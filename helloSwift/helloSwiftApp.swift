@@ -15,5 +15,18 @@ struct helloSwiftApp: App {
             ContentView()
                 .environmentObject(model)
         }
+        #if os(macOS)
+        .commands {
+            LandmarkCommands(model: model)
+        }
+        #endif
+        #if os(watchOS)
+        WKNotificationScene(controller: NotificationController.self, category: "myCategory")
+        #endif
+        #if os(macOS)
+        Settings {
+            LandmarkSettings()
+        }
+        #endif
     }
 }

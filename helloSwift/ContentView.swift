@@ -11,173 +11,217 @@ import CoreLocation
 import Foundation
 import Combine
 
-func load<T:Decodable>(_ fileName:String)->T {
-    let data: Data
-    guard let file = Bundle.main.url(forResource: fileName, withExtension: nil)
-    else {
-        fatalError("can't find \(fileName)")
-    }
-    do {
-        data = try Data(contentsOf: file)
-    } catch {
-        fatalError("can't load \(error)")
-    }
-    do {
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
-    } catch {
-        fatalError("can't parse \(error)")
-    }
-}
-
-struct Landmark: Hashable, Codable, Identifiable {
-    var id: Int
-    var name:String
-    var park:String
-    var state:String
-    var description:String
-    var city:String
-    var category:String
-    var isFavorite:Bool
-    private var imageName:String
-    var image:Image { Image(imageName) }
-    private var coordinates:Coor
-    var local: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
-    }
-    struct Coor: Hashable, Codable {
-        var latitude, longitude: Double
-    }
-}
-
-class ModelData: ObservableObject {
-    @Published var landmarks: [Landmark] = load("landmarkData.json")
-}
-
 struct ContentView: View {
+    @State private var selection: Tab = .featured
+    enum Tab { case featured, list }
     @EnvironmentObject var model:ModelData
-    @State var showFavor = false
-    var lanmarks:[Landmark] {
-        model.landmarks.filter { !showFavor || $0.isFavorite }
+    var body: some View {
+        TabView(selection: $selection) {
+            CategoryHome()
+                .tabItem {
+                    Label("Featured", systemImage: "star")
+                }
+                .tag(Tab.featured)
+            LandmarkList()
+                .tabItem {
+                    Label("List", systemImage: "list.bullet")
+                }
+                .tag(Tab.list)
+        }
     }
+}
+
+struct CategoryHome: View {
+    @EnvironmentObject var model:ModelData
+    @State private var showingProfile = false
+    @State private var showFeature: Landmark?
     var body: some View {
         NavigationView {
             List {
-                Toggle(isOn: $showFavor) {
-                    Text("Favorites only")
+                PageView(pages: model.features.map { FeatureCard(landmark: $0) })
+                        .aspectRatio(3 / 2, contentMode: .fit)
+                        .listRowInsets(EdgeInsets())
+                ForEach(model.categories.keys.sorted(),
+                        id:\.self) { key in
+                    CategoryRow(categoryName:key,
+                                items:model.categories[key]!)
+                }.listRowInsets(EdgeInsets())
+            }
+            .navigationTitle("Featured")
+            .listStyle(.inset)
+            .toolbar {
+                Button {
+                    showingProfile.toggle()
+                } label: {
+                    Label("User Profile", systemImage: "person.crop.circle")
                 }
-                ForEach(lanmarks) { land in
-                    NavigationLink {
-                        LandmarkDetail(land:land)
-                    } label: {
-                        LandmarkRow(land: land)
+            }.sheet(isPresented:$showingProfile) {
+                ProfileHost()
+            }
+        }
+    }
+}
+
+struct ProfileHost: View {
+    @Environment(\.editMode) var editMode
+    @EnvironmentObject var model:ModelData
+    @State private var draftProfile = Profile.default
+    var body: some View {
+        VStack(alignment:.leading, spacing: 20) {
+            HStack {
+                if editMode?.wrappedValue == .active {
+                    Button("Cancel") {
+                        draftProfile = model.profile
+                        editMode?.animation().wrappedValue = .inactive
                     }
                 }
-            }.navigationTitle("Landmarks")
-        }
-    }
-}
-
-struct LandmarkRow: View {
-    var land: Landmark
-    var body: some View {
-        HStack {
-            land.image.resizable()
-                .frame(width:50,height: 50)
-            Text(land.name)
-            Spacer()
-            if land.isFavorite {
-                Image(systemName: "star.fill")
-                    .imageScale(.medium)
-                    .foregroundColor(.yellow)
+                Spacer()
+                EditButton()
             }
-        }
+            if editMode?.wrappedValue == .inactive {
+                ProfileSummary(profile: model.profile)
+            } else {
+                ProfileEditor(profile: $draftProfile)
+                    .onAppear {
+                        draftProfile = model.profile
+                    }
+                    .onDisappear {
+                        model.profile = draftProfile
+                    }
+            }
+        }.padding()
     }
 }
 
-struct FavoriteButton: View {
-    @Binding var isSet: Bool
+struct ProfileSummary: View {
+    @EnvironmentObject var modelData: ModelData
+    var profile: Profile
     var body: some View {
-        Button {
-            isSet.toggle()
-        } label: {
-            Label("Toggle Favoriate",
-                  systemImage: isSet ? "star.fill" : "star")
-                .labelStyle(.iconOnly)
-                .foregroundColor(isSet ? .yellow : .gray)
-        }
-    }
-}
-
-struct LandmarkDetail: View {
-    @EnvironmentObject var model:ModelData
-    var land: Landmark
-    var index: Int {
-        model.landmarks.firstIndex(where: {
-            $0.id == land.id
-        })!
-    }
-    var body: some View {
-        ScrollView(showsIndicators:false) {
-            MapView(coord: land.local)
-                .ignoresSafeArea()
-                .frame(height:300)
-            CircleImage(image:land.image)
-                .offset(y:-140)
-                .padding(.bottom, -140)
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(land.name)
-                        .font(.title)
-                    FavoriteButton(isSet: $model.landmarks[index].isFavorite)
-                }
-                HStack{
-                    Text(land.park)
-                    Spacer()
-                    Text(land.city)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(profile.username)
+                    .bold()
+                    .font(.title)
+                Text("Notifications: \(profile.prefersNotifications ? "On": "Off" )")
+                Text("Seasonal Photos: \(profile.seasonalPhoto.rawValue)")
+                Text("Goal Date: ") + Text(profile.goalDate, style: .date)
+                Divider()
+                VStack(alignment: .leading) {
+                    Text("Completed Badges")
+                        .font(.headline)
+                    ScrollView(.horizontal) {
+                        HStack {
+                            HikeBadge(name: "First Hike")
+                            HikeBadge(name: "Earth Day")
+                                .hueRotation(Angle(degrees: 90))
+                            HikeBadge(name: "Tenth Hike")
+                                .grayscale(0.5)
+                                .hueRotation(Angle(degrees: 45))
+                        }
+                        .padding(.bottom)
+                    }
                 }
                 Divider()
-                Text("About \(land.name)")
-                    .font(.title2)
-                    .padding(.bottom, 1)
-                Text(land.description)
-            }.padding()
-        }.ignoresSafeArea()
-    }
-}
-
-struct CircleImage: View {
-    let image:Image
-    var body: some View {
-        image
-            .frame(width:250)
-            .clipShape(Circle())
-            .shadow(radius: 7)
-    }
-}
-
-struct MapView: View {
-    var coord: CLLocationCoordinate2D
-    @State private var region = MKCoordinateRegion()
-    var body: some View {
-        Map(coordinateRegion: $region)
-            .onAppear {
-                region = MKCoordinateRegion(
-                    center: coord, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+                VStack(alignment: .leading) {
+                    Text("Recent Hikes")
+                        .font(.headline)
+                    HikeView(hike: modelData.hikes[0])
+                }
             }
+            .padding()
+        }
+    }
+}
+
+struct ProfileEditor: View {
+    @Binding var profile: Profile
+    var dateRange:ClosedRange<Date> {
+        Calendar.current.date(byAdding: .year, value: -1, to: profile.goalDate)!
+        ...
+        Calendar.current.date(byAdding: .year, value: 1, to: profile.goalDate)!
+    }
+    var body: some View {
+        List {
+            HStack {
+                Text("Username").bold()
+                Divider()
+                TextField("Username", text: $profile.username)
+            }
+            Toggle(isOn: $profile.prefersNotifications) {
+                Text("Enable Notification").bold()
+            }
+            VStack(alignment:.leading, spacing: 20) {
+                Text("Seasonal Photo").bold()
+                Picker("Seasonal Photo", selection: $profile.seasonalPhoto) {
+                    ForEach(Profile.Season.allCases) { s in
+                        Text(s.id).tag(s)
+                    }
+                }.pickerStyle(.segmented)
+            }
+            DatePicker(selection: $profile.goalDate, in: dateRange,
+                       displayedComponents: .date) {
+                Text("Goal Date").bold()
+            }
+        }
+    }
+}
+
+struct CategoryRow: View {
+    var categoryName:String
+    var items:[Landmark]
+    var body: some View {
+        VStack(alignment:.leading) {
+            Text(categoryName)
+                .font(.headline)
+                .padding(.leading, 15)
+                .padding(.top, 15)
+                .padding(.bottom, -5)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .top, spacing: 0) {
+                    ForEach(items) { land in
+                        NavigationLink{
+                            LandmarkDetail(land: land)
+                        } label: {
+                            CategoryItem(land:land)
+                        }
+                    }
+                }
+            }.frame(height:185)
+        }
+    }
+}
+
+struct CategoryItem: View {
+    var land:Landmark
+    var body: some View {
+        VStack(alignment: .leading) {
+            land.image.renderingMode(.original)
+                .resizable()
+                .frame(width: 155, height: 144)
+                .cornerRadius(5)
+            Text(land.name)
+                .foregroundColor(.primary)
+                .font(.caption)
+        }.padding(.leading, 15)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var model = ModelData()
     static var previews: some View {
-        FavoriteButton(isSet: .constant(true))
-            .previewLayout(.fixed(width: 300, height: 70))
-        LandmarkDetail(land: (model.landmarks)[3])
-            .environmentObject(model)
+//        FavoriteButton(isSet: .constant(true))
+//            .previewLayout(.fixed(width: 300, height: 70))
+//        LandmarkDetail(land: (model.landmarks)[3])
+//            .environmentObject(model)
         ContentView()
             .preferredColorScheme(.dark)
             .environmentObject(model)
+//        ProfileSummary(profile: Profile.default)
+//            .environmentObject(model)
+//        ProfileHost()
+//            .environmentObject(model)
+//        ProfileEditor(profile: .constant(Profile.default))
+//            .environmentObject(model)
 //            .previewDevice("iPhone 11")
 //        Group {
 //            LandmarkRow(land: landmarks[0])

@@ -137,7 +137,9 @@ struct BottomView: View {
             NumberView(title: "Score", text: String(game.score))
             Spacer()
             Button("EXIT") {
-                service.gaming = false
+                withAnimation {
+                    service.gaming = false
+                }
             }.accentColor(.white)
             Spacer()
             NumberView(title: "Round", text: String(game.round))

@@ -9,7 +9,10 @@
 /* Begin PBXBuildFile section */
 		190C4D3928D7D80C00C1CAE1 /* ReadMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3828D7D80C00C1CAE1 /* ReadMe.swift */; };
 		190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3A28D7D81800C1CAE1 /* Book.swift */; };
+		190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3C28D7E34300C1CAE1 /* DetailView.swift */; };
 		193323A228D2264F0038AD74 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193323A128D2264F0038AD74 /* Feature.swift */; };
+		1948648028D883A500064104 /* PhPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948647F28D883A500064104 /* PhPicker.swift */; };
+		1948648228D89DF300064104 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948648128D89DF300064104 /* Todo.swift */; };
 		195A3D2F28BFA2C600239F01 /* helloSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D2E28BFA2C600239F01 /* helloSwiftApp.swift */; };
 		195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D3028BFA2C600239F01 /* ContentView.swift */; };
 		195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
@@ -71,7 +74,10 @@
 /* Begin PBXFileReference section */
 		190C4D3828D7D80C00C1CAE1 /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 		190C4D3A28D7D81800C1CAE1 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		190C4D3C28D7E34300C1CAE1 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		193323A128D2264F0038AD74 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		1948647F28D883A500064104 /* PhPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhPicker.swift; sourceTree = "<group>"; };
+		1948648128D89DF300064104 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		195A3D2B28BFA2C600239F01 /* CyberMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		195A3D2E28BFA2C600239F01 /* helloSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloSwiftApp.swift; sourceTree = "<group>"; };
 		195A3D3028BFA2C600239F01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -132,6 +138,8 @@
 			children = (
 				190C4D3828D7D80C00C1CAE1 /* ReadMe.swift */,
 				190C4D3A28D7D81800C1CAE1 /* Book.swift */,
+				190C4D3C28D7E34300C1CAE1 /* DetailView.swift */,
+				1948647F28D883A500064104 /* PhPicker.swift */,
 			);
 			path = tourtal2;
 			sourceTree = "<group>";
@@ -221,6 +229,7 @@
 			children = (
 				19625BA428D36D9E00860518 /* CyberService.swift */,
 				19625BA128D365B600860518 /* CyberHome.swift */,
+				1948648128D89DF300064104 /* Todo.swift */,
 			);
 			path = cyber;
 			sourceTree = "<group>";
@@ -407,9 +416,11 @@
 				19625BA528D36D9E00860518 /* CyberService.swift in Sources */,
 				193323A228D2264F0038AD74 /* Feature.swift in Sources */,
 				19CE75EA28D22EB400AF8AFF /* Helper.swift in Sources */,
+				190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */,
 				190C4D3928D7D80C00C1CAE1 /* ReadMe.swift in Sources */,
 				19D2A9E528D4B045009C81C4 /* Game.swift in Sources */,
 				19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */,
+				1948648228D89DF300064104 /* Todo.swift in Sources */,
 				195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */,
 				190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */,
 				19D6C3B728D14C4000ED5D4B /* Badge.swift in Sources */,
@@ -420,6 +431,7 @@
 				19D6C3BB28D1514300ED5D4B /* Model.swift in Sources */,
 				19D2A9E028D489AE009C81C4 /* Bullseye.swift in Sources */,
 				19CE75ED28D2307F00AF8AFF /* Landmarks.swift in Sources */,
+				1948648028D883A500064104 /* PhPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

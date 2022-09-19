@@ -14,9 +14,15 @@ struct CyberNav: View {
     var body: some View {
         if service.gaming {
             Bullseye().accentColor(.red)
+                .transition(.scale)
         } else if service.landing {
             ContentView()
                 .environmentObject(ModelData())
+                .transition(.scale)
+        } else if service.readme {
+            ReadMe()
+                .environmentObject(Library())
+                .transition(.scale)
         } else {
             TabView(selection: $selection) {
                 CyberHome()
@@ -29,7 +35,9 @@ struct CyberNav: View {
                         Label("Me", systemImage: "person.crop.circle")
                     }
                     .tag(Tab.game)
-            }.accentColor(.blue)
+            }
+            .accentColor(.blue)
+            .transition(.moveAndFade)
         }
     }
 }
@@ -37,12 +45,21 @@ struct CyberNav: View {
 struct ProfileView: View {
     @EnvironmentObject var service:CyberService
     var body: some View {
-        VStack {
+        VStack(spacing: 15) {
             Button("BullsEye Game") {
-                service.gaming = true
+                withAnimation {
+                    service.gaming = true
+                }
             }
             Button("Landmarks") {
-                service.landing = true
+                withAnimation {
+                    service.landing = true
+                }
+            }
+            Button("ReadMe") {
+                withAnimation {
+                    service.readme = true
+                }
             }
         }
     }
@@ -59,6 +76,7 @@ struct CyberHome: View {
                         .foregroundColor(Color.blue)
                     MyToDo(todo:$service.summaryData.data.todo)
                         .padding(.bottom, 9)
+                        .padding(.top, 3)
                     Label("我的日记", systemImage: "book.closed")
                         .font(.title2)
                         .foregroundColor(Color.blue)
@@ -79,78 +97,31 @@ struct CyberHome: View {
     }
 }
 
-struct MyToDo: View {
-    typealias Todo = Summary.TodoItem
-    @EnvironmentObject var service:CyberService
-    @Binding var todo: [String:[Todo]]
-    var today: [Todo] {
-        var data = todo[getDate()] ?? []
-        if data.isEmpty {
-            data = todo[getDate(off:-1)] ?? []
-        }
-        return data.sorted(by: {a,b in
-            if a.list == b.list {
-                return a.create_at < b.create_at
-            } else {
-                return a.list < b.list
-            }
-        })
-    }
-    var body: some View {
-        if today.isEmpty {
-            Text("没有数据")
-        } else {
-            ForEach(today) { item in
-                HStack {
-                    if item.status == "completed" {
-                        Text(item.title)
-                            .strikethrough()
-                            .fixedSize(horizontal: false, vertical: false)
-                    } else {
-                        Text(item.title)
-                            .strikethrough()
-                    }
-                    Spacer()
-                    ZStack(alignment:.center) {
-                        Color.gray.opacity(0.1)
-                        Text(item.list)
-                            .padding(.vertical, 4.0)
-                            .padding(.horizontal, 6.0)
-                    }.clipShape(RoundedRectangle(cornerRadius: 15))
-                        .fixedSize(horizontal: true, vertical: true)
-                    .padding(.trailing, 4)
-                }
-            }
-            .padding(.leading, 2.0)
-        }
-    }
-}
-
-struct CyberHomeScene_Previews: PreviewProvider {
-    static var service = CyberService()
-    static var previews: some View {
-        //CyberHome()
-        //CyberHome()
-        ProfileView()
-            .environmentObject(service)
-            .onAppear {
-//                Task {
-//                    //await service.fetchSummary()
-//                }
-            }
-//        HStack {
-//            Text("Hello World")
-//            Spacer()
-//            ZStack(alignment:.center) {
-//                Color.gray.opacity(0.1)
-//                Text("List 1").padding([.leading, .trailing], 8)
-//                    .padding([.top, .bottom], 5)
-//            }.clipShape(RoundedRectangle(cornerRadius: 15))
-//                .fixedSize(horizontal: true, vertical: true)
-//            .padding(.trailing, 4)
-//        }.padding()
-    }
-}
+//struct CyberHomeScene_Previews: PreviewProvider {
+//    static var service = CyberService()
+//    static var previews: some View {
+//        //CyberHome()
+//        //CyberHome()
+//        ProfileView()
+//            .environmentObject(service)
+//            .onAppear {
+////                Task {
+////                    //await service.fetchSummary()
+////                }
+//            }
+////        HStack {
+////            Text("Hello World")
+////            Spacer()
+////            ZStack(alignment:.center) {
+////                Color.gray.opacity(0.1)
+////                Text("List 1").padding([.leading, .trailing], 8)
+////                    .padding([.top, .bottom], 5)
+////            }.clipShape(RoundedRectangle(cornerRadius: 15))
+////                .fixedSize(horizontal: true, vertical: true)
+////            .padding(.trailing, 4)
+////        }.padding()
+//    }
+//}
 
 func getDate(off:Int = 0) -> String {
     var dayComponent = DateComponents()

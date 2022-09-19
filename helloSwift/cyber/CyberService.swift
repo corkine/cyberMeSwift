@@ -38,8 +38,9 @@ class CyberService: ObservableObject {
     @Published var summaryData = Summary.defaultSummary
     @Published var gaming = false
     @Published var landing = false
+    @Published var readme = false
     let baseUrl = "https://cyber.mazhangjing.com/cyber"
-    let demoToken = "Y29ya2luZTphR2xUZEdneFZWTj"
+    let demoToken = "Y29ya2luZTphR2xUZEdneFZWTjVUakl6YTJVeWJ"
     let summaryUrl = "/dashboard/summary?day=5"
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError

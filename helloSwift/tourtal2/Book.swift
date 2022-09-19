@@ -102,7 +102,7 @@ class Library: ObservableObject {
         booksCache = booksCache.filter { $0 != book }
         objectWillChange.send()
     }
-    var images: [Book:Image] = [:]
+    @Published var images: [Book:Image] = [:]
     @Published private var booksCache: [Book] = [
         .init(title: "Ein Neues Land", author: "Shaun Tan"),
         .init(title: "Bosch", author: "Laurinda Dixon"),

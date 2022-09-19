@@ -17,7 +17,7 @@ class Book: ObservableObject {
     init(title:String = "Title", author:String = "Author",
          microReview:String = "", readMe:Bool = true) {
         self.title = title; self.author = author;
-        self.microReview = microReview; self.readMe = true;
+        self.microReview = microReview; self.readMe = readMe;
     }
 }
 
@@ -39,7 +39,8 @@ extension Book {
         var body: some View {
             if let image = image {
                 image.resizable().scaledToFill().frame(width: size, height: size)
-                    .cornerRadius(cornerRadius)
+                    .contentShape(Rectangle())
+                    .cornerRadius(cornerRadius).clipped()
             } else {
                 let symbol =
                 SwiftUI.Image(title: title) ?? SwiftUI.Image(systemName: "book")
@@ -47,6 +48,7 @@ extension Book {
                     .resizable()
                     .scaledToFit()
                     .frame(width: size, height: size)
+                    .clipped()
                     .font(Font.title.weight(.light))
                     .foregroundColor(.secondary.opacity(0.5))
             }

@@ -4,45 +4,20 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>CyberMeWidgetExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>MacLandmarks.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
-		</dict>
-		<key>WatchLandmarks (Complication).xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
-		</dict>
-		<key>WatchLandmarks (Notification).xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
-		</dict>
-		<key>WatchLandmarks.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>2</integer>
 		</dict>
 		<key>helloSwift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
-		</dict>
-		<key>landmarkWatch (Complication).xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>landmarkWatch (Notification).xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>landmarkWatch.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -63,6 +38,21 @@
 			<true/>
 		</dict>
 		<key>19CE75A028D22D5900AF8AFF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>19D2A9EC28D4B4F6009C81C4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>19FD181428D9CB6C004F97B3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>19FD182728D9CBB0004F97B3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

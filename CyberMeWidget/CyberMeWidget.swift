@@ -10,97 +10,159 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+        SimpleEntry(date: Date(), dashboard: Dashboard.demo)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
+        let entry = SimpleEntry(date: Date(), dashboard: Dashboard.demo)
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
+        CyberService.fetchDashboard { dashboard, error in
+            if let dashboard = dashboard {
+                let currentDate = Date()
+                let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
+                
+                let entry = SimpleEntry(date: currentDate, dashboard: dashboard)
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
+                completion(timeline)
+            } else {
+                let currentDate = Date()
+                let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
+                
+                let entry = SimpleEntry(date: currentDate, dashboard: Dashboard.failed(error: error))
+
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
+                completion(timeline)
+            }
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
     }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
+    let dashboard: Dashboard
 }
 
 struct CyberMeWidgetEntryView : View {
     var entry: Provider.Entry
     let basic: CGFloat = 11.5
+    
+    var dateStr: String {
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.dateFormat = "MM月dd日 E"
+        return formatter.string(from: now)
+    }
+    
+    var updateStr1: String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .abbreviated
+        formatter.allowedUnits = [.hour, .minute]
+        let updateAt = Date(timeIntervalSince1970: TimeInterval(entry.dashboard.updateAt))
+        let now = Date()
+        let timeinterval = now.distance(to: updateAt)
+        return formatter.string(from: timeinterval) ?? "? MINUTES"
+    }
+    
+    var updateStr: String {
+        let updateAt = Date(timeIntervalSince1970: TimeInterval(entry.dashboard.updateAt))
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.dateFormat = "hh:mm"
+        return formatter.string(from: updateAt)
+    }
 
     var body: some View {
-        VStack(alignment:.leading) {
+        let data = entry.dashboard
+        
+        return VStack(alignment:.leading) {
             HStack {
-                Text("🟡")
+                Text(data.workStatus)
                     .padding(.trailing, -5)
                 VStack(alignment:.leading) {
                     Text("我的一天")
                         .kerning(0.6)
                         .bold()
                         .font(.system(size: basic))
-                    Text("9月20日 周二")
+                    Text(dateStr)
                         .font(.system(size: basic - 3))
                 }
                 Spacer()
                 VStack {
-                    Text("每周一学")
-                        .foregroundColor(Color("BackgroundColor-Heavy"))
+                    Text("今日日报")
+                        .foregroundColor(data.needDiaryReport ? .white : Color("BackgroundColor-Heavy"))
                         .font(.system(size: basic - 3))
                     Text("每日浇水")
+                        .foregroundColor(data.needPlantWater ? .white : Color("BackgroundColor-Heavy"))
                         .font(.system(size: basic - 3))
                 }
-                ZStack {
-                    Color.white.opacity(0.22)
-                    HStack(spacing:1) {
-                        Text("7:30")
-                        Text("|").opacity(0.2)
-                        Text("18:20")
-                    }
-                    .font(.system(size: basic))
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 3)
-                }.fixedSize(horizontal: true, vertical: true)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                if !data.cardCheck.isEmpty {
+                    ZStack {
+                        Color.white.opacity(0.22)
+                        if data.cardCheck.count == 1 {
+                            HStack(spacing:1) {
+                                Text(data.cardCheck[0])
+                            }
+                            .font(.system(size: basic))
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 3)
+                        } else if data.cardCheck.count >= 2 {
+                            HStack(spacing:1) {
+                                Text(data.cardCheck[0])
+                                Text("|").opacity(0.2)
+                                Text(data.cardCheck[data.cardCheck.count - 1])
+                            }
+                            .font(.system(size: basic))
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 3)
+                        }
+                    }.fixedSize(horizontal: true, vertical: true)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
                    
             }
             Spacer()
             Spacer()
             VStack(alignment:.leading) {
-                Text("降雨带：西南 34 公里之外 +44m")
-                    .font(.system(size: basic))
-                Divider()
-                    .background(Color.white)
-                    .opacity(0.4)
-                    .padding(.top, -5)
-                    .padding(.bottom, -15)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("五元组：北向 API 提供查询接口 1")
-                        .font(.system(size: basic + 4))
-                    Text("五元组：北向 API 提供查询接口 2")
-                        .font(.system(size: basic + 4))
-                    Text("五元组：北向 API 提供查询接口 3")
-                        .font(.system(size: basic + 4))
+                if let weather = data.weatherInfo,
+                   !weather.isEmpty {
+                    Text(weather)
+                        .font(.system(size: basic))
+                    Divider()
+                        .background(Color.white)
+                        .opacity(0.4)
+                        .padding(.top, -5)
+                        .padding(.bottom, -15)
                 }
-                .padding(.top, -10)
-                .padding(.bottom, 1)
+                if !data.todo.isEmpty {
+                    VStack(alignment: .leading, spacing: 2) {
+                        ForEach(data.todo.prefix(3), id: \.self) { item in
+                            if item.isFinished {
+                                Text(item.title)
+                                    .strikethrough()
+                                    .font(.system(size: basic + 4))
+                                    .lineLimit(1)
+                            } else {
+                                Text(item.title)
+                                    .font(.system(size: basic + 4))
+                                    .lineLimit(1)
+                            }
+                        }
+                    }
+                    .padding(.top, -10)
+                    .padding(.bottom, 1)
+                }
+                
                 HStack(spacing: 1) {
-                    Text("其它 6 个")
-                        .padding(.trailing, 3)
-                    Text("8 MINUTES AGO")
+                    if data.todo.count - 3 > 0 {
+                        Text("其它 \(data.todo.count - 3) 个")
+                            .padding(.trailing, 3)
+                    }
+                    Text("UPDATE \(updateStr)")
                         .kerning(0.1)
                         .bold()
                         .padding(.trailing, 3)
@@ -137,7 +199,8 @@ struct CyberMeWidget: Widget {
 
 struct CyberMeWidget_Previews: PreviewProvider {
     static var previews: some View {
-        CyberMeWidgetEntryView(entry: SimpleEntry(date: Date()))
+        CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                  dashboard: Dashboard.demo))
             .preferredColorScheme(.dark)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }

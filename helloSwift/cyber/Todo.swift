@@ -12,7 +12,7 @@ struct MyToDo: View {
     @Binding var todo: [String:[Summary.TodoItem]]
     var today: [Summary.TodoItem] {
         var data = todo[getDate()] ?? []
-        if data.isEmpty {
+        if data.isEmpty && Calendar.current.component(.hour, from: Date()) < 7 {
             data = todo[getDate(off:-1)] ?? []
         }
         return data.sorted(by: {a,b in

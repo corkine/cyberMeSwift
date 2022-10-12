@@ -39,9 +39,10 @@ class CyberService: ObservableObject {
     @Published var gaming = false
     @Published var landing = false
     @Published var readme = false
-    let baseUrl = "https://cyber.mazhangjing.com/cyber"
-    let demoToken = "Y29ya2luZTphR2xUZEdneFZWTjVUakl6YTJVeWJ"
-    let summaryUrl = "/dashboard/summary?day=5"
+    static let baseUrl = "https://cyber.mazhangjing.com/cyber"
+    static let demoToken = "Y29ya2luZTphR2xUZEdneFZWTjVUakl6YTJVeWJHbDVSbGx6UmpaTlQzWlZQVG82TVRZNU1UY3lOekV5T0RFNE1nPT0="
+    static let summaryUrl = "/dashboard/summary?day=5"
+    static let dashboardUrl = "/dashboard/ioswidget"
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError
     }
@@ -56,12 +57,12 @@ class CyberService: ObservableObject {
 //        return try JSONDecoder().decode(T.self, from: data)
 //    }
     func fetchSummary() {
-        guard let url = URL(string: baseUrl + summaryUrl) else {
+        guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {
             print("End point is Invalid")
             return
         }
         var request = URLRequest(url: url)
-        request.setValue("Basic \(self.demoToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(CyberService.demoToken)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 if let response = try? JSONDecoder().decode(Summary.self, from: data) {
@@ -73,10 +74,29 @@ class CyberService: ObservableObject {
             }
         }.resume()
     }
-//    func fetchSummary() async {
-//        summaryData = try! await fetch(summaryUrl, token: demoToken)
-//        ?? Summary.defaultSummary
-//    }
+    static func fetchDashboard(completion:@escaping (Dashboard?, Error?) -> Void) {
+        guard let url = URL(string: baseUrl + dashboardUrl) else {
+            print("End point is Invalid")
+            return
+        }
+        var request = URLRequest(url: url)
+        print("requesting for \(request)")
+        request.setValue("Basic \(self.demoToken)", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                if let response = try? JSONDecoder().decode(Dashboard.self, from: data) {
+                    print("decoding from \(data)")
+                    completion(response, nil)
+                } else {
+                    print("decoding from \(data) failed")
+                    completion(nil, error)
+                }
+            }
+            if let error = error {
+                completion(nil, error)
+            }
+        }.resume()
+    }
 }
 
 extension URLSession {

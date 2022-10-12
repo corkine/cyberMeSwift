@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct CyberNav: View {
     @State var selection: Tab = .today
@@ -94,6 +95,9 @@ struct CyberHome: View {
             }
         }
         .onAppear(perform: service.fetchSummary)
+        .onAppear {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     }
 }
 

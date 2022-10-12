@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WidgetKit
 
 struct Dashboard: Codable {
     var workStatus:String
@@ -23,6 +24,16 @@ struct Dashboard: Codable {
 }
 
 extension Dashboard {
+    static var lastUpdate = Date()
+    static func updateWidget(inSeconds inSec: Int64) {
+        print("updating widget call")
+        let now = Date()
+        if now.timeIntervalSince(lastUpdate) > Double(inSec) {
+            lastUpdate = now
+            print("updating widget action call")
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
     static let demoTodo = [Todo(title: "提醒事项1", isFinished: true),
                            Todo(title: "提醒事项2", isFinished: false),
                            Todo(title: "提醒事项3", isFinished: true),

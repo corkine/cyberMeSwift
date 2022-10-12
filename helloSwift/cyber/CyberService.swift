@@ -40,7 +40,7 @@ class CyberService: ObservableObject {
     @Published var landing = false
     @Published var readme = false
     static let baseUrl = "https://cyber.mazhangjing.com/cyber"
-    static let demoToken = "Y29ya2luZTphR2xUZEdneFZWTjVUakl6YTJVeWJHbDVSbGx6UmpaTlQzWlZQVG82TVRZNU1UY3lOekV5T0RFNE1nPT0="
+    static let demoToken = "Y29ya2luZTphR2xNU1UY3lOekV5T0RFNE1nPT0="
     static let summaryUrl = "/dashboard/summary?day=5"
     static let dashboardUrl = "/dashboard/ioswidget"
     enum FetchError: Error {
@@ -82,6 +82,11 @@ class CyberService: ObservableObject {
         var request = URLRequest(url: url)
         print("requesting for \(request)")
         request.setValue("Basic \(self.demoToken)", forHTTPHeaderField: "Authorization")
+        //        let conf = URLSessionConfiguration.background(withIdentifier: "cyber.dashboard")
+        //        conf.allowsCellularAccess = true
+        //        conf.allowsExpensiveNetworkAccess = true
+        //        conf.allowsConstrainedNetworkAccess = true
+        //        let session = URLSession(configuration: conf)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 if let response = try? JSONDecoder().decode(Dashboard.self, from: data) {

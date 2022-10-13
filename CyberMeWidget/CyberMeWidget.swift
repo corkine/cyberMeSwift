@@ -181,12 +181,15 @@ struct CyberMeWidgetEntryView : View {
         .padding(.all, 14)
         .background(Color("BackgroundColor"))
         .foregroundColor(.white)
+        .widgetURL(URL(string: "cyberme://checkCardIfNeed"))
     }
 }
 
 @main
 struct CyberMeWidget: Widget {
     let kind: String = "CyberMeWidget"
+    
+    let backgroundData = BackgroundManager()
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
@@ -194,6 +197,13 @@ struct CyberMeWidget: Widget {
         }
         .configurationDisplayName("CyberMe")
         .description("智能的提供你最关注的信息")
+        .onBackgroundURLSessionEvents { (sessionIdentifier, completion) in
+            if sessionIdentifier == self.kind {
+                self.backgroundData.update()
+                self.backgroundData.completionHandler = completion
+                print("background update")
+            }
+        }
     }
 }
 

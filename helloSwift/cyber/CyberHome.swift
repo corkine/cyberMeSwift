@@ -68,6 +68,7 @@ struct ProfileView: View {
 
 struct CyberHome: View {
     @EnvironmentObject var service:CyberService
+    
     var body: some View {
         ScrollView(.vertical,showsIndicators:false) {
             HStack(alignment:.top) {
@@ -93,11 +94,13 @@ struct CyberHome: View {
                 .navigationTitle("\(getWeedayFromeDate(date:Date()))")
                 Spacer()
             }
+            .alert(isPresented: $service.showCheckCardResult) {
+                Alert(title: Text("打卡结果"),
+                      message: Text(service.checkCardResult ?? "无结果"))
+            }
         }
         .onAppear(perform: service.fetchSummary)
-        .onAppear {
-            WidgetCenter.shared.reloadAllTimelines()
-        }
+        
     }
 }
 

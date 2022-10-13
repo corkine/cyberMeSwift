@@ -16,6 +16,10 @@
 		1948B75F28F6C569009BECD0 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* Dashboard.swift */; };
 		1948B76128F6C7F7009BECD0 /* CyberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA428D36D9E00860518 /* CyberService.swift */; };
 		1948B76228F6D0A4009BECD0 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* Dashboard.swift */; };
+		1948B76528F858CD009BECD0 /* TimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B76428F858CD009BECD0 /* TimeUtil.swift */; };
+		1948B76628F858CD009BECD0 /* TimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B76428F858CD009BECD0 /* TimeUtil.swift */; };
+		1948B76828F859D8009BECD0 /* TokenUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B76728F859D8009BECD0 /* TokenUtil.swift */; };
+		1948B76928F859D8009BECD0 /* TokenUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B76728F859D8009BECD0 /* TokenUtil.swift */; };
 		195A3D2F28BFA2C600239F01 /* helloSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D2E28BFA2C600239F01 /* helloSwiftApp.swift */; };
 		195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D3028BFA2C600239F01 /* ContentView.swift */; };
 		195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
@@ -106,6 +110,8 @@
 		1948648128D89DF300064104 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		1948B75E28F6C569009BECD0 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		1948B76328F6EDBC009BECD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1948B76428F858CD009BECD0 /* TimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
+		1948B76728F859D8009BECD0 /* TokenUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUtil.swift; sourceTree = "<group>"; };
 		195A3D2B28BFA2C600239F01 /* CyberMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		195A3D2E28BFA2C600239F01 /* helloSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloSwiftApp.swift; sourceTree = "<group>"; };
 		195A3D3028BFA2C600239F01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -278,6 +284,7 @@
 				19625BA128D365B600860518 /* CyberHome.swift */,
 				1948648128D89DF300064104 /* Todo.swift */,
 				1948B75E28F6C569009BECD0 /* Dashboard.swift */,
+				1948B76728F859D8009BECD0 /* TokenUtil.swift */,
 			);
 			path = cyber;
 			sourceTree = "<group>";
@@ -295,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				195A3D2E28BFA2C600239F01 /* helloSwiftApp.swift */,
+				1948B76428F858CD009BECD0 /* TimeUtil.swift */,
 				195A3D3228BFA2C700239F01 /* Assets.xcassets */,
 			);
 			path = app;
@@ -516,9 +524,11 @@
 				19CE75EA28D22EB400AF8AFF /* Helper.swift in Sources */,
 				190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */,
 				190C4D3928D7D80C00C1CAE1 /* ReadMe.swift in Sources */,
+				1948B76528F858CD009BECD0 /* TimeUtil.swift in Sources */,
 				19D2A9E528D4B045009C81C4 /* Game.swift in Sources */,
 				19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */,
 				1948648228D89DF300064104 /* Todo.swift in Sources */,
+				1948B76828F859D8009BECD0 /* TokenUtil.swift in Sources */,
 				195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */,
 				190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */,
 				19D6C3B728D14C4000ED5D4B /* Badge.swift in Sources */,
@@ -563,8 +573,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1948B76928F859D8009BECD0 /* TokenUtil.swift in Sources */,
 				1948B76228F6D0A4009BECD0 /* Dashboard.swift in Sources */,
 				19FD182D28D9CBB0004F97B3 /* CyberMeWidget.swift in Sources */,
+				1948B76628F858CD009BECD0 /* TimeUtil.swift in Sources */,
 				1948B76128F6C7F7009BECD0 /* CyberService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

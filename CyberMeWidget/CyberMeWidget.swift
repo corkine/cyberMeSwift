@@ -72,7 +72,7 @@ struct CyberMeWidgetEntryView : View {
         let updateAt = Date(timeIntervalSince1970: TimeInterval(entry.dashboard.updateAt))
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "zh_CN")
-        formatter.dateFormat = "hh:mm"
+        formatter.dateFormat = "HH:mm"
         return formatter.string(from: updateAt)
     }
 
@@ -166,13 +166,17 @@ struct CyberMeWidgetEntryView : View {
                         .kerning(0.1)
                         .bold()
                         .padding(.trailing, 3)
-                    Text("HCM")
-                        .kerning(-1)
-                        .bold()
-                        .opacity(1)
-                        .padding(.trailing, 3)
-                    Text("GRAPH")
-                        .kerning(-1)
+                    if TimeUtil.needCheckCard {
+                        Text("HCM")
+                            .kerning(-1)
+                            .bold()
+                            .opacity(1)
+                            .padding(.trailing, 3)
+                    } else {
+                        Text("GRAPH")
+                            .kerning(-1)
+                            .bold()
+                    }
                 }
                 .font(.system(size: basic - 2))
                 .opacity(0.5)

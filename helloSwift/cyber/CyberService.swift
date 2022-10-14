@@ -89,6 +89,7 @@ class CyberService: ObservableObject {
                 self.showCheckCardResult = true
                 self.checkCardResult = "\(data.message)"
             }
+            Dashboard.updateWidget(inSeconds: 0)
         }
     }
     
@@ -124,5 +125,5 @@ extension CyberService {
     static let baseUrl = "https://cyber.mazhangjing.com/"
     static let summaryUrl = "cyber/dashboard/summary?day=5"
     static let dashboardUrl = "cyber/dashboard/ioswidget"
-    static let checkCardUrl = "cyber/check/now?plainText=false&useCache=false"
+    static let checkCardUrl = "cyber/check/now?plainText=false&preferCacheSuccess=true"
 }

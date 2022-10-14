@@ -71,7 +71,7 @@ struct helloSwiftApp: App {
                 userInfo: nil
             ),
             UIApplicationShortcutItem(
-                type: "checkCard",
+                type: "checkCardForce",
                 localizedTitle: "打卡信息确认",
                 localizedSubtitle: nil,
                 icon: UIApplicationShortcutIcon(systemImageName: "wallet.pass"),
@@ -92,14 +92,15 @@ struct helloSwiftApp: App {
         case "syncTodo":
             cyberService.syncTodo()
             break
-        case "checkCard":
-            cyberService.checkCard()
+        case "checkCardForce":
+            cyberService.checkCard(isForce: true)
             break
         case "addLog":
             break
         default:
             break
         }
+        AppDelegate.shortcutItem = nil
     }
 }
 

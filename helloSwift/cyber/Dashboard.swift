@@ -26,7 +26,7 @@ struct Dashboard: Codable {
 extension Dashboard {
     static var lastUpdate = Date()
     static func updateWidget(inSeconds inSec: Int64) {
-        print("updating widget call")
+        //print("updating widget call")
         let now = Date()
         if now.timeIntervalSince(lastUpdate) > Double(inSec) {
             lastUpdate = now

@@ -96,7 +96,11 @@ struct CyberHome: View {
             }
             .alert(isPresented: $service.showAlertResult) {
                 Alert(title: Text(""),
-                      message: Text(service.alertInfomation ?? "无结果"))
+                      message: Text(service.alertInfomation ?? "无结果"),
+                      dismissButton: .default(Text("确定"), action: {
+                    service.showAlertResult = false
+                    service.alertInfomation = nil
+                }))
             }
             .fullScreenCover(isPresented: $service.syncTodoNow) {
                 VStack(spacing: 30) {

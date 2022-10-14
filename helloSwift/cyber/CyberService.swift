@@ -78,8 +78,9 @@ class CyberService: ObservableObject {
         var message: String
     }
     
-    func checkCard() {
-        CyberService.loadJSON(from: CyberService.checkCardUrl, for: SimpleMessage.self)
+    func checkCard(isForce:Bool = false) {
+        CyberService.loadJSON(from: isForce ? CyberService.checkCardForce :
+                                CyberService.checkCardUrl, for: SimpleMessage.self)
         { [weak self] data, error in
             guard let self = self else { return }
             if let error = error {
@@ -150,5 +151,6 @@ extension CyberService {
     static let summaryUrl = "cyber/dashboard/summary?day=5"
     static let dashboardUrl = "cyber/dashboard/ioswidget"
     static let checkCardUrl = "cyber/check/now?plainText=false&preferCacheSuccess=true"
+    static let checkCardForce = "cyber/check/now?plainText=false&useCache=false"
     static let syncTodoUrl = "cyber/todo/sync"
 }

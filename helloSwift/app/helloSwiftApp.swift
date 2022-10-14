@@ -13,7 +13,7 @@ import UIKit
 @main
 struct helloSwiftApp: App {
     @StateObject var cyberService = CyberService()
-    //@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var phase
     var body: some Scene {
         WindowGroup {
@@ -34,9 +34,11 @@ struct helloSwiftApp: App {
         .onChange(of: phase) { newValue in
             switch newValue {
             case .active:
+                handleQuickAction()
                 Dashboard.updateWidget(inSeconds: 300)
                 break
             case .background:
+                addDynamicQuickActions()
                 break
             default: break
             }
@@ -58,6 +60,47 @@ struct helloSwiftApp: App {
     //        //req.earliestBeginDate = Date().addingTimeInterval(24 * 3600)
     //        try? BGTaskScheduler.shared.submit(req)
     //    }
+    
+    private func addDynamicQuickActions() {
+        UIApplication.shared.shortcutItems = [
+            UIApplicationShortcutItem(
+                type: "syncTodo",
+                localizedTitle: "同步待办事项",
+                localizedSubtitle: nil,
+                icon: UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath"),
+                userInfo: nil
+            ),
+            UIApplicationShortcutItem(
+                type: "checkCard",
+                localizedTitle: "打卡信息确认",
+                localizedSubtitle: nil,
+                icon: UIApplicationShortcutIcon(systemImageName: "wallet.pass"),
+                userInfo: nil
+            ),
+            UIApplicationShortcutItem(
+                type: "addLog",
+                localizedTitle: "新建项目日志",
+                localizedSubtitle: nil,
+                icon:UIApplicationShortcutIcon(systemImageName: "tray.and.arrow.down")
+            )
+        ]
+    }
+    
+    private func handleQuickAction() {
+        guard let shortcutItem = appDelegate.shortcutItem else { return }
+        switch shortcutItem.type {
+        case "syncTodo":
+            cyberService.syncTodo()
+            break
+        case "checkCard":
+            cyberService.checkCard()
+            break
+        case "addLog":
+            break
+        default:
+            break
+        }
+    }
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -116,4 +159,37 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     //        print("Unknown property")
     //      }
     //    }
+    
+    var shortcutItem: UIApplicationShortcutItem? { AppDelegate.shortcutItem }
+    
+    fileprivate static var shortcutItem: UIApplicationShortcutItem?
+    
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        if let shortcutItem = options.shortcutItem {
+            AppDelegate.shortcutItem = shortcutItem
+        }
+        
+        let sceneConfiguration = UISceneConfiguration(
+            name: "Scene Configuration",
+            sessionRole: connectingSceneSession.role
+        )
+        sceneConfiguration.delegateClass = SceneDelegate.self
+        
+        return sceneConfiguration
+    }
+}
+
+private final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    func windowScene(
+        _ windowScene: UIWindowScene,
+        performActionFor shortcutItem: UIApplicationShortcutItem,
+        completionHandler: @escaping (Bool) -> Void
+    ) {
+        AppDelegate.shortcutItem = shortcutItem
+        completionHandler(true)
+    }
 }

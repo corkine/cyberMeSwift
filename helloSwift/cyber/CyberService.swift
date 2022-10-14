@@ -40,8 +40,9 @@ class CyberService: ObservableObject {
     @Published var gaming = false
     @Published var landing = false
     @Published var readme = false
-    @Published var showCheckCardResult = false
-    var checkCardResult: String?
+    @Published var showAlertResult = false
+    var alertInfomation: String?
+    @Published var syncTodoNow = false
     
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError
@@ -72,22 +73,45 @@ class CyberService: ObservableObject {
         case canNotDecode
     }
     
-    struct CheckCardVO: Codable {
+    struct SimpleMessage: Codable {
         var status: Int
         var message: String
     }
     
     func checkCard() {
-        CyberService.loadJSON(from: CyberService.checkCardUrl, for: CheckCardVO.self)
+        CyberService.loadJSON(from: CyberService.checkCardUrl, for: SimpleMessage.self)
         { [weak self] data, error in
             guard let self = self else { return }
             if let error = error {
-                self.showCheckCardResult = true
-                self.checkCardResult = "打卡失败：\(error)"
+                self.showAlertResult = true
+                self.alertInfomation = "打卡失败：\(error)"
             }
             if let data = data {
-                self.showCheckCardResult = true
-                self.checkCardResult = "\(data.message)"
+                self.showAlertResult = true
+                self.alertInfomation = "\(data.message)"
+            }
+            Dashboard.updateWidget(inSeconds: 0)
+        }
+    }
+    
+    func syncTodo() {
+        syncTodoNow = true
+        CyberService.loadJSON(from: CyberService.syncTodoUrl, for: SimpleMessage.self)
+        { [weak self] data, error in
+            guard let self = self else { return }
+            if let error = error {
+                self.syncTodoNow = false
+                DispatchQueue.main.async {
+                    self.showAlertResult = true
+                    self.alertInfomation = "同步失败：\(error)"
+                }
+            }
+            if let data = data {
+                self.syncTodoNow = false
+                DispatchQueue.main.async {
+                    self.showAlertResult = true
+                    self.alertInfomation = "同步结果：\(data.message)"
+                }
             }
             Dashboard.updateWidget(inSeconds: 0)
         }
@@ -126,4 +150,5 @@ extension CyberService {
     static let summaryUrl = "cyber/dashboard/summary?day=5"
     static let dashboardUrl = "cyber/dashboard/ioswidget"
     static let checkCardUrl = "cyber/check/now?plainText=false&preferCacheSuccess=true"
+    static let syncTodoUrl = "cyber/todo/sync"
 }

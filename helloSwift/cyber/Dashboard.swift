@@ -55,6 +55,7 @@ extension CyberService {
         if dashboard != nil {
             print("fetch dashboard data from bg")
             completion(dashboard, nil)
+            dashboard = nil
         } else {
             guard let url = URL(string: baseUrl + dashboardUrl) else {
                 print("End point is Invalid")

@@ -94,9 +94,16 @@ struct CyberHome: View {
                 .navigationTitle("\(getWeedayFromeDate(date:Date()))")
                 Spacer()
             }
-            .alert(isPresented: $service.showCheckCardResult) {
-                Alert(title: Text("打卡结果"),
-                      message: Text(service.checkCardResult ?? "无结果"))
+            .alert(isPresented: $service.showAlertResult) {
+                Alert(title: Text(""),
+                      message: Text(service.alertInfomation ?? "无结果"))
+            }
+            .fullScreenCover(isPresented: $service.syncTodoNow) {
+                VStack(spacing: 30) {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                    Text("正在同步，请稍后")
+                }
             }
         }
         .onAppear(perform: service.fetchSummary)

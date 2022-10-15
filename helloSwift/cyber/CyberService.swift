@@ -93,6 +93,7 @@ class CyberService: ObservableObject {
                 self.showAlertResult = true
                 self.alertInfomation = "\(data.message)"
             }
+            completed()
         }
     }
     
@@ -109,12 +110,12 @@ class CyberService: ObservableObject {
                     self.alertInfomation = "同步失败：\(error)"
                 }
             }
-            if let data = data {
+            if let _ = data {
                 self.syncTodoNow = false
-                DispatchQueue.main.async {
-                    self.showAlertResult = true
-                    self.alertInfomation = "同步结果：\(data.message)"
-                }
+                //                DispatchQueue.main.async {
+                //                    self.showAlertResult = true
+                //                    self.alertInfomation = "同步结果：\(data.message)"
+                //                }
             }
             completed()
         }

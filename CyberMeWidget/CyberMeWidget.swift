@@ -81,13 +81,16 @@ struct CyberMeWidgetEntryView : View {
         
         return VStack(alignment:.leading) {
             HStack {
-                Text(data.workStatus)
+                Link(data.workStatus,
+                     destination: URL(string: "cyberme://checkCardForce")!)
                     .padding(.trailing, -5)
                 VStack(alignment:.leading) {
-                    Text("我的一天")
-                        .kerning(0.6)
-                        .bold()
-                        .font(.system(size: basic))
+                    Link(destination: URL(string: "cyberme://syncTodo")!) {
+                        Text("我的一天")
+                            .kerning(0.6)
+                            .bold()
+                            .font(.system(size: basic))
+                    }
                     Text(dateStr)
                         .font(.system(size: basic - 3))
                 }
@@ -185,7 +188,7 @@ struct CyberMeWidgetEntryView : View {
         .padding(.all, 14)
         .background(Color("BackgroundColor"))
         .foregroundColor(.white)
-        .widgetURL(URL(string: "cyberme://checkCardIfNeed"))
+        //.widgetURL(URL(string: "cyberme://checkCardIfNeed"))
     }
 }
 

@@ -28,6 +28,17 @@ struct helloSwiftApp: App {
                             }
                         }
                         break
+                    case "cyberme://checkCardForce":
+                        cyberService.checkCard(isForce:true) {
+                            Dashboard.updateWidget(inSeconds: 0)
+                        }
+                        break
+                    case "cyberme://syncTodo":
+                        cyberService.syncTodo {
+                            cyberService.fetchSummary()
+                            Dashboard.updateWidget(inSeconds: 0)
+                        }
+                        break
                     default:
                         print("no handler for \(url)")
                     }

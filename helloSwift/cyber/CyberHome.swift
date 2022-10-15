@@ -110,7 +110,9 @@ struct CyberHome: View {
                 }
             }
         }
-        .onAppear(perform: service.fetchSummary)
+        .onAppear {
+            service.fetchSummary()
+        }
         
     }
 }

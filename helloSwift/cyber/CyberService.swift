@@ -47,8 +47,10 @@ class CyberService: ObservableObject {
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError
     }
-
+    
     func fetchSummary() {
+        if syncTodoNow { return }
+        print("fetching summary")
         guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {
             print("End point is Invalid")
             return
@@ -78,7 +80,7 @@ class CyberService: ObservableObject {
         var message: String
     }
     
-    func checkCard(isForce:Bool = false) {
+    func checkCard(isForce:Bool = false,completed:@escaping ()->Void = {}) {
         CyberService.loadJSON(from: isForce ? CyberService.checkCardForce :
                                 CyberService.checkCardUrl, for: SimpleMessage.self)
         { [weak self] data, error in
@@ -91,11 +93,11 @@ class CyberService: ObservableObject {
                 self.showAlertResult = true
                 self.alertInfomation = "\(data.message)"
             }
-            Dashboard.updateWidget(inSeconds: 0)
         }
     }
     
-    func syncTodo() {
+    func syncTodo(completed:@escaping ()->Void = {}) {
+        print("syncing todo")
         syncTodoNow = true
         CyberService.loadJSON(from: CyberService.syncTodoUrl, for: SimpleMessage.self)
         { [weak self] data, error in
@@ -114,7 +116,7 @@ class CyberService: ObservableObject {
                     self.alertInfomation = "同步结果：\(data.message)"
                 }
             }
-            Dashboard.updateWidget(inSeconds: 0)
+            completed()
         }
     }
     

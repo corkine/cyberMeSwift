@@ -23,7 +23,9 @@ struct helloSwiftApp: App {
                     switch url.description {
                     case "cyberme://checkCardIfNeed":
                         if TimeUtil.needCheckCard {
-                            cyberService.checkCard()
+                            cyberService.checkCard {
+                                Dashboard.updateWidget(inSeconds: 0)
+                            }
                         }
                         break
                     default:
@@ -90,10 +92,15 @@ struct helloSwiftApp: App {
         guard let shortcutItem = appDelegate.shortcutItem else { return }
         switch shortcutItem.type {
         case "syncTodo":
-            cyberService.syncTodo()
+            cyberService.syncTodo {
+                cyberService.fetchSummary()
+                Dashboard.updateWidget(inSeconds: 0)
+            }
             break
         case "checkCardForce":
-            cyberService.checkCard(isForce: true)
+            cyberService.checkCard(isForce: true) {
+                Dashboard.updateWidget(inSeconds: 0)
+            }
             break
         case "addLog":
             break

@@ -39,6 +39,9 @@ struct helloSwiftApp: App {
                             Dashboard.updateWidget(inSeconds: 0)
                         }
                         break
+                    case "cyberme://syncWidget":
+                        Dashboard.updateWidget(inSeconds: 0)
+                        break
                     default:
                         print("no handler for \(url)")
                     }

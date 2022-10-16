@@ -12,6 +12,7 @@ struct Dashboard: Codable {
     var workStatus:String
     var cardCheck:[String]
     var weatherInfo: String?
+    var tempInfo: Temp?
     var todo:[Todo]
     var updateAt: Int64
     var needDiaryReport: Bool
@@ -20,6 +21,12 @@ struct Dashboard: Codable {
         var title:String
         var isFinished:Bool
         var id:String { title }
+    }
+    struct Temp: Codable {
+        var high: Double
+        var low: Double
+        var diffHigh: Double?
+        var diffLow: Double?
     }
 }
 
@@ -38,7 +45,7 @@ extension Dashboard {
                            Todo(title: "提醒事项2", isFinished: false),
                            Todo(title: "提醒事项3", isFinished: true),
                            Todo(title: "提醒事项4", isFinished: false)]
-    static let demo = Dashboard(workStatus: "🟡", cardCheck: ["8:20","17:31"], weatherInfo: "",
+    static let demo = Dashboard(workStatus: "🟡", cardCheck: ["8:20","17:31"], weatherInfo: "", tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
                                 todo: demoTodo, updateAt:
                                     Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
     static func failed(error:Error?) -> Dashboard {

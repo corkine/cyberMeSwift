@@ -133,8 +133,30 @@ struct CyberMeWidgetEntryView : View {
             VStack(alignment:.leading) {
                 if let weather = data.weatherInfo,
                    !weather.isEmpty {
-                    Text(weather)
-                        .font(.system(size: basic))
+                    if let temp = data.tempInfo {
+                        HStack(alignment:.bottom, spacing: 0) {
+                            Text("↑\(Int(temp.high))")
+                                .font(.system(size: basic))
+                            if temp.diffHigh != nil {
+                                Text(String(format: "%+.0f", temp.diffHigh!))
+                                    .font(.system(size: basic - 2))
+                                    .opacity(0.5)
+                            }
+                            Text("↓\(Int(temp.low))")
+                                .font(.system(size: basic))
+                                .padding(.leading, 1)
+                            if temp.diffLow != nil {
+                                Text(String(format: "%+.0f", temp.diffLow!))
+                                    .font(.system(size: basic - 2))
+                                    .opacity(0.5)
+                            }
+                            Text(" " + weather)
+                                .font(.system(size: basic))
+                        }
+                    } else {
+                        Text(weather)
+                            .font(.system(size: basic))
+                    }
                     Divider()
                         .background(Color.white)
                         .opacity(0.4)
@@ -188,7 +210,7 @@ struct CyberMeWidgetEntryView : View {
         .padding(.all, 14)
         .background(Color("BackgroundColor"))
         .foregroundColor(.white)
-        //.widgetURL(URL(string: "cyberme://checkCardIfNeed"))
+        .widgetURL(URL(string: "cyberme://syncWidget"))
     }
 }
 

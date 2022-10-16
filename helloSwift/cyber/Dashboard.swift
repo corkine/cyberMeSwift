@@ -13,6 +13,7 @@ struct Dashboard: Codable {
     var cardCheck:[String]
     var weatherInfo: String?
     var tempInfo: Temp?
+    var tempFutureInfo: Temp?
     var todo:[Todo]
     var updateAt: Int64
     var needDiaryReport: Bool

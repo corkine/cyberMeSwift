@@ -137,7 +137,7 @@ struct CyberMeWidgetEntryView : View {
                         HStack(alignment:.bottom, spacing: 0) {
                             Text("↑\(Int(temp.high))")
                                 .font(.system(size: basic))
-                            if temp.diffHigh != nil {
+                            if temp.diffHigh != nil && Int(temp.diffHigh!) != 0 {
                                 Text(String(format: "%+.0f", temp.diffHigh!))
                                     .font(.system(size: basic - 2))
                                     .opacity(0.5)
@@ -145,7 +145,7 @@ struct CyberMeWidgetEntryView : View {
                             Text("↓\(Int(temp.low))")
                                 .font(.system(size: basic))
                                 .padding(.leading, 1)
-                            if temp.diffLow != nil {
+                            if temp.diffLow != nil && Int(temp.diffLow!) != 0 {
                                 Text(String(format: "%+.0f", temp.diffLow!))
                                     .font(.system(size: basic - 2))
                                     .opacity(0.5)
@@ -155,7 +155,32 @@ struct CyberMeWidgetEntryView : View {
                         }
                     } else {
                         Text(weather)
+                            .lineLimit(1)
                             .font(.system(size: basic))
+                    }
+                    Divider()
+                        .background(Color.white)
+                        .opacity(0.4)
+                        .padding(.top, -5)
+                        .padding(.bottom, -15)
+                } else if let temp = data.tempFutureInfo,
+                          data.weatherInfo == nil {
+                    HStack(alignment:.bottom, spacing: 0) {
+                        Text("↑\(Int(temp.high))")
+                            .font(.system(size: basic))
+                        if temp.diffHigh != nil && Int(temp.diffHigh!) != 0 {
+                            Text(String(format: "%+.0f", temp.diffHigh!))
+                                .font(.system(size: basic - 2))
+                                .opacity(0.5)
+                        }
+                        Text("↓\(Int(temp.low))")
+                            .font(.system(size: basic))
+                            .padding(.leading, 1)
+                        if temp.diffLow != nil && Int(temp.diffLow!) != 0 {
+                            Text(String(format: "%+.0f", temp.diffLow!))
+                                .font(.system(size: basic - 2))
+                                .opacity(0.5)
+                        }
                     }
                     Divider()
                         .background(Color.white)

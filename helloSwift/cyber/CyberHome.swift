@@ -94,11 +94,10 @@ struct CyberHome: View {
                 .navigationTitle("\(getWeedayFromeDate(date:Date()))")
                 Spacer()
             }
-            .alert(isPresented: $service.showAlertResult) {
+            .alert(isPresented: $service.showAlert) {
                 Alert(title: Text(""),
                       message: Text(service.alertInfomation ?? "无结果"),
                       dismissButton: .default(Text("确定"), action: {
-                    service.showAlertResult = false
                     service.alertInfomation = nil
                 }))
             }

@@ -36,13 +36,21 @@ struct Summary: Codable, Hashable {
 
 //@MainActor
 class CyberService: ObservableObject {
+    var subs = Set<AnyCancellable>()
     @Published var summaryData = Summary.defaultSummary
     @Published var gaming = false
     @Published var landing = false
     @Published var readme = false
-    @Published var showAlertResult = false
-    var alertInfomation: String?
+    @Published var alertInfomation: String?
+    var showAlert = false
     @Published var syncTodoNow = false
+    
+    init() {
+        $alertInfomation
+            .map { info in info != nil }
+            .sink { self.showAlert = $0 }
+            .store(in: &subs)
+    }
     
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError
@@ -86,11 +94,9 @@ class CyberService: ObservableObject {
         { [weak self] data, error in
             guard let self = self else { return }
             if let error = error {
-                self.showAlertResult = true
                 self.alertInfomation = "打卡失败：\(error)"
             }
             if let data = data {
-                self.showAlertResult = true
                 self.alertInfomation = "\(data.message)"
             }
             completed()
@@ -106,7 +112,6 @@ class CyberService: ObservableObject {
             if let error = error {
                 self.syncTodoNow = false
                 DispatchQueue.main.async {
-                    self.showAlertResult = true
                     self.alertInfomation = "同步失败：\(error)"
                 }
             }

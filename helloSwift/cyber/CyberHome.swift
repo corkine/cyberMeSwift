@@ -62,12 +62,18 @@ struct ProfileView: View {
                     service.readme = true
                 }
             }
+            Button("Clear Token") {
+                service.clearLoginToken()
+            }
         }
     }
 }
 
 struct CyberHome: View {
     @EnvironmentObject var service:CyberService
+    @State var username:String = ""
+    @State var password:String = ""
+    @State var showLogin = false
     
     var body: some View {
         ScrollView(.vertical,showsIndicators:false) {
@@ -82,7 +88,7 @@ struct CyberHome: View {
                     Label("我的日记", systemImage: "book.closed")
                         .font(.title2)
                         .foregroundColor(Color.blue)
-
+                    
                     Label("本周计划", systemImage: "books.vertical")
                         .font(.title2)
                         .foregroundColor(Color.blue)
@@ -106,6 +112,19 @@ struct CyberHome: View {
                     ProgressView()
                         .progressViewStyle(.circular)
                     Text("正在同步，请稍后")
+                }
+            }
+            .sheet(isPresented: $service.showLogin) {
+                Form {
+                    TextField("用户名", text: $username)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                    SecureField("密码", text: $password)
+                        .textContentType(.password)
+                        .autocapitalization(.none)
+                    Button("确定") {
+                        service.setLoginToken(user: username, pass: password)
+                    }
                 }
             }
         }
@@ -154,26 +173,26 @@ func getDate(off:Int = 0) -> String {
 }
 
 func getWeedayFromeDate(date: Date) -> String {
- let calendar = Calendar.current
- let dateComponets = calendar.dateComponents([Calendar.Component.year,Calendar.Component.month,Calendar.Component.weekday,Calendar.Component.day], from: date)
-     //获取到今天是周几 1(星期天) 2(星期一) 3(星期二) 4(星期三) 5(星期四) 6(星期五) 7(星期六)
-     let weekDay = dateComponets.weekday
-     switch weekDay {
-       case 1:
-         return "周日"
-       case 2:
-         return "周一"
-       case 3:
-         return "周二"
-       case 4:
-         return "周三"
-       case 5:
-         return "周四"
-       case 6:
-         return "周五"
-       case 7:
-         return "周六"
-       default:
-         return ""
-      }
+    let calendar = Calendar.current
+    let dateComponets = calendar.dateComponents([Calendar.Component.year,Calendar.Component.month,Calendar.Component.weekday,Calendar.Component.day], from: date)
+    //获取到今天是周几 1(星期天) 2(星期一) 3(星期二) 4(星期三) 5(星期四) 6(星期五) 7(星期六)
+    let weekDay = dateComponets.weekday
+    switch weekDay {
+    case 1:
+        return "周日"
+    case 2:
+        return "周一"
+    case 3:
+        return "周二"
+    case 4:
+        return "周三"
+    case 5:
+        return "周四"
+    case 6:
+        return "周五"
+    case 7:
+        return "周六"
+    default:
+        return ""
+    }
 }

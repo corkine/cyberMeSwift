@@ -60,6 +60,8 @@ extension CyberService {
     static var dashboard: Dashboard?
     
     static func fetchDashboard(completion:@escaping (Dashboard?, Error?) -> Void) {
+        let token = UserDefaults(suiteName: "group.cyberme.share")!
+            .string(forKey: "cyber-token") ?? ""
         if dashboard != nil {
             print("fetch dashboard data from bg")
             completion(dashboard, nil)
@@ -71,14 +73,14 @@ extension CyberService {
             }
             var request = URLRequest(url: url)
             print("requesting for \(request)")
-            request.setValue("Basic \(self.demoToken)", forHTTPHeaderField: "Authorization")
+            request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data {
                     if let response = try? JSONDecoder().decode(Dashboard.self, from: data) {
-                        print("decoding from \(data)")
+                        //print("decoding from \(data)")
                         completion(response, nil)
                     } else {
-                        print("decoding from \(data) failed")
+                        //print("decoding from \(data) failed")
                         completion(nil, error)
                     }
                 }
@@ -94,6 +96,9 @@ class BackgroundManager : NSObject, URLSessionDelegate, URLSessionDownloadDelega
     
     var completionHandler: (() -> Void)? = nil
     
+    var token = UserDefaults(suiteName: "group.cyberme.share")!
+        .string(forKey: "cyber-token") ?? ""
+    
     lazy var urlSession: URLSession = {
         let config = URLSessionConfiguration.background(withIdentifier: "CyberMeWidget")
         config.sessionSendsLaunchEvents = true
@@ -107,7 +112,7 @@ class BackgroundManager : NSObject, URLSessionDelegate, URLSessionDownloadDelega
         }
         var request = URLRequest(url: url)
         print("requesting for \(request)")
-        request.setValue("Basic \(CyberService.demoToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
         let task = urlSession.downloadTask(with: request)
         task.resume()
     }

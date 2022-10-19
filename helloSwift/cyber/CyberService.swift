@@ -36,22 +36,45 @@ struct Summary: Codable, Hashable {
 
 //@MainActor
 class CyberService: ObservableObject {
+    
     var subs = Set<AnyCancellable>()
+    
+    let userDefault = UserDefaults(suiteName: "group.cyberme.share")!
+    
     @Published var summaryData = Summary.defaultSummary
     @Published var gaming = false
     @Published var landing = false
     @Published var readme = false
+    
     @Published var alertInfomation: String?
     var showAlert = false
+    
     @Published var syncTodoNow = false
+    
+    static var token: String = ""
+    var token: String = "" {
+        didSet {
+            CyberService.token = self.token
+            if token != "" {
+                self.fetchSummary()
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        }
+    }
+    @Published var showLogin = false
     
     init() {
         $alertInfomation
             .map { info in info != nil }
             .sink { self.showAlert = $0 }
             .store(in: &subs)
+        
+        if let token = getLoginToken() {
+            self.token = token
+            CyberService.token = token
+        }
     }
-    
+        
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError
     }
@@ -64,7 +87,7 @@ class CyberService: ObservableObject {
             return
         }
         var request = URLRequest(url: url)
-        request.setValue("Basic \(CyberService.demoToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(CyberService.token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 if let response = try? JSONDecoder().decode(Summary.self, from: data) {
@@ -117,10 +140,6 @@ class CyberService: ObservableObject {
             }
             if let _ = data {
                 self.syncTodoNow = false
-                //                DispatchQueue.main.async {
-                //                    self.showAlertResult = true
-                //                    self.alertInfomation = "同步结果：\(data.message)"
-                //                }
             }
             completed()
         }
@@ -131,7 +150,7 @@ class CyberService: ObservableObject {
       guard let url = URL(string: baseUrl + urlString) else { return }
       //print("requesting for \(baseUrl + urlString)")
       var request = URLRequest(url: url)
-      request.setValue("Basic \(CyberService.demoToken)", forHTTPHeaderField: "Authorization")
+      request.setValue("Basic \(CyberService.token)", forHTTPHeaderField: "Authorization")
       URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 //print("response is \(String(describing: String(data: data, encoding: .utf8)))")
@@ -152,13 +171,4 @@ class CyberService: ObservableObject {
             }
         }.resume()
     }
-}
-
-extension CyberService {
-    static let baseUrl = "https://cyber.mazhangjing.com/"
-    static let summaryUrl = "cyber/dashboard/summary?day=5"
-    static let dashboardUrl = "cyber/dashboard/ioswidget"
-    static let checkCardUrl = "cyber/check/now?plainText=false&preferCacheSuccess=true"
-    static let checkCardForce = "cyber/check/now?plainText=false&useCache=false"
-    static let syncTodoUrl = "cyber/todo/sync"
 }

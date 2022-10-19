@@ -7,17 +7,19 @@
 		<key>CyberMeWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>MacLandmarks.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
 			<integer>2</integer>
+		</dict>
+		<key>MacLandmarks.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>0</integer>
 		</dict>
 		<key>helloSwift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -38,6 +40,11 @@
 			<true/>
 		</dict>
 		<key>19CE75A028D22D5900AF8AFF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>19CE75F728D23A5F00AF8AFF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

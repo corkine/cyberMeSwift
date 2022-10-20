@@ -123,8 +123,9 @@ struct CyberMeWidgetEntryView : View {
                             .padding(.horizontal, 6)
                             .padding(.vertical, 3)
                         }
-                    }.fixedSize(horizontal: true, vertical: true)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    .fixedSize(horizontal: true, vertical: true)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                    
             }
@@ -165,7 +166,7 @@ struct CyberMeWidgetEntryView : View {
                         .padding(.bottom, -15)
                 } else if let temp = data.tempFutureInfo,
                           data.weatherInfo == nil {
-                    HStack(alignment:.bottom, spacing: 0) {
+                    HStack(alignment:.top, spacing: 0) {
                         Text("↑\(Int(temp.high))")
                             .font(.system(size: basic))
                         if temp.diffHigh != nil && Int(temp.diffHigh!) != 0 {

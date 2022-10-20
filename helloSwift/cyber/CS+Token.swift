@@ -29,7 +29,7 @@ extension CyberService {
     func getLoginToken() -> String? {
         let res = userDefault.string(forKey: "cyber-token")
         if res == nil {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.showLogin = true
             }
         }

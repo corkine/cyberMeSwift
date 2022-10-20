@@ -47,14 +47,11 @@ class CyberService: ObservableObject {
     @Published var readme = false
     
     @Published var alertInfomation: String?
-    var showAlert = false
     
     @Published var syncTodoNow = false
     
-    static var token: String = ""
     var token: String = "" {
         didSet {
-            CyberService.token = self.token
             if token != "" {
                 self.fetchSummary()
                 WidgetCenter.shared.reloadAllTimelines()
@@ -64,17 +61,9 @@ class CyberService: ObservableObject {
     @Published var showLogin = false
     
     init() {
-        $alertInfomation
-            .map { info in info != nil }
-            .sink { self.showAlert = $0 }
-            .store(in: &subs)
-        
-        if let token = getLoginToken() {
-            self.token = token
-            CyberService.token = token
-        }
+        self.token = getLoginToken() ?? ""
     }
-        
+    
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError
     }
@@ -87,7 +76,7 @@ class CyberService: ObservableObject {
             return
         }
         var request = URLRequest(url: url)
-        request.setValue("Basic \(CyberService.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 if let response = try? JSONDecoder().decode(Summary.self, from: data) {
@@ -112,7 +101,7 @@ class CyberService: ObservableObject {
     }
     
     func checkCard(isForce:Bool = false,completed:@escaping ()->Void = {}) {
-        CyberService.loadJSON(from: isForce ? CyberService.checkCardForce :
+        loadJSON(from: isForce ? CyberService.checkCardForce :
                                 CyberService.checkCardUrl, for: SimpleMessage.self)
         { [weak self] data, error in
             guard let self = self else { return }
@@ -129,7 +118,7 @@ class CyberService: ObservableObject {
     func syncTodo(completed:@escaping ()->Void = {}) {
         print("syncing todo")
         syncTodoNow = true
-        CyberService.loadJSON(from: CyberService.syncTodoUrl, for: SimpleMessage.self)
+        loadJSON(from: CyberService.syncTodoUrl, for: SimpleMessage.self)
         { [weak self] data, error in
             guard let self = self else { return }
             if let error = error {
@@ -145,13 +134,13 @@ class CyberService: ObservableObject {
         }
     }
     
-    static func loadJSON<T: Codable>(from urlString: String, for type: T.Type,
-                                     action:@escaping (T?,Error?) -> Void) {
-      guard let url = URL(string: baseUrl + urlString) else { return }
-      //print("requesting for \(baseUrl + urlString)")
-      var request = URLRequest(url: url)
-      request.setValue("Basic \(CyberService.token)", forHTTPHeaderField: "Authorization")
-      URLSession.shared.dataTask(with: request) { data, response, error in
+    func loadJSON<T: Codable>(from urlString: String, for type: T.Type,
+                              action:@escaping (T?,Error?) -> Void) {
+        guard let url = URL(string: CyberService.baseUrl + urlString) else { return }
+        //print("requesting for \(baseUrl + urlString)")
+        var request = URLRequest(url: url)
+        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 //print("response is \(String(describing: String(data: data, encoding: .utf8)))")
                 if let response = try? JSONDecoder().decode(T.self, from: data) {

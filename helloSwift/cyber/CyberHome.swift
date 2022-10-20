@@ -74,6 +74,7 @@ struct CyberHome: View {
     @State var username:String = ""
     @State var password:String = ""
     @State var showLogin = false
+    @State var showAlert = false
     
     var body: some View {
         ScrollView(.vertical,showsIndicators:false) {
@@ -100,7 +101,10 @@ struct CyberHome: View {
                 .navigationTitle("\(getWeedayFromeDate(date:Date()))")
                 Spacer()
             }
-            .alert(isPresented: $service.showAlert) {
+            .onReceive(service.$alertInfomation, perform: { info in
+                if info != nil { showAlert = true }
+            })
+            .alert(isPresented: $showAlert) {
                 Alert(title: Text(""),
                       message: Text(service.alertInfomation ?? "无结果"),
                       dismissButton: .default(Text("确定"), action: {
@@ -108,7 +112,7 @@ struct CyberHome: View {
                 }))
             }
             .fullScreenCover(isPresented: $service.syncTodoNow) {
-                VStack(spacing: 30) {
+                VStack(spacing: 20) {
                     ProgressView()
                         .progressViewStyle(.circular)
                     Text("正在同步，请稍后")

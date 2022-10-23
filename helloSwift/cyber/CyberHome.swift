@@ -44,28 +44,64 @@ struct CyberNav: View {
 }
 
 struct ProfileView: View {
+    @State private var widgetBG: WidgetBackground = .mountain
+    
     @EnvironmentObject var service:CyberService
     var body: some View {
-        VStack(spacing: 15) {
-            Button("BullsEye Game") {
-                withAnimation {
-                    service.gaming = true
+        NavigationView {
+            VStack(alignment: .leading, spacing: 15) {
+                Text("示例应用")
+                Button("BullsEye Game") {
+                    withAnimation {
+                        service.gaming = true
+                    }
                 }
-            }
-            Button("Landmarks") {
-                withAnimation {
-                    service.landing = true
+                Button("Landmarks") {
+                    withAnimation {
+                        service.landing = true
+                    }
                 }
-            }
-            Button("ReadMe") {
-                withAnimation {
-                    service.readme = true
+                Button("ReadMe") {
+                    withAnimation {
+                        service.readme = true
+                    }
                 }
+                Divider()
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading) {
+                        Text("Widget 背景")
+                        Picker("Widget 背景", selection: $widgetBG) {
+                            Text("蓝色").tag(WidgetBackground.blue)
+                            Text("云南群山").tag(WidgetBackground.mountain)
+                        }
+                        .pickerStyle(.segmented)
+                        .onChange(of: widgetBG) { newValue in
+                            print("Setting to \(newValue)")
+                            service.userDefault.set(newValue.rawValue, forKey: "widgetBG")
+                            Dashboard.updateWidget(inSeconds: 0)
+                        }
+                    }
+                    Spacer()
+                }
+                Button("清空凭证") {
+                    service.clearLoginToken()
+                }
+                Button("清空设置") {
+                    service.clearSettings()
+                }
+                Spacer()
             }
-            Button("Clear Token") {
-                service.clearLoginToken()
-            }
+            .padding(25)
+            .navigationTitle("设置")
         }
+    }
+}
+
+struct ProfileView_Previews: PreviewProvider {
+    static var service = CyberService()
+    static var previews: some View {
+        ProfileView()
+            .environmentObject(service)
     }
 }
 
@@ -75,6 +111,9 @@ struct CyberHome: View {
     @State var password:String = ""
     @State var showLogin = false
     @State var showAlert = false
+    @State var healthURL = ""
+    @State var hcmShortcutName = ""
+    @State var syncHealthShortcutName = ""
     
     var body: some View {
         ScrollView(.vertical,showsIndicators:false) {
@@ -128,6 +167,25 @@ struct CyberHome: View {
                         .autocapitalization(.none)
                     Button("确定") {
                         service.setLoginToken(user: username, pass: password)
+                    }
+                }
+            }
+            // TODO: 增加 Widget 跳转 URLScheme 的设置
+            .sheet(isPresented: $service.showSettings) {
+                Form {
+                    TextField("健康码 URLScheme", text: $healthURL)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                    TextField("HCM 打卡快捷指令名称", text: $hcmShortcutName)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                    TextField("锻炼信息同步快捷指令名称", text: $syncHealthShortcutName)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                    Button("确定") {
+                        service.setSettings(["healthURL":healthURL,
+                                             "hcmShortcutName":hcmShortcutName,
+                                             "syncHealthShortcutName":syncHealthShortcutName])
                     }
                 }
             }

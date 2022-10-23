@@ -60,8 +60,16 @@ class CyberService: ObservableObject {
     }
     @Published var showLogin = false
     
+    var settings: [String:String] = [:] {
+        didSet {
+            print("settings now set to \(settings)")
+        }
+    }
+    @Published var showSettings = false
+    
     init() {
         self.token = getLoginToken() ?? ""
+        self.settings = getSettings() ?? [:]
     }
     
     enum FetchError: Error {

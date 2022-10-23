@@ -53,4 +53,24 @@ extension CyberService {
         userDefault.removeObject(forKey: "cyber-token")
         showLogin = true
     }
+    
+    func setSettings(_ data: [String:String]) {
+        userDefault.set(data, forKey: "settings")
+        showSettings = false
+    }
+    
+    func clearSettings() {
+        userDefault.removeObject(forKey: "settings")
+        showSettings = true
+    }
+    
+    func getSettings() -> [String:String]? {
+        let res = userDefault.dictionary(forKey: "settings")
+        if res == nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.showSettings = true
+            }
+        }
+        return res as? [String:String]
+    }
 }

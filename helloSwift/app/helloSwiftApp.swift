@@ -33,6 +33,22 @@ struct helloSwiftApp: App {
                             Dashboard.updateWidget(inSeconds: 0)
                         }
                         break
+                    case "cyberme://checkCardHCM":
+                        if let name = cyberService.settings["hcmShortcutName"], name != "" {
+                            let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!
+                            UIApplication.shared.open(url)
+                        } else {
+                            cyberService.alertInfomation = "请设置云上协同打卡的捷径名称（英文）"
+                        }
+                        //等待一会儿后台强制同步 HCM 并更新 Widget
+                        /*DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            print("run after check card hcm")
+                            cyberService.checkCard(isForce: true) {
+                                print("check card finished")
+                                Dashboard.updateWidget(inSeconds: 0)
+                            }
+                        }*/
+                        break
                     case "cyberme://syncTodo":
                         cyberService.syncTodo {
                             cyberService.fetchSummary()
@@ -43,8 +59,23 @@ struct helloSwiftApp: App {
                         Dashboard.updateWidget(inSeconds: 0)
                         break
                     case "cyberme://healthcard":
-                        let url = URL(string: "alipay://platformapi/startapp?appId=2021001132656455")!
-                        UIApplication.shared.open(url)
+                        if let name = cyberService.settings["healthURL"], name != "" {
+                            let url = URL(string: name)!
+                            UIApplication.shared.open(url)
+                        } else {
+                            let url = URL(string: "alipay://platformapi/startapp?appId=2021001132656455")!
+                            UIApplication.shared.open(url)
+                        }
+                        break
+                    case "cyberme://uploadHealthData":
+                        if let name = cyberService.settings["syncHealthShortcutName"],
+                               name != "" {
+                            let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!
+                            UIApplication.shared.open(url)
+                        } else {
+                            cyberService.alertInfomation = "请设置健身记录上传的捷径名称（英文）"
+                        }
+                        break
                     default:
                         print("no handler for \(url)")
                     }

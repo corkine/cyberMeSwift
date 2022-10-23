@@ -8,8 +8,14 @@
 import Foundation
 import WidgetKit
 
+enum WidgetBackground: String, CaseIterable, Identifiable {
+    case blue, mountain
+    var id: Self { self }
+}
+
 struct Dashboard: Codable {
     var workStatus:String
+    var offWork:Bool
     var cardCheck:[String]
     var weatherInfo: String?
     var tempInfo: Temp?
@@ -61,11 +67,11 @@ extension Dashboard {
                            Todo(title: "提醒事项2", isFinished: false),
                            Todo(title: "提醒事项3", isFinished: true),
                            Todo(title: "提醒事项4", isFinished: false)]
-    static let demo = Dashboard(workStatus: "🟡", cardCheck: ["8:20","17:31"], weatherInfo: "", tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
+    static let demo = Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "", tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
                                 todo: demoTodo, updateAt:
                                     Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
     static func failed(error:Error?) -> Dashboard {
-        Dashboard(workStatus: "🟡", cardCheck: ["8:20","17:31"], weatherInfo: "请求失败：\(String(describing: error))",
+        Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "请求失败：\(String(describing: error))",
                   todo: demoTodo, updateAt:
                                         Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
     }

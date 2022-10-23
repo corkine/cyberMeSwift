@@ -14,3 +14,14 @@ enum TimeUtil {
         return (hour >= 7 && hour < 9) || (hour >= 17 && hour < 22)
     }
 }
+
+extension Date {
+    var weekday: Int {
+        let res = Calendar.current.component(.weekday, from: self)
+        if res == 1 { return 7 }
+        else { return res - 1 }
+    }
+    var hour: Int {
+        Calendar.current.component(.hour, from: self)
+    }
+}

@@ -100,19 +100,33 @@ struct CyberMeWidgetEntryView : View {
     /// 暂时改为每天显示，除了晚上 8 点后
     var needShowAcidResult: Bool {
         let now = Date()
-        if Calendar.current.component(.hour, from: now) <= 20 {
+        if now.hour <= 20 {
             return true
         }
-        //        if Calendar.current.component(.weekday, from: now) < 6 {
-        //            let hour = Calendar.current.component(.hour, from: now)
+        //        if now.weekday < 6 {
+        //            let hour = now.hour
         //            return hour >= 8 && hour < 9
         //        }
         return false
     }
+    
+    /// 如果工作日没有打卡或者是周六 8:00 - 20:00，则显示
+    func needHCMCard(_ data: Dashboard) -> Bool {
+        let now = Date()
+        if now.weekday >= 6 {
+            let hour = now.hour
+            return hour >= 8 && hour <= 20
+        }
+        if !data.offWork { return true }
+        return false
+    }
+
 
     var body: some View {
         let data = entry.dashboard
         let needFitness = needWarnFitness(data)
+        let bg = WidgetBackground(rawValue: UserDefaults(suiteName: "group.cyberme.share")!
+            .string(forKey: "widgetBG") ?? "mountain")
         
         return VStack(alignment:.leading) {
             HStack {
@@ -144,7 +158,9 @@ struct CyberMeWidgetEntryView : View {
                 } else if data.needDiaryReport {
                     alert("今日日报")
                 } else {
-                    alert("形体之山")
+                    Link(destination: URL(string: "cyberme://uploadHealthData")!) {
+                        alert("形体之山")
+                    }
                 }
                 // MARK: 顶部打卡事件信息
                 if !data.cardCheck.isEmpty {
@@ -170,6 +186,7 @@ struct CyberMeWidgetEntryView : View {
                     }
                     .fixedSize(horizontal: true, vertical: true)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.leading, -2)
                 }
                    
             }
@@ -263,23 +280,22 @@ struct CyberMeWidgetEntryView : View {
                         .kerning(0.1)
                         .bold()
                         .padding(.trailing, 3)
-//                    if TimeUtil.needCheckCard {
-//                        Text("HCM")
-//                            .kerning(-1)
-//                            .bold()
-//                            .opacity(1)
-//                            .padding(.trailing, 3)
-//                    } else {
-//                        Text("GRAPH")
-//                            .kerning(-1)
-//                            .bold()
-//                    }
-                    if true {
+                    if needHCMCard(data) {
+                        Link(destination: URL(string: "cyberme://checkCardHCM")!) {
+                            Text("HCM打卡")
+                                .kerning(0)
+                                .bold()
+                                .opacity(1)
+                                //.padding(.leading, 3)
+                        }
+                    }
+                    if needShowAcidResult {
                         Link(destination: URL(string: "cyberme://healthcard")!) {
                             Text("健康码")
                                 .kerning(0)
                                 .bold()
                                 .opacity(1)
+                                .padding(.leading, 3)
                         }
                     }
                 }
@@ -288,7 +304,11 @@ struct CyberMeWidgetEntryView : View {
             }
         }
         .padding(.all, 14)
-        .background(Color("BackgroundColor"))
+        .background(bg == .mountain ? Image("mountain")
+            .resizable()
+            .offset(y:-50)
+            .scaledToFill() : nil)
+        .background(bg == .mountain ? Color.clear : Color("BackgroundColor"))
         .foregroundColor(.white)
         .widgetURL(URL(string: "cyberme://syncWidget"))
     }
@@ -304,6 +324,7 @@ struct CyberMeWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             CyberMeWidgetEntryView(entry: entry)
         }
+        .supportedFamilies([.systemMedium])
         .configurationDisplayName("CyberMe")
         .description("智能的提供你最关注的信息")
         .onBackgroundURLSessionEvents { (sessionIdentifier, completion) in

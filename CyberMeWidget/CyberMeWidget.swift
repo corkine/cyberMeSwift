@@ -157,7 +157,7 @@ struct CyberMeWidgetEntryView : View {
                     }
                 } else if data.needDiaryReport {
                     alert("今日日报")
-                } else {
+                } else if needFitness {
                     Link(destination: URL(string: "cyberme://uploadHealthData")!) {
                         alert("形体之山")
                     }

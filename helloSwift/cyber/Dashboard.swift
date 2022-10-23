@@ -14,6 +14,7 @@ struct Dashboard: Codable {
     var weatherInfo: String?
     var tempInfo: Temp?
     var tempFutureInfo: Temp?
+    var fitnessInfo: Fitness?
     var todo:[Todo]
     var updateAt: Int64
     var needDiaryReport: Bool
@@ -28,6 +29,20 @@ struct Dashboard: Codable {
         var low: Double
         var diffHigh: Double?
         var diffLow: Double?
+    }
+    struct Fitness: Codable {
+        var active: Double
+        var rest: Double
+        var diet: Double
+        var goalActive: Double
+        var goalCut: Double
+        enum CodingKeys: String, CodingKey {
+            case active
+            case rest
+            case diet
+            case goalActive = "goal-active"
+            case goalCut = "goal-cut"
+        }
     }
 }
 

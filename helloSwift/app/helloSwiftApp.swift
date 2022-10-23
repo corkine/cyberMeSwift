@@ -42,6 +42,9 @@ struct helloSwiftApp: App {
                     case "cyberme://syncWidget":
                         Dashboard.updateWidget(inSeconds: 0)
                         break
+                    case "cyberme://healthcard":
+                        let url = URL(string: "alipay://platformapi/startapp?appId=2021001132656455")!
+                        UIApplication.shared.open(url)
                     default:
                         print("no handler for \(url)")
                     }

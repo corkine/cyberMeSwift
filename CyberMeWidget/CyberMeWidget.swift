@@ -75,12 +75,48 @@ struct CyberMeWidgetEntryView : View {
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: updateAt)
     }
+    
+    func needWarnFitness(_ dash: Dashboard) -> Bool {
+        guard let fit = dash.fitnessInfo else { return false }
+        if fit.active > 550 { return false }
+        return true
+    }
+    
+    func alert(_ text: String) -> some View {
+        ZStack {
+            Color.white.opacity(0.22)
+            HStack(spacing:1) {
+                Text(text)
+            }
+            .font(.system(size: basic))
+            .padding(.horizontal, 6)
+            .padding(.vertical, 3)
+        }
+        .fixedSize(horizontal: true, vertical: true)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+    
+    /// 是否显示核酸结果：早 8:00 - 9:00 显示（非周末）
+    /// 暂时改为每天显示，除了晚上 8 点后
+    var needShowAcidResult: Bool {
+        let now = Date()
+        if Calendar.current.component(.hour, from: now) <= 20 {
+            return true
+        }
+        //        if Calendar.current.component(.weekday, from: now) < 6 {
+        //            let hour = Calendar.current.component(.hour, from: now)
+        //            return hour >= 8 && hour < 9
+        //        }
+        return false
+    }
 
     var body: some View {
         let data = entry.dashboard
+        let needFitness = needWarnFitness(data)
         
         return VStack(alignment:.leading) {
             HStack {
+                // MARK: 顶部左侧
                 Link(data.workStatus,
                      destination: URL(string: "cyberme://checkCardForce")!)
                     .padding(.trailing, -5)
@@ -95,14 +131,22 @@ struct CyberMeWidgetEntryView : View {
                         .font(.system(size: basic - 3))
                 }
                 Spacer()
-                VStack {
-                    Text("今日日报")
-                        .foregroundColor(data.needDiaryReport ? .white : Color("BackgroundColor-Heavy"))
-                        .font(.system(size: basic - 3))
-                    Text("每日浇水")
-                        .foregroundColor(data.needPlantWater ? .white : Color("BackgroundColor-Heavy"))
-                        .font(.system(size: basic - 3))
+                // MARK: 顶部提醒日报、健身信息
+                if data.needDiaryReport && needFitness {
+                    VStack {
+                        Text("今日日报")
+                            .foregroundColor(data.needDiaryReport ? .white : Color("BackgroundColor-Heavy"))
+                            .font(.system(size: basic - 3))
+                        Text("形体之山")
+                            .foregroundColor(needFitness ? .white : Color("BackgroundColor-Heavy"))
+                            .font(.system(size: basic - 3))
+                    }
+                } else if data.needDiaryReport {
+                    alert("今日日报")
+                } else {
+                    alert("形体之山")
                 }
+                // MARK: 顶部打卡事件信息
                 if !data.cardCheck.isEmpty {
                     ZStack {
                         Color.white.opacity(0.22)
@@ -131,6 +175,7 @@ struct CyberMeWidgetEntryView : View {
             }
             Spacer()
             Spacer()
+            // MARK: 天气信息
             VStack(alignment:.leading) {
                 if let weather = data.weatherInfo,
                    !weather.isEmpty {
@@ -189,6 +234,7 @@ struct CyberMeWidgetEntryView : View {
                         .padding(.top, -5)
                         .padding(.bottom, -15)
                 }
+                // MARK: 待办事项
                 if !data.todo.isEmpty {
                     VStack(alignment: .leading, spacing: 2) {
                         ForEach(data.todo.prefix(3), id: \.self) { item in
@@ -207,7 +253,7 @@ struct CyberMeWidgetEntryView : View {
                     .padding(.top, -10)
                     .padding(.bottom, 1)
                 }
-                
+                // MARK: 底部信息
                 HStack(spacing: 1) {
                     if data.todo.count - 3 > 0 {
                         Text("其它 \(data.todo.count - 3) 个")
@@ -217,16 +263,24 @@ struct CyberMeWidgetEntryView : View {
                         .kerning(0.1)
                         .bold()
                         .padding(.trailing, 3)
-                    if TimeUtil.needCheckCard {
-                        Text("HCM")
-                            .kerning(-1)
-                            .bold()
-                            .opacity(1)
-                            .padding(.trailing, 3)
-                    } else {
-                        Text("GRAPH")
-                            .kerning(-1)
-                            .bold()
+//                    if TimeUtil.needCheckCard {
+//                        Text("HCM")
+//                            .kerning(-1)
+//                            .bold()
+//                            .opacity(1)
+//                            .padding(.trailing, 3)
+//                    } else {
+//                        Text("GRAPH")
+//                            .kerning(-1)
+//                            .bold()
+//                    }
+                    if true {
+                        Link(destination: URL(string: "cyberme://healthcard")!) {
+                            Text("健康码")
+                                .kerning(0)
+                                .bold()
+                                .opacity(1)
+                        }
                     }
                 }
                 .font(.system(size: basic - 2))

@@ -6,6 +6,10 @@
 	<array>
 		<string>cyberme.refresh</string>
 	</array>
+	<key>NSHealthShareUsageDescription</key>
+	<string>CyberMe 需要读取健康数据以提供更好的目标管理</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>CyberMe 需要写入健康数据以持久化您的运动成果</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

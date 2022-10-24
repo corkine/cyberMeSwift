@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WidgetKit
+import HealthKit
 
 struct CyberNav: View {
     @State var selection: Tab = .today
@@ -115,6 +116,16 @@ struct CyberHome: View {
     @State var hcmShortcutName = ""
     @State var syncHealthShortcutName = ""
     
+    var healthManager: HealthManager?
+    
+    init() {
+        if HKHealthStore.isHealthDataAvailable() {
+            healthManager = HealthManager()
+        } else {
+            print("platform not support HealthKit")
+        }
+    }
+    
     var body: some View {
         ScrollView(.vertical,showsIndicators:false) {
             HStack(alignment:.top) {
@@ -192,6 +203,11 @@ struct CyberHome: View {
         }
         .onAppear {
             service.fetchSummary()
+            healthManager?.withPermission {
+                healthManager?.fetchWidgetData { data, err in
+                    print("data is \(String(describing: data))")
+                }
+            }
         }
         
     }

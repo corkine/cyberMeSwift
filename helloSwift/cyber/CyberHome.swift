@@ -72,7 +72,7 @@ struct ProfileView: View {
                         Text("Widget 背景")
                         Picker("Widget 背景", selection: $widgetBG) {
                             Text("蓝色").tag(WidgetBackground.blue)
-                            Text("云南群山").tag(WidgetBackground.mountain)
+                            Text("桂林阳朔的群山").tag(WidgetBackground.mountain)
                         }
                         .pickerStyle(.segmented)
                         .onChange(of: widgetBG) { newValue in

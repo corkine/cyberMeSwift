@@ -10,6 +10,8 @@ CyberMe iOS 客户端程序。后端基于 status.mazhangjing.com 和 cyber.mazh
 
 > 此仓库基于 SwiftUI 5 和 Xcode 14 开发，Target 为 iOS 14
 
+![](https://static2.mazhangjing.com/cyber/202210/53c2bcf4_图片.png)
+
 ## 特性
 
 ### 桌面组件
@@ -23,6 +25,12 @@ CyberMe iOS 客户端程序。后端基于 status.mazhangjing.com 和 cyber.mazh
 ![](https://static2.mazhangjing.com/cyber/202210/6963ac46_图片.png)
 
 提供同步 HCM、同步 Microsoft Graph(TODO) 的快捷菜单。
+
+### 体重管理
+
+![](https://static2.mazhangjing.com/cyber/202210/e05bafd5_图片.png)
+
+提供和 Apple Health 交互的体重记录和趋势查看、目标激励。
 
 ### 其他
 

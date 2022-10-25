@@ -50,6 +50,7 @@ class CyberService: ObservableObject {
     
     @Published var syncTodoNow = false
     
+    // MARK: 登录
     var token: String = "" {
         didSet {
             if token != "" {
@@ -60,12 +61,16 @@ class CyberService: ObservableObject {
     }
     @Published var showLogin = false
     
+    // MARK: 设置
     var settings: [String:String] = [:] {
         didSet {
             print("settings now set to \(settings)")
         }
     }
     @Published var showSettings = false
+    
+    // MARK: 体重
+    @Published var showBodyMassSheet = false
     
     init() {
         self.token = getLoginToken() ?? ""

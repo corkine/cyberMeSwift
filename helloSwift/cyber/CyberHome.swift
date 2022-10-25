@@ -116,16 +116,6 @@ struct CyberHome: View {
     @State var hcmShortcutName = ""
     @State var syncHealthShortcutName = ""
     
-    var healthManager: HealthManager?
-    
-    init() {
-        if HKHealthStore.isHealthDataAvailable() {
-            healthManager = HealthManager()
-        } else {
-            print("platform not support HealthKit")
-        }
-    }
-    
     var body: some View {
         ScrollView(.vertical,showsIndicators:false) {
             HStack(alignment:.top) {
@@ -181,7 +171,6 @@ struct CyberHome: View {
                     }
                 }
             }
-            // TODO: 增加 Widget 跳转 URLScheme 的设置
             .sheet(isPresented: $service.showSettings) {
                 Form {
                     TextField("健康码 URLScheme", text: $healthURL)
@@ -200,14 +189,12 @@ struct CyberHome: View {
                     }
                 }
             }
+            .sheet(isPresented: $service.showBodyMassSheet) {
+                BodyMassView()
+            }
         }
         .onAppear {
             service.fetchSummary()
-            healthManager?.withPermission {
-                healthManager?.fetchWidgetData { data, err in
-                    print("data is \(String(describing: data))")
-                }
-            }
         }
         
     }

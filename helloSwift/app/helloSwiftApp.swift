@@ -114,13 +114,6 @@ struct helloSwiftApp: App {
     private func addDynamicQuickActions() {
         UIApplication.shared.shortcutItems = [
             UIApplicationShortcutItem(
-                type: "syncTodo",
-                localizedTitle: "同步待办事项",
-                localizedSubtitle: nil,
-                icon: UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath"),
-                userInfo: nil
-            ),
-            UIApplicationShortcutItem(
                 type: "checkCardForce",
                 localizedTitle: "打卡信息确认",
                 localizedSubtitle: nil,
@@ -128,10 +121,17 @@ struct helloSwiftApp: App {
                 userInfo: nil
             ),
             UIApplicationShortcutItem(
-                type: "addLog",
-                localizedTitle: "新建项目日志",
+                type: "syncTodo",
+                localizedTitle: "同步待办事项",
                 localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "tray.and.arrow.down")
+                icon: UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath"),
+                userInfo: nil
+            ),
+            UIApplicationShortcutItem(
+                type: "bodyMassManage",
+                localizedTitle: "体重管理",
+                localizedSubtitle: nil,
+                icon:UIApplicationShortcutIcon(systemImageName: "scalemass")
             )
         ]
     }
@@ -151,6 +151,9 @@ struct helloSwiftApp: App {
             }
             break
         case "addLog":
+            break
+        case "bodyMassManage":
+            cyberService.showBodyMassSheet = true
             break
         default:
             break

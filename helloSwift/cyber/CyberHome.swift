@@ -46,6 +46,7 @@ struct CyberNav: View {
 
 struct ProfileView: View {
     @State private var widgetBG: WidgetBackground = .mountain
+    @State var showBodyMassSheet = false
     
     @EnvironmentObject var service:CyberService
     var body: some View {
@@ -84,6 +85,9 @@ struct ProfileView: View {
                     }
                     Spacer()
                 }
+                Button("体重管理") {
+                    showBodyMassSheet = true
+                }
                 Button("清空凭证") {
                     service.clearLoginToken()
                 }
@@ -94,6 +98,9 @@ struct ProfileView: View {
             }
             .padding(25)
             .navigationTitle("设置")
+            .sheet(isPresented: $showBodyMassSheet) {
+                BodyMassView()
+            }
         }
     }
 }

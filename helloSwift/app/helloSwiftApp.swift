@@ -9,56 +9,53 @@ import SwiftUI
 import BackgroundTasks
 import WidgetKit
 import UIKit
+import os
 
 @main
 struct helloSwiftApp: App {
     @StateObject var cyberService = CyberService()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var phase
+    @State var tappedCheckCard = false
     var body: some Scene {
         WindowGroup {
             CyberNav().environmentObject(cyberService)
                 .onOpenURL { url in
                     guard url.scheme == "cyberme" else { return }
-                    switch url.description {
-                    case "cyberme://checkCardIfNeed":
+                    let input = url.description
+                    switch input {
+                    case _ where input.hasPrefix("cyberme://checkCardIfNeed"):
                         if TimeUtil.needCheckCard {
                             cyberService.checkCard {
                                 Dashboard.updateWidget(inSeconds: 0)
                             }
                         }
                         break
-                    case "cyberme://checkCardForce":
+                    case _ where input.hasPrefix("cyberme://checkCardForce"):
                         cyberService.checkCard(isForce:true) {
                             Dashboard.updateWidget(inSeconds: 0)
                         }
                         break
-                    case "cyberme://checkCardHCM":
+                    case _ where input.hasPrefix("cyberme://checkCardHCM"):
                         if let name = cyberService.settings["hcmShortcutName"], name != "" {
                             let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!
+                            self.tappedCheckCard = true
+                            appDelegate.cyberService = cyberService
                             UIApplication.shared.open(url)
                         } else {
                             cyberService.alertInfomation = "请设置云上协同打卡的捷径名称（英文）"
                         }
-                        //等待一会儿后台强制同步 HCM 并更新 Widget
-                        /*DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            print("run after check card hcm")
-                            cyberService.checkCard(isForce: true) {
-                                print("check card finished")
-                                Dashboard.updateWidget(inSeconds: 0)
-                            }
-                        }*/
                         break
-                    case "cyberme://syncTodo":
+                    case _ where input.hasPrefix("cyberme://syncTodo"):
                         cyberService.syncTodo {
                             cyberService.fetchSummary()
                             Dashboard.updateWidget(inSeconds: 0)
                         }
                         break
-                    case "cyberme://syncWidget":
+                    case _ where input.hasPrefix("cyberme://syncWidget"):
                         Dashboard.updateWidget(inSeconds: 0)
                         break
-                    case "cyberme://healthcard":
+                    case _ where input.hasPrefix("cyberme://healthcard"):
                         if let name = cyberService.settings["healthURL"], name != "" {
                             let url = URL(string: name)!
                             UIApplication.shared.open(url)
@@ -67,7 +64,8 @@ struct helloSwiftApp: App {
                             UIApplication.shared.open(url)
                         }
                         break
-                    case "cyberme://uploadHealthData":
+                    case _ where input.hasPrefix("cyberme://uploadHealthData"):
+                        cyberService.showBodyMassSheet = true
                         if let name = cyberService.settings["syncHealthShortcutName"],
                                name != "" {
                             let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!
@@ -75,6 +73,10 @@ struct helloSwiftApp: App {
                         } else {
                             cyberService.alertInfomation = "请设置健身记录上传的捷径名称（英文）"
                         }
+                        break
+                    case _ where input.hasPrefix("cyberme://showWeather"):
+                        let url = URL(string: "caiyunapppro://weather")!
+                        UIApplication.shared.open(url)
                         break
                     default:
                         print("no handler for \(url)")
@@ -89,10 +91,18 @@ struct helloSwiftApp: App {
                 break
             case .background:
                 addDynamicQuickActions()
+                if tappedCheckCard {
+                    print("wait check card finish and refresh in background...")
+                    appDelegate.scheduleFetch()
+                    DispatchQueue.main.async {
+                        tappedCheckCard = false
+                    }
+                }
                 break
             default: break
             }
         }
+        
         //        .onChange(of: phase) { newValue in
         //            switch newValue {
         //            case .background: scheduleAppRefresh()
@@ -163,40 +173,51 @@ struct helloSwiftApp: App {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    //    func application(_ application: UIApplication,
-    //                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    //        registerBackgroundTaks()
-    //        return true
-    //    }
-    //
-    //    private func registerBackgroundTaks() {
-    //        BGTaskScheduler.shared.register(forTaskWithIdentifier: "cyberme.refresh", using: nil) { task in
-    //            print("enter background refresh:")
-    //            Dashboard.updateWidget(inSeconds: 300)
-    //            task.setTaskCompleted(success: true)
-    //            task.expirationHandler = {
-    //                self.scheduleRefresh()
-    //            }
-    //            self.scheduleRefresh()
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: AppDelegate.self)
+    )
+    var cyberService: CyberService?
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions
+                     launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        registerBackgroundTaks()
+        return true
+    }
+
+    private func registerBackgroundTaks() {
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "cyberme.refresh", using: nil) { task in
+            Self.logger.info("enter background refresh:")
+            self.cyberService?.checkCard(isForce: true) {
+                Self.logger.info("background check card finished")
+                Dashboard.updateWidget(inSeconds: 0)
+                task.setTaskCompleted(success: true)
+            }
+            //reschedule by using:
+            //self.scheduleFetch()
+        }
+    }
+
+
+    //        func applicationDidEnterBackground(_ application: UIApplication) {
+    //            print("app did enter background")
+    //            scheduleFetch()
     //        }
-    //    }
-    //
-    //
-    //    func applicationDidEnterBackground(_ application: UIApplication) {
-    //        //scheduleRefresh()
-    //    }
-    //
-    //    //e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"cyberme.refresh"]
-    //    func scheduleRefresh() {
-    //        let request = BGAppRefreshTaskRequest(identifier: "cyberme.refresh")
-    //        request.earliestBeginDate = Date(timeIntervalSinceNow: 5 * 60)
-    //        do {
-    //            try BGTaskScheduler.shared.submit(request)
-    //            print("submit refresh task")
-    //        } catch {
-    //            print("Could not schedule refresh: \(error)")
-    //        }
-    //    }
+
+    //e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"cyberme.refresh"]
+    func scheduleFetch() {
+        let request = BGProcessingTaskRequest(identifier: "cyberme.refresh")
+        request.requiresNetworkConnectivity = true
+        request.requiresExternalPower = true
+
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
+
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            print("Could not schedule image fetch: \(error)")
+        }
+    }
     //
     //    func cancelAllPendingBGTask() {
     //        BGTaskScheduler.shared.cancelAllTaskRequests()
@@ -218,11 +239,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     //        print("Unknown property")
     //      }
     //    }
-    
+
     var shortcutItem: UIApplicationShortcutItem? { AppDelegate.shortcutItem }
-    
+
     fileprivate static var shortcutItem: UIApplicationShortcutItem?
-    
+
     func application(
         _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,

@@ -64,8 +64,10 @@ struct helloSwiftApp: App {
                             UIApplication.shared.open(url)
                         }
                         break
-                    case _ where input.hasPrefix("cyberme://uploadHealthData"):
+                    case _ where input.hasPrefix("cyberme://showBodyMass"):
                         cyberService.showBodyMassSheet = true
+                        break
+                    case _ where input.hasPrefix("cyberme://uploadHealthData"):
                         if let name = cyberService.settings["syncHealthShortcutName"],
                                name != "" {
                             let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!

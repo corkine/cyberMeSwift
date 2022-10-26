@@ -149,6 +149,9 @@ struct BodyMassView: View {
             .padding(.bottom, 30)
         }
         .onAppear(perform: self.fetchMess)
+        .onDisappear {
+            Dashboard.updateWidget(inSeconds: 0)
+        }
         .alert(isPresented: $showErrorMessage) {
             Alert(title: Text(""),
                   message: Text(errorMessage),

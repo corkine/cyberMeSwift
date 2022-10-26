@@ -16,6 +16,13 @@ extension View {
 }
 #endif
 
+extension Float {
+    func roundTo(places: Int) -> Float {
+        let divisor = pow(10.0, Float(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
+
 struct BodyMassView: View {
     @State var weight = ""
     @State var massData: [Float] = []
@@ -42,13 +49,15 @@ struct BodyMassView: View {
                     if data.count <= 7 {
                         self.massData = data.map { sample in
                             Float(sample.quantity.doubleValue(for: .gramUnit(with: .kilo)))
+                                .roundTo(places: 2)
                         }
                     } else {
                         var collect: [Float] = []
                         let slot = data.count / 7
                         data.indices.forEach { i in
                             if i % slot == 0 {
-                                collect.append(Float(data[i].quantity.doubleValue(for: .gramUnit(with: .kilo))))
+                                collect.append(Float(data[i].quantity.doubleValue(for: .gramUnit(with: .kilo)))
+                                    .roundTo(places: 2))
                             }
                         }
                         self.massData = collect
@@ -122,7 +131,7 @@ struct BodyMassView: View {
             Button("记录体重") {
                 if let w = Double(weight) {
                     print("记录体重值为 \(w)")
-                    self.massData.append(Float(w))
+                    self.massData.append(Float(w).roundTo(places: 2))
                     healthManager?.setBodyMass(w, callback: { result, err in
                         if !result {
                             errorMessage = "保存数据失败：\(String(describing: err?.localizedDescription))"

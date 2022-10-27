@@ -92,8 +92,8 @@ struct helloSwiftApp: App {
                 break
             case .background:
                 if self.tappedCheckCard {
-                    appDelegate.cyberService = cyberService
-                    appDelegate.scheduleFetch()
+                    SceneDelegate.cyberMeService = cyberService
+                    AppDelegate.cyberService = cyberService
                     DispatchQueue.main.async {
                         self.tappedCheckCard = false
                     }
@@ -161,14 +161,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: AppDelegate.self)
     )
-    var cyberService: CyberService?
+    static var cyberService: CyberService?
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Self.logger.info("register background task..")
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "cyberme.refresh", using: nil) { task in
-            Self.logger.info("enter background refresh:")
-            self.cyberService?.checkCard(isForce: true) {
+            Self.logger.info("enter background refresh: service is \(AppDelegate.cyberService == nil)")
+            Self.cyberService?.checkCard(isForce: true) {
                 Self.logger.info("background check card finished")
                 Dashboard.updateWidget(inSeconds: 0)
                 task.setTaskCompleted(success: true)
@@ -179,12 +179,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
 
-    //e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"cyberme.refresh"]
-    func scheduleFetch() {
-        let request = BGProcessingTaskRequest(identifier: "cyberme.refresh")
-        request.requiresNetworkConnectivity = true
-        request.requiresExternalPower = true
-
+    //e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"cyberme.refresh"]
+    static func scheduleFetch() {
+        let request = BGAppRefreshTaskRequest(identifier: "cyberme.refresh")
         request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
 
         do {
@@ -193,27 +190,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             print("Could not schedule image fetch: \(error)")
         }
     }
-    //
-    //    func cancelAllPendingBGTask() {
-    //        BGTaskScheduler.shared.cancelAllTaskRequests()
-    //    }
-    //
-    //    func checkBackgroundRefreshStatus() {
-    //      switch UIApplication.shared.backgroundRefreshStatus {
-    //      case .available:
-    //        print("Background fetch is enabled")
-    //      case .denied:
-    //        print("Background fetch is explicitly disabled")
-    //
-    //        // Redirect user to Settings page only once; Respect user's choice is important
-    //        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-    //      case .restricted:
-    //        // Should not redirect user to Settings since he / she cannot toggle the settings
-    //        print("Background fetch is restricted, e.g. under parental control")
-    //      default:
-    //        print("Unknown property")
-    //      }
-    //    }
 
     var shortcutItem: UIApplicationShortcutItem? { AppDelegate.shortcutItem }
 
@@ -239,6 +215,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 private final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    static var cyberMeService: CyberService?
+    static var appDelegate: AppDelegate?
     func windowScene(
         _ windowScene: UIWindowScene,
         performActionFor shortcutItem: UIApplicationShortcutItem,
@@ -246,5 +224,9 @@ private final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         AppDelegate.shortcutItem = shortcutItem
         completionHandler(true)
+    }
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        BGTaskScheduler.shared.cancelAllTaskRequests()
+        AppDelegate.scheduleFetch()
     }
 }

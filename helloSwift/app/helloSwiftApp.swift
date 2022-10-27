@@ -40,7 +40,6 @@ struct helloSwiftApp: App {
                         if let name = cyberService.settings["hcmShortcutName"], name != "" {
                             let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!
                             self.tappedCheckCard = true
-                            appDelegate.cyberService = cyberService
                             UIApplication.shared.open(url)
                         } else {
                             cyberService.alertInfomation = "请设置云上协同打卡的捷径名称（英文）"
@@ -92,36 +91,19 @@ struct helloSwiftApp: App {
                 Dashboard.updateWidget(inSeconds: 300)
                 break
             case .background:
-                addDynamicQuickActions()
-                if tappedCheckCard {
-                    print("wait check card finish and refresh in background...")
+                if self.tappedCheckCard {
+                    appDelegate.cyberService = cyberService
                     appDelegate.scheduleFetch()
                     DispatchQueue.main.async {
-                        tappedCheckCard = false
+                        self.tappedCheckCard = false
                     }
                 }
+                addDynamicQuickActions()
                 break
             default: break
             }
         }
-        
-        //        .onChange(of: phase) { newValue in
-        //            switch newValue {
-        //            case .background: scheduleAppRefresh()
-        //            default: break
-        //            }
-        //        }
-        //        .backgroundTask(.appRefresh("cyberme.refresh")) {
-        //            WidgetCenter.shared.reloadAllTimelines()
-        //        }
-        
     }
-    
-    //    func scheduleAppRefresh() {
-    //        let req = BGAppRefreshTaskRequest(identifier: "cyberme.refresh")
-    //        //req.earliestBeginDate = Date().addingTimeInterval(24 * 3600)
-    //        try? BGTaskScheduler.shared.submit(req)
-    //    }
     
     private func addDynamicQuickActions() {
         UIApplication.shared.shortcutItems = [
@@ -183,11 +165,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        registerBackgroundTaks()
-        return true
-    }
-
-    private func registerBackgroundTaks() {
+        Self.logger.info("register background task..")
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "cyberme.refresh", using: nil) { task in
             Self.logger.info("enter background refresh:")
             self.cyberService?.checkCard(isForce: true) {
@@ -198,13 +176,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             //reschedule by using:
             //self.scheduleFetch()
         }
+        return true
     }
-
-
-    //        func applicationDidEnterBackground(_ application: UIApplication) {
-    //            print("app did enter background")
-    //            scheduleFetch()
-    //        }
 
     //e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"cyberme.refresh"]
     func scheduleFetch() {

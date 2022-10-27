@@ -92,11 +92,11 @@ struct helloSwiftApp: App {
                 break
             case .background:
                 if self.tappedCheckCard {
-                    SceneDelegate.cyberMeService = cyberService
-                    AppDelegate.cyberService = cyberService
                     DispatchQueue.main.async {
                         self.tappedCheckCard = false
                     }
+                    SceneDelegate.needFetch = true
+                    AppDelegate.cyberService = cyberService
                 }
                 addDynamicQuickActions()
                 break
@@ -215,8 +215,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 private final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    static var cyberMeService: CyberService?
-    static var appDelegate: AppDelegate?
+    static var needFetch: Bool = false
     func windowScene(
         _ windowScene: UIWindowScene,
         performActionFor shortcutItem: UIApplicationShortcutItem,
@@ -226,6 +225,7 @@ private final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         completionHandler(true)
     }
     func sceneDidEnterBackground(_ scene: UIScene) {
+        Self.needFetch = false
         BGTaskScheduler.shared.cancelAllTaskRequests()
         AppDelegate.scheduleFetch()
     }

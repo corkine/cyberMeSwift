@@ -39,7 +39,8 @@ struct helloSwiftApp: App {
                     case _ where input.hasPrefix("cyberme://checkCardHCM"):
                         if let name = cyberService.settings["hcmShortcutName"], name != "" {
                             let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!
-                            self.tappedCheckCard = true
+                            //暂时不再触发背景刷新
+                            //self.tappedCheckCard = true
                             UIApplication.shared.open(url)
                         } else {
                             cyberService.alertInfomation = "请设置云上协同打卡的捷径名称（英文）"
@@ -92,11 +93,12 @@ struct helloSwiftApp: App {
                 break
             case .background:
                 if self.tappedCheckCard {
+                    print("enter background and begin to fetch...")
+                    SceneDelegate.needFetch = true
+                    AppDelegate.cyberService = cyberService
                     DispatchQueue.main.async {
                         self.tappedCheckCard = false
                     }
-                    SceneDelegate.needFetch = true
-                    AppDelegate.cyberService = cyberService
                 }
                 addDynamicQuickActions()
                 break
@@ -181,8 +183,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     //e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"cyberme.refresh"]
     static func scheduleFetch() {
-        let request = BGAppRefreshTaskRequest(identifier: "cyberme.refresh")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60)
+        //let request = BGAppRefreshTaskRequest(identifier: "cyberme.refresh")
+        let request = BGProcessingTaskRequest(identifier: "cyberme.refresh")
+        request.requiresExternalPower = true
+        request.requiresNetworkConnectivity = true
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 60)
 
         do {
             try BGTaskScheduler.shared.submit(request)
@@ -225,8 +230,12 @@ private final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         completionHandler(true)
     }
     func sceneDidEnterBackground(_ scene: UIScene) {
-        Self.needFetch = false
-        BGTaskScheduler.shared.cancelAllTaskRequests()
-        AppDelegate.scheduleFetch()
+        print("enter \(#function)")
+        if Self.needFetch {
+            Self.needFetch = false
+            BGTaskScheduler.shared.cancelAllTaskRequests()
+            print("\(#function) schedule fetch")
+            AppDelegate.scheduleFetch()
+        }
     }
 }

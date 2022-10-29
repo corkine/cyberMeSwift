@@ -154,7 +154,7 @@ struct FoodAccountView: View {
                     SwiftUI.Section {
                         ForEach(solvedItems) { item in
                             HStack {
-                                VStack {
+                                VStack(alignment: .leading) {
                                     Text(item.name ?? "无名称")
                                         .strikethrough()
                                     Text(FoodCategory.descToCategory(desc: item.category).rawValue)
@@ -215,7 +215,7 @@ struct FoodAccountView: View {
                             Label("显示已抵账的条目", systemImage: "arrow.3.trianglepath")
                         }
                     } label: {
-                        Text("过滤")
+                        Label("过滤", systemImage: "gearshape.fill")
                     }
                 }
             }

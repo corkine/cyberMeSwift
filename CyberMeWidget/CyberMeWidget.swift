@@ -125,7 +125,7 @@ struct CyberMeWidgetEntryView : View {
     var body: some View {
         let data = entry.dashboard
         let needFitness = needWarnFitness(data)
-        let bg = WidgetBackground(rawValue: UserDefaults(suiteName: "group.cyberme.share")!
+        let bg = WidgetBackground(rawValue: UserDefaults(suiteName: Default.groupName)!
             .string(forKey: "widgetBG") ?? "mountain")
         
         return VStack(alignment:.leading) {
@@ -135,7 +135,7 @@ struct CyberMeWidgetEntryView : View {
                      destination: URL(string: "cyberme://checkCardForce")!)
                     .padding(.trailing, -5)
                 VStack(alignment:.leading) {
-                    Link(destination: URL(string: "cyberme://syncTodo")!) {
+                    Link(destination: URL(string: CyberUrl.syncTodo)!) {
                         Text("我的一天")
                             .kerning(0.6)
                             .bold()
@@ -158,7 +158,7 @@ struct CyberMeWidgetEntryView : View {
                 } else if data.needDiaryReport {
                     alert("今日日报")
                 } else if needFitness {
-                    Link(destination: URL(string: "cyberme://uploadHealthData")!) {
+                    Link(destination: URL(string: CyberUrl.uploadHealthData)!) {
                         alert("形体之山")
                     }
                 }
@@ -197,7 +197,7 @@ struct CyberMeWidgetEntryView : View {
                 if let weather = data.weatherInfo,
                    !weather.isEmpty {
                     if let temp = data.tempInfo {
-                        Link(destination: URL(string: "cyberme://showWeather")!) {
+                        Link(destination: URL(string: CyberUrl.showWeather)!) {
                             HStack(alignment:.bottom, spacing: 0) {
                                 Text("↑\(Int(temp.high))")
                                     .font(.system(size: basic))
@@ -220,7 +220,7 @@ struct CyberMeWidgetEntryView : View {
                             }
                         }
                     } else {
-                        Link(destination: URL(string: "cyberme://showWeather")!) {
+                        Link(destination: URL(string: CyberUrl.showWeather)!) {
                             Text(weather)
                                 .lineLimit(1)
                                 .font(.system(size: basic))
@@ -233,7 +233,7 @@ struct CyberMeWidgetEntryView : View {
                         .padding(.bottom, -15)
                 } else if let temp = data.tempFutureInfo,
                           data.weatherInfo == nil {
-                    Link(destination: URL(string: "cyberme://showWeather")!) {
+                    Link(destination: URL(string: CyberUrl.showWeather)!) {
                         HStack(alignment:.top, spacing: 0) {
                             Text("↑\(Int(temp.high))")
                                 .font(.system(size: basic))
@@ -288,7 +288,7 @@ struct CyberMeWidgetEntryView : View {
                         .bold()
                         .padding(.trailing, 3)
                     if needHCMCard(data) {
-                        Link(destination: URL(string: "cyberme://checkCardHCM")!) {
+                        Link(destination: URL(string: CyberUrl.checkCardHCM)!) {
                             Text("HCM打卡")
                                 .kerning(0)
                                 .bold()
@@ -297,7 +297,7 @@ struct CyberMeWidgetEntryView : View {
                         }
                     }
                     if needShowAcidResult {
-                        Link(destination: URL(string: "cyberme://healthcard")!) {
+                        Link(destination: URL(string: CyberUrl.healthCard)!) {
                             Text("健康码")
                                 .kerning(0)
                                 .bold()
@@ -317,7 +317,7 @@ struct CyberMeWidgetEntryView : View {
             .scaledToFill() : nil)
         .background(bg == .mountain ? Color.clear : Color("BackgroundColor"))
         .foregroundColor(.white)
-        .widgetURL(URL(string: "cyberme://syncWidget"))
+        .widgetURL(URL(string: CyberUrl.syncWidget))
     }
 }
 

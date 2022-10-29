@@ -12,7 +12,7 @@ import HealthKit
 struct CyberNav: View {
     @State var selection: Tab = .today
     @EnvironmentObject var service:CyberService
-    enum Tab { case today, game }
+    enum Tab { case today, eat, setting }
     var body: some View {
         if service.gaming {
             Bullseye().accentColor(.red)
@@ -29,14 +29,19 @@ struct CyberNav: View {
             TabView(selection: $selection) {
                 CyberHome()
                     .tabItem {
-                        Label("Home", systemImage: "house.fill")
+                        Label("Today", systemImage: "house.fill")
                     }
                     .tag(Tab.today)
+                FoodAccountView()
+                    .tabItem {
+                        Label("Eat & Drink", systemImage: "square.text.square")
+                    }
+                    .tag(Tab.eat)
                 ProfileView()
                     .tabItem {
-                        Label("Me", systemImage: "person.crop.circle")
+                        Label("Settings", systemImage: "slider.horizontal.3")
                     }
-                    .tag(Tab.game)
+                    .tag(Tab.setting)
             }
             .accentColor(.blue)
             .transition(.moveAndFade)
@@ -115,13 +120,13 @@ struct ProfileView_Previews: PreviewProvider {
 
 struct CyberHome: View {
     @EnvironmentObject var service:CyberService
-    @State var username:String = ""
+    @State var username:String = "corkine"
     @State var password:String = ""
     @State var showLogin = false
     @State var showAlert = false
-    @State var healthURL = ""
-    @State var hcmShortcutName = ""
-    @State var syncHealthShortcutName = ""
+    @State var healthURL = Setting.healthUrlScheme
+    @State var hcmShortcutName = Setting.hcmShortcutName
+    @State var syncHealthShortcutName = Setting.syncHealthShortcutName
     
     var body: some View {
         ScrollView(.vertical,showsIndicators:false) {

@@ -10,80 +10,40 @@ import BackgroundTasks
 import WidgetKit
 import UIKit
 import os
+import CoreData
+
+private enum CoreDataStack {
+  static var viewContext: NSManagedObjectContext = {
+    let container = NSPersistentContainer(name: "FoodAccount")
+    container.loadPersistentStores { _, error in
+      guard error == nil else {
+        fatalError("\(#file), \(#function), \(error!.localizedDescription)")
+      }
+    }
+    return container.viewContext
+  }()
+  static func save() {
+    guard viewContext.hasChanges else { return }
+    do {
+      try viewContext.save()
+    } catch {
+      fatalError("\(#file), \(#function), \(error.localizedDescription)")
+    }
+  }
+}
 
 @main
-struct helloSwiftApp: App {
-    @StateObject var cyberService = CyberService()
+struct CyberApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var phase
+    @StateObject var cyberService = CyberService()
     @State var tappedCheckCard = false
     var body: some Scene {
         WindowGroup {
-            CyberNav().environmentObject(cyberService)
-                .onOpenURL { url in
-                    guard url.scheme == "cyberme" else { return }
-                    let input = url.description
-                    switch input {
-                    case _ where input.hasPrefix("cyberme://checkCardIfNeed"):
-                        if TimeUtil.needCheckCard {
-                            cyberService.checkCard {
-                                Dashboard.updateWidget(inSeconds: 0)
-                            }
-                        }
-                        break
-                    case _ where input.hasPrefix("cyberme://checkCardForce"):
-                        cyberService.checkCard(isForce:true) {
-                            Dashboard.updateWidget(inSeconds: 0)
-                        }
-                        break
-                    case _ where input.hasPrefix("cyberme://checkCardHCM"):
-                        if let name = cyberService.settings["hcmShortcutName"], name != "" {
-                            let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!
-                            //暂时不再触发背景刷新
-                            //self.tappedCheckCard = true
-                            UIApplication.shared.open(url)
-                        } else {
-                            cyberService.alertInfomation = "请设置云上协同打卡的捷径名称（英文）"
-                        }
-                        break
-                    case _ where input.hasPrefix("cyberme://syncTodo"):
-                        cyberService.syncTodo {
-                            cyberService.fetchSummary()
-                            Dashboard.updateWidget(inSeconds: 0)
-                        }
-                        break
-                    case _ where input.hasPrefix("cyberme://syncWidget"):
-                        Dashboard.updateWidget(inSeconds: 0)
-                        break
-                    case _ where input.hasPrefix("cyberme://healthcard"):
-                        if let name = cyberService.settings["healthURL"], name != "" {
-                            let url = URL(string: name)!
-                            UIApplication.shared.open(url)
-                        } else {
-                            let url = URL(string: "alipay://platformapi/startapp?appId=2021001132656455")!
-                            UIApplication.shared.open(url)
-                        }
-                        break
-                    case _ where input.hasPrefix("cyberme://showBodyMass"):
-                        cyberService.showBodyMassSheet = true
-                        break
-                    case _ where input.hasPrefix("cyberme://uploadHealthData"):
-                        if let name = cyberService.settings["syncHealthShortcutName"],
-                               name != "" {
-                            let url = URL(string: "shortcuts://run-shortcut?name=\(name)")!
-                            UIApplication.shared.open(url)
-                        } else {
-                            cyberService.alertInfomation = "请设置健身记录上传的捷径名称（英文）"
-                        }
-                        break
-                    case _ where input.hasPrefix("cyberme://showWeather"):
-                        let url = URL(string: "caiyunapppro://weather")!
-                        UIApplication.shared.open(url)
-                        break
-                    default:
-                        print("no handler for \(url)")
-                    }
-                }
+            CyberNav()
+                .environmentObject(cyberService)
+                .environment(\.managedObjectContext, CoreDataStack.viewContext)
+                .onOpenURL(perform: handleOpenUrl)
         }
         .onChange(of: phase) { newValue in
             switch newValue {
@@ -101,9 +61,75 @@ struct helloSwiftApp: App {
                     }
                 }
                 addDynamicQuickActions()
+                CoreDataStack.save()
                 break
             default: break
             }
+        }
+    }
+    
+    private func handleOpenUrl(_ url: URL) {
+        guard url.scheme == "cyberme" else { return }
+        let input = url.description
+        switch input {
+        case _ where input.hasPrefix(CyberUrl.checkCardIfNeed):
+            if TimeUtil.needCheckCard {
+                cyberService.checkCard {
+                    Dashboard.updateWidget(inSeconds: 0)
+                }
+            }
+            break
+        case _ where input.hasPrefix(CyberUrl.checkCardForce):
+            cyberService.checkCard(isForce:true) {
+                Dashboard.updateWidget(inSeconds: 0)
+            }
+            break
+        case _ where input.hasPrefix(CyberUrl.checkCardHCM):
+            if let name = cyberService.settings[Setting.hcmShortcutName], name != "" {
+                let url = URL(string: Default.UrlScheme.shortcutUrl(name))!
+                //暂时不再触发背景刷新
+                //self.tappedCheckCard = true
+                UIApplication.shared.open(url)
+            } else {
+                cyberService.alertInfomation = "请设置云上协同打卡的捷径名称（英文）"
+            }
+            break
+        case _ where input.hasPrefix(CyberUrl.syncTodo):
+            cyberService.syncTodo {
+                cyberService.fetchSummary()
+                Dashboard.updateWidget(inSeconds: 0)
+            }
+            break
+        case _ where input.hasPrefix(CyberUrl.syncWidget):
+            Dashboard.updateWidget(inSeconds: 0)
+            break
+        case _ where input.hasPrefix(CyberUrl.healthCard):
+            if let name = cyberService.settings[Setting.healthUrlScheme], name != "" {
+                let url = URL(string: name)!
+                UIApplication.shared.open(url)
+            } else {
+                let url = URL(string: Default.UrlScheme.alipayHealthApp)!
+                UIApplication.shared.open(url)
+            }
+            break
+        case _ where input.hasPrefix(CyberUrl.showBodyMass):
+            cyberService.showBodyMassSheet = true
+            break
+        case _ where input.hasPrefix(CyberUrl.uploadHealthData):
+            if let name = cyberService.settings[Setting.syncHealthShortcutName],
+                   name != "" {
+                let url = URL(string: Default.UrlScheme.shortcutUrl(name))!
+                UIApplication.shared.open(url)
+            } else {
+                cyberService.alertInfomation = "请设置健身记录上传的捷径名称（英文）"
+            }
+            break
+        case _ where input.hasPrefix(CyberUrl.showWeather):
+            let url = URL(string: Default.UrlScheme.caiyunWeather)!
+            UIApplication.shared.open(url)
+            break
+        default:
+            print("no handler for \(url)")
         }
     }
     

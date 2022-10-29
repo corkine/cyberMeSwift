@@ -75,7 +75,7 @@ struct FoodAccountView: View {
     @State var showAdd = false
     
     @AppStorage("food.showCompleted")
-    var foodShowCompleted = false
+    var foodShowCompleted = true
     
     struct FetchView: View {
         @Binding var foodShowCompleted: Bool
@@ -94,8 +94,8 @@ struct FoodAccountView: View {
             let req = FoodAccountDAO.fetchRequest()
             req.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
             let sol = NSPredicate(format: "solved == false")
-            if filter != nil {
-                let cate = NSPredicate(format: "category == %@", [filter!.description])
+            if filter != nil && filter != .all {
+                let cate = NSPredicate(format: "category == %@", filter!.description)
                 req.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sol, cate])
             } else {
                 req.predicate = sol
@@ -109,13 +109,14 @@ struct FoodAccountView: View {
                 SwiftUI.Section {
                     ForEach(newItems) { item in
                         HStack {
-                            VStack {
+                            VStack(alignment: .leading) {
                                 Text(item.name ?? "无名称")
                                 Text(FoodCategory.descToCategory(desc: item.category).rawValue)
                             }
                             Spacer()
                             Text(String(format: "%.0f cal", item.calories))
-                                .foregroundColor(item.category == "placeholder" ? .green : .red)
+                                .foregroundColor(item.calories < 0 ? .green : .red)
+                                .padding(.trailing, 10)
                         }
                         .contextMenu {
                             Button {
@@ -148,7 +149,6 @@ struct FoodAccountView: View {
                         Image(systemName: "list.dash")
                         Text("已入账")
                     }
-                    .padding(.leading, -15)
                 }
                 if foodShowCompleted {
                     SwiftUI.Section {
@@ -161,6 +161,7 @@ struct FoodAccountView: View {
                                 }
                                 Spacer()
                                 Text(String(format: "%.0f cal", item.calories))
+                                    .padding(.trailing, 10)
                             }
                             .contextMenu {
                                 Button {
@@ -186,7 +187,6 @@ struct FoodAccountView: View {
                             Image(systemName: "arrow.3.trianglepath")
                             Text("已抵账")
                         }
-                        .padding(.leading, -15)
                     }
                 }
             }
@@ -195,9 +195,9 @@ struct FoodAccountView: View {
     
     var body: some View {
         NavigationView {
-            FetchView(forCategory: nil, foodShowCompleted: $foodShowCompleted)
+            FetchView(forCategory: filter, foodShowCompleted: $foodShowCompleted)
             .toolbar {
-                HStack {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
                         showAdd = true
                     } label: {
@@ -215,7 +215,7 @@ struct FoodAccountView: View {
                             Label("显示已抵账的条目", systemImage: "arrow.3.trianglepath")
                         }
                     } label: {
-                        Image(systemName: "line.3.horizontal.decrease.circle")
+                        Text("过滤")
                     }
                 }
             }
@@ -252,91 +252,89 @@ struct FoodAccountAddView: View {
         return true
     }
     var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Button("关闭") {
-                        showAdd = false
-                    }
-                    .accentColor(Color.red)
-                    Spacer()
-                    Button("保存") {
-                        if checkCanSubmit() {
-                            let dao = FoodAccountDAO(context: context)
-                            dao.name = name
-                            dao.id = UUID()
-                            dao.category = category.description
-                            dao.calories = Double(calories)!
-                            if category == .placeholder {
-                                dao.calories = -1 * dao.calories
-                            }
-                            if note != "" { dao.note = note }
-                            dao.date = date
-                            do {
-                                try context.save()
-                                showAdd = false
-                            } catch let e {
-                                showAlert = true
-                                errorMessage = e.localizedDescription
-                            }
-                        } else {
-                            showAlert = true
-                        }
-                    }
+        VStack(alignment:.leading) {
+            HStack {
+                Button("关闭") {
+                    showAdd = false
                 }
-                .padding(20)
-                .frame(height: 60)
+                .accentColor(Color.red)
                 Spacer()
-                GeometryReader { p in
-                    VStack(alignment: .leading) {
-                        Group {
-                            Text("名称").padding(.top, 10)
-                            TextField("食物名称",text: $name)
+                Button("保存") {
+                    if checkCanSubmit() {
+                        let dao = FoodAccountDAO(context: context)
+                        dao.name = name
+                        dao.id = UUID()
+                        dao.category = category.description
+                        dao.calories = Double(calories)!
+                        if category == .placeholder {
+                            dao.calories = -1 * dao.calories
                         }
-                        Group {
-                            Text("类别").padding(.top, 10)
-                            Picker("食物类别", selection: $category) {
-                                ForEach([FoodCategory.suger,
-                                         FoodCategory.drink,
-                                         FoodCategory.fat,
-                                         FoodCategory.other,
-                                         FoodCategory.placeholder]) { category in
-                                    Text(category.rawValue).tag(category)
-                                }
-                            }
-                            .pickerStyle(.segmented)
+                        if note != "" { dao.note = note }
+                        dao.date = date
+                        do {
+                            try context.save()
+                            showAdd = false
+                        } catch let e {
+                            showAlert = true
+                            errorMessage = e.localizedDescription
                         }
-                        Group {
-                            Text("卡路里").padding(.top, 10)
-                            TextField("食物消耗的卡路里",text: $calories)
-                                .keyboardType(.decimalPad)
-                                .textFieldStyle(.roundedBorder)
-                        }
-                        Group {
-                            DatePicker("记录时间", selection: $date)
-                                .padding(.top, 10)
-                        }
-                        Group {
-                            Text("备注").padding(.top, 10)
-                            TextEditor(text: $note)
-                        }
-                        Spacer()
-                    }
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.horizontal, 20)
-                    .frame(height: p.size.height - 60)
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("请完成表单"),message: Text("\(errorMessage)"))
+                    } else {
+                        showAlert = true
                     }
                 }
             }
+            .padding(20)
+            VStack(alignment: .leading) {
+                Group {
+                    Text("名称").padding(.top, 10)
+                    TextField("食物名称",text: $name)
+                }
+                Group {
+                    Text("类别").padding(.top, 10)
+                    Picker("食物类别", selection: $category) {
+                        ForEach([FoodCategory.suger,
+                                 FoodCategory.drink,
+                                 FoodCategory.fat,
+                                 FoodCategory.other,
+                                 FoodCategory.placeholder]) { category in
+                            Text(category.rawValue).tag(category)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                Group {
+                    Text("卡路里").padding(.top, 10)
+                    TextField("食物消耗的卡路里",text: $calories)
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.roundedBorder)
+                }
+                Group {
+                    DatePicker("记录时间", selection: $date)
+                        .padding(.top, 10)
+                }
+                Group {
+                    Text("备注").padding(.top, 10)
+                    TextEditor(text: $note)
+                }
+                Spacer()
+            }
+            .textFieldStyle(.roundedBorder)
+            .padding(.horizontal, 20)
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("请完成表单"),message: Text("\(errorMessage)"))
+            }
+            Spacer()
         }
+        Spacer()
     }
 }
 
 struct FoodAccountView_Previews: PreviewProvider {
     static var previews: some View {
         FoodAccountView()
-        //FoodAccountAddView(showAdd: .constant(true))
+        //        Text("Hello")
+        //            .sheet(isPresented: .constant(true)) {
+        //                FoodAccountAddView(showAdd: .constant(true))
+        //            }
     }
 }

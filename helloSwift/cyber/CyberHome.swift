@@ -34,7 +34,7 @@ struct CyberNav: View {
                     .tag(Tab.today)
                 FoodAccountView()
                     .tabItem {
-                        Label("Eat & Drink", systemImage: "square.text.square")
+                        Label("Eat & Drink", systemImage: "flame.fill")
                     }
                     .tag(Tab.eat)
                 ProfileView()

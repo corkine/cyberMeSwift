@@ -32,6 +32,12 @@ CyberMe iOS 客户端程序。后端基于 status.mazhangjing.com 和 cyber.mazh
 
 提供和 Apple Health 交互的体重记录和趋势查看、目标激励。
 
+### 饮食管理
+
+![](https://static2.mazhangjing.com/20221030/82f6_f1a3e988.jpg)
+
+提供基于 Core Data 的饮食管理。可以随手“入账”高热量食物、饮品的消费，并且在近期通过运动锻炼来将其“抵账”。
+
 ### 其他
 
 代码库还包括一些 SwiftUI 与 Swift 特性示例应用（小游戏、图书管理、景点介绍）。

@@ -10,6 +10,7 @@ import CoreData
 
 enum FoodCategory: String, CaseIterable, Identifiable {
     case all = "所有类型"
+    case energy = "碳水"
     case suger = "甜点"
     case drink = "饮品"
     case fat = "油炸"
@@ -19,6 +20,7 @@ enum FoodCategory: String, CaseIterable, Identifiable {
     var description: String {
         switch self {
         case .all: return "all"
+        case .energy: return "energy"
         case .suger: return "suger"
         case .drink: return "drink"
         case .fat: return "fat"
@@ -30,6 +32,7 @@ enum FoodCategory: String, CaseIterable, Identifiable {
         if desc == nil { return .other }
         switch desc! {
         case "all": return .all
+        case "energy": return .energy
         case "suger": return .suger
         case "drink": return .drink
         case "fat": return .fat
@@ -119,22 +122,24 @@ struct FoodAccountView: View {
                                 .padding(.trailing, 10)
                         }
                         .contextMenu {
-                            Button {
-                                withAnimation {
-                                    
+                            if FoodCategory.descToCategory(desc: item.category) != .placeholder {
+                                Button {
+                                    withAnimation {
+                                        
+                                    }
+                                } label: {
+                                    Label("从此项复制", systemImage: "doc.on.doc")
                                 }
-                            } label: {
-                                Label("从此项复制", systemImage: "doc.on.doc")
-                            }
-                            Button {
-                                withAnimation {
-                                    item.solved = true
-                                    try! context.save()
+                                Button {
+                                    withAnimation {
+                                        item.solved = true
+                                        try! context.save()
+                                    }
+                                } label: {
+                                    Label("标记已抵账", systemImage: "arrow.3.trianglepath")
                                 }
-                            } label: {
-                                Label("标记已抵账", systemImage: "arrow.3.trianglepath")
+                                Divider()
                             }
-                            Divider()
                             Button {
                                 withAnimation {
                                     context.delete(item)
@@ -292,7 +297,8 @@ struct FoodAccountAddView: View {
                 Group {
                     Text("类别").padding(.top, 10)
                     Picker("食物类别", selection: $category) {
-                        ForEach([FoodCategory.suger,
+                        ForEach([FoodCategory.energy,
+                                 FoodCategory.suger,
                                  FoodCategory.drink,
                                  FoodCategory.fat,
                                  FoodCategory.other,

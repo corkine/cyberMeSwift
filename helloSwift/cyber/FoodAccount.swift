@@ -254,42 +254,30 @@ struct FoodAccountView: View {
     }
 }
 
-extension Binding where Value == Bool {
-    public func negate() -> Binding<Bool> {
-        return Binding<Bool>(get:{ !self.wrappedValue },
-            set: { self.wrappedValue = !$0})
+fileprivate extension Optional<String> {
+    var forBind: FoodCategory {
+        get { FoodCategory.descToCategory(desc: self) }
+        set { self = newValue.description }
     }
 }
 
-extension Binding where Value == Double {
-    public func toText() -> Binding<String> {
-        return Binding<String>(
-            get:{ String(self.wrappedValue) },
-            set: { self.wrappedValue = Double($0) ?? 0.0 })
+extension Double {
+    var text: String {
+        get { String(self) }
+        set { self = Double(newValue) ?? 0.0 }
     }
 }
 
-fileprivate extension Binding where Value == Optional<String> {
-    func toFoodCategory() -> Binding<FoodCategory> {
-        return Binding<FoodCategory>(
-            get:{ FoodCategory.descToCategory(desc: self.wrappedValue) },
-            set: { self.wrappedValue = Optional($0.description) })
+extension Optional<Date> {
+    var orNull: Date {
+        get { self ?? Date() }
+        set { self = newValue }
     }
 }
 
 extension Binding where Value == Optional<String> {
     func onNone(_ fallback: String) -> Binding<String> {
         return Binding<String>(get: {
-            return self.wrappedValue ?? fallback
-        }) { value in
-            self.wrappedValue = value
-        }
-    }
-}
-
-extension Binding where Value == Optional<Date> {
-    func onNone(_ fallback: Date) -> Binding<Date> {
-        return Binding<Date>(get: {
             return self.wrappedValue ?? fallback
         }) { value in
             self.wrappedValue = value
@@ -331,7 +319,7 @@ struct FoodAccountEditView: View {
                 }
                 Group {
                     Text("类别").padding(.top, 10)
-                    Picker("食物类别", selection: $item.category.toFoodCategory()) {
+                    Picker("食物类别", selection: $item.category.forBind) {
                         ForEach([FoodCategory.energy,
                                  FoodCategory.suger,
                                  FoodCategory.drink,
@@ -345,12 +333,12 @@ struct FoodAccountEditView: View {
                 }
                 Group {
                     Text("卡路里").padding(.top, 10)
-                    TextField("食物消耗的卡路里",text: $item.calories.toText())
+                    TextField("食物消耗的卡路里",text: $item.calories.text)
                         .keyboardType(.decimalPad)
                         .textFieldStyle(.roundedBorder)
                 }
                 Group {
-                    DatePicker("记录时间", selection: $item.date.onNone(Date()))
+                    DatePicker("记录时间", selection: $item.date.orNull)
                         .padding(.top, 10)
                 }
                 Group {

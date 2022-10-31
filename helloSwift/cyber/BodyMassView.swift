@@ -43,6 +43,9 @@ struct BodyMassView: View {
     
     func fetchMess() {
         healthManager?.withPermission {
+            healthManager?.demoTest(completed: { sumType in
+                print("sumType is \(sumType)")
+            })
             healthManager?.fetchWidgetData { data, err in
                 //print("data is \(String(describing: data))")
                 if let data = data {
@@ -110,7 +113,6 @@ struct BodyMassView: View {
                     .frame(width: 200, height: 200)
                 HStack {
                     TextField("", text: $weight)
-                        .textContentType(.telephoneNumber)
                         .keyboardType(.decimalPad)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 80)

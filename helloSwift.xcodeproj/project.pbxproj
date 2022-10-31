@@ -19,8 +19,6 @@
 		193548D8290CD99F00B2266C /* FoodAccount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 193548D6290CD99F00B2266C /* FoodAccount.xcdatamodeld */; };
 		193548E3290CF5CD00B2266C /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
 		193548E4290CF86200B2266C /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
-		193548F3290D250000B2266C /* FoodAccountDAO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548F1290D250000B2266C /* FoodAccountDAO+CoreDataClass.swift */; };
-		193548F4290D250000B2266C /* FoodAccountDAO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548F2290D250000B2266C /* FoodAccountDAO+CoreDataProperties.swift */; };
 		1948648028D883A500064104 /* PhPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948647F28D883A500064104 /* PhPicker.swift */; };
 		1948648228D89DF300064104 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948648128D89DF300064104 /* Todo.swift */; };
 		1948B75F28F6C569009BECD0 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* Dashboard.swift */; };
@@ -70,6 +68,8 @@
 		19FD183328D9CBB1004F97B3 /* CyberMeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		19FF8EC529001FCA009C96C3 /* View+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Sync.swift */; };
 		19FF8EC629001FCA009C96C3 /* View+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Sync.swift */; };
+		19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */; };
+		19FFA8FB290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFA8F9290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,8 +123,6 @@
 		193548D3290C132B00B2266C /* FoodAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAccount.swift; sourceTree = "<group>"; };
 		193548D7290CD99F00B2266C /* FoodAccount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodAccount.xcdatamodel; sourceTree = "<group>"; };
 		193548E2290CF5CD00B2266C /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
-		193548F1290D250000B2266C /* FoodAccountDAO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		193548F2290D250000B2266C /* FoodAccountDAO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		1948647F28D883A500064104 /* PhPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhPicker.swift; sourceTree = "<group>"; };
 		1948648128D89DF300064104 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		1948B75E28F6C569009BECD0 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
@@ -169,6 +167,8 @@
 		19FF8EC429001FCA009C96C3 /* View+Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Sync.swift"; sourceTree = "<group>"; };
 		19FF8EC72900202C009C96C3 /* helloSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = helloSwift.entitlements; sourceTree = "<group>"; };
 		19FF8EC829002041009C96C3 /* CyberMeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMeWidgetExtension.entitlements; sourceTree = "<group>"; };
+		19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataClass.swift"; sourceTree = "<group>"; };
+		19FFA8F9290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,8 +228,8 @@
 		193548D9290CDA6C00B2266C /* generate */ = {
 			isa = PBXGroup;
 			children = (
-				193548F1290D250000B2266C /* FoodAccountDAO+CoreDataClass.swift */,
-				193548F2290D250000B2266C /* FoodAccountDAO+CoreDataProperties.swift */,
+				19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */,
+				19FFA8F9290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift */,
 			);
 			path = generate;
 			sourceTree = "<group>";
@@ -570,7 +570,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19625BA528D36D9E00860518 /* CyberService.swift in Sources */,
-				193548F4290D250000B2266C /* FoodAccountDAO+CoreDataProperties.swift in Sources */,
+				19FFA8FB290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift in Sources */,
 				193323A228D2264F0038AD74 /* Feature.swift in Sources */,
 				19CE75EA28D22EB400AF8AFF /* Helper.swift in Sources */,
 				190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */,
@@ -582,7 +582,7 @@
 				19D2A9E528D4B045009C81C4 /* Game.swift in Sources */,
 				19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */,
 				1948648228D89DF300064104 /* Todo.swift in Sources */,
-				193548F3290D250000B2266C /* FoodAccountDAO+CoreDataClass.swift in Sources */,
+				19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */,
 				195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */,
 				190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */,
 				19FF8EC529001FCA009C96C3 /* View+Sync.swift in Sources */,

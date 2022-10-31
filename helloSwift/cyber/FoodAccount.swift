@@ -76,6 +76,7 @@ struct DynamicFetchRequestView<T: NSManagedObject, Content: View>: View {
 struct FoodAccountView: View {
     @State var filter: FoodCategory = .all
     @State var showAdd = false
+    @State var showBodyMass = false
     
     @AppStorage("food.showCompleted")
     var foodShowCompleted = true
@@ -111,16 +112,20 @@ struct FoodAccountView: View {
             List {
                 SwiftUI.Section {
                     ForEach(newItems) { item in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name ?? "无名称")
-                                Text(FoodCategory.descToCategory(desc: item.category).rawValue)
+                        NavigationLink(destination: {
+                            FoodAccountEditView(item: item)
+                        }, label: {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(item.name ?? "无名称")
+                                    Text(FoodCategory.descToCategory(desc: item.category).rawValue)
+                                }
+                                Spacer()
+                                Text(String(format: "%.0f cal", item.calories))
+                                    .foregroundColor(item.calories < 0 ? .green : .red)
+                                    .padding(.trailing, 10)
                             }
-                            Spacer()
-                            Text(String(format: "%.0f cal", item.calories))
-                                .foregroundColor(item.calories < 0 ? .green : .red)
-                                .padding(.trailing, 10)
-                        }
+                        })
                         .contextMenu {
                             if FoodCategory.descToCategory(desc: item.category) != .placeholder {
                                 Button {
@@ -158,16 +163,20 @@ struct FoodAccountView: View {
                 if foodShowCompleted {
                     SwiftUI.Section {
                         ForEach(solvedItems) { item in
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(item.name ?? "无名称")
-                                        .strikethrough()
-                                    Text(FoodCategory.descToCategory(desc: item.category).rawValue)
+                            NavigationLink(destination: {
+                                FoodAccountEditView(item: item)
+                            }, label: {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(item.name ?? "无名称")
+                                            .strikethrough()
+                                        Text(FoodCategory.descToCategory(desc: item.category).rawValue)
+                                    }
+                                    Spacer()
+                                    Text(String(format: "%.0f cal", item.calories))
+                                        .padding(.trailing, 10)
                                 }
-                                Spacer()
-                                Text(String(format: "%.0f cal", item.calories))
-                                    .padding(.trailing, 10)
-                            }
+                            })
                             .contextMenu {
                                 Button {
                                     withAnimation {
@@ -202,6 +211,13 @@ struct FoodAccountView: View {
         NavigationView {
             FetchView(forCategory: filter, foodShowCompleted: $foodShowCompleted)
             .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button {
+                        showBodyMass = true
+                    } label: {
+                        Text("体重管理")
+                    }
+                }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button {
                         showAdd = true
@@ -230,8 +246,131 @@ struct FoodAccountView: View {
             .sheet(isPresented: $showAdd, content: {
                 FoodAccountAddView(showAdd: $showAdd)
             })
+            .sheet(isPresented: $showBodyMass, content: {
+                BodyMassView()
+            })
             .navigationTitle("饮食账单")
         }
+    }
+}
+
+extension Binding where Value == Bool {
+    public func negate() -> Binding<Bool> {
+        return Binding<Bool>(get:{ !self.wrappedValue },
+            set: { self.wrappedValue = !$0})
+    }
+}
+
+extension Binding where Value == Double {
+    public func toText() -> Binding<String> {
+        return Binding<String>(
+            get:{ String(self.wrappedValue) },
+            set: { self.wrappedValue = Double($0) ?? 0.0 })
+    }
+}
+
+fileprivate extension Binding where Value == Optional<String> {
+    func toFoodCategory() -> Binding<FoodCategory> {
+        return Binding<FoodCategory>(
+            get:{ FoodCategory.descToCategory(desc: self.wrappedValue) },
+            set: { self.wrappedValue = Optional($0.description) })
+    }
+}
+
+extension Binding where Value == Optional<String> {
+    func onNone(_ fallback: String) -> Binding<String> {
+        return Binding<String>(get: {
+            return self.wrappedValue ?? fallback
+        }) { value in
+            self.wrappedValue = value
+        }
+    }
+}
+
+extension Binding where Value == Optional<Date> {
+    func onNone(_ fallback: Date) -> Binding<Date> {
+        return Binding<Date>(get: {
+            return self.wrappedValue ?? fallback
+        }) { value in
+            self.wrappedValue = value
+        }
+    }
+}
+
+struct FoodAccountEditView: View {
+    @StateObject var item: FoodAccountDAO
+    @State var showAlert = false
+    @State var errorMessage = ""
+    @Environment(\.managedObjectContext) var context
+    func checkCanSubmit() -> Bool {
+        if item.name == nil || item.name!.isEmpty {
+            errorMessage = "名称不能为空"
+            return false
+        }
+        return true
+    }
+    func doSave() {
+        if checkCanSubmit() {
+            do {
+                try context.save()
+            } catch let e {
+                showAlert = true
+                errorMessage = e.localizedDescription
+            }
+        } else {
+            showAlert = true
+        }
+    }
+    var body: some View {
+        ZStack(alignment: .top) {
+            Color.white.opacity(0.0001)
+            VStack(alignment: .leading) {
+                Group {
+                    Text("名称").padding(.top, 10)
+                    TextField("食物名称",text: $item.name.onNone(""))
+                }
+                Group {
+                    Text("类别").padding(.top, 10)
+                    Picker("食物类别", selection: $item.category.toFoodCategory()) {
+                        ForEach([FoodCategory.energy,
+                                 FoodCategory.suger,
+                                 FoodCategory.drink,
+                                 FoodCategory.fat,
+                                 FoodCategory.other,
+                                 FoodCategory.placeholder]) { category in
+                            Text(category.rawValue).tag(category)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                Group {
+                    Text("卡路里").padding(.top, 10)
+                    TextField("食物消耗的卡路里",text: $item.calories.toText())
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.roundedBorder)
+                }
+                Group {
+                    DatePicker("记录时间", selection: $item.date.onNone(Date()))
+                        .padding(.top, 10)
+                }
+                Group {
+                    Text("备注").padding(.top, 10)
+                    TextEditor(text: $item.note.onNone(""))
+                }
+                Spacer()
+            }
+        }
+        .onTapGesture {
+            hideKeyboard()
+        }
+        .textFieldStyle(.roundedBorder)
+        .padding(.horizontal, 20)
+        .padding(.top ,5)
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("请完成表单"),message: Text("\(errorMessage)"))
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        Spacer()
     }
 }
 

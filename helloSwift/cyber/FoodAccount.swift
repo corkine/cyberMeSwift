@@ -286,10 +286,15 @@ extension Binding where Value == Optional<String> {
 }
 
 struct FoodAccountEditView: View {
-    @StateObject var item: FoodAccountDAO
+    @State var item: FoodAccountDAO
     @State var showAlert = false
     @State var errorMessage = ""
+    @State var isSolved: Bool
     @Environment(\.managedObjectContext) var context
+    init(item: FoodAccountDAO) {
+        _item = State(wrappedValue: item)
+        _isSolved = State(initialValue: item.solved)
+    }
     func checkCanSubmit() -> Bool {
         if item.name == nil || item.name!.isEmpty {
             errorMessage = "名称不能为空"
@@ -300,6 +305,7 @@ struct FoodAccountEditView: View {
     func doSave() {
         if checkCanSubmit() {
             do {
+                item.solved = isSolved
                 try context.save()
             } catch let e {
                 showAlert = true
@@ -342,6 +348,9 @@ struct FoodAccountEditView: View {
                         .padding(.top, 10)
                 }
                 Group {
+                    Toggle("已抵账", isOn: $isSolved)
+                }
+                Group {
                     Text("备注").padding(.top, 10)
                     TextEditor(text: $item.note.onNone(""))
                 }
@@ -357,6 +366,7 @@ struct FoodAccountEditView: View {
         .alert(isPresented: $showAlert) {
             Alert(title: Text("请完成表单"),message: Text("\(errorMessage)"))
         }
+        .onDisappear(perform: doSave)
         .navigationBarTitleDisplayMode(.inline)
         Spacer()
     }

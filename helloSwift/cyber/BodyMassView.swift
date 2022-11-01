@@ -143,7 +143,7 @@ struct BodyMassView: View {
                 }
             }
             .font(.system(size: 20))
-            .padding(.horizontal, 100)
+            .padding(.horizontal, 150)
             .padding(.vertical, 13)
             .foregroundColor(.white)
             .background(Color.blue)

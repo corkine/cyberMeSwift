@@ -29,7 +29,7 @@ struct CyberNav: View {
             TabView(selection: $selection) {
                 CyberHome()
                     .tabItem {
-                        Label("Today", systemImage: "house.fill")
+                        Label("Today", systemImage: "house")
                     }
                     .tag(Tab.today)
                 FoodAccountView()

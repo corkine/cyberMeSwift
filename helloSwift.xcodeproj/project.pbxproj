@@ -19,6 +19,8 @@
 		193548D8290CD99F00B2266C /* FoodAccount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 193548D6290CD99F00B2266C /* FoodAccount.xcdatamodeld */; };
 		193548E3290CF5CD00B2266C /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
 		193548E4290CF86200B2266C /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
+		193C8A1B291223EE00FF975F /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Number+Extension.swift */; };
+		193C8A1C291223EE00FF975F /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Number+Extension.swift */; };
 		1948648028D883A500064104 /* PhPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948647F28D883A500064104 /* PhPicker.swift */; };
 		1948648228D89DF300064104 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948648128D89DF300064104 /* Todo.swift */; };
 		1948B75F28F6C569009BECD0 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* Dashboard.swift */; };
@@ -66,8 +68,8 @@
 		19FD182D28D9CBB0004F97B3 /* CyberMeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FD182C28D9CBB0004F97B3 /* CyberMeWidget.swift */; };
 		19FD182F28D9CBB1004F97B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19FD182E28D9CBB1004F97B3 /* Assets.xcassets */; };
 		19FD183328D9CBB1004F97B3 /* CyberMeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		19FF8EC529001FCA009C96C3 /* View+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Sync.swift */; };
-		19FF8EC629001FCA009C96C3 /* View+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Sync.swift */; };
+		19FF8EC529001FCA009C96C3 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Extension.swift */; };
+		19FF8EC629001FCA009C96C3 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Extension.swift */; };
 		19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */; };
 		19FFA8FB290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFA8F9290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
@@ -123,6 +125,7 @@
 		193548D3290C132B00B2266C /* FoodAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAccount.swift; sourceTree = "<group>"; };
 		193548D7290CD99F00B2266C /* FoodAccount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodAccount.xcdatamodel; sourceTree = "<group>"; };
 		193548E2290CF5CD00B2266C /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
+		193C8A1A291223EE00FF975F /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
 		1948647F28D883A500064104 /* PhPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhPicker.swift; sourceTree = "<group>"; };
 		1948648128D89DF300064104 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		1948B75E28F6C569009BECD0 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
@@ -164,7 +167,7 @@
 		19FD182C28D9CBB0004F97B3 /* CyberMeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberMeWidget.swift; sourceTree = "<group>"; };
 		19FD182E28D9CBB1004F97B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19FD183028D9CBB1004F97B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		19FF8EC429001FCA009C96C3 /* View+Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Sync.swift"; sourceTree = "<group>"; };
+		19FF8EC429001FCA009C96C3 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		19FF8EC72900202C009C96C3 /* helloSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = helloSwift.entitlements; sourceTree = "<group>"; };
 		19FF8EC829002041009C96C3 /* CyberMeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -350,9 +353,10 @@
 			children = (
 				195A3D2E28BFA2C600239F01 /* CyberApp.swift */,
 				1948B76428F858CD009BECD0 /* TimeUtil.swift */,
-				19FF8EC429001FCA009C96C3 /* View+Sync.swift */,
-				19B925752906A5370039948A /* HealthManager.swift */,
 				193548E2290CF5CD00B2266C /* Default.swift */,
+				19FF8EC429001FCA009C96C3 /* View+Extension.swift */,
+				193C8A1A291223EE00FF975F /* Number+Extension.swift */,
+				19B925752906A5370039948A /* HealthManager.swift */,
 				195A3D3228BFA2C700239F01 /* Assets.xcassets */,
 			);
 			path = app;
@@ -571,6 +575,7 @@
 			files = (
 				19625BA528D36D9E00860518 /* CyberService.swift in Sources */,
 				19FFA8FB290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift in Sources */,
+				193C8A1B291223EE00FF975F /* Number+Extension.swift in Sources */,
 				193323A228D2264F0038AD74 /* Feature.swift in Sources */,
 				19CE75EA28D22EB400AF8AFF /* Helper.swift in Sources */,
 				190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */,
@@ -585,7 +590,7 @@
 				19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */,
 				195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */,
 				190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */,
-				19FF8EC529001FCA009C96C3 /* View+Sync.swift in Sources */,
+				19FF8EC529001FCA009C96C3 /* View+Extension.swift in Sources */,
 				19D6C3B728D14C4000ED5D4B /* Badge.swift in Sources */,
 				19B925782906AD830039948A /* BodyMassView.swift in Sources */,
 				19B925762906A5370039948A /* HealthManager.swift in Sources */,
@@ -636,8 +641,9 @@
 				190995BA2900112A000B5770 /* CS+API.swift in Sources */,
 				19FD182D28D9CBB0004F97B3 /* CyberMeWidget.swift in Sources */,
 				190995BD29001135000B5770 /* CS+Token.swift in Sources */,
-				19FF8EC629001FCA009C96C3 /* View+Sync.swift in Sources */,
+				19FF8EC629001FCA009C96C3 /* View+Extension.swift in Sources */,
 				193548E4290CF86200B2266C /* Default.swift in Sources */,
+				193C8A1C291223EE00FF975F /* Number+Extension.swift in Sources */,
 				1948B76628F858CD009BECD0 /* TimeUtil.swift in Sources */,
 				1948B76128F6C7F7009BECD0 /* CyberService.swift in Sources */,
 			);

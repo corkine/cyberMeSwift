@@ -16,13 +16,6 @@ extension View {
 }
 #endif
 
-extension Float {
-    func roundTo(places: Int) -> Float {
-        let divisor = pow(10.0, Float(places))
-        return (self * divisor).rounded() / divisor
-    }
-}
-
 struct BodyMassView: View {
     @State var weight = ""
     @State var massData: [Float] = []
@@ -56,13 +49,19 @@ struct BodyMassView: View {
                         }
                     } else {
                         var collect: [Float] = []
-                        let slot = data.count / 7
+                        let slot = data.count / 7 + 1
                         data.indices.forEach { i in
+                            if i == data.count - 1 {
+                                return //如果是最后一个，手动添加
+                            }
                             if i % slot == 0 {
                                 collect.append(Float(data[i].quantity.doubleValue(for: .gramUnit(with: .kilo)))
                                     .roundTo(places: 2))
                             }
                         }
+                        collect.append(Float(data[data.count - 1]
+                            .quantity.doubleValue(for: .gramUnit(with: .kilo)))
+                            .roundTo(places: 2))
                         self.massData = collect
                     }
                 } else {

@@ -53,6 +53,11 @@ struct ProfileView: View {
     @State private var widgetBG: WidgetBackground = .mountain
     @State var showBodyMassSheet = false
     
+    init() {
+        _widgetBG = State(initialValue: WidgetBackground(rawValue: UserDefaults(suiteName: Default.groupName)!
+            .string(forKey: "widgetBG") ?? "mountain")!)
+    }
+    
     @EnvironmentObject var service:CyberService
     var body: some View {
         NavigationView {
@@ -93,12 +98,15 @@ struct ProfileView: View {
                 Button("体重管理") {
                     showBodyMassSheet = true
                 }
-                Button("清空凭证") {
-                    service.clearLoginToken()
+                Group {
+                    Button("清空凭证") {
+                        service.clearLoginToken()
+                    }
+                    Button("清空设置") {
+                        service.clearSettings()
+                    }
                 }
-                Button("清空设置") {
-                    service.clearSettings()
-                }
+                .foregroundColor(.red)
                 Spacer()
             }
             .padding(25)

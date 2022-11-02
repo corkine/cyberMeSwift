@@ -28,7 +28,7 @@ struct MyToDo: View {
             Text("没有数据")
         } else {
             ForEach(today) { item in
-                HStack {
+                HStack(alignment:.firstTextBaseline) {
                     if item.status == "completed" {
                         Text(item.title)
                             .strikethrough()

@@ -8,6 +8,12 @@
 import HealthKit
 import Combine
 
+enum HealthServerKind: String, Hashable {
+    case activeEnergy, basalEnergy, standTime, exerciseTime
+}
+
+typealias HMUploadData = (Double,Double,Int,Int)
+
 class HealthManager {
     
     let store = HKHealthStore()
@@ -40,12 +46,10 @@ class HealthManager {
         case active, rest, stand, exec
     }
     
-    typealias SumTypeS = (Double,Double,Int,Int)
-    
     var collect: Set<AnyCancellable> = []
     
     /// 获取当天的运动消耗、静息消耗、站立和运动时长
-    func demoTest(completed:@escaping (SumTypeS) -> Void) {
+    func fetchWorkoutData(completed:@escaping (HMUploadData) -> Void) {
         let startDate = Calendar.current.startOfDay(for: Date())
         let endDate = Date()
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)

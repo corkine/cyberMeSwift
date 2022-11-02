@@ -22,7 +22,7 @@
 		193C8A1B291223EE00FF975F /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Number+Extension.swift */; };
 		193C8A1C291223EE00FF975F /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Number+Extension.swift */; };
 		1948648028D883A500064104 /* PhPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948647F28D883A500064104 /* PhPicker.swift */; };
-		1948648228D89DF300064104 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948648128D89DF300064104 /* Todo.swift */; };
+		1948648228D89DF300064104 /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948648128D89DF300064104 /* TodoView.swift */; };
 		1948B75F28F6C569009BECD0 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* Dashboard.swift */; };
 		1948B76128F6C7F7009BECD0 /* CyberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA428D36D9E00860518 /* CyberService.swift */; };
 		1948B76228F6D0A4009BECD0 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* Dashboard.swift */; };
@@ -32,7 +32,7 @@
 		195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D3028BFA2C600239F01 /* ContentView.swift */; };
 		195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
 		195A3D3628BFA2C700239F01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3528BFA2C700239F01 /* Preview Assets.xcassets */; };
-		19625BA228D365B600860518 /* CyberHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA128D365B600860518 /* CyberHome.swift */; };
+		19625BA228D365B600860518 /* CyberHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA128D365B600860518 /* CyberHomeView.swift */; };
 		19625BA528D36D9E00860518 /* CyberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA428D36D9E00860518 /* CyberService.swift */; };
 		19B925762906A5370039948A /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
 		19B925782906AD830039948A /* BodyMassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925772906AD830039948A /* BodyMassView.swift */; };
@@ -127,7 +127,7 @@
 		193548E2290CF5CD00B2266C /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		193C8A1A291223EE00FF975F /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
 		1948647F28D883A500064104 /* PhPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhPicker.swift; sourceTree = "<group>"; };
-		1948648128D89DF300064104 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
+		1948648128D89DF300064104 /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		1948B75E28F6C569009BECD0 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		1948B76328F6EDBC009BECD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1948B76428F858CD009BECD0 /* TimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 		195A3D3028BFA2C600239F01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		195A3D3228BFA2C700239F01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		195A3D3528BFA2C700239F01 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		19625BA128D365B600860518 /* CyberHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberHome.swift; sourceTree = "<group>"; };
+		19625BA128D365B600860518 /* CyberHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberHomeView.swift; sourceTree = "<group>"; };
 		19625BA428D36D9E00860518 /* CyberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberService.swift; sourceTree = "<group>"; };
 		19B925752906A5370039948A /* HealthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
 		19B925772906AD830039948A /* BodyMassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMassView.swift; sourceTree = "<group>"; };
@@ -237,6 +237,17 @@
 			path = generate;
 			sourceTree = "<group>";
 		};
+		193C8A1D2912556900FF975F /* view */ = {
+			isa = PBXGroup;
+			children = (
+				19625BA128D365B600860518 /* CyberHomeView.swift */,
+				1948648128D89DF300064104 /* TodoView.swift */,
+				19B925772906AD830039948A /* BodyMassView.swift */,
+				193548D3290C132B00B2266C /* FoodAccount.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		195A3D2228BFA2C600239F01 = {
 			isa = PBXGroup;
 			children = (
@@ -267,14 +278,15 @@
 		195A3D2D28BFA2C600239F01 /* helloSwift */ = {
 			isa = PBXGroup;
 			children = (
-				193548D5290CD97E00B2266C /* database */,
-				19FF8EC72900202C009C96C3 /* helloSwift.entitlements */,
-				1948B76328F6EDBC009BECD0 /* Info.plist */,
-				19D2A9DE28D48987009C81C4 /* tourtal1 */,
-				190C4D3728D7D7FB00C1CAE1 /* tourtal2 */,
 				19D2A9E128D4AF40009C81C4 /* app */,
 				19D2A9DD28D48953009C81C4 /* cyber */,
+				193C8A1D2912556900FF975F /* view */,
+				193548D5290CD97E00B2266C /* database */,
 				19D2A9DC28D48912009C81C4 /* landmarks */,
+				19D2A9DE28D48987009C81C4 /* tourtal1 */,
+				190C4D3728D7D7FB00C1CAE1 /* tourtal2 */,
+				19FF8EC72900202C009C96C3 /* helloSwift.entitlements */,
+				1948B76328F6EDBC009BECD0 /* Info.plist */,
 				195A3D3428BFA2C700239F01 /* Preview Content */,
 			);
 			path = helloSwift;
@@ -327,14 +339,12 @@
 		19D2A9DD28D48953009C81C4 /* cyber */ = {
 			isa = PBXGroup;
 			children = (
+				193548E2290CF5CD00B2266C /* Default.swift */,
+				1948B75E28F6C569009BECD0 /* Dashboard.swift */,
 				19625BA428D36D9E00860518 /* CyberService.swift */,
 				190995B82900112A000B5770 /* CS+API.swift */,
 				190995BB29001135000B5770 /* CS+Token.swift */,
-				19625BA128D365B600860518 /* CyberHome.swift */,
-				1948648128D89DF300064104 /* Todo.swift */,
-				1948B75E28F6C569009BECD0 /* Dashboard.swift */,
-				19B925772906AD830039948A /* BodyMassView.swift */,
-				193548D3290C132B00B2266C /* FoodAccount.swift */,
+				19B925752906A5370039948A /* HealthManager.swift */,
 			);
 			path = cyber;
 			sourceTree = "<group>";
@@ -353,10 +363,8 @@
 			children = (
 				195A3D2E28BFA2C600239F01 /* CyberApp.swift */,
 				1948B76428F858CD009BECD0 /* TimeUtil.swift */,
-				193548E2290CF5CD00B2266C /* Default.swift */,
 				19FF8EC429001FCA009C96C3 /* View+Extension.swift */,
 				193C8A1A291223EE00FF975F /* Number+Extension.swift */,
-				19B925752906A5370039948A /* HealthManager.swift */,
 				195A3D3228BFA2C700239F01 /* Assets.xcassets */,
 			);
 			path = app;
@@ -586,7 +594,7 @@
 				1948B76528F858CD009BECD0 /* TimeUtil.swift in Sources */,
 				19D2A9E528D4B045009C81C4 /* Game.swift in Sources */,
 				19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */,
-				1948648228D89DF300064104 /* Todo.swift in Sources */,
+				1948648228D89DF300064104 /* TodoView.swift in Sources */,
 				19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */,
 				195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */,
 				190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */,
@@ -595,7 +603,7 @@
 				19B925782906AD830039948A /* BodyMassView.swift in Sources */,
 				19B925762906A5370039948A /* HealthManager.swift in Sources */,
 				19DBD54F28D61E190086B710 /* LeaderBoard.swift in Sources */,
-				19625BA228D365B600860518 /* CyberHome.swift in Sources */,
+				19625BA228D365B600860518 /* CyberHomeView.swift in Sources */,
 				19CE761628D240D500AF8AFF /* LandmarkCommands.swift in Sources */,
 				195A3D2F28BFA2C600239F01 /* CyberApp.swift in Sources */,
 				19D6C3BB28D1514300ED5D4B /* Model.swift in Sources */,

@@ -17,9 +17,11 @@ extension View {
 #endif
 
 struct BodyMassView: View {
+    @EnvironmentObject var service:CyberService
+    
     @State var weight = ""
     @State var massData: [Float] = []
-
+    
     var healthManager: HealthManager?
     
     @State var showErrorMessage = false
@@ -36,8 +38,14 @@ struct BodyMassView: View {
     
     func fetchMess() {
         healthManager?.withPermission {
-            healthManager?.demoTest(completed: { sumType in
-                print("sumType is \(sumType)")
+            healthManager?.fetchWorkoutData(completed: { sumType in
+                print("health data now \(sumType)")
+                service.uploadHealth(data:
+                                        [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
+                                                          activeEnergy: sumType.0,
+                                                          basalEnergy: sumType.1,
+                                                          standTime: sumType.2,
+                                                          exerciseTime: sumType.3)])
             })
             healthManager?.fetchWidgetData { data, err in
                 //print("data is \(String(describing: data))")
@@ -89,8 +97,8 @@ struct BodyMassView: View {
                     if self.massData.count >= 2 {
                         BodyMassChartView(data: self.massData,
                                           color: Color("weightDiff"))
-                            .frame(height: 110)
-                            .padding(.trailing, 7)
+                        .frame(height: 110)
+                        .padding(.trailing, 7)
                     } else {
                         Text("没有数据，锻炼并记录一段时间后再来吧")
                             .padding(.top, 2)
@@ -118,7 +126,7 @@ struct BodyMassView: View {
                         .foregroundColor(Color("weightNumber"))
                         .multilineTextAlignment(.center)
                         .font(.custom("American Typewriter", size: 20))
-                        
+                    
                     Text("kg")
                         .foregroundColor(Color("weightNumber"))
                         .font(.custom("American Typewriter", size: 20))
@@ -207,7 +215,7 @@ struct BodyMassChartView: View {
             let diffCount: Int = data.count - 1
             let circleSlot: CGFloat = diffWidth / CGFloat(diffCount)
             let dataN: [Float] = normalize(data,
-                        height: Float(proxy.size.height) - Float(circleWidth))
+                                           height: Float(proxy.size.height) - Float(circleWidth))
             let firestLineOffsetY = CGFloat(dataN[0]) + circleWidth / 2 - 1
             // MARK: 基准线
             Line()
@@ -254,9 +262,9 @@ struct BodyMassChartView: View {
 struct BodyMassView_Previews: PreviewProvider {
     static var previews: some View {
         BodyMassView()
-//        BodyMassChartView(data: [101,102,103,110,107,100])
-//            .previewLayout(.fixed(width: 500, height: 200))
-//        BodyMassChartView(data: [106,102])
-//            .previewLayout(.fixed(width: 500, height: 200))
+        //        BodyMassChartView(data: [101,102,103,110,107,100])
+        //            .previewLayout(.fixed(width: 500, height: 200))
+        //        BodyMassChartView(data: [106,102])
+        //            .previewLayout(.fixed(width: 500, height: 200))
     }
 }

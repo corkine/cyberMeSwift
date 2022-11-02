@@ -39,13 +39,11 @@ struct Dashboard: Codable {
     struct Fitness: Codable {
         var active: Double
         var rest: Double
-        var diet: Double
         var goalActive: Double
         var goalCut: Double
         enum CodingKeys: String, CodingKey {
             case active
             case rest
-            case diet
             case goalActive = "goal-active"
             case goalCut = "goal-cut"
         }

@@ -34,6 +34,14 @@ struct Summary: Codable, Hashable {
                                             SummaryData(todo: [:]))
 }
 
+struct HMUploadDateData: Codable {
+    var time: String
+    var activeEnergy: Double
+    var basalEnergy: Double
+    var standTime: Int
+    var exerciseTime: Int
+}
+
 //@MainActor
 class CyberService: ObservableObject {
     
@@ -50,7 +58,7 @@ class CyberService: ObservableObject {
     
     @Published var syncTodoNow = false
     
-    // MARK: 登录
+    // MARK: - 登录 -
     var token: String = "" {
         didSet {
             if token != "" {
@@ -61,7 +69,7 @@ class CyberService: ObservableObject {
     }
     @Published var showLogin = false
     
-    // MARK: 设置
+    // MARK: - 设置 -
     var settings: [String:String] = [:] {
         didSet {
             print("settings now set to \(settings)")
@@ -69,7 +77,7 @@ class CyberService: ObservableObject {
     }
     @Published var showSettings = false
     
-    // MARK: 体重
+    // MARK: - 体重 -
     @Published var showBodyMassSheet = false
     
     init() {
@@ -77,6 +85,7 @@ class CyberService: ObservableObject {
         self.settings = getSettings() ?? [:]
     }
     
+    // MARK: - API -
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError
     }
@@ -96,6 +105,24 @@ class CyberService: ObservableObject {
                     DispatchQueue.main.async {
                         self.summaryData = response
                     }
+                    return
+                }
+            }
+        }.resume()
+    }
+    
+    func uploadHealth(data: [HMUploadDateData]) {
+        guard let url = URL(string: CyberService.baseUrl + CyberService.uploadHealthUrl) else {
+            return
+        }
+        var request = URLRequest(url: url)
+        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "Post"
+        URLSession.shared.uploadTask(with: request, from: try! JSONEncoder().encode(data)) { data, response, error in
+            if let data = data {
+                if let response = try? JSONDecoder().decode(SimpleMessage.self, from: data) {
+                    print("upload health result: \(response)")
                     return
                 }
             }

@@ -16,6 +16,12 @@ enum TimeUtil {
 }
 
 extension Date {
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.calendar = Calendar.current
+        return formatter
+    }()
     var weekday: Int {
         let res = Calendar.current.component(.weekday, from: self)
         if res == 1 { return 7 }
@@ -23,5 +29,11 @@ extension Date {
     }
     var hour: Int {
         Calendar.current.component(.hour, from: self)
+    }
+    static var today: Date {
+        Calendar.current.startOfDay(for: Date())
+    }
+    static var yesterday: Date {
+        Calendar.current.date(byAdding: .day, value: -1, to: Date())!
     }
 }

@@ -47,7 +47,7 @@ class CyberService: ObservableObject {
     
     var subs = Set<AnyCancellable>()
     
-    let userDefault = UserDefaults(suiteName: "group.cyberme.share")!
+    static let userDefault = UserDefaults(suiteName: "group.cyberme.share")!
     
     @Published var summaryData = Summary.defaultSummary
     @Published var gaming = false
@@ -83,6 +83,19 @@ class CyberService: ObservableObject {
     init() {
         self.token = getLoginToken() ?? ""
         self.settings = getSettings() ?? [:]
+    }
+    
+    // MARK: - 节流 -
+    var lastUpdate = 0.0
+    
+    var updateCacheAndNeedAction: Bool {
+        let now = Date().timeIntervalSince1970
+        let res = now - lastUpdate
+        let result =  res > 60
+        if result {
+            lastUpdate = now
+        }
+        return result
     }
     
     // MARK: - API -

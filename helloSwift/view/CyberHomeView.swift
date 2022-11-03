@@ -50,19 +50,22 @@ struct CyberNav: View {
 }
 
 struct ProfileView: View {
+    @EnvironmentObject var service:CyberService
     @State private var widgetBG: WidgetBackground = .mountain
+    @State private var autoUpldateHealthInfo = false
+    @State private var slowApi = false
     @State var showBodyMassSheet = false
     
     init() {
-        _widgetBG = State(initialValue: WidgetBackground(rawValue: UserDefaults(suiteName: Default.groupName)!
-            .string(forKey: "widgetBG") ?? "mountain")!)
+        _widgetBG = State(initialValue: WidgetBackground(rawValue: CyberService.widgetBG)!)
+        _autoUpldateHealthInfo = State(initialValue: CyberService.autoUpdateHealthInfo)
+        _slowApi = State(initialValue: CyberService.slowApi)
     }
     
-    @EnvironmentObject var service:CyberService
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 15) {
-                Text("示例应用")
+                Text("小应用")
                 Button("BullsEye Game") {
                     withAnimation {
                         service.gaming = true
@@ -78,6 +81,9 @@ struct ProfileView: View {
                         service.readme = true
                     }
                 }
+                Button("体重管理") {
+                    showBodyMassSheet = true
+                }
                 Divider()
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {
@@ -88,15 +94,21 @@ struct ProfileView: View {
                         }
                         .pickerStyle(.segmented)
                         .onChange(of: widgetBG) { newValue in
-                            print("Setting to \(newValue)")
-                            service.userDefault.set(newValue.rawValue, forKey: "widgetBG")
+                            CyberService.widgetBG = newValue.rawValue
                             Dashboard.updateWidget(inSeconds: 0)
                         }
                     }
                     Spacer()
                 }
-                Button("体重管理") {
-                    showBodyMassSheet = true
+                Group {
+                    Toggle("自动更新健身记录", isOn: $autoUpldateHealthInfo)
+                    Toggle("请求 API 节流", isOn: $slowApi)
+                }
+                .onChange(of: autoUpldateHealthInfo) { newValue in
+                    CyberService.autoUpdateHealthInfo = newValue
+                }
+                .onChange(of: slowApi) { newValue in
+                    CyberService.slowApi = newValue
                 }
                 Group {
                     Button("清空凭证") {
@@ -135,6 +147,14 @@ struct CyberHome: View {
     @State var healthURL = Setting.healthUrlScheme
     @State var hcmShortcutName = Setting.hcmShortcutName
     @State var syncHealthShortcutName = Setting.syncHealthShortcutName
+    
+    var healthManager: HealthManager?
+    
+    init() {
+        if HKHealthStore.isHealthDataAvailable() {
+            healthManager = HealthManager()
+        }
+    }
     
     var body: some View {
         ScrollView(.vertical,showsIndicators:false) {
@@ -214,7 +234,21 @@ struct CyberHome: View {
             }
         }
         .onAppear {
-            service.fetchSummary()
+            if service.updateCacheAndNeedAction || !CyberService.slowApi {
+                service.fetchSummary()
+                if CyberService.autoUpdateHealthInfo {
+                    healthManager?.withPermission {
+                        healthManager?.fetchWorkoutData(completed: { sumType in
+                            service.uploadHealth(data:
+                                                    [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
+                                                                      activeEnergy: sumType.0,
+                                                                      basalEnergy: sumType.1,
+                                                                      standTime: sumType.2,
+                                                                      exerciseTime: sumType.3)])
+                        })
+                    }
+                }
+            }
         }
         
     }

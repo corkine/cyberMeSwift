@@ -27,7 +27,7 @@ extension CyberService {
     }
     
     func getLoginToken() -> String? {
-        let res = userDefault.string(forKey: "cyber-token")
+        let res = Self.userDefault.string(forKey: "cyber-token")
         if res == nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.showLogin = true
@@ -44,33 +44,60 @@ extension CyberService {
         }
         let allToken = (user + ":" + passToken).data(using: .utf8)?.base64EncodedString()
         print("gen token \(String(describing: allToken))")
-        userDefault.set(allToken, forKey: "cyber-token")
+        Self.userDefault.set(allToken, forKey: "cyber-token")
         token = allToken!
         showLogin = false
     }
     
     func clearLoginToken() {
-        userDefault.removeObject(forKey: "cyber-token")
+        Self.userDefault.removeObject(forKey: "cyber-token")
         showLogin = true
     }
     
     func setSettings(_ data: [String:String]) {
-        userDefault.set(data, forKey: "settings")
+        Self.userDefault.set(data, forKey: "settings")
         showSettings = false
     }
     
     func clearSettings() {
-        userDefault.removeObject(forKey: "settings")
+        Self.userDefault.removeObject(forKey: "settings")
         showSettings = true
     }
     
     func getSettings() -> [String:String]? {
-        let res = userDefault.dictionary(forKey: "settings")
+        let res = Self.userDefault.dictionary(forKey: "settings")
         if res == nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.showSettings = true
             }
         }
         return res as? [String:String]
+    }
+    
+    static var autoUpdateHealthInfo: Bool {
+        get {
+            userDefault.bool(forKey: "autoUpdateHealthInfo")
+        }
+        set {
+            userDefault.set(newValue, forKey: "autoUpdateHealthInfo")
+        }
+    }
+    
+    static var widgetBG: String {
+        get {
+            userDefault.string(forKey: "widgetBG") ?? "mountain"
+        }
+        set {
+            userDefault.set(newValue, forKey: "widgetBG")
+        }
+    }
+    
+    static var slowApi: Bool {
+        get {
+            userDefault.bool(forKey: "slowApi")
+        }
+        set {
+            userDefault.set(newValue, forKey: "slowApi")
+        }
     }
 }

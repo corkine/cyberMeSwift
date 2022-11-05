@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct MyToDo: View {
-    @Binding var todo: [String:[Summary.TodoItem]]
-    var today: [Summary.TodoItem] {
+    @Binding var todo: [String:[ISummary.TodoItem]]
+    var today: [ISummary.TodoItem] {
         var data = todo[getDate()] ?? []
         if data.isEmpty && Calendar.current.component(.hour, from: Date()) < 7 {
             data = todo[getDate(off:-1)] ?? []
@@ -53,7 +53,7 @@ struct MyToDo: View {
 }
 
 struct MyToDo_Previews: PreviewProvider {
-    typealias Todo = Summary.TodoItem
+    typealias Todo = ISummary.TodoItem
     static var previews: some View {
         VStack {
             MyToDo(todo: .constant(

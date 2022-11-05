@@ -11,13 +11,7 @@ import Combine
 import SwiftUI
 import WidgetKit
 
-struct Summary: Codable, Hashable {
-    var message:String
-    var status:Int
-    var data: SummaryData
-    struct SummaryData: Codable, Hashable {
-        var todo: [String:[TodoItem]]
-    }
+struct ISummary: Hashable {
     struct TodoItem: Codable, Hashable, Identifiable {
         var time:String
         var title:String
@@ -26,12 +20,89 @@ struct Summary: Codable, Hashable {
         var finish_at:String?
         var create_at:String
         var importance:String
-        var id:String {
-            title
+        var id:String { title }
+    }
+    struct MovieItem: Codable, Hashable, Identifiable {
+        var name:String
+        var url:String
+        var data:[String]
+        var last_update:String
+        var id:String { url }
+    }
+    struct FitnessItem: Codable, Hashable {
+        var active: Double
+        var rest: Double
+        var stand: Int?
+        var exercise: Int?
+        var goalActive: Double
+        enum CodingKeys: String, CodingKey {
+            case active, rest, stand, exercise, goalActive = "goal-active"
         }
     }
-    static let defaultSummary = Summary(message: "Empty", status: -1, data:
-                                            SummaryData(todo: [:]))
+    struct WorkItem: Codable, Hashable {
+        var NeedWork: Bool
+        var OffWork: Bool
+        var NeedMorningCheck: Bool
+        var SignIn: [String]
+        var Policy: WorkItemPolicy?
+        struct WorkItemPolicy: Codable, Hashable {
+            var exist: Bool
+            var pending: Int
+            var failed: Int
+            var success: Int
+        }
+    }
+    struct BlueItem: Codable, Hashable {
+        var UpdateTime: String
+        var IsTodayBlue: Bool
+        var WeekBlueCount: Int
+        var MonthBlueCount: Int
+        var MaxNoBlueDay: Int
+        var Day120BalanceDay: Int
+        var MaxNoBlueDayFirstDay: String
+        var MarvelCount: Int
+    }
+    struct CleanItem: Codable, Hashable {
+        var MorningBrushTeeth: Bool
+        var NightBrushTeeth: Bool
+        var MorningCleanFace: Bool
+        var NightCleanFace: Bool
+        var HabitCountUntilNow: Int
+        var HabitHint: String
+        var MarvelCount: Int
+    }
+    var todo: [String:[TodoItem]]
+    var movie: [MovieItem]
+    var fitness: FitnessItem
+    var work: WorkItem
+    var blue: BlueItem
+    var clean: CleanItem
+    enum CodingKeys: String, CodingKey {
+        case todo, movie, fitness, work, blue, clean
+    }
+}
+
+extension ISummary: Decodable {
+    init(from decoder: Decoder) throws {
+        let f = try decoder.container(keyedBy: CodingKeys.self)
+        self.todo = try f.decode([String:[TodoItem]].self, forKey: .todo)
+        self.movie = try f.decode([MovieItem].self, forKey: .movie)
+        
+        let fit = try f.nestedContainer(keyedBy: FitnessItem.CodingKeys.self, forKey: .fitness)
+        let a = try fit.decode(Double.self, forKey: .active)
+        let r = try fit.decode(Double.self, forKey: .rest)
+        let s = try fit.decodeIfPresent(Int.self, forKey: .stand)
+        let e = try fit.decodeIfPresent(Int.self, forKey: .exercise)
+        let g = try fit.decode(Double.self, forKey: .goalActive)
+        //self.fitness = try f.decode(FitnessItem.self, forKey: .fitness)
+        self.fitness = FitnessItem(active: a, rest: r, stand: s, exercise: e ,goalActive: g)
+        
+        self.work = try f.decode(WorkItem.self, forKey: .work)
+        self.blue = try f.decode(BlueItem.self, forKey: .blue)
+        self.clean = try f.decode(CleanItem.self, forKey: .clean)
+    }
+    static var `default`: ISummary =
+    ISummary(todo: [:], movie: [], fitness: FitnessItem(active: 10, rest: 10, goalActive: 100), work: WorkItem(NeedWork: true, OffWork: false, NeedMorningCheck: false, SignIn: []), blue: BlueItem(UpdateTime: "NotKnown", IsTodayBlue: true, WeekBlueCount: 10, MonthBlueCount: 10, MaxNoBlueDay: 10, Day120BalanceDay: 10, MaxNoBlueDayFirstDay: "2022-01-01", MarvelCount: 30), clean: CleanItem(MorningBrushTeeth: true, NightBrushTeeth: true, MorningCleanFace: true, NightCleanFace: true, HabitCountUntilNow: 30, HabitHint: "1+1?", MarvelCount: 40))
 }
 
 struct HMUploadDateData: Codable {
@@ -42,6 +113,14 @@ struct HMUploadDateData: Codable {
     var exerciseTime: Int
 }
 
+struct CyberResult<Item:Decodable>: Decodable {
+    var message: String
+    var status: Int
+    var data: Item?
+}
+
+typealias SimpleResult = CyberResult<Int>
+
 //@MainActor
 class CyberService: ObservableObject {
     
@@ -49,13 +128,13 @@ class CyberService: ObservableObject {
     
     static let userDefault = UserDefaults(suiteName: "group.cyberme.share")!
     
-    @Published var summaryData = Summary.defaultSummary
+    @Published var summaryData = ISummary.default
     @Published var gaming = false
     @Published var landing = false
     @Published var readme = false
     
+    // MARK: - 提示 -
     @Published var alertInfomation: String?
-    
     @Published var syncTodoNow = false
     
     // MARK: - 登录 -
@@ -105,7 +184,6 @@ class CyberService: ObservableObject {
     
     func fetchSummary() {
         if syncTodoNow { return }
-        print("fetching summary")
         guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {
             print("End point is Invalid")
             return
@@ -114,9 +192,10 @@ class CyberService: ObservableObject {
         request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
-                if let response = try? JSONDecoder().decode(Summary.self, from: data) {
+                if let response = try? JSONDecoder().decode(CyberResult<ISummary>.self, from: data),
+                   let data = response.data {
                     DispatchQueue.main.async {
-                        self.summaryData = response
+                        self.summaryData = data
                     }
                     return
                 }
@@ -134,7 +213,7 @@ class CyberService: ObservableObject {
         request.httpMethod = "Post"
         URLSession.shared.uploadTask(with: request, from: try! JSONEncoder().encode(data)) { data, response, error in
             if let data = data {
-                if let response = try? JSONDecoder().decode(SimpleMessage.self, from: data) {
+                if let response = try? JSONDecoder().decode(SimpleResult.self, from: data) {
                     print("upload health result: \(response)")
                     return
                 }
@@ -148,14 +227,9 @@ class CyberService: ObservableObject {
         case canNotDecode
     }
     
-    struct SimpleMessage: Codable {
-        var status: Int
-        var message: String
-    }
-    
     func checkCard(isForce:Bool = false,completed:@escaping ()->Void = {}) {
         loadJSON(from: isForce ? CyberService.checkCardForce :
-                                CyberService.checkCardUrl, for: SimpleMessage.self)
+                                CyberService.checkCardUrl, for: SimpleResult.self)
         { [weak self] data, error in
             guard let self = self else { return }
             if let error = error {
@@ -169,9 +243,8 @@ class CyberService: ObservableObject {
     }
     
     func syncTodo(completed:@escaping ()->Void = {}) {
-        print("syncing todo")
         syncTodoNow = true
-        loadJSON(from: CyberService.syncTodoUrl, for: SimpleMessage.self)
+        loadJSON(from: CyberService.syncTodoUrl, for: SimpleResult.self)
         { [weak self] data, error in
             guard let self = self else { return }
             if let error = error {
@@ -187,7 +260,7 @@ class CyberService: ObservableObject {
         }
     }
     
-    func loadJSON<T: Codable>(from urlString: String, for type: T.Type,
+    func loadJSON<T: Decodable>(from urlString: String, for type: T.Type,
                               action:@escaping (T?,Error?) -> Void) {
         guard let url = URL(string: CyberService.baseUrl + urlString) else { return }
         //print("requesting for \(baseUrl + urlString)")

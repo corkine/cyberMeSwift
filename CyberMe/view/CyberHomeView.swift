@@ -34,7 +34,7 @@ struct CyberHome: View {
                     Label("我的一天", systemImage: "calendar")
                         .font(.title2)
                         .foregroundColor(Color.blue)
-                    MyToDo(todo:$service.summaryData.data.todo)
+                    MyToDo(todo:$service.summaryData.todo)
                         .padding(.bottom, 9)
                         .padding(.top, 3)
                     Label("我的日记", systemImage: "book.closed")

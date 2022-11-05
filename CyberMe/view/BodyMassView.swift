@@ -150,8 +150,8 @@ struct BodyMassView: View {
                 }
             }
             .font(.system(size: 20))
-            .padding(.horizontal, 150)
-            .padding(.vertical, 13)
+            .frame(width: UIScreen.main.bounds.width - 40,
+                   height: 45)
             .foregroundColor(.white)
             .background(Color.blue)
             .cornerRadius(10)

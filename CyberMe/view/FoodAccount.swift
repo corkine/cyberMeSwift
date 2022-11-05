@@ -14,6 +14,7 @@ enum FoodCategory: String, CaseIterable, Identifiable {
     case suger = "甜点"
     case drink = "饮品"
     case fat = "油炸"
+    case reflect = "反馈"
     case other = "其它"
     case placeholder = "占位符"
     var id: FoodCategory { self }
@@ -25,6 +26,7 @@ enum FoodCategory: String, CaseIterable, Identifiable {
         case .drink: return "drink"
         case .fat: return "fat"
         case .other: return "other"
+        case .reflect: return "reflect"
         case .placeholder: return "placeholder"
         }
     }
@@ -37,6 +39,7 @@ enum FoodCategory: String, CaseIterable, Identifiable {
         case "drink": return .drink
         case "fat": return .fat
         case "other": return .other
+        case "reflect": return .reflect
         case "placeholder": return .placeholder
         default: return .other
         }
@@ -300,6 +303,7 @@ struct FoodAccountEditView: View {
                                  FoodCategory.suger,
                                  FoodCategory.drink,
                                  FoodCategory.fat,
+                                 FoodCategory.reflect,
                                  FoodCategory.other,
                                  FoodCategory.placeholder]) { category in
                             Text(category.rawValue).tag(category)
@@ -345,7 +349,7 @@ struct FoodAccountEditView: View {
 struct FoodAccountAddView: View {
     @Binding var showAdd: Bool
     @State var name = ""
-    @State var category = FoodCategory.suger
+    @State var category = FoodCategory.energy
     @State var calories = ""
     @State var note = ""
     @State var date = Date()
@@ -408,12 +412,19 @@ struct FoodAccountAddView: View {
                                  FoodCategory.suger,
                                  FoodCategory.drink,
                                  FoodCategory.fat,
+                                 FoodCategory.reflect,
                                  FoodCategory.other,
                                  FoodCategory.placeholder]) { category in
                             Text(category.rawValue).tag(category)
                         }
                     }
                     .pickerStyle(.segmented)
+                }
+                .onChange(of: category) { newValue in
+                    if newValue == .reflect {
+                        name = "晚间健身圆环力量反馈"
+                        calories = "30"
+                    }
                 }
                 Group {
                     Text("卡路里").padding(.top, 10)

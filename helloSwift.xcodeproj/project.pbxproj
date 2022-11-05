@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		190995B92900112A000B5770 /* CS+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995B82900112A000B5770 /* CS+API.swift */; };
 		190995BA2900112A000B5770 /* CS+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995B82900112A000B5770 /* CS+API.swift */; };
-		190995BC29001135000B5770 /* CS+Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995BB29001135000B5770 /* CS+Token.swift */; };
-		190995BD29001135000B5770 /* CS+Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995BB29001135000B5770 /* CS+Token.swift */; };
+		190995BC29001135000B5770 /* CS+Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995BB29001135000B5770 /* CS+Setting.swift */; };
+		190995BD29001135000B5770 /* CS+Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995BB29001135000B5770 /* CS+Setting.swift */; };
 		190C4D3928D7D80C00C1CAE1 /* ReadMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3828D7D80C00C1CAE1 /* ReadMe.swift */; };
 		190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3A28D7D81800C1CAE1 /* Book.swift */; };
 		190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3C28D7E34300C1CAE1 /* DetailView.swift */; };
@@ -34,6 +34,8 @@
 		195A3D3628BFA2C700239F01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3528BFA2C700239F01 /* Preview Assets.xcassets */; };
 		19625BA228D365B600860518 /* CyberHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA128D365B600860518 /* CyberHomeView.swift */; };
 		19625BA528D36D9E00860518 /* CyberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA428D36D9E00860518 /* CyberService.swift */; };
+		199BA88E291653D00080925D /* CyberNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88D291653D00080925D /* CyberNavView.swift */; };
+		199BA890291653FE0080925D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88F291653FE0080925D /* SettingView.swift */; };
 		19B925762906A5370039948A /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
 		19B925782906AD830039948A /* BodyMassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925772906AD830039948A /* BodyMassView.swift */; };
 		19BD734728CA07AF0062B8D9 /* landmarkData.json in Resources */ = {isa = PBXBuildFile; fileRef = 19BD734628CA07AF0062B8D9 /* landmarkData.json */; };
@@ -117,7 +119,7 @@
 
 /* Begin PBXFileReference section */
 		190995B82900112A000B5770 /* CS+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+API.swift"; sourceTree = "<group>"; };
-		190995BB29001135000B5770 /* CS+Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Token.swift"; sourceTree = "<group>"; };
+		190995BB29001135000B5770 /* CS+Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Setting.swift"; sourceTree = "<group>"; };
 		190C4D3828D7D80C00C1CAE1 /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 		190C4D3A28D7D81800C1CAE1 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		190C4D3C28D7E34300C1CAE1 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -138,6 +140,8 @@
 		195A3D3528BFA2C700239F01 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		19625BA128D365B600860518 /* CyberHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberHomeView.swift; sourceTree = "<group>"; };
 		19625BA428D36D9E00860518 /* CyberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberService.swift; sourceTree = "<group>"; };
+		199BA88D291653D00080925D /* CyberNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberNavView.swift; sourceTree = "<group>"; };
+		199BA88F291653FE0080925D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		19B925752906A5370039948A /* HealthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
 		19B925772906AD830039948A /* BodyMassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMassView.swift; sourceTree = "<group>"; };
 		19BD734628CA07AF0062B8D9 /* landmarkData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = landmarkData.json; sourceTree = "<group>"; };
@@ -168,7 +172,7 @@
 		19FD182E28D9CBB1004F97B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19FD183028D9CBB1004F97B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		19FF8EC429001FCA009C96C3 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
-		19FF8EC72900202C009C96C3 /* helloSwift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = helloSwift.entitlements; sourceTree = "<group>"; };
+		19FF8EC72900202C009C96C3 /* CyberMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMe.entitlements; sourceTree = "<group>"; };
 		19FF8EC829002041009C96C3 /* CyberMeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		19FFA8F9290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -240,7 +244,9 @@
 		193C8A1D2912556900FF975F /* view */ = {
 			isa = PBXGroup;
 			children = (
+				199BA88D291653D00080925D /* CyberNavView.swift */,
 				19625BA128D365B600860518 /* CyberHomeView.swift */,
+				199BA88F291653FE0080925D /* SettingView.swift */,
 				1948648128D89DF300064104 /* TodoView.swift */,
 				19B925772906AD830039948A /* BodyMassView.swift */,
 				193548D3290C132B00B2266C /* FoodAccount.swift */,
@@ -251,12 +257,9 @@
 		195A3D2228BFA2C600239F01 = {
 			isa = PBXGroup;
 			children = (
-				19FF8EC829002041009C96C3 /* CyberMeWidgetExtension.entitlements */,
-				19D6C3B828D1510A00ED5D4B /* hikeData.json */,
 				19BD734828CAB6400062B8D9 /* README.md */,
-				19BD734628CA07AF0062B8D9 /* landmarkData.json */,
-				195A3D2D28BFA2C600239F01 /* helloSwift */,
-				19CE75F928D23A5F00AF8AFF /* MacLandmarks */,
+				195A3D2D28BFA2C600239F01 /* CyberMe */,
+				19CE75F928D23A5F00AF8AFF /* CyberMeMac */,
 				19D2A9EE28D4B4F6009C81C4 /* CyberMeTests */,
 				19FD182B28D9CBB0004F97B3 /* CyberMeWidget */,
 				19FD17FF28D9CB27004F97B3 /* Frameworks */,
@@ -275,7 +278,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		195A3D2D28BFA2C600239F01 /* helloSwift */ = {
+		195A3D2D28BFA2C600239F01 /* CyberMe */ = {
 			isa = PBXGroup;
 			children = (
 				19D2A9E128D4AF40009C81C4 /* app */,
@@ -285,11 +288,11 @@
 				19D2A9DC28D48912009C81C4 /* landmarks */,
 				19D2A9DE28D48987009C81C4 /* tourtal1 */,
 				190C4D3728D7D7FB00C1CAE1 /* tourtal2 */,
-				19FF8EC72900202C009C96C3 /* helloSwift.entitlements */,
+				19FF8EC72900202C009C96C3 /* CyberMe.entitlements */,
 				1948B76328F6EDBC009BECD0 /* Info.plist */,
 				195A3D3428BFA2C700239F01 /* Preview Content */,
 			);
-			path = helloSwift;
+			path = CyberMe;
 			sourceTree = "<group>";
 		};
 		195A3D3428BFA2C700239F01 /* Preview Content */ = {
@@ -300,7 +303,7 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		19CE75F928D23A5F00AF8AFF /* MacLandmarks */ = {
+		19CE75F928D23A5F00AF8AFF /* CyberMeMac */ = {
 			isa = PBXGroup;
 			children = (
 				19CE75FC28D23A5F00AF8AFF /* ContentView.swift */,
@@ -311,7 +314,7 @@
 				19CE761328D23F9C00AF8AFF /* Settings.swift */,
 				19CE761528D240D500AF8AFF /* LandmarkCommands.swift */,
 			);
-			path = MacLandmarks;
+			path = CyberMeMac;
 			sourceTree = "<group>";
 		};
 		19CE760028D23A6300AF8AFF /* Preview Content */ = {
@@ -325,6 +328,8 @@
 		19D2A9DC28D48912009C81C4 /* landmarks */ = {
 			isa = PBXGroup;
 			children = (
+				19D6C3B828D1510A00ED5D4B /* hikeData.json */,
+				19BD734628CA07AF0062B8D9 /* landmarkData.json */,
 				19D6C3BA28D1514300ED5D4B /* Model.swift */,
 				19CE75E928D22EB400AF8AFF /* Helper.swift */,
 				195A3D3028BFA2C600239F01 /* ContentView.swift */,
@@ -343,7 +348,7 @@
 				1948B75E28F6C569009BECD0 /* Dashboard.swift */,
 				19625BA428D36D9E00860518 /* CyberService.swift */,
 				190995B82900112A000B5770 /* CS+API.swift */,
-				190995BB29001135000B5770 /* CS+Token.swift */,
+				190995BB29001135000B5770 /* CS+Setting.swift */,
 				19B925752906A5370039948A /* HealthManager.swift */,
 			);
 			path = cyber;
@@ -407,6 +412,7 @@
 		19FD182B28D9CBB0004F97B3 /* CyberMeWidget */ = {
 			isa = PBXGroup;
 			children = (
+				19FF8EC829002041009C96C3 /* CyberMeWidgetExtension.entitlements */,
 				19FD182C28D9CBB0004F97B3 /* CyberMeWidget.swift */,
 				19FD182E28D9CBB1004F97B3 /* Assets.xcassets */,
 				19FD183028D9CBB1004F97B3 /* Info.plist */,
@@ -581,6 +587,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				199BA88E291653D00080925D /* CyberNavView.swift in Sources */,
 				19625BA528D36D9E00860518 /* CyberService.swift in Sources */,
 				19FFA8FB290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift in Sources */,
 				193C8A1B291223EE00FF975F /* Number+Extension.swift in Sources */,
@@ -589,6 +596,7 @@
 				190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */,
 				193548D4290C132B00B2266C /* FoodAccount.swift in Sources */,
 				190C4D3928D7D80C00C1CAE1 /* ReadMe.swift in Sources */,
+				199BA890291653FE0080925D /* SettingView.swift in Sources */,
 				193548E3290CF5CD00B2266C /* Default.swift in Sources */,
 				190995B92900112A000B5770 /* CS+API.swift in Sources */,
 				1948B76528F858CD009BECD0 /* TimeUtil.swift in Sources */,
@@ -607,7 +615,7 @@
 				19CE761628D240D500AF8AFF /* LandmarkCommands.swift in Sources */,
 				195A3D2F28BFA2C600239F01 /* CyberApp.swift in Sources */,
 				19D6C3BB28D1514300ED5D4B /* Model.swift in Sources */,
-				190995BC29001135000B5770 /* CS+Token.swift in Sources */,
+				190995BC29001135000B5770 /* CS+Setting.swift in Sources */,
 				19D2A9E028D489AE009C81C4 /* Bullseye.swift in Sources */,
 				19CE75ED28D2307F00AF8AFF /* Landmarks.swift in Sources */,
 				193548D8290CD99F00B2266C /* FoodAccount.xcdatamodeld in Sources */,
@@ -648,7 +656,7 @@
 				1948B76228F6D0A4009BECD0 /* Dashboard.swift in Sources */,
 				190995BA2900112A000B5770 /* CS+API.swift in Sources */,
 				19FD182D28D9CBB0004F97B3 /* CyberMeWidget.swift in Sources */,
-				190995BD29001135000B5770 /* CS+Token.swift in Sources */,
+				190995BD29001135000B5770 /* CS+Setting.swift in Sources */,
 				19FF8EC629001FCA009C96C3 /* View+Extension.swift in Sources */,
 				193548E4290CF86200B2266C /* Default.swift in Sources */,
 				193C8A1C291223EE00FF975F /* Number+Extension.swift in Sources */,
@@ -795,14 +803,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = helloSwift/helloSwift.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CyberMe/CyberMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"helloSwift/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CyberMe/Preview Content\"";
 				DEVELOPMENT_TEAM = MUN22RF257;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = helloSwift/Info.plist;
+				INFOPLIST_FILE = CyberMe/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "CyberMe 需要读取健康数据以提供更好的目标管理";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CyberMe 需要写入健康数据以持久化您的运动成果";
@@ -833,14 +841,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = helloSwift/helloSwift.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CyberMe/CyberMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"helloSwift/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CyberMe/Preview Content\"";
 				DEVELOPMENT_TEAM = MUN22RF257;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = helloSwift/Info.plist;
+				INFOPLIST_FILE = CyberMe/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "CyberMe 需要读取健康数据以提供更好的目标管理";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CyberMe 需要写入健康数据以持久化您的运动成果";
@@ -966,7 +974,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = CyberMeWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CyberMeWidget/CyberMeWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -997,7 +1005,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = CyberMeWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CyberMeWidget/CyberMeWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

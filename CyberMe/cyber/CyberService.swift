@@ -44,6 +44,7 @@ struct ISummary: Hashable {
         var OffWork: Bool
         var NeedMorningCheck: Bool
         var SignIn: [SignIn]
+        var WorkHour: Double?
         var Policy: WorkItemPolicy?
         struct WorkItemPolicy: Codable, Hashable {
             var exist: Bool

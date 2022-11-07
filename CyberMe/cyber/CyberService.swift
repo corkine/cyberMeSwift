@@ -43,13 +43,17 @@ struct ISummary: Hashable {
         var NeedWork: Bool
         var OffWork: Bool
         var NeedMorningCheck: Bool
-        var SignIn: [String]
+        var SignIn: [SignIn]
         var Policy: WorkItemPolicy?
         struct WorkItemPolicy: Codable, Hashable {
             var exist: Bool
             var pending: Int
             var failed: Int
             var success: Int
+        }
+        struct SignIn: Codable, Hashable {
+            var source: String
+            var time: String //2022-11-07T08:28:29
         }
     }
     struct BlueItem: Codable, Hashable {

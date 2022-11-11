@@ -26,15 +26,13 @@ CyberMe iOS 客户端程序。后端基于 status.mazhangjing.com 和 cyber.mazh
 
 提供同步 HCM、同步 Microsoft Graph(TODO) 的快捷菜单。
 
-### 体重管理
+### 待办、HCM 打卡、周计划、饮食和体重管理
 
-![](https://static2.mazhangjing.com/cyber/202210/e05bafd5_图片.png)
+![](https://static2.mazhangjing.com/cyber/202211/75f8df24_图片.png)
+
+提供 Microsoft TODO 待办事项、周计划、当天 HCM 打卡信息等数据的查看。
 
 提供和 Apple Health 交互的体重记录和趋势查看、目标激励。
-
-### 饮食管理
-
-![](https://static2.mazhangjing.com/20221030/82f6_f1a3e988.jpg)
 
 提供基于 Core Data 的饮食管理。可以随手“入账”高热量食物、饮品的消费，并且在近期通过运动锻炼来将其“抵账”。
 

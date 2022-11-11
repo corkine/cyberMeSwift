@@ -40,7 +40,7 @@ struct MyToDo: View {
                     RoundBG(Text(item.list).font(.system(size: 14)).padding(.vertical, 5),
                             fill: .gray.opacity(0.1))
                     .padding(.trailing, 2)
-                }.padding(.vertical, -3)
+                }.padding(.vertical, -4)
             }
             .padding(.leading, 2.0)
         }

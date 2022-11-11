@@ -26,13 +26,12 @@ struct DashboardView: View {
                                 Text("我的一天")
                                     .font(.title2)
                                     .foregroundColor(Color.blue)
+                                    .padding(.bottom, 10)
                                 
                                 MyToDo(todo: .constant(summary.todo))
-                                .padding(.bottom, 12)
-                                .padding(.top, 3)
                                 
                                 DashboardInfoView(summary: summary)
-                                    .padding(.top, 20)
+                                    .padding(.top, 30)
                                     .padding(.bottom, 20)
                                 
                                 Text("本周计划")
@@ -229,9 +228,6 @@ struct DashboardPlanView: View {
                         }
                     }
                     .fixedSize(horizontal: true, vertical: true)
-                    .alignmentGuide(.bottom, computeValue: { d in
-                        max(80, d.height)
-                    })
                 }
             }
             .padding(.vertical, 15)

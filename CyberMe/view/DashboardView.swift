@@ -28,7 +28,7 @@ struct DashboardView: View {
                                     .foregroundColor(Color.blue)
                                 
                                 MyToDo(todo: .constant(summary.todo))
-                                .padding(.bottom, 9)
+                                .padding(.bottom, 12)
                                 .padding(.top, 3)
                                 
                                 DashboardInfoView(summary: summary)
@@ -62,6 +62,7 @@ struct DashboardView: View {
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         DashboardView(summary: .default)
+            .previewDevice(.init(rawValue: "iPhone XR"))
         //DashboardInfoView()
         //DashboardPlanView()
     }
@@ -86,7 +87,7 @@ struct DashboardInfoView: View {
                                height: proxy.size.height)
                         .padding(.all, 0)
                         .scaleEffect(CGSize(width: scale, height: scale),
-                                     anchor: UnitPoint(x: 0.5, y: 0.6))
+                                     anchor: UnitPoint(x: 0.5, y: 0.7))
                         .offset(x: offset)
                         .animation(.spring(), value: offset)
                     Spacer()
@@ -131,7 +132,7 @@ struct DashboardInfoView: View {
         }
         .frame(height: 120)
         .onAppear {
-            self.offset = -10
+            self.offset = 10
         }
     }
 }

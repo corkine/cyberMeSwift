@@ -14,15 +14,12 @@ CyberMe iOS 客户端程序。后端基于 status.mazhangjing.com 和 cyber.mazh
 
 ## 特性
 
-### 桌面组件
+### 桌面组件与快捷菜单
 
-![](https://static2.mazhangjing.com/cyber/202210/2f0cb141_图片.png)
+![](https://static2.mazhangjing.com/cyber/202211/60e7335e_图片.png)
 
 提供当日工作状态、打卡状态、周报完成状态、健身完成状态、当日 TODO 待办事项和天气与昨日与明日的温差的展示。根据时间和状态不同，显示的内容存在差异。允许直接跳转到支付宝健康码、云上协同打卡界面、调用快捷指令执行 Health 健康数据上传等动作。
 
-### 快捷菜单
-
-![](https://static2.mazhangjing.com/cyber/202210/6963ac46_图片.png)
 
 提供同步 HCM、同步 Microsoft Graph(TODO) 的快捷菜单。
 

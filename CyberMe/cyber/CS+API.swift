@@ -9,7 +9,7 @@ import Foundation
 
 extension CyberService {
     static let baseUrl = "https://cyber.mazhangjing.com/"
-    static let summaryUrl = "cyber/dashboard/summary?day=5"
+    static let summaryUrl = "cyber/dashboard/ios-summary?day=5"
     static let dashboardUrl = "cyber/dashboard/ioswidget"
     static let uploadHealthUrl = "cyber/fitness/appUpload"
     static let checkCardUrl = "cyber/check/now?plainText=false&preferCacheSuccess=true"

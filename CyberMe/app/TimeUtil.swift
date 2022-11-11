@@ -13,6 +13,42 @@ enum TimeUtil {
         let hour = Calendar.current.component(.hour, from: date)
         return (hour >= 7 && hour < 9) || (hour >= 17 && hour < 22)
     }
+    static func getDate(off:Int = 0) -> String {
+        var dayComponent = DateComponents()
+        dayComponent.day = off
+        let calendar = Calendar.current
+        let day = calendar.date(byAdding: dayComponent, to: Date())!
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let currentTime: String = formatter.string(from: day)
+        return currentTime
+    }
+    static func getWeedayFromeDate(date: Date, withMonth: Bool = false) -> String {
+        let calendar = Calendar.current
+        let dateComponets = calendar.dateComponents([Calendar.Component.year,Calendar.Component.month,Calendar.Component.weekday,Calendar.Component.day], from: date)
+        //获取到今天是周几 1(星期天) 2(星期一) 3(星期二) 4(星期三) 5(星期四) 6(星期五) 7(星期六)
+        let weekDay = dateComponets.weekday
+        var weekDayStr = ""
+        switch weekDay {
+        case 1:
+            weekDayStr = "周日"
+        case 2:
+            weekDayStr = "周一"
+        case 3:
+            weekDayStr = "周二"
+        case 4:
+            weekDayStr = "周三"
+        case 5:
+            weekDayStr = "周四"
+        case 6:
+            weekDayStr = "周五"
+        case 7:
+            weekDayStr = "周六"
+        default:
+            weekDayStr = ""
+        }
+        return withMonth ? "\(dateComponets.day!) 日 \(weekDayStr)" : weekDayStr
+    }
 }
 
 extension Date {
@@ -37,3 +73,4 @@ extension Date {
         Calendar.current.date(byAdding: .day, value: -1, to: Date())!
     }
 }
+

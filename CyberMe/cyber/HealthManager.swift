@@ -53,43 +53,41 @@ class HealthManager {
         let startDate = Calendar.current.startOfDay(for: Date())
         let endDate = Date()
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-        //        let query = HKSampleQuery(sampleType: activeEnergyType, predicate: predicate,
-        //                                  limit: HKObjectQueryNoLimit, sortDescriptors: nil) { query, res, err in
-        //            if let sample = res as? [HKQuantitySample] {
-        //                //print("res is \(String(describing: sample))")
-        //                var count = 0
-        //                var allCount = 0
-        //                let sum = sample.reduce(0.0) { current, sample in
-        //                    count += 1
-        //                    allCount += sample.count
-        //                    return current + sample.quantity.doubleValue(for: .smallCalorie())
-        //                }
-        //                print("sum calories is \(sum / 1000.0), count \(count), allCount \(allCount)")
-        //            }
-        //        }
         let publisher = PassthroughSubject<(SumType, Double), Never>()
         store.execute(HKStatisticsQuery(quantityType: activeEnergyType, quantitySamplePredicate: predicate) {
             query, data, error in
             if let data = data?.sumQuantity()?.doubleValue(for: .smallCalorie()) {
                 publisher.send((SumType.active, data / 1000.0))
+            } else if let error = error {
+                print("error fetch activeEnergy \(error.localizedDescription)")
+                publisher.send((SumType.active, 0))
             }
         })
         store.execute(HKStatisticsQuery(quantityType: restEnergyType, quantitySamplePredicate: predicate) {
             query, data, error in
             if let data = data?.sumQuantity()?.doubleValue(for: .smallCalorie()) {
                 publisher.send((SumType.rest, data / 1000.0))
+            } else if let error = error {
+                print("error fetch restEnergy \(error.localizedDescription)")
+                publisher.send((SumType.rest, 0))
             }
         })
         store.execute(HKStatisticsQuery(quantityType: standTimeType, quantitySamplePredicate: predicate) {
             query, data, error in
             if let data = data?.sumQuantity()?.doubleValue(for: .minute()) {
                 publisher.send((SumType.stand, data))
+            } else if let error = error {
+                print("error fetch standTime \(error.localizedDescription)")
+                publisher.send((SumType.stand, 0))
             }
         })
         store.execute(HKStatisticsQuery(quantityType: execTimeType, quantitySamplePredicate: predicate) {
             query, data, error in
             if let data = data?.sumQuantity()?.doubleValue(for: .minute()) {
                 publisher.send((SumType.exec, data))
+            } else if let error = error {
+                print("error fetch execTime \(error.localizedDescription)")
+                publisher.send((SumType.exec, 0))
             }
         })
         publisher

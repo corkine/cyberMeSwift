@@ -39,7 +39,6 @@ struct BodyMassView: View {
     func fetchMess() {
         healthManager?.withPermission {
             healthManager?.fetchWorkoutData(completed: { sumType in
-                print("health data now \(sumType)")
                 service.uploadHealth(data:
                                         [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
                                                           activeEnergy: sumType.0,

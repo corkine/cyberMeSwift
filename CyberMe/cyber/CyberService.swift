@@ -128,7 +128,8 @@ class CyberService: ObservableObject {
         request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "Post"
-        URLSession.shared.uploadTask(with: request, from: try! JSONEncoder().encode(data)) { data, response, error in
+        let jsonData = try! JSONEncoder().encode(data)
+        URLSession.shared.uploadTask(with: request, from: jsonData) { data, response, error in
             if let data = data {
                 if let response = try? JSONDecoder().decode(SimpleResult.self, from: data) {
                     action(response, error)

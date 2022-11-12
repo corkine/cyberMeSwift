@@ -50,7 +50,7 @@ struct ToDoView: View {
                         }
                 }
                 Spacer()
-                RoundBG(Text(item.list).font(.system(size: 14)).padding(.vertical, 5),
+                RoundBG(Text(item.list).font(.system(size: 14)).padding(.vertical, 3),
                         fill: .gray.opacity(0.1))
                 .padding(.trailing, 2)
             }
@@ -75,7 +75,7 @@ struct MyToDo_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             ToDoView(todo: [TimeUtil.getDate():[
-                Todo(time: "2022", title: "Todo Item 1", list: "学习", status: "completed", create_at: "2022", importance: "high"),
+                Todo(time: "2022", title: "Todo Item 11111111111111111111111111122222323232323232323232", list: "学习", status: "completed", create_at: "2022", importance: "high"),
                 Todo(time: "2022", title: "Todo Item 1", list: "学习", status: "completed", create_at: "2022", importance: "high"),
                 Todo(time: "2022", title: "Todo Item 1", list: "学习", status: "completed", create_at: "2022", importance: "high"),
                 Todo(time: "2022", title: "Todo Item 1", list: "学习", status: "completed", create_at: "2022", importance: "high")

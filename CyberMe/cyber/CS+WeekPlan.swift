@@ -11,9 +11,11 @@ struct WeekPlanAddLog: Codable, Hashable {
     var name: String
     var progressDelta: Double
     var description: String?
-    enum CodeKey: String, CodingKey {
-        case name, progressDelta = "progress-delta",
-        description, update
+    enum CodingKeys: String, CodingKey {
+        case planId
+        case name
+        case progressDelta = "progress-delta"
+        case description
     }
 }
 
@@ -21,7 +23,6 @@ extension CyberService {
     /// 添加周计划项目
     func addLog(_ log: WeekPlanAddLog, action:@escaping () -> Void = {}) {
         uploadJSON(api: CyberService.addLogUrl(log.planId!), data: log) { [self] data, err in
-            print(data ?? "No Result")
             if let data = data {
                 if data.status <= 0 {
                     self.alertInfomation = data.message

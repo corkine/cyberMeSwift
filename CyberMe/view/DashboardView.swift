@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @EnvironmentObject var service:CyberService
     @Environment(\.colorScheme) var currentMode
     var summary: ISummary
     var body: some View {
@@ -17,18 +18,24 @@ struct DashboardView: View {
                     Image("background_image")
                         .resizable()
                         .scaledToFit()
-                        //.offset(y: 34)
                 }
                 GeometryReader { proxy in
                     ScrollView(.vertical,showsIndicators:false) {
                         HStack(alignment:.top) {
                             VStack(alignment:.leading,spacing: 10) {
-                                Text("我的一天")
-                                    .font(.title2)
-                                    .foregroundColor(Color.blue)
-                                    .padding(.bottom, 10)
+                                Button("我的一天") {
+                                    service.syncTodo {
+                                        service.fetchSummary()
+                                        Dashboard.updateWidget(inSeconds: 0)
+                                    }
+                                }
+                                .font(.title2)
+                                .foregroundColor(Color.blue)
+                                .padding(.bottom, 10)
                                 
-                                MyToDo(todo: .constant(summary.todo))
+                                
+                                ToDoView(todo: summary.todo,
+                                         weekPlan: summary.weekPlan)
                                 
                                 DashboardInfoView(summary: summary)
                                     .padding(.top, 30)
@@ -155,14 +162,13 @@ struct RoundBG<T: View>: View {
 }
 
 struct DashboardPlanView: View {
+    @EnvironmentObject var service:CyberService
     @Environment(\.colorScheme) var currentMode
     let proxy: GeometryProxy
     var weekPlan: ISummary.WeekPlanItem
-    var logs: [String]
     init(weekPlan: ISummary.WeekPlanItem, proxy: GeometryProxy) {
         self.proxy = proxy
         self.weekPlan = weekPlan
-        self.logs = weekPlan.logs.map { log in log.name }
     }
     var body: some View {
         ZStack {
@@ -204,7 +210,7 @@ struct DashboardPlanView: View {
                                 .frame(width: 1)
                                 .padding(.vertical, 3)
                             VStack(alignment: .leading) {
-                                ForEach(logs, id:\.self) { _ in
+                                ForEach(weekPlan.logs, id:\.id) { _ in
                                     Circle()
                                         .foregroundColor(
                                             currentMode == .light ? Color("lightGray") : .gray)
@@ -218,8 +224,14 @@ struct DashboardPlanView: View {
                         // MARK: 日志
                         HStack(alignment:.bottom, spacing: 0.0) {
                             VStack(alignment:.leading, spacing: 4) {
-                                ForEach(logs, id:\.self) { log in
-                                    Text(log)
+                                ForEach(weekPlan.logs, id:\.self) { log in
+                                    Text(log.name)
+                                        .contextMenu {
+                                            Button("删除") {
+                                                removeLogAndRefresh(log.id)
+                                            }
+                                            .accentColor(Color.red)
+                                        }
                                 }
                                 .lineLimit(1)
                             }
@@ -233,6 +245,10 @@ struct DashboardPlanView: View {
             .padding(.vertical, 15)
             .padding(.horizontal, 15)
         }
-        .frame(width: proxy.size.width - 40)
+    }
+    func removeLogAndRefresh(_ logId: String) {
+        service.removeLog(weekPlan.id, logId) {
+           service.fetchSummary()
+        }
     }
 }

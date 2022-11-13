@@ -23,14 +23,28 @@ struct DashboardView: View {
                     ScrollView(.vertical,showsIndicators:false) {
                         HStack(alignment:.top) {
                             VStack(alignment:.leading,spacing: 10) {
-                                Button("我的一天") {
-                                    service.syncTodo {
-                                        service.fetchSummary()
-                                        Dashboard.updateWidget(inSeconds: 0)
+                                HStack(alignment:.center) {
+                                    Button("我的一天") {
+                                        service.syncTodo {
+                                            service.fetchSummary()
+                                            Dashboard.updateWidget(inSeconds: 0)
+                                        }
                                     }
+                                    .font(.title2)
+                                    .foregroundColor(Color.blue)
+                                    
+                                    Spacer()
+                
+                                    Button {
+                                        UIApplication.shared.open(URL(string: Default.UrlScheme.shortcutUrl("TODO"))!)
+                                    } label: {
+                                        Label("", systemImage: "plus")
+                                            .labelStyle(.iconOnly)
+                                    }
+                                    .scaleEffect(1.2)
+                                    .padding(.trailing, 8)
+
                                 }
-                                .font(.title2)
-                                .foregroundColor(Color.blue)
                                 .padding(.bottom, 10)
                                 
                                 

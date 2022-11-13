@@ -20,9 +20,9 @@ extension CyberService {
         uploadJSON(api: CyberService.uploadHealthUrl, data: data) { response, error in
             print("""
                   upload health action:
-                  data: \(data),
-                  response: \(String(describing: response)),
-                  error: \(String(describing: error?.localizedDescription))
+                    data: \(data),
+                    response: \(String(describing: response)),
+                    error: \(String(describing: error?.localizedDescription))
                   """)
             return
         }

@@ -54,7 +54,7 @@ struct ToDoView: View {
                         fill: .gray.opacity(0.1))
                 .padding(.trailing, 2)
             }
-            .padding(.vertical, -4)
+            .padding(.vertical, 0)
         }
         .padding(.leading, 2.0)
     }

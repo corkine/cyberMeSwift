@@ -55,20 +55,23 @@ struct DashboardView: View {
                                     .padding(.top, 30)
                                     .padding(.bottom, 20)
                                 
-                                Text("本周计划")
-                                    .font(.title2)
-                                    .foregroundColor(Color.blue)
-                                
-                                ForEach(summary.weekPlan, id: \.id) { plan in
-                                    DashboardPlanView(weekPlan: plan, proxy: proxy)
+                                if !summary.weekPlan.isEmpty {
+                                    Text("本周计划")
+                                        .font(.title2)
+                                        .foregroundColor(Color.blue)
+                                    
+                                    ForEach(summary.weekPlan, id: \.id) { plan in
+                                        DashboardPlanView(weekPlan: plan, proxy: proxy)
+                                    }
+                                    .padding(.bottom, 10)
                                 }
-                                .padding(.bottom, 10)
                                 
                                 Spacer()
                             }
                             .padding(.top, 20)
                             .padding(.leading, 20)
                             .padding(.trailing, 5)
+                            .opacity(summary.isDemo ? 0 : 1)
                             .navigationTitle("\(TimeUtil.getWeedayFromeDate(date: Date(), withMonth: true))")
                             Spacer()
                         }

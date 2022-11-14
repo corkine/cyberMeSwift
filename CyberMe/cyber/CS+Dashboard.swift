@@ -114,6 +114,7 @@ struct ISummary: Hashable {
         static let `default` =
         WeekPlanItem(id: "1001", name: "周计划 101", category: "learn", logs: [WeekPlanItem.WeekPlanLog(id: "101", name: "日志 101", update: "2022-01-01", progressDelta: 10),WeekPlanItem.WeekPlanLog(id: "102", name: "日志 102", update: "2022-01-02", progressDelta: 12)])
     }
+    var isDemo = false
     var todo: [String:[TodoItem]]
     var movie: [MovieItem]
     var fitness: FitnessItem
@@ -147,7 +148,8 @@ extension ISummary: Decodable {
         self.weekPlan = try f.decode([WeekPlanItem].self, forKey: .weekPlan)
     }
     static var `default`: ISummary =
-    ISummary(todo: ["2022-11-11":[TodoItem.default, TodoItem.default, TodoItem.default]],
+    ISummary(isDemo: true,
+             todo: ["2022-11-11":[TodoItem.default, TodoItem.default, TodoItem.default]],
              movie: [],
              fitness: FitnessItem(active: 10, rest: 10, goalActive: 100),
              work: WorkItem(NeedWork: true, OffWork: false, NeedMorningCheck: false,
@@ -176,7 +178,11 @@ extension CyberService {
                         self.summaryData = data
                     }
                     return
+                } else {
+                    self.alertInfomation = "解码 Summary 数据出错"
                 }
+            } else {
+                self.alertInfomation = error?.localizedDescription ?? "获取 Summary 数据出错"
             }
         }.resume()
     }

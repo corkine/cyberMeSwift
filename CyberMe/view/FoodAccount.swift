@@ -58,6 +58,7 @@ struct FoodAccountView: View {
         @Binding var foodShowCompleted: Bool
         
         @Environment(\.managedObjectContext) var context
+        @EnvironmentObject var service: CyberService
         
         @FetchRequest
         var newItems: FetchedResults<FoodAccountDAO>
@@ -80,6 +81,8 @@ struct FoodAccountView: View {
             _newItems = FetchRequest(fetchRequest: req)
             _foodShowCompleted = foodShowCompleted
         }
+        
+        @State var op = 0.0
         
         var body: some View {
             List {
@@ -177,52 +180,56 @@ struct FoodAccountView: View {
                     }
                 }
             }
+            .opacity(op)
+            .animation(.spring(), value: op)
+            .onAppear { op = 1.0 }
+            .onChange(of: newItems.count) { count in
+                service.setFoodCount(count)
+                service.foodCount = count
+            }
         }
     }
     
     var body: some View {
         NavigationView {
             FetchView(forCategory: filter, foodShowCompleted: $foodShowCompleted)
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    Button {
-                        showBodyMass = true
-                    } label: {
-                        Text("体重管理")
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button {
+                            showBodyMass = true
+                        } label: {
+                            Text("体重管理")
+                        }
                     }
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button {
-                        showAdd = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                    Menu {
-                        Picker("食物类别", selection: $filter) {
-                            ForEach(FoodCategory.allCases) { category in
-                                Text(category.rawValue).tag(category)
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button {
+                            showAdd = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                        Menu {
+                            Picker("食物类别", selection: $filter) {
+                                ForEach(FoodCategory.allCases) { category in
+                                    Text(category.rawValue).tag(category)
+                                }
                             }
+                            .pickerStyle(.inline)
+                            
+                            Toggle(isOn: $foodShowCompleted) {
+                                Label("显示已抵账的条目", systemImage: "arrow.3.trianglepath")
+                            }
+                        } label: {
+                            Label("过滤", systemImage: "gearshape.fill")
                         }
-                        .pickerStyle(.inline)
-                        
-                        Toggle(isOn: $foodShowCompleted) {
-                            Label("显示已抵账的条目", systemImage: "arrow.3.trianglepath")
-                        }
-                    } label: {
-                        Label("过滤", systemImage: "gearshape.fill")
                     }
                 }
-            }
-            .onChange(of: filter, perform: { newValue in
-                
-            })
-            .sheet(isPresented: $showAdd, content: {
-                FoodAccountAddView(showAdd: $showAdd)
-            })
-            .sheet(isPresented: $showBodyMass, content: {
-                BodyMassView()
-            })
-            .navigationTitle("饮食账单")
+                .sheet(isPresented: $showAdd, content: {
+                    FoodAccountAddView(showAdd: $showAdd)
+                })
+                .sheet(isPresented: $showBodyMass, content: {
+                    BodyMassView()
+                })
+                .navigationTitle("饮食账单")
         }
     }
 }
@@ -304,7 +311,7 @@ struct FoodAccountEditView: View {
                                  FoodCategory.drink,
                                  FoodCategory.fat,
                                  FoodCategory.reflect,
-                                 FoodCategory.other,
+                                 //FoodCategory.other,
                                  FoodCategory.placeholder]) { category in
                             Text(category.rawValue).tag(category)
                         }

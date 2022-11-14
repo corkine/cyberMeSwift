@@ -84,7 +84,10 @@ struct DashboardView: View {
 
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardView(summary: .default)
+        var defaultSummary = ISummary.default
+        defaultSummary.isDemo = false
+        defaultSummary.weekPlan[0].logs[0].name = "Very Long Very Long Very Long Very Long Very Long Very Long"
+        return DashboardView(summary: defaultSummary)
             .previewDevice(.init(rawValue: "iPhone XR"))
         //DashboardInfoView()
         //DashboardPlanView()
@@ -256,7 +259,7 @@ struct DashboardPlanView: View {
                             .foregroundColor(.gray)
                         }
                     }
-                    .fixedSize(horizontal: true, vertical: true)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .padding(.vertical, 15)

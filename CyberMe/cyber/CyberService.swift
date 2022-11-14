@@ -31,6 +31,9 @@ class CyberService: ObservableObject {
     @Published var landing = false
     @Published var readme = false
     
+    // MARK: - 食物 -
+    @Published var foodCount = 0
+    
     // MARK: - 提示 -
     @Published var alertInfomation: String?
     @Published var syncTodoNow = false
@@ -60,6 +63,7 @@ class CyberService: ObservableObject {
     init() {
         self.token = getLoginToken() ?? ""
         self.settings = getSettings() ?? [:]
+        self.foodCount = getFoodCount()
     }
     
     // MARK: - 节流 -

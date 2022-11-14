@@ -76,12 +76,14 @@ struct CyberApp: App {
             if TimeUtil.needCheckCard {
                 cyberService.checkCard {
                     Dashboard.updateWidget(inSeconds: 0)
+                    cyberService.fetchSummary()
                 }
             }
             break
         case _ where input.hasPrefix(CyberUrl.checkCardForce):
             cyberService.checkCard(isForce:true) {
                 Dashboard.updateWidget(inSeconds: 0)
+                cyberService.fetchSummary()
             }
             break
         case _ where input.hasPrefix(CyberUrl.checkCardHCM):

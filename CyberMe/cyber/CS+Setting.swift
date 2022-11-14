@@ -64,6 +64,15 @@ extension CyberService {
         showSettings = true
     }
     
+    func setFoodCount(_ count: Int) {
+        Self.userDefault.set(count, forKey: "foodCount")
+        
+    }
+    
+    func getFoodCount() -> Int {
+        Self.userDefault.integer(forKey: "foodCount")
+    }
+    
     func getSettings() -> [String:String]? {
         let res = Self.userDefault.dictionary(forKey: "settings")
         if res == nil {

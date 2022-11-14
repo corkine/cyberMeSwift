@@ -17,13 +17,7 @@ struct ToDoView: View {
         if data.isEmpty && Calendar.current.component(.hour, from: Date()) < 7 {
             data = todo[TimeUtil.getDate(off:-1)] ?? []
         }
-        return data.sorted(by: {a,b in
-            if a.list == b.list {
-                return a.create_at < b.create_at
-            } else {
-                return a.list < b.list
-            }
-        })
+        return data
     }
     var body: some View {
         ForEach(today) { item in

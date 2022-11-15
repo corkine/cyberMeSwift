@@ -91,7 +91,7 @@ struct ISummary: Hashable {
         var progress: Double?
         var description: String?
         var lastUpdate: String?
-        var logs: [WeekPlanLog]
+        var logs: [WeekPlanLog]?
         struct WeekPlanLog: Codable, Hashable {
             var id: String
             var name: String
@@ -172,14 +172,18 @@ extension CyberService {
         request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
-                if let response = try? JSONDecoder().decode(CyberResult<ISummary>.self, from: data),
-                   let data = response.data {
-                    DispatchQueue.main.async {
-                        self.summaryData = data
+                do {
+                    let response = try JSONDecoder().decode(CyberResult<ISummary>.self, from: data)
+                    if let data = response.data {
+                        DispatchQueue.main.async {
+                            self.summaryData = data
+                        }
+                    } else {
+                        self.alertInfomation = "解码 Summary 数据出错"
                     }
-                    return
-                } else {
-                    self.alertInfomation = "解码 Summary 数据出错"
+                } catch {
+                    print("error decode: \(error)")
+                    self.alertInfomation = "解码 Summary 数据出错: \(error.localizedDescription)"
                 }
             } else {
                 self.alertInfomation = error?.localizedDescription ?? "获取 Summary 数据出错"

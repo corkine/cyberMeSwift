@@ -82,7 +82,7 @@ struct FoodAccountView: View {
             _foodShowCompleted = foodShowCompleted
         }
         
-        @State var op = 0.0
+        //@State var op = 0.0
         
         var body: some View {
             List {
@@ -180,9 +180,9 @@ struct FoodAccountView: View {
                     }
                 }
             }
-            .opacity(op)
-            .animation(.spring(), value: op)
-            .onAppear { op = 1.0 }
+            //            .opacity(op)
+            //            .animation(.spring(), value: op)
+            //            .onAppear { op = 1.0 }
             .onChange(of: newItems.count) { count in
                 service.setFoodCount(count)
                 service.foodCount = count

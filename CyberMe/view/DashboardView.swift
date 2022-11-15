@@ -36,7 +36,7 @@ struct DashboardView: View {
                                     Spacer()
                 
                                     Button {
-                                        UIApplication.shared.open(URL(string: Default.UrlScheme.shortcutUrl("TODO"))!)
+                                        UIApplication.shared.open(URL(string: Default.UrlScheme.todoApp)!)
                                     } label: {
                                         Label("", systemImage: "plus")
                                             .labelStyle(.iconOnly)
@@ -86,7 +86,7 @@ struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         var defaultSummary = ISummary.default
         defaultSummary.isDemo = false
-        defaultSummary.weekPlan[0].logs[0].name = "Very Long Very Long Very Long Very Long Very Long Very Long"
+        defaultSummary.weekPlan[0].logs![0].name = "Very Long Very Long Very Long Very Long Very Long Very Long"
         return DashboardView(summary: defaultSummary)
             .previewDevice(.init(rawValue: "iPhone XR"))
         //DashboardInfoView()
@@ -228,9 +228,10 @@ struct DashboardPlanView: View {
                             Rectangle()
                                 .fill(currentMode == .light ? Color("lightGray") : .gray)
                                 .frame(width: 1)
-                                .padding(.vertical, 3)
+                                .padding(.vertical, 4)
+                                .opacity((weekPlan.logs ?? []).isEmpty ? 0 : 1)
                             VStack(alignment: .leading) {
-                                ForEach(weekPlan.logs, id:\.id) { _ in
+                                ForEach(weekPlan.logs ?? [], id:\.id) { _ in
                                     Circle()
                                         .foregroundColor(
                                             currentMode == .light ? Color("lightGray") : .gray)
@@ -244,7 +245,7 @@ struct DashboardPlanView: View {
                         // MARK: 日志
                         HStack(alignment:.bottom, spacing: 0.0) {
                             VStack(alignment:.leading, spacing: 4) {
-                                ForEach(weekPlan.logs, id:\.self) { log in
+                                ForEach(weekPlan.logs ?? [], id:\.self) { log in
                                     Text(log.name)
                                         .contextMenu {
                                             Button("删除") {

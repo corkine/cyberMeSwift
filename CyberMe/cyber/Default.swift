@@ -9,6 +9,7 @@ enum Default {
     enum UrlScheme {
         static let alipayHealthApp = "alipay://platformapi/startapp?appId=2021001132656455"
         static let caiyunWeather = "caiyunapppro://weather"
+        static let todoApp = "x-msauth-to-do://today"
         static func shortcutUrl(_ name: String) -> String { "shortcuts://run-shortcut?name=\(name)" }
     }
     static let groupName = "group.cyberme.share"

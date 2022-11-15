@@ -15,9 +15,7 @@ struct CyberHome: View {
     @State var password:String = ""
     @State var showLogin = false
     @State var showAlert = false
-    @State var healthURL = Setting.healthUrlScheme
     @State var hcmShortcutName = Setting.hcmShortcutName
-    @State var syncHealthShortcutName = Setting.syncHealthShortcutName
     
     var healthManager: HealthManager?
     
@@ -61,19 +59,11 @@ struct CyberHome: View {
             }
             .sheet(isPresented: $service.showSettings) {
                 Form {
-                    TextField("健康码 URLScheme", text: $healthURL)
-                        .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
                     TextField("HCM 打卡快捷指令名称", text: $hcmShortcutName)
                         .autocorrectionDisabled(true)
                         .autocapitalization(.none)
-                    TextField("锻炼信息同步快捷指令名称", text: $syncHealthShortcutName)
-                        .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
                     Button("确定") {
-                        service.setSettings(["healthURL":healthURL,
-                                             "hcmShortcutName":hcmShortcutName,
-                                             "syncHealthShortcutName":syncHealthShortcutName])
+                        service.setSettings(["hcmShortcutName":hcmShortcutName])
                     }
                 }
             }

@@ -55,9 +55,11 @@ struct FoodAccountView: View {
     var foodShowCompleted = true
     
     struct FetchView: View {
+
         @Binding var foodShowCompleted: Bool
         
         @Environment(\.managedObjectContext) var context
+        
         @EnvironmentObject var service: CyberService
         
         @FetchRequest
@@ -67,6 +69,8 @@ struct FoodAccountView: View {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
             predicate: NSPredicate(format: "solved == true"))
         var solvedItems: FetchedResults<FoodAccountDAO>
+        
+        @State var op = 0.0
         
         init(forCategory filter: FoodCategory?, foodShowCompleted: Binding<Bool>) {
             let req = FoodAccountDAO.fetchRequest()
@@ -81,8 +85,6 @@ struct FoodAccountView: View {
             _newItems = FetchRequest(fetchRequest: req)
             _foodShowCompleted = foodShowCompleted
         }
-        
-        //@State var op = 0.0
         
         var body: some View {
             List {
@@ -180,9 +182,8 @@ struct FoodAccountView: View {
                     }
                 }
             }
-            //            .opacity(op)
-            //            .animation(.spring(), value: op)
-            //            .onAppear { op = 1.0 }
+            .onAppear { op = 1 }
+            .animation(.spring(), value: op)
             .onChange(of: newItems.count) { count in
                 service.setFoodCount(count)
                 service.foodCount = count

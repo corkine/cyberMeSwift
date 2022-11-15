@@ -106,13 +106,8 @@ struct CyberApp: App {
             Dashboard.updateWidget(inSeconds: 0)
             break
         case _ where input.hasPrefix(CyberUrl.healthCard):
-            if let name = cyberService.settings[Setting.healthUrlScheme], name != "" {
-                let url = URL(string: name)!
-                UIApplication.shared.open(url)
-            } else {
-                let url = URL(string: Default.UrlScheme.alipayHealthApp)!
-                UIApplication.shared.open(url)
-            }
+            let url = URL(string: Default.UrlScheme.alipayHealthApp)!
+            UIApplication.shared.open(url)
             break
         case _ where input.hasPrefix(CyberUrl.showBodyMass):
             cyberService.showBodyMassSheet = true

@@ -39,6 +39,9 @@ struct Dashboard: Codable {
     struct Fitness: Codable {
         var active: Double
         var rest: Double
+        var stand: Int?
+        var exercise: Int?
+        var mindful: Double?
         var goalActive: Double
         var goalCut: Double
         enum CodingKeys: String, CodingKey {

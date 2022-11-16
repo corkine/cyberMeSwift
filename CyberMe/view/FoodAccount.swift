@@ -183,7 +183,7 @@ struct FoodAccountView: View {
                 }
             }
             .onAppear { op = 1 }
-            .animation(.spring(), value: op)
+            .animation(.spring(), value: newItems.count + solvedItems.count + Int(op))
             .onChange(of: newItems.count) { count in
                 service.setFoodCount(count)
                 service.foodCount = count

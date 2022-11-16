@@ -12,7 +12,7 @@ enum HealthServerKind: String, Hashable {
     case activeEnergy, basalEnergy, standTime, exerciseTime
 }
 
-typealias HMUploadData = (Double,Double,Int,Int)
+typealias HMUploadData = (Double,Double,Int,Int,Double)
 
 class HealthManager {
     
@@ -28,10 +28,12 @@ class HealthManager {
     
     let execTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
     
+    let mindful = HKCategoryType.categoryType(forIdentifier: .mindfulSession)!
+    
     /// 请求读取 HealthKit 权限
     func withPermission(completed:@escaping ()->Void) {
         //HKHealthStore.isHealthDataAvailable()
-        let read: Set = [bodyMassType, activeEnergyType, restEnergyType, standTimeType, execTimeType]
+        let read: Set = [bodyMassType, activeEnergyType, restEnergyType, standTimeType, execTimeType, mindful]
         let write: Set = [bodyMassType]
         store.requestAuthorization(toShare: write, read: read) { success, error in
             if success {
@@ -43,7 +45,7 @@ class HealthManager {
     }
     
     enum SumType {
-        case active, rest, stand, exec
+        case active, rest, stand, exec, mindful
     }
     
     var collect: Set<AnyCancellable> = []
@@ -90,23 +92,45 @@ class HealthManager {
                 publisher.send((SumType.exec, 0))
             }
         })
+        let startM = Calendar.current.startOfDay(for: Date())
+        let endM = Calendar.current.date(byAdding: .day, value: 1, to: startM)
+        let pre = HKQuery.predicateForSamples(withStart: startM, end: endM)
+        let query = HKSampleQuery(sampleType: mindful, predicate: pre, limit: HKObjectQueryNoLimit,
+                                  sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)]) {
+            query, res, err in
+            if err == nil {
+                var totalTime = 0.0
+                if let results = res {
+                    for result in results {
+                        totalTime += result.endDate.timeIntervalSince(result.startDate)
+                    }
+                }
+                publisher.send((SumType.mindful, totalTime / 60))
+            } else {
+                print("error fetch mindful \(String(describing: err?.localizedDescription))")
+                publisher.send((SumType.mindful, 0))
+            }
+        }
+        store.execute(query)
         publisher
-            .collect(4)
+            .collect(5)
             .timeout(.seconds(10), scheduler: DispatchQueue.main)
             .sink { items in
                 var active = 0.0
                 var rest = 0.0
                 var stand = 0
                 var exec = 0
+                var mindful = 0.0
                 items.forEach { item in
                     switch item.0 {
                     case SumType.active: active = item.1
                     case SumType.rest: rest = item.1
                     case SumType.stand: stand = Int(item.1)
                     case SumType.exec: exec = Int(item.1)
+                    case SumType.mindful: mindful = item.1
                     }
                 }
-                completed((active, rest, stand, exec))
+                completed((active, rest, stand, exec, mindful))
                 publisher.send(completion: .finished)
             }
             .store(in: &self.collect)

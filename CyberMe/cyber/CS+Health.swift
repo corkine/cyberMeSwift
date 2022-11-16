@@ -13,6 +13,7 @@ struct HMUploadDateData: Codable {
     var basalEnergy: Double
     var standTime: Int
     var exerciseTime: Int
+    var mindful: Double
 }
 
 extension CyberService {

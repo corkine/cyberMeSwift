@@ -31,6 +31,7 @@ struct ISummary: Hashable {
         var rest: Double
         var stand: Int?
         var exercise: Int?
+        var mindful: Double?
         var goalActive: Double
         enum CodingKeys: String, CodingKey {
             case active, rest, stand, exercise, goalActive = "goal-active"

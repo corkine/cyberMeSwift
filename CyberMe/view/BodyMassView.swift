@@ -44,7 +44,8 @@ struct BodyMassView: View {
                                                           activeEnergy: sumType.0,
                                                           basalEnergy: sumType.1,
                                                           standTime: sumType.2,
-                                                          exerciseTime: sumType.3)])
+                                                          exerciseTime: sumType.3,
+                                                          mindful: sumType.4)])
             })
             healthManager?.fetchWidgetData { data, err in
                 //print("data is \(String(describing: data))")

@@ -13,16 +13,17 @@ enum TimeUtil {
         let hour = Calendar.current.component(.hour, from: date)
         return (hour >= 7 && hour < 9) || (hour >= 17 && hour < 22)
     }
-    static func getDate(off:Int = 0) -> String {
+    static func getDate(off:Int = 0, format:String = "yyyy-MM-dd") -> String {
         var dayComponent = DateComponents()
         dayComponent.day = off
         let calendar = Calendar.current
         let day = calendar.date(byAdding: dayComponent, to: Date())!
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = format
         let currentTime: String = formatter.string(from: day)
         return currentTime
     }
+    static var javaLikeFormat = "yyyy-MM-dd'T'HH:mm:ss"
     static func getWeedayFromeDate(date: Date, withMonth: Bool = false) -> String {
         let calendar = Calendar.current
         let dateComponets = calendar.dateComponents([Calendar.Component.year,Calendar.Component.month,Calendar.Component.weekday,Calendar.Component.day], from: date)

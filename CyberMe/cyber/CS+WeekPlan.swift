@@ -4,6 +4,7 @@
 //
 //  Created by Corkine on 2022/11/12.
 //
+import Foundation
 
 /// 周计划查询项目
 struct WeekPlanAddLog: Codable, Hashable {
@@ -47,5 +48,57 @@ extension CyberService {
                 alertInfomation = "删除日志出错：\(err.localizedDescription)"
             }
         })
-  }
+    }
+    fileprivate struct EditItem: Codable {
+        var id: String
+        var name: String
+        var description: String
+        var progressDelta: Double?
+        var update: String?
+        enum CodingKeys: String, CodingKey {
+            case id, name, description,
+                 progressDelta = "progress-delta", update
+        }
+    }
+    /// 修改周计划项目
+    func editItem(id:String, name:String, desc:String,
+                  action:@escaping (Error?) -> Void = {_ in }) {
+        uploadJSON(api: CyberService.editWeekPlanItemUrl,
+                   data: EditItem(id: id, name: name, description: desc, progressDelta: nil)) {
+            data, err in
+            if let data = data {
+                DispatchQueue.main.async {
+                    action(data.status <= 0 ? CyberError(message: data.message) : nil)
+                }
+            } else if let err = err {
+                DispatchQueue.main.async {
+                    action(err)
+                }
+            }
+        }
+    }
+    /// 修改周计划日志
+    func editLog(itemId:String, id:String, name:String,
+                 desc:String, delta: Double?, update: String?,
+                 action:@escaping (Error?) -> Void = {_ in }) {
+        uploadJSON(api: CyberService.editLogUrl(itemId),
+                   data: EditItem(id: id, name: name, description: desc,
+                                  progressDelta: delta, update: update)) {
+            data, err in
+            if let data = data {
+                DispatchQueue.main.async {
+                    action(data.status <= 0 ? CyberError(message: data.message) : nil)
+                }
+            } else if let err = err {
+                DispatchQueue.main.async {
+                    action(err)
+                }
+            }
+        }
+    }
+    
+}
+
+struct CyberError: Error {
+    var message: String
 }

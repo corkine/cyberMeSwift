@@ -21,4 +21,8 @@ extension CyberService {
     static func removeLogUrl(_ itemId: String, _ logId: String) -> String {
         return "cyber/week-plan/update-item/\(itemId)/remove-log/\(logId)"
     }
+    static func editLogUrl(_ itemId: String) -> String {
+        return "cyber/week-plan/update-item/\(itemId)/update-log"
+    }
+    static let editWeekPlanItemUrl = "cyber/week-plan/modify-item"
 }

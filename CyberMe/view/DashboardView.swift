@@ -186,6 +186,9 @@ struct DashboardPlanView: View {
     @Environment(\.colorScheme) var currentMode
     let proxy: GeometryProxy
     var weekPlan: ISummary.WeekPlanItem
+    @State var editLog: ISummary.WeekPlanItem.WeekPlanLog?
+    @State var editPlan: ISummary.WeekPlanItem?
+    @State var updateLogRemoveDate: Bool = false
     init(weekPlan: ISummary.WeekPlanItem, proxy: GeometryProxy) {
         self.proxy = proxy
         self.weekPlan = weekPlan
@@ -214,11 +217,16 @@ struct DashboardPlanView: View {
                     Text(weekPlan.name)
                         .font(.title3)
                         .foregroundColor(.gray)
-                        .padding(.bottom, -5)
+                        .contextMenu {
+                            Button("修改") {
+                                editPlan = weekPlan
+                            }
+                        }
                     Spacer()
                     RoundBG(Text("\(String(format: "%.0f", weekPlan.progress ?? 0.0))%"),
                             fill: currentMode == .light ? .white : Color("grayBackground"))
                 }
+                .padding(.bottom, -5)
                 // MARK: 内容
                 HStack(alignment: .bottom) {
                     // MARK: 圆点和日志
@@ -248,6 +256,15 @@ struct DashboardPlanView: View {
                                 ForEach(weekPlan.logs ?? [], id:\.self) { log in
                                     Text(log.name)
                                         .contextMenu {
+                                            Button("修改") {
+                                                updateLogRemoveDate = false
+                                                editLog = log
+                                            }
+                                            Button("修改（且移到最后）") {
+                                                updateLogRemoveDate = true
+                                                editLog = log
+                                            }
+                                            Divider()
                                             Button("删除") {
                                                 removeLogAndRefresh(log.id)
                                             }
@@ -262,6 +279,28 @@ struct DashboardPlanView: View {
                     }
                     .fixedSize(horizontal: false, vertical: true)
                 }
+            }
+            .sheet(item: $editLog) { item in
+                SimpleInfoView(saveAction: { name, desc in
+                    service.editLog(itemId: weekPlan.id, id: item.id, name: name,
+                                    desc: desc, delta: 10,
+                                    update: updateLogRemoveDate ? nil : item.update) { err in
+                        editLog = nil
+                        service.fetchSummary()
+                    }
+                }, title: "修改日志",
+                   name: item.name,
+                   desc: item.description ?? "")
+            }
+            .sheet(item: $editPlan) { item in
+                SimpleInfoView(saveAction: { name, desc in
+                    service.editItem(id: item.id, name: name, desc: desc) { err in
+                        editPlan = nil
+                        service.fetchSummary()
+                    }
+                }, title: "修改计划",
+                   name: item.name,
+                   desc: item.description ?? "")
             }
             .padding(.vertical, 15)
             .padding(.horizontal, 15)

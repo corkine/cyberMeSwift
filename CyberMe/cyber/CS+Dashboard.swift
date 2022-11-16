@@ -84,7 +84,7 @@ struct ISummary: Hashable {
         var HabitHint: String
         var MarvelCount: Int
     }
-    struct WeekPlanItem: Codable, Hashable {
+    struct WeekPlanItem: Codable, Hashable, Identifiable {
         var id: String
         var name: String
         var category: String
@@ -92,11 +92,12 @@ struct ISummary: Hashable {
         var description: String?
         var lastUpdate: String?
         var logs: [WeekPlanLog]?
-        struct WeekPlanLog: Codable, Hashable {
+        struct WeekPlanLog: Codable, Hashable, Identifiable {
             var id: String
             var name: String
             var update: String
             var itemId: String?
+            var description: String?
             var progressTo: Double?
             var progressFrom: Double?
             var progressDelta: Double?
@@ -104,7 +105,8 @@ struct ISummary: Hashable {
                 case id, name, update, itemId = "item-id",
                 progressTo = "progress-to",
                 progressFrom = "progress-from",
-                progressDelta = "progress-delta"
+                progressDelta = "progress-delta",
+                description
             }
         }
         enum CodingKeys: String, CodingKey {

@@ -141,6 +141,7 @@ struct BodyMassView: View {
                 if let w = Double(weight) {
                     print("记录体重值为 \(w)")
                     self.massData.append(Float(w).roundTo(places: 2))
+                    service.uploadBodyMass(value: w)
                     healthManager?.setBodyMass(w, callback: { result, err in
                         if !result {
                             errorMessage = "保存数据失败：\(String(describing: err?.localizedDescription))"

@@ -70,8 +70,6 @@ struct FoodAccountView: View {
             predicate: NSPredicate(format: "solved == true"))
         var solvedItems: FetchedResults<FoodAccountDAO>
         
-        @State var op = 0.0
-        
         init(forCategory filter: FoodCategory?, foodShowCompleted: Binding<Bool>) {
             let req = FoodAccountDAO.fetchRequest()
             req.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
@@ -85,6 +83,8 @@ struct FoodAccountView: View {
             _newItems = FetchRequest(fetchRequest: req)
             _foodShowCompleted = foodShowCompleted
         }
+        
+        @State var op = 0.0
         
         var body: some View {
             List {
@@ -182,8 +182,12 @@ struct FoodAccountView: View {
                     }
                 }
             }
-            .onAppear { op = 1 }
-            .animation(.spring(), value: newItems.count + solvedItems.count + Int(op))
+            .opacity(op)
+            .onAppear {
+                withAnimation(.spring()) {
+                    op = 1.0
+                }
+            }
             .onChange(of: newItems.count) { count in
                 service.setFoodCount(count)
                 service.foodCount = count

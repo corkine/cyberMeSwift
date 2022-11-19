@@ -122,11 +122,11 @@ struct ISummary: Hashable {
     var movie: [MovieItem]
     var fitness: FitnessItem
     var work: WorkItem
-    var blue: BlueItem
-    var clean: CleanItem
+    var blue: BlueItem?
+    var clean: CleanItem?
     var weekPlan: [WeekPlanItem]
     enum CodingKeys: String, CodingKey {
-        case todo, movie, fitness, work, blue, clean, weekPlan
+        case todo, movie, fitness, work, weekPlan
     }
 }
 
@@ -146,8 +146,8 @@ extension ISummary: Decodable {
         self.fitness = FitnessItem(active: a, rest: r, stand: s, exercise: e ,goalActive: g)
         
         self.work = try f.decode(WorkItem.self, forKey: .work)
-        self.blue = try f.decode(BlueItem.self, forKey: .blue)
-        self.clean = try f.decode(CleanItem.self, forKey: .clean)
+        //self.blue = try f.decode(BlueItem.self, forKey: .blue)
+        //self.clean = try f.decode(CleanItem.self, forKey: .clean)
         self.weekPlan = try f.decode([WeekPlanItem].self, forKey: .weekPlan)
     }
     static var `default`: ISummary =

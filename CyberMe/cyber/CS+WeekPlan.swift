@@ -55,9 +55,12 @@ extension CyberService {
         var description: String
         var progressDelta: Double?
         var update: String?
+        var toStart: Bool?
+        var toEnd: Bool?
         enum CodingKeys: String, CodingKey {
             case id, name, description,
-                 progressDelta = "progress-delta", update
+                 progressDelta = "progress-delta", update,
+                 toStart = "to-start", toEnd = "to-end"
         }
     }
     /// 修改周计划项目
@@ -77,13 +80,19 @@ extension CyberService {
             }
         }
     }
+    enum EditLogActionType {
+        case notMove, toStart, toEnd
+    }
     /// 修改周计划日志
     func editLog(itemId:String, id:String, name:String,
                  desc:String, delta: Double?, update: String?,
+                 type:EditLogActionType = .notMove,
                  action:@escaping (Error?) -> Void = {_ in }) {
         uploadJSON(api: CyberService.editLogUrl(itemId),
                    data: EditItem(id: id, name: name, description: desc,
-                                  progressDelta: delta, update: update)) {
+                                  progressDelta: delta, update: update,
+                                  toStart: type == .toStart ? true : nil,
+                                  toEnd: type == .toEnd ? true: nil)) {
             data, err in
             if let data = data {
                 DispatchQueue.main.async {
@@ -96,7 +105,6 @@ extension CyberService {
             }
         }
     }
-    
 }
 
 struct CyberError: Error {

@@ -260,9 +260,11 @@ struct DashboardPlanView: View {
                                                 updateLogRemoveDate = false
                                                 editLog = log
                                             }
-                                            Button("修改（且移到最后）") {
-                                                updateLogRemoveDate = true
-                                                editLog = log
+                                            Button("移到最前") {
+                                                moveItem(log: log, type: .toStart)
+                                            }
+                                            Button("移到最后") {
+                                                moveItem(log: log, type: .toEnd)
                                             }
                                             Divider()
                                             Button("删除") {
@@ -309,6 +311,14 @@ struct DashboardPlanView: View {
     func removeLogAndRefresh(_ logId: String) {
         service.removeLog(weekPlan.id, logId) {
            service.fetchSummary()
+        }
+    }
+    func moveItem(log: ISummary.WeekPlanItem.WeekPlanLog,
+                  type: CyberService.EditLogActionType) {
+        service.editLog(itemId: weekPlan.id, id: log.id, name: log.name,
+                        desc: log.description ?? "", delta: log.progressDelta,
+                        update: log.update, type: type) {err in
+            service.fetchSummary()
         }
     }
 }

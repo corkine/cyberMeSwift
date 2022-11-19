@@ -114,7 +114,8 @@ class HealthManager {
         store.execute(query)
         publisher
             .collect(5)
-            .timeout(.seconds(10), scheduler: DispatchQueue.main)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .timeout(.seconds(10), scheduler: DispatchQueue.global(qos: .background))
             .sink { items in
                 var active = 0.0
                 var rest = 0.0

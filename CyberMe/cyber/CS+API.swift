@@ -11,6 +11,7 @@ extension CyberService {
     static let baseUrl = "https://cyber.mazhangjing.com/"
     static let summaryUrl = "cyber/client/ios-summary?day=5"
     static let dashboardUrl = "cyber/client/ios-widget"
+    static let uploadBodyMassUrl = "cyber/client/ios-body-mass"
     static let uploadHealthUrl = "cyber/fitness/appUpload"
     static let checkCardUrl = "cyber/check/now?plainText=false&preferCacheSuccess=true"
     static let checkCardForce = "cyber/check/now?plainText=false&useCache=false"

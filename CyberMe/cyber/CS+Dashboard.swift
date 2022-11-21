@@ -46,6 +46,10 @@ struct ISummary: Hashable {
         var NeedDiaryReport: Bool?
         var NeedWeekLearn: Bool?
         var Policy: WorkItemPolicy?
+        var signInSort: [String] {
+            let all = self.SignIn.map(\.timeSimple).sorted()
+            return all.count >= 2 ? [all.first!, all.last!] : all
+        }
         struct WorkItemPolicy: Codable, Hashable {
             var exist: Bool
             var pending: Int

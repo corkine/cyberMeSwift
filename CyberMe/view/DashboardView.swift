@@ -144,7 +144,7 @@ struct DashboardInfoView: View {
                                     .padding(.trailing, 10)
                                     .scaledToFit()
                             }
-                            ForEach(summary.work.SignIn.map { s in s.timeSimple }, id:\.self) { time in
+                            ForEach(summary.work.signInSort, id:\.self) { time in
                                 RoundBG(Text("\(time)"), fill:
                                             currentMode == .light ? .white : Color("grayBackground"))
                                     .font(.system(size: 12))

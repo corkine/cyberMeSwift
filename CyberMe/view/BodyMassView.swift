@@ -48,30 +48,8 @@ struct BodyMassView: View {
                                                           mindful: sumType.4)])
             })
             healthManager?.fetchWidgetData { data, err in
-                //print("data is \(String(describing: data))")
                 if let data = data {
-                    if data.count <= 7 {
-                        self.massData = data.map { sample in
-                            Float(sample.quantity.doubleValue(for: .gramUnit(with: .kilo)))
-                                .roundTo(places: 2)
-                        }
-                    } else {
-                        var collect: [Float] = []
-                        let slot = data.count / 7 + 1
-                        data.indices.forEach { i in
-                            if i == data.count - 1 {
-                                return //如果是最后一个，手动添加
-                            }
-                            if i % slot == 0 {
-                                collect.append(Float(data[i].quantity.doubleValue(for: .gramUnit(with: .kilo)))
-                                    .roundTo(places: 2))
-                            }
-                        }
-                        collect.append(Float(data[data.count - 1]
-                            .quantity.doubleValue(for: .gramUnit(with: .kilo)))
-                            .roundTo(places: 2))
-                        self.massData = collect
-                    }
+                    self.massData = healthManager!.healthBodyMassData2ChartData(data: data)
                 } else {
                     print("not fetched data")
                 }

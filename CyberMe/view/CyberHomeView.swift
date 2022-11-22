@@ -16,6 +16,7 @@ struct CyberHome: View {
     @State var showLogin = false
     @State var showAlert = false
     @State var hcmShortcutName = Setting.hcmShortcutName
+    @State var bodyMass: [Float] = []
     
     var healthManager: HealthManager?
     
@@ -26,7 +27,8 @@ struct CyberHome: View {
     }
     
     var body: some View {
-        DashboardView(summary: service.summaryData)
+        DashboardView(summary: service.summaryData,
+        bodyMass: $bodyMass)
             .onReceive(service.$alertInfomation, perform: { info in
                 if info != nil { showAlert = true }
             })
@@ -75,7 +77,20 @@ struct CyberHome: View {
                     service.fetchSummary()
                     if CyberService.autoUpdateHealthInfo {
                         healthManager?.withPermission {
+                            healthManager?.fetchWidgetData { data, err in
+                                if let data = data {
+                                    self.bodyMass = healthManager!.healthBodyMassData2ChartData(data: data)
+                                } else {
+                                    print("not fetched data")
+                                }
+                            }
                             healthManager?.fetchWorkoutData(completed: { sumType in
+                                var fitness = service.summaryData.fitness
+                                fitness.active = sumType.0
+                                fitness.rest = sumType.1
+                                fitness.stand = sumType.2
+                                fitness.exercise = sumType.3
+                                fitness.mindful = sumType.4
                                 service.uploadHealth(data:
                                                         [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
                                                                           activeEnergy: sumType.0,

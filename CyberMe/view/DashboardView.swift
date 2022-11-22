@@ -11,72 +11,111 @@ struct DashboardView: View {
     @EnvironmentObject var service:CyberService
     @Environment(\.colorScheme) var currentMode
     var summary: ISummary
+    @Binding var bodyMass: [Float]
     var body: some View {
         NavigationView {
-            ZStack(alignment:.bottom) {
-                if currentMode == .light {
-                    Image("background_image")
-                        .resizable()
-                        .scaledToFit()
-                }
-                GeometryReader { proxy in
-                    ScrollView(.vertical,showsIndicators:false) {
-                        HStack(alignment:.top) {
-                            VStack(alignment:.leading,spacing: 10) {
-                                HStack(alignment:.center) {
-                                    Button("我的一天") {
-                                        service.syncTodo {
-                                            service.fetchSummary()
-                                            Dashboard.updateWidget(inSeconds: 0)
-                                        }
+            GeometryReader { proxy in
+                ScrollView(.vertical,showsIndicators:false) {
+                    HStack(alignment:.top) {
+                        VStack(alignment:.leading,spacing: 10) {
+                            HStack(alignment:.center) {
+                                Button("我的一天") {
+                                    service.syncTodo {
+                                        service.fetchSummary()
+                                        Dashboard.updateWidget(inSeconds: 0)
                                     }
-                                    .font(.title2)
-                                    .foregroundColor(Color.blue)
-                                    
-                                    Spacer()
-                
-                                    Button {
-                                        UIApplication.shared.open(URL(string: Default.UrlScheme.todoApp)!)
-                                    } label: {
-                                        Label("", systemImage: "plus")
-                                            .labelStyle(.iconOnly)
-                                    }
-                                    .scaleEffect(1.2)
-                                    .padding(.trailing, 8)
-
                                 }
-                                .padding(.bottom, 10)
-                                
-                                
-                                ToDoView(todo: summary.todo,
-                                         weekPlan: summary.weekPlan)
-                                
-                                DashboardInfoView(summary: summary)
-                                    .padding(.top, 30)
-                                    .padding(.bottom, 20)
-                                
-                                if !summary.weekPlan.isEmpty {
-                                    Text("本周计划")
-                                        .font(.title2)
-                                        .foregroundColor(Color.blue)
-                                    
-                                    ForEach(summary.weekPlan, id: \.id) { plan in
-                                        DashboardPlanView(weekPlan: plan, proxy: proxy)
-                                    }
-                                    .padding(.bottom, 10)
-                                }
+                                .font(.title2)
+                                .foregroundColor(Color.blue)
                                 
                                 Spacer()
+            
+                                Button {
+                                    UIApplication.shared.open(URL(string: Default.UrlScheme.todoApp)!)
+                                } label: {
+                                    Label("", systemImage: "plus")
+                                        .labelStyle(.iconOnly)
+                                }
+                                .scaleEffect(1.2)
+                                .padding(.trailing, 8)
+
                             }
-                            .padding(.top, 20)
-                            .padding(.leading, 20)
-                            .padding(.trailing, 5)
-                            .opacity(summary.isDemo ? 0 : 1)
-                            .navigationTitle("\(TimeUtil.getWeedayFromeDate(date: Date(), withMonth: true))")
+                            .padding(.bottom, 10)
+                            
+                            
+                            ToDoView(todo: summary.todo,
+                                     weekPlan: summary.weekPlan)
+                            
+                            DashboardInfoView(summary: summary)
+                                .padding(.top, 30)
+                                .padding(.bottom, 5)
+                            
+                            // MARK: - 健身卡片
+                            Text("形体之山")
+                                .font(.title2)
+                                .foregroundColor(Color.blue)
+                                .padding(.top, 10)
+                                .padding(.bottom, 5)
+                            
+                            FitnessView(data:
+                                            (Int(summary.fitness.active),
+                                             Int(summary.fitness.exercise ?? 0),
+                                             Int(summary.fitness.mindful ?? 0)),
+                                        geo: proxy)
+                            
+                            if !bodyMass.isEmpty {
+                                ZStack {
+                                    Color("backgroundGray")
+                                    VStack(alignment: .leading,
+                                    spacing: 10) {
+                                        Text("本月体重趋势")
+                                        BodyMassChartView(
+                                            data: self.bodyMass,
+                                            color: .red)
+                                    }
+                                    .padding(.top, 20)
+                                    .padding([.leading, .trailing], 25)
+                                    .padding(.bottom, 15)
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .frame(height: 150)
+                            }
+                            
+                            // MARK: - 周计划
+                            if !summary.weekPlan.isEmpty {
+                                Text("本周计划")
+                                    .font(.title2)
+                                    .foregroundColor(Color.blue)
+                                    .padding(.top, 15)
+                                
+                                ForEach(summary.weekPlan, id: \.id) { plan in
+                                    DashboardPlanView(weekPlan: plan, proxy: proxy)
+                                }
+                                .padding(.bottom, 10)
+                                .zIndex(10)
+                            }
+            
                             Spacer()
+                            
+                            if currentMode == .light {
+                                Image("background_image")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .padding(.leading, -20)
+                                    .padding(.trailing, -10)
+                                    .padding(.top, -200)
+                                    .zIndex(0)
+                            }
                         }
+                        .padding(.top, 20)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 5)
+                        .opacity(summary.isDemo ? 0 : 1)
+                        Spacer()
                     }
                 }
+                .navigationTitle("\(TimeUtil.getWeedayFromeDate(date: Date(), withMonth: true))")
+                //.padding(.top, 0.2)
             }
         }
     }
@@ -87,7 +126,8 @@ struct DashboardView_Previews: PreviewProvider {
         var defaultSummary = ISummary.default
         defaultSummary.isDemo = false
         defaultSummary.weekPlan[0].logs![0].name = "Very Long Very Long Very Long Very Long Very Long Very Long"
-        return DashboardView(summary: defaultSummary)
+        return DashboardView(summary: defaultSummary,
+                             bodyMass: .constant([]))
             .previewDevice(.init(rawValue: "iPhone XR"))
         //DashboardInfoView()
         //DashboardPlanView()

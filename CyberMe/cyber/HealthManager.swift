@@ -44,6 +44,33 @@ class HealthManager {
         }
     }
     
+    func healthBodyMassData2ChartData(data: [HKQuantitySample]) -> [Float] {
+        var massData: [Float] = []
+        if data.count <= 7 {
+            massData = data.map { sample in
+                Float(sample.quantity.doubleValue(for: .gramUnit(with: .kilo)))
+                    .roundTo(places: 2)
+            }
+        } else {
+            var collect: [Float] = []
+            let slot = data.count / 7 + 1
+            data.indices.forEach { i in
+                if i == data.count - 1 {
+                    return //如果是最后一个，手动添加
+                }
+                if i % slot == 0 {
+                    collect.append(Float(data[i].quantity.doubleValue(for: .gramUnit(with: .kilo)))
+                        .roundTo(places: 2))
+                }
+            }
+            collect.append(Float(data[data.count - 1]
+                .quantity.doubleValue(for: .gramUnit(with: .kilo)))
+                .roundTo(places: 2))
+            massData = collect
+        }
+        return massData
+    }
+    
     enum SumType {
         case active, rest, stand, exec, mindful
     }

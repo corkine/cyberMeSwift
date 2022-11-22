@@ -11,7 +11,6 @@ struct DashboardView: View {
     @EnvironmentObject var service:CyberService
     @Environment(\.colorScheme) var currentMode
     var summary: ISummary
-    @Binding var bodyMass: [Float]
     var body: some View {
         NavigationView {
             GeometryReader { proxy in
@@ -51,11 +50,13 @@ struct DashboardView: View {
                                 .padding(.bottom, 5)
                             
                             // MARK: - 健身卡片
-                            Text("形体之山")
-                                .font(.title2)
-                                .foregroundColor(Color.blue)
-                                .padding(.top, 10)
-                                .padding(.bottom, 5)
+                            Button("形体之山") {
+                                service.refreshAndUploadHealthInfo()
+                            }
+                            .font(.title2)
+                            .foregroundColor(Color.blue)
+                            .padding(.top, 10)
+                            .padding(.bottom, 5)
                             
                             FitnessView(data:
                                             (Int(summary.fitness.active),
@@ -64,14 +65,14 @@ struct DashboardView: View {
                                         geo: proxy,
                                         height: 150)
                             
-                            if !bodyMass.isEmpty {
+                            if !service.bodyMass.isEmpty {
                                 ZStack {
                                     Color("backgroundGray")
                                     VStack(alignment: .leading,
                                     spacing: 10) {
                                         Text("30 天体重趋势")
                                         BodyMassChartView(
-                                            data: self.bodyMass,
+                                            data: service.bodyMass,
                                             color: .red)
                                     }
                                     .padding(.top, 18)
@@ -127,8 +128,7 @@ struct DashboardView_Previews: PreviewProvider {
         var defaultSummary = ISummary.default
         defaultSummary.isDemo = false
         defaultSummary.weekPlan[0].logs![0].name = "Very Long Very Long Very Long Very Long Very Long Very Long"
-        return DashboardView(summary: defaultSummary,
-                             bodyMass: .constant([]))
+        return DashboardView(summary: defaultSummary)
             .previewDevice(.init(rawValue: "iPhone XR"))
         //DashboardInfoView()
         //DashboardPlanView()

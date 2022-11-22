@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 import WidgetKit
+import HealthKit
 
 struct CyberResult<Item:Decodable>: Decodable {
     var message: String
@@ -60,10 +61,44 @@ class CyberService: ObservableObject {
     // MARK: - 体重 -
     @Published var showBodyMassSheet = false
     
+    var healthManager: HealthManager?
+    
     init() {
         self.token = getLoginToken() ?? ""
         self.settings = getSettings() ?? [:]
         self.foodCount = getFoodCount()
+        if HKHealthStore.isHealthDataAvailable() {
+            healthManager = HealthManager()
+        }
+    }
+    
+    @Published var bodyMass: [Float] = []
+    
+    func refreshAndUploadHealthInfo() {
+        self.healthManager?.withPermission {
+            self.healthManager?.fetchWidgetData { data, err in
+                if let data = data {
+                    self.bodyMass = self.healthManager!.healthBodyMassData2ChartData(data: data)
+                } else {
+                    print("not fetched data")
+                }
+            }
+            self.healthManager?.fetchWorkoutData(completed: { sumType in
+                self.summaryData.fitness =
+                ISummary.FitnessItem(active: sumType.0, rest: sumType.1,
+                                   stand: sumType.2,
+                                   exercise: sumType.3,
+                                   mindful: sumType.4,
+                                   goalActive: 500)
+                self.uploadHealth(data:
+                                        [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
+                                                          activeEnergy: sumType.0,
+                                                          basalEnergy: sumType.1,
+                                                          standTime: sumType.2,
+                                                          exerciseTime: sumType.3,
+                                                          mindful: sumType.4)])
+            })
+        }
     }
     
     // MARK: - 节流 -

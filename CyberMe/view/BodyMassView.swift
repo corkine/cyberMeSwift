@@ -20,41 +20,12 @@ struct BodyMassView: View {
     @EnvironmentObject var service:CyberService
     
     @State var weight = ""
-    @State var massData: [Float] = []
-    
-    var healthManager: HealthManager?
     
     @State var showErrorMessage = false
     @State var errorMessage = ""
     
     init() {
         UITextView.appearance().backgroundColor = .clear
-        if HKHealthStore.isHealthDataAvailable() {
-            healthManager = HealthManager()
-        } else {
-            print("platform not support HealthKit")
-        }
-    }
-    
-    func fetchMess() {
-        healthManager?.withPermission {
-            healthManager?.fetchWorkoutData(completed: { sumType in
-                service.uploadHealth(data:
-                                        [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
-                                                          activeEnergy: sumType.0,
-                                                          basalEnergy: sumType.1,
-                                                          standTime: sumType.2,
-                                                          exerciseTime: sumType.3,
-                                                          mindful: sumType.4)])
-            })
-            healthManager?.fetchWidgetData { data, err in
-                if let data = data {
-                    self.massData = healthManager!.healthBodyMassData2ChartData(data: data)
-                } else {
-                    print("not fetched data")
-                }
-            }
-        }
     }
     
     var body: some View {
@@ -72,8 +43,8 @@ struct BodyMassView: View {
                     Text("30 天走势")
                         .font(.system(size: 30, weight: .bold))
                     // 如果少于两个数据，则不显示
-                    if self.massData.count >= 2 {
-                        BodyMassChartView(data: self.massData,
+                    if service.bodyMass.count >= 2 {
+                        BodyMassChartView(data: service.bodyMass,
                                           color: Color("weightDiff"))
                         .frame(height: 110)
                         .padding(.trailing, 7)
@@ -118,9 +89,9 @@ struct BodyMassView: View {
             Button("记录体重") {
                 if let w = Double(weight) {
                     print("记录体重值为 \(w)")
-                    self.massData.append(Float(w).roundTo(places: 2))
+                    service.bodyMass.append(Float(w).roundTo(places: 2))
                     service.uploadBodyMass(value: w)
-                    healthManager?.setBodyMass(w, callback: { result, err in
+                    service.healthManager?.setBodyMass(w, callback: { result, err in
                         if !result {
                             errorMessage = "保存数据失败：\(String(describing: err?.localizedDescription))"
                             showErrorMessage = true
@@ -136,7 +107,7 @@ struct BodyMassView: View {
             .cornerRadius(10)
             .padding(.bottom, 30)
         }
-        .onAppear(perform: self.fetchMess)
+        .onAppear(perform: service.refreshAndUploadHealthInfo)
         .onDisappear {
             Dashboard.updateWidget(inSeconds: 0)
         }

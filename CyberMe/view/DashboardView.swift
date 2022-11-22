@@ -68,12 +68,12 @@ struct DashboardView: View {
                                     Color("backgroundGray")
                                     VStack(alignment: .leading,
                                     spacing: 10) {
-                                        Text("本月体重趋势")
+                                        Text("30 天体重趋势")
                                         BodyMassChartView(
                                             data: self.bodyMass,
                                             color: .red)
                                     }
-                                    .padding(.top, 20)
+                                    .padding(.top, 18)
                                     .padding([.leading, .trailing], 25)
                                     .padding(.bottom, 15)
                                 }
@@ -270,16 +270,16 @@ struct DashboardPlanView: View {
                 // MARK: 内容
                 HStack(alignment: .bottom) {
                     // MARK: 圆点和日志
-                    HStack(alignment:.top, spacing: 0.0) {
+                    HStack(alignment:.center, spacing: 0.0) {
                         // MARK: 圆点
                         ZStack {
                             Rectangle()
                                 .fill(currentMode == .light ? Color("lightGray") : .gray)
                                 .frame(width: 1)
-                                .padding(.vertical, 4)
+                                .padding(.vertical, 5)
                                 .opacity((weekPlan.logs ?? []).isEmpty ? 0 : 1)
-                            VStack(alignment: .leading) {
-                                ForEach(weekPlan.logs ?? [], id:\.id) { _ in
+                            VStack(alignment: .leading,spacing: 13) {
+                                ForEach(weekPlan.logs ?? [], id:\.id) { log in
                                     Circle()
                                         .foregroundColor(
                                             currentMode == .light ? Color("lightGray") : .gray)

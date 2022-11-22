@@ -61,7 +61,8 @@ struct DashboardView: View {
                                             (Int(summary.fitness.active),
                                              Int(summary.fitness.exercise ?? 0),
                                              Int(summary.fitness.mindful ?? 0)),
-                                        geo: proxy)
+                                        geo: proxy,
+                                        height: 150)
                             
                             if !bodyMass.isEmpty {
                                 ZStack {
@@ -91,7 +92,7 @@ struct DashboardView: View {
                                 ForEach(summary.weekPlan, id: \.id) { plan in
                                     DashboardPlanView(weekPlan: plan, proxy: proxy)
                                 }
-                                .padding(.bottom, 10)
+                                .padding(.bottom, 0)
                                 .zIndex(10)
                             }
             

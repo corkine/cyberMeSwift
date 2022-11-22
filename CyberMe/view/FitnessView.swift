@@ -19,7 +19,7 @@ struct FitnessItemView: View {
     let biggerSize = 30.0
     
     var body: some View {
-        ZStack(alignment:.leading) {
+        ZStack(alignment:.bottomLeading) {
             Color("backgroundGray")
             VStack(alignment:.leading) {
                 ZStack {
@@ -46,15 +46,16 @@ struct FitnessItemView: View {
         }
         .clipShape(RoundedRectangle(cornerSize:
                 .init(width: 15, height: 15)))
-        .fixedSize(horizontal: false, vertical: true)
+        .fixedSize(horizontal: false, vertical: false)
     }
 }
 
 struct FitnessView: View {
     var data = (0,0,0)
     var geo: GeometryProxy
+    var height: Double
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             FitnessItemView(color: Color("orange"),
                             imageName: "flame",
                             text: ["燃脂",data.0.description,"卡"])
@@ -70,6 +71,7 @@ struct FitnessView: View {
                             text: ["正念",data.2.description,"分钟"])
             .frame(width: geo.size.width / 3.4)
         }
+        .frame(height: height)
         //.padding(.horizontal, 10)
     }
 }
@@ -77,7 +79,7 @@ struct FitnessView: View {
 struct FitnessView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { proxy in
-            FitnessView(data: (135,12,10), geo: proxy)
+            FitnessView(data: (135,12,10), geo: proxy, height: 100)
         }
     }
 }

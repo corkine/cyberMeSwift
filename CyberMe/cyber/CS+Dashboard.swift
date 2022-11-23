@@ -34,7 +34,7 @@ struct ISummary: Hashable {
         var mindful: Double?
         var goalActive: Double
         enum CodingKeys: String, CodingKey {
-            case active, rest, stand, exercise, goalActive = "goal-active"
+            case active, rest, stand, exercise, mindful, goalActive = "goal-active"
         }
     }
     struct WorkItem: Codable, Hashable {
@@ -140,14 +140,14 @@ extension ISummary: Decodable {
         self.todo = try f.decode([String:[TodoItem]].self, forKey: .todo)
         self.movie = try f.decode([MovieItem].self, forKey: .movie)
         
-        let fit = try f.nestedContainer(keyedBy: FitnessItem.CodingKeys.self, forKey: .fitness)
-        let a = try fit.decode(Double.self, forKey: .active)
-        let r = try fit.decode(Double.self, forKey: .rest)
-        let s = try fit.decodeIfPresent(Int.self, forKey: .stand)
-        let e = try fit.decodeIfPresent(Int.self, forKey: .exercise)
-        let g = try fit.decode(Double.self, forKey: .goalActive)
-        //self.fitness = try f.decode(FitnessItem.self, forKey: .fitness)
-        self.fitness = FitnessItem(active: a, rest: r, stand: s, exercise: e ,goalActive: g)
+        //        let fit = try f.nestedContainer(keyedBy: FitnessItem.CodingKeys.self, forKey: .fitness)
+        //        let a = try fit.decode(Double.self, forKey: .active)
+        //        let r = try fit.decode(Double.self, forKey: .rest)
+        //        let s = try fit.decodeIfPresent(Int.self, forKey: .stand)
+        //        let e = try fit.decodeIfPresent(Int.self, forKey: .exercise)
+        //        let g = try fit.decode(Double.self, forKey: .goalActive)
+        //        self.fitness = FitnessItem(active: a, rest: r, stand: s, exercise: e ,goalActive: g)
+        self.fitness = try f.decode(FitnessItem.self, forKey: .fitness)
         
         self.work = try f.decode(WorkItem.self, forKey: .work)
         //self.blue = try f.decode(BlueItem.self, forKey: .blue)

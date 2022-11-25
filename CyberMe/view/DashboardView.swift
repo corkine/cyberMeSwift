@@ -185,11 +185,18 @@ struct DashboardInfoView: View {
                                     .padding(.trailing, 10)
                                     .scaledToFit()
                             }
-                            ForEach(summary.work.signInSort, id:\.self) { time in
-                                RoundBG(Text("\(time)"), fill:
-                                            currentMode == .light ? .white : Color("grayBackground"))
+                            if summary.work.SignIn.count == 0 {
+                                RoundBG(Text(""))
                                     .font(.system(size: 12))
                                     .padding(.trailing, 2)
+                                    .opacity(0.0)
+                            } else {
+                                ForEach(summary.work.signInSort, id:\.self) { time in
+                                    RoundBG(Text("\(time)"), fill:
+                                                currentMode == .light ? .white : Color("grayBackground"))
+                                        .font(.system(size: 12))
+                                        .padding(.trailing, 2)
+                                }
                             }
                         }
                     }

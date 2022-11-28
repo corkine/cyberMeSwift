@@ -81,6 +81,7 @@ struct DashboardView: View {
                                 }
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .frame(height: 150)
+                                .zIndex(10)
                             }
                             
                             // MARK: - 周计划
@@ -99,6 +100,7 @@ struct DashboardView: View {
             
                             Spacer()
                             
+                            // MARK: - 背景
                             if currentMode == .light {
                                 Image("background_image")
                                     .resizable()
@@ -185,7 +187,7 @@ struct DashboardInfoView: View {
                                     .padding(.trailing, 10)
                                     .scaledToFit()
                             }
-                            if summary.work.SignIn.count == 0 {
+                            if summary.work.WorkHour ?? 0.0 != 0.0 && summary.work.SignIn.count == 0 {
                                 RoundBG(Text(""))
                                     .font(.system(size: 12))
                                     .padding(.trailing, 2)

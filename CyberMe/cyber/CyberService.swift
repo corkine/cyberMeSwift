@@ -88,19 +88,20 @@ class CyberService: ObservableObject {
             self.healthManager?.fetchWorkoutData(completed: { sumType in
                 DispatchQueue.main.async {
                     self.summaryData.fitness =
-                    ISummary.FitnessItem(active: sumType.0, rest: sumType.1,
-                                       stand: sumType.2,
-                                       exercise: sumType.3,
-                                       mindful: sumType.4,
-                                       goalActive: 500)
+                    ISummary.FitnessItem(active: sumType.0,
+                                         rest: sumType.1,
+                                         stand: sumType.2,
+                                         exercise: sumType.3,
+                                         mindful: sumType.4,
+                                         goalActive: 500)
                 }
                 self.uploadHealth(data:
-                                        [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
-                                                          activeEnergy: sumType.0,
-                                                          basalEnergy: sumType.1,
-                                                          standTime: sumType.2,
-                                                          exerciseTime: sumType.3,
-                                                          mindful: sumType.4)])
+                                    [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
+                                                      activeEnergy: sumType.0,
+                                                      basalEnergy: sumType.1,
+                                                      standTime: sumType.2,
+                                                      exerciseTime: sumType.3,
+                                                      mindful: sumType.4)])
             })
         }
     }
@@ -130,7 +131,7 @@ class CyberService: ObservableObject {
     }
     
     func loadJSON<T: Decodable>(from urlString: String, for type: T.Type,
-                              action:@escaping (T?,Error?) -> Void) {
+                                action:@escaping (T?,Error?) -> Void) {
         guard let url = URL(string: CyberService.baseUrl + urlString) else {
             print("url \(urlString) not a valid url!")
             return

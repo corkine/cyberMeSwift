@@ -44,7 +44,7 @@ extension PHPickerViewController.View: UIViewControllerRepresentable {
                             if let img = newImage as? UIImage {
                                 DispatchQueue.main.async {
                                     print("Select image \(img.hashValue)")
-                                    parent.image = SwiftUI.Image.init(uiImage: img)
+                                    self.parent.image = SwiftUI.Image.init(uiImage: img)
                                 }
                             }
                         }

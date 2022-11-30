@@ -105,11 +105,9 @@ class CyberService: ObservableObject {
                                              goalActive: 500)
                     }
                 }
-                updateUI()
                 self.$summaryData
                     //如果有来自服务器的旧数据插入，那么新数据等待在其后更新它
-                    .first(where: { s in Int(s.fitness.active) > Int(sumType.0) && !s.isDemo })
-                    .subscribe(on: DispatchQueue.global(qos: .background))
+                    .first(where: { s in Int(s.fitness.active) < Int(sumType.0) && !s.isDemo })
                     .timeout(.seconds(5), scheduler: DispatchQueue.global(qos: .background))
                     .sink(receiveCompletion: { _ in
                         print("finished waiting for summaryData change")
@@ -117,6 +115,7 @@ class CyberService: ObservableObject {
                         updateUI()
                     })
                     .store(in: &self.subs)
+                updateUI()
             }
         }
     }

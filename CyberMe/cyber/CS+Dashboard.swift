@@ -184,6 +184,7 @@ extension CyberService {
                     if let data = response.data {
                         DispatchQueue.main.async {
                             self.summaryData = data
+                            print("setting summaryData from WebServer: active is \(data.fitness.active)")
                         }
                     } else {
                         self.alertInfomation = "解码 Summary 数据出错"

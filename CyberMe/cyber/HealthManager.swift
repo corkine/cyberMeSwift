@@ -83,40 +83,64 @@ class HealthManager {
         let endDate = Date()
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
         let publisher = PassthroughSubject<(SumType, Double), Never>()
+        publisher
+            .collect(5)
+            .timeout(.seconds(10), scheduler: DispatchQueue.global(qos: .background))
+            .sink(receiveCompletion: { res in
+                //print("finished merge from healthKit callback")
+            }, receiveValue: { items in
+                //print("received from healthKit callback... \(items)")
+                var active = 0.0
+                var rest = 0.0
+                var stand = 0
+                var exec = 0
+                var mindful = 0.0
+                items.forEach { item in
+                    switch item.0 {
+                    case SumType.active: active = item.1
+                    case SumType.rest: rest = item.1
+                    case SumType.stand: stand = Int(item.1)
+                    case SumType.exec: exec = Int(item.1)
+                    case SumType.mindful: mindful = item.1
+                    }
+                }
+                completed((active, rest, stand, exec, mindful))
+            })
+            .store(in: &self.collect)
         store.execute(HKStatisticsQuery(quantityType: activeEnergyType, quantitySamplePredicate: predicate) {
             query, data, error in
             if let data = data?.sumQuantity()?.doubleValue(for: .smallCalorie()) {
                 publisher.send((SumType.active, data / 1000.0))
-            } else if let error = error {
-                print("error fetch activeEnergy \(error.localizedDescription)")
-                publisher.send((SumType.active, 0))
+            } else {
+                print("error fetch activeEnergy \(String(describing: error?.localizedDescription))")
+                publisher.send((SumType.active, 0.0))
             }
         })
         store.execute(HKStatisticsQuery(quantityType: restEnergyType, quantitySamplePredicate: predicate) {
             query, data, error in
             if let data = data?.sumQuantity()?.doubleValue(for: .smallCalorie()) {
                 publisher.send((SumType.rest, data / 1000.0))
-            } else if let error = error {
-                print("error fetch restEnergy \(error.localizedDescription)")
-                publisher.send((SumType.rest, 0))
+            } else {
+                print("error fetch restEnergy \(String(describing: error?.localizedDescription))")
+                publisher.send((SumType.rest, 0.0))
             }
         })
         store.execute(HKStatisticsQuery(quantityType: standTimeType, quantitySamplePredicate: predicate) {
             query, data, error in
             if let data = data?.sumQuantity()?.doubleValue(for: .minute()) {
                 publisher.send((SumType.stand, data))
-            } else if let error = error {
-                print("error fetch standTime \(error.localizedDescription)")
-                publisher.send((SumType.stand, 0))
+            } else {
+                print("error fetch standTime \(String(describing: error?.localizedDescription))")
+                publisher.send((SumType.stand, 0.0))
             }
         })
         store.execute(HKStatisticsQuery(quantityType: execTimeType, quantitySamplePredicate: predicate) {
             query, data, error in
             if let data = data?.sumQuantity()?.doubleValue(for: .minute()) {
                 publisher.send((SumType.exec, data))
-            } else if let error = error {
-                print("error fetch execTime \(error.localizedDescription)")
-                publisher.send((SumType.exec, 0))
+            } else {
+                print("error fetch execTime \(String(describing: error?.localizedDescription))")
+                publisher.send((SumType.exec, 0.0))
             }
         })
         let startM = Calendar.current.startOfDay(for: Date())
@@ -135,33 +159,10 @@ class HealthManager {
                 publisher.send((SumType.mindful, totalTime / 60))
             } else {
                 print("error fetch mindful \(String(describing: err?.localizedDescription))")
-                publisher.send((SumType.mindful, 0))
+                publisher.send((SumType.mindful, 0.0))
             }
         }
         store.execute(query)
-        publisher
-            .collect(5)
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .timeout(.seconds(10), scheduler: DispatchQueue.global(qos: .background))
-            .sink { items in
-                var active = 0.0
-                var rest = 0.0
-                var stand = 0
-                var exec = 0
-                var mindful = 0.0
-                items.forEach { item in
-                    switch item.0 {
-                    case SumType.active: active = item.1
-                    case SumType.rest: rest = item.1
-                    case SumType.stand: stand = Int(item.1)
-                    case SumType.exec: exec = Int(item.1)
-                    case SumType.mindful: mindful = item.1
-                    }
-                }
-                completed((active, rest, stand, exec, mindful))
-                publisher.send(completion: .finished)
-            }
-            .store(in: &self.collect)
     }
     
     /// 获取最近的体重数据

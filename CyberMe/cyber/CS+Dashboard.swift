@@ -170,7 +170,7 @@ extension ISummary: Decodable {
 }
 
 extension CyberService {
-    func fetchSummary() -> AnyPublisher<ISummary,Never>? {
+    func fetchSummaryPublisher() -> AnyPublisher<ISummary,Never>? {
         if syncTodoNow { return nil }
         guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {
             print("End point is Invalid")
@@ -206,6 +206,35 @@ extension CyberService {
             .timeout(.seconds(10), scheduler: DispatchQueue.main)
             .replaceEmpty(with: ISummary.default)
             .eraseToAnyPublisher()
+    }
+    
+    func fetchSummary() {
+        if syncTodoNow { return  }
+        guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {
+            print("End point is Invalid")
+            return
+        }
+        var request = URLRequest(url: url)
+        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    let response = try JSONDecoder().decode(CyberResult<ISummary>.self, from: data)
+                    if let data = response.data {
+                        DispatchQueue.main.async {
+                            self.summaryData = data
+                        }
+                    } else {
+                        self.alertInfomation = "解码 Summary 数据出错"
+                    }
+                } catch {
+                    print("error decode: \(error)")
+                    self.alertInfomation = "解码 Summary 数据出错: \(error.localizedDescription)"
+                }
+            } else {
+                self.alertInfomation = error?.localizedDescription ?? "获取 Summary 数据出错"
+            }
+        }.resume()
     }
     
     func checkCard(isForce:Bool = false,completed:@escaping ()->Void = {}) {

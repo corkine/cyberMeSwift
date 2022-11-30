@@ -81,7 +81,7 @@ class CyberService: ObservableObject {
     /// DashboardView 请求 Web 服务获取待办事项、本周计划等信息，从 HealthKit 读取数据并展示
     /// （保证 HealthKit 最新数据覆盖 Web 服务的健身和体重数据）
     func setDashboardData() {
-        let summaryPublisher = self.fetchSummary()?.share()
+        let summaryPublisher = self.fetchSummaryPublisher()?.share()
         guard let summaryPublisher = summaryPublisher else { return }
         if Self.autoUpdateHealthInfo {
             self.refreshAndUploadHealthInfoPublisher()

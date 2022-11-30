@@ -43,7 +43,7 @@ class CyberService: ObservableObject {
     var token: String = "" {
         didSet {
             if token != "" {
-                self.fetchSummary()
+                let _ = self.fetchSummary()
                 WidgetCenter.shared.reloadAllTimelines()
             }
         }
@@ -74,6 +74,76 @@ class CyberService: ObservableObject {
     
     @Published var bodyMass: [Float] = []
     
+    /// DashboardView 请求 Web 服务获取待办事项、本周计划等信息，从 HealthKit 读取数据并展示
+    /// （保证 HealthKit 最新数据覆盖 Web 服务的健身和体重数据）
+    func setDashboardData() {
+        let summaryPublisher = self.fetchSummary()?.share()
+        guard let summaryPublisher = summaryPublisher else { return }
+        if Self.autoUpdateHealthInfo {
+            self.refreshAndUploadHealthInfoPublisher()
+                .zip(summaryPublisher)
+                .receive(on: DispatchQueue.main)
+                .sink { _ in
+                    print("finished fetch zipped dashboard data...")
+                } receiveValue: { (tuple, summary) in
+                    let (bm, fit) = tuple
+                    var summary = summary
+                    if let fit = fit { summary.fitness = fit }
+                    self.bodyMass = bm ?? []
+                    self.summaryData = summary
+                }
+                .store(in: &self.subs)
+        } else {
+            summaryPublisher
+                .receive(on: DispatchQueue.main)
+                .handleEvents(receiveCompletion: {_ in
+                    print("finished fetch dashboard data(just summary)...")
+                })
+                .assign(to: \.summaryData, on: self)
+                .store(in: &self.subs)
+        }
+    }
+    
+    func refreshAndUploadHealthInfoPublisher() -> AnyPublisher<([Float]?,ISummary.FitnessItem?),Never> {
+        let publisher = PassthroughSubject<([Float]?,ISummary.FitnessItem?),Never>()
+        self.healthManager?.withPermission {
+            self.healthManager?.fetchWidgetData { data, err in
+                if let data = data {
+                    publisher.send((self.healthManager!.healthBodyMassData2ChartData(data: data), nil))
+                } else {
+                    print("not fetched widget data")
+                    publisher.send((nil, nil))
+                }
+            }
+            self.healthManager?.fetchWorkoutData { sumType in
+                self.uploadHealth(data:
+                                    [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
+                                                      activeEnergy: sumType.0,
+                                                      basalEnergy: sumType.1,
+                                                      standTime: sumType.2,
+                                                      exerciseTime: sumType.3,
+                                                      mindful: sumType.4)])
+                print("updating fitness with healthKit value: \(sumType)")
+                publisher.send((nil,
+                    ISummary.FitnessItem(active: sumType.0,
+                                         rest: sumType.1,
+                                         stand: sumType.2,
+                                         exercise: sumType.3,
+                                         mindful: sumType.4,
+                                         goalActive: 500)))
+            }
+        }
+        return publisher
+                .collect(2)
+                .timeout(.seconds(5), scheduler: DispatchQueue.global(qos: .background))
+                .map { items in
+                    let bodyMass = items.compactMap(\.0).first
+                    let fitnessItem = items.compactMap(\.1).first
+                    return (bodyMass, fitnessItem)
+                }
+                .eraseToAnyPublisher()
+    }
+    
     func refreshAndUploadHealthInfo() {
         self.healthManager?.withPermission {
             self.healthManager?.fetchWidgetData { data, err in
@@ -93,29 +163,16 @@ class CyberService: ObservableObject {
                                                       standTime: sumType.2,
                                                       exerciseTime: sumType.3,
                                                       mindful: sumType.4)])
-                let updateUI = {
-                    DispatchQueue.main.async {
-                        print("updating fitness with healthKit value: \(sumType)")
-                        self.summaryData.fitness =
-                        ISummary.FitnessItem(active: sumType.0,
-                                             rest: sumType.1,
-                                             stand: sumType.2,
-                                             exercise: sumType.3,
-                                             mindful: sumType.4,
-                                             goalActive: 500)
-                    }
+                DispatchQueue.main.async {
+                    print("updating fitness with healthKit value: \(sumType)")
+                    self.summaryData.fitness =
+                    ISummary.FitnessItem(active: sumType.0,
+                                         rest: sumType.1,
+                                         stand: sumType.2,
+                                         exercise: sumType.3,
+                                         mindful: sumType.4,
+                                         goalActive: 500)
                 }
-                self.$summaryData
-                    //如果有来自服务器的旧数据插入，那么新数据等待在其后更新它
-                    .first(where: { s in Int(s.fitness.active) < Int(sumType.0) && !s.isDemo })
-                    .timeout(.seconds(5), scheduler: DispatchQueue.global(qos: .background))
-                    .sink(receiveCompletion: { _ in
-                        print("finished waiting for summaryData change")
-                    }, receiveValue: { _ in
-                        updateUI()
-                    })
-                    .store(in: &self.subs)
-                updateUI()
             }
         }
     }

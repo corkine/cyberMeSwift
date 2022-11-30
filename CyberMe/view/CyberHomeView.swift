@@ -65,10 +65,7 @@ struct CyberHome: View {
             }
             .onAppear {
                 if service.updateCacheAndNeedAction || !CyberService.slowApi {
-                    service.fetchSummary()
-                    if CyberService.autoUpdateHealthInfo {
-                        service.refreshAndUploadHealthInfo()
-                    }
+                    service.setDashboardData()
                 }
             }
     }

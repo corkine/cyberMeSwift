@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 struct ISummary: Hashable {
     struct TodoItem: Codable, Hashable, Identifiable {
@@ -169,23 +170,26 @@ extension ISummary: Decodable {
 }
 
 extension CyberService {
-    func fetchSummary() {
-        if syncTodoNow { return }
+    func fetchSummary() -> AnyPublisher<ISummary,Never>? {
+        if syncTodoNow { return nil }
         guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {
             print("End point is Invalid")
-            return
+            return nil
         }
         var request = URLRequest(url: url)
         request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        let publisher = PassthroughSubject<ISummary,Never>()
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
                     let response = try JSONDecoder().decode(CyberResult<ISummary>.self, from: data)
                     if let data = response.data {
-                        DispatchQueue.main.async {
-                            self.summaryData = data
-                            print("setting summaryData from WebServer: active is \(data.fitness.active)")
-                        }
+                        print("setting summaryData from WebServer: active is \(data.fitness.active)")
+                        publisher.send(data)
+                        //DispatchQueue.main.async {
+                        //    self.summaryData = data
+                        //    print("setting summaryData from WebServer: active is \(data.fitness.active)")
+                        //}
                     } else {
                         self.alertInfomation = "解码 Summary 数据出错"
                     }
@@ -197,6 +201,10 @@ extension CyberService {
                 self.alertInfomation = error?.localizedDescription ?? "获取 Summary 数据出错"
             }
         }.resume()
+        return publisher
+            .first()
+            .timeout(.seconds(10), scheduler: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
     
     func checkCard(isForce:Bool = false,completed:@escaping ()->Void = {}) {

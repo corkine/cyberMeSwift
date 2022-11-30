@@ -204,6 +204,7 @@ extension CyberService {
         return publisher
             .first()
             .timeout(.seconds(10), scheduler: DispatchQueue.main)
+            .replaceEmpty(with: ISummary.default)
             .eraseToAnyPublisher()
     }
     

@@ -20,6 +20,10 @@ struct CyberResult<Item:Decodable>: Decodable {
 
 typealias SimpleResult = CyberResult<Int>
 
+struct TimeOut: Error { }
+
+let timeout = TimeOut()
+
 //@MainActor
 class CyberService: ObservableObject {
     
@@ -105,7 +109,7 @@ class CyberService: ObservableObject {
     }
     
     func refreshAndUploadHealthInfoPublisher() -> AnyPublisher<([Float]?,ISummary.FitnessItem?),Never> {
-        let publisher = PassthroughSubject<([Float]?,ISummary.FitnessItem?),Never>()
+        let publisher = PassthroughSubject<([Float]?,ISummary.FitnessItem?),TimeOut>()
         self.healthManager?.withPermission {
             self.healthManager?.fetchWidgetData { data, err in
                 if let data = data {
@@ -135,12 +139,14 @@ class CyberService: ObservableObject {
         }
         return publisher
                 .collect(2)
-                .timeout(.seconds(5), scheduler: DispatchQueue.global(qos: .background))
+                .timeout(.seconds(5), scheduler: DispatchQueue.global(qos: .background), customError: { timeout })
                 .map { items in
                     let bodyMass = items.compactMap(\.0).first
                     let fitnessItem = items.compactMap(\.1).first
                     return (bodyMass, fitnessItem)
                 }
+                .replaceError(with: (nil, nil))
+                .first()
                 .eraseToAnyPublisher()
     }
     

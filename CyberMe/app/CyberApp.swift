@@ -110,7 +110,7 @@ struct CyberApp: App {
             UIApplication.shared.open(url)
             break
         case _ where input.hasPrefix(CyberUrl.showBodyMass):
-            cyberService.showBodyMassSheet = true
+            cyberService.showBodyMassSheetFetch = (true, true)
             break
         case _ where input.hasPrefix(CyberUrl.uploadHealthData):
             if let name = cyberService.settings[Setting.syncHealthShortcutName],
@@ -172,7 +172,7 @@ struct CyberApp: App {
         case "addLog":
             break
         case "bodyMassManage":
-            cyberService.showBodyMassSheet = true
+            cyberService.showBodyMassSheetFetch = (true,true)
             break
         default:
             break

@@ -17,6 +17,8 @@ struct CyberHome: View {
     @State var showAlert = false
     @State var hcmShortcutName = Setting.hcmShortcutName
     
+    @State var showBodyMassView = false
+    @State var bodyMassViewFetch = true
     
     var body: some View {
         DashboardView(summary: service.summaryData)
@@ -60,8 +62,13 @@ struct CyberHome: View {
                     }
                 }
             }
-            .sheet(isPresented: $service.showBodyMassSheet) {
-                BodyMassView()
+            .onReceive(service.$showBodyMassSheetFetch, perform: { showFetch in
+                let (show, fetch) = showFetch
+                showBodyMassView = show
+                bodyMassViewFetch = fetch
+            })
+            .sheet(isPresented: $showBodyMassView) {
+                BodyMassView(withFetch: bodyMassViewFetch)
             }
             .onAppear {
                 if service.updateCacheAndNeedAction || !CyberService.slowApi {

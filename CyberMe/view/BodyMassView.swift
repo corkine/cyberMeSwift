@@ -19,14 +19,12 @@ extension View {
 struct BodyMassView: View {
     @EnvironmentObject var service:CyberService
     
+    @State var withFetch: Bool = true
+    
     @State var weight = ""
     
     @State var showErrorMessage = false
     @State var errorMessage = ""
-    
-    init() {
-        UITextView.appearance().backgroundColor = .clear
-    }
     
     var body: some View {
         VStack(alignment:.center) {
@@ -107,7 +105,9 @@ struct BodyMassView: View {
             .cornerRadius(10)
             .padding(.bottom, 30)
         }
-        .onAppear(perform: service.refreshAndUploadHealthInfo)
+        .onAppear {
+            if withFetch { service.refreshAndUploadHealthInfo() }
+        }
         .onDisappear {
             Dashboard.updateWidget(inSeconds: 0)
         }

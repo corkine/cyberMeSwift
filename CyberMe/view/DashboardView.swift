@@ -79,6 +79,9 @@ struct DashboardView: View {
                                     .padding([.leading, .trailing], 25)
                                     .padding(.bottom, 15)
                                 }
+                                .onTapGesture {
+                                    service.showBodyMassSheetFetch = (true, false)
+                                }
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .frame(height: 150)
                                 .zIndex(10)

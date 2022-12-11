@@ -62,8 +62,8 @@ class CyberService: ObservableObject {
     }
     @Published var showSettings = false
     
-    // MARK: - 体重 -
-    @Published var showBodyMassSheet = false
+    // MARK: - HealthKit: BodyMass -
+    @Published var showBodyMassSheetFetch = (false, false)
     
     var healthManager: HealthManager?
     

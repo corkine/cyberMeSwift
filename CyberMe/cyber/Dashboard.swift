@@ -20,6 +20,8 @@ struct Dashboard: Codable {
     var weatherInfo: String?
     var tempInfo: Temp?
     var tempFutureInfo: Temp?
+    /// 返回气温和是否是昨天气温的说明
+    var tempSmartInfo: (Temp?,Bool) { Date().hour >= 19 ? (tempFutureInfo, false) : (tempInfo, true) }
     var fitnessInfo: Fitness?
     var todo:[Todo]
     var updateAt: Int64

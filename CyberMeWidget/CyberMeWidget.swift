@@ -194,47 +194,11 @@ struct CyberMeWidgetEntryView : View {
             Spacer()
             // MARK: 天气信息
             VStack(alignment:.leading) {
-                if let weather = data.weatherInfo,
-                   !weather.isEmpty {
-                    if let temp = data.tempInfo {
-                        Link(destination: URL(string: CyberUrl.showWeather)!) {
-                            HStack(alignment:.bottom, spacing: 0) {
-                                Text("↑\(Int(temp.high))")
-                                    .font(.system(size: basic))
-                                if temp.diffHigh != nil && Int(temp.diffHigh!) != 0 {
-                                    Text(String(format: "%+.0f", temp.diffHigh!))
-                                        .font(.system(size: basic - 2))
-                                        .opacity(0.5)
-                                }
-                                Text("↓\(Int(temp.low))")
-                                    .font(.system(size: basic))
-                                    .padding(.leading, 1)
-                                if temp.diffLow != nil && Int(temp.diffLow!) != 0 {
-                                    Text(String(format: "%+.0f", temp.diffLow!))
-                                        .font(.system(size: basic - 2))
-                                        .opacity(0.5)
-                                }
-                                Text(" " + weather)
-                                    .lineLimit(1)
-                                    .font(.system(size: basic))
-                            }
-                        }
-                    } else {
-                        Link(destination: URL(string: CyberUrl.showWeather)!) {
-                            Text(weather)
-                                .lineLimit(1)
-                                .font(.system(size: basic))
-                        }
-                    }
-                    Divider()
-                        .background(Color.white)
-                        .opacity(0.4)
-                        .padding(.top, -5)
-                        .padding(.bottom, -15)
-                } else if let temp = data.tempFutureInfo,
-                          data.weatherInfo == nil {
+                // 先显示气温，后显示天气，其中当时间大于等于晚上七点则显示第二天气温
+                if let (temp, isYesterday) = data.tempSmartInfo,
+                   let temp = temp {
                     Link(destination: URL(string: CyberUrl.showWeather)!) {
-                        HStack(alignment:.top, spacing: 0) {
+                        HStack(alignment: isYesterday ? .bottom : .top, spacing: 0) {
                             Text("↑\(Int(temp.high))")
                                 .font(.system(size: basic))
                             if temp.diffHigh != nil && Int(temp.diffHigh!) != 0 {
@@ -250,14 +214,23 @@ struct CyberMeWidgetEntryView : View {
                                     .font(.system(size: basic - 2))
                                     .opacity(0.5)
                             }
+                            Text(" " + (data.weatherInfo ?? ""))
+                                .lineLimit(1)
+                                .font(.system(size: basic))
                         }
                     }
-                    Divider()
-                        .background(Color.white)
-                        .opacity(0.4)
-                        .padding(.top, -5)
-                        .padding(.bottom, -15)
+                } else {
+                    Link(destination: URL(string: CyberUrl.showWeather)!) {
+                        Text(data.weatherInfo ?? "")
+                            .lineLimit(1)
+                            .font(.system(size: basic))
+                    }
                 }
+                Divider()
+                    .background(Color.white)
+                    .opacity(0)
+                    .padding(.top, -5)
+                    .padding(.bottom, -15)
                 // MARK: 待办事项
                 if !data.todo.isEmpty {
                     VStack(alignment: .leading, spacing: 2) {

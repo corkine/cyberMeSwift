@@ -108,6 +108,12 @@ class CyberService: ObservableObject {
         }
     }
     
+    func setDashboardDataIfNeed() {
+        if self.updateCacheAndNeedAction || !Self.slowApi {
+            self.setDashboardData()
+        }
+    }
+    
     func refreshAndUploadHealthInfoPublisher() -> AnyPublisher<([Float]?,ISummary.FitnessItem?),Never> {
         let publisher = PassthroughSubject<([Float]?,ISummary.FitnessItem?),TimeOut>()
         self.healthManager?.withPermission {

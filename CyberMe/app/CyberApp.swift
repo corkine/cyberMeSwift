@@ -49,6 +49,7 @@ struct CyberApp: App {
             switch newValue {
             case .active:
                 handleQuickAction()
+                cyberService.setDashboardDataIfNeed()
                 Dashboard.updateWidget(inSeconds: 300)
                 break
             case .background:

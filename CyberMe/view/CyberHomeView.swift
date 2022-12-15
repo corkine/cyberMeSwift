@@ -70,11 +70,7 @@ struct CyberHome: View {
             .sheet(isPresented: $showBodyMassView) {
                 BodyMassView(withFetch: bodyMassViewFetch)
             }
-            .onAppear {
-                if service.updateCacheAndNeedAction || !CyberService.slowApi {
-                    service.setDashboardData()
-                }
-            }
+            .onAppear { service.setDashboardDataIfNeed() }
     }
 }
 

@@ -11,6 +11,9 @@ enum Default {
         static let caiyunWeather = "caiyunapppro://weather"
         static let todoApp = "x-msauth-to-do://today"
         static func shortcutUrl(_ name: String) -> String { "shortcuts://run-shortcut?name=\(name)" }
+        /// 图标右键菜单跳转的快捷指令名称，FIXME 提供设置
+        static let alertShortcutName = "alert"
+        static let noAlertShortcutName = "noAlert"
     }
     static let groupName = "group.cyberme.share"
 }

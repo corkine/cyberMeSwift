@@ -85,6 +85,11 @@ struct DashboardView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .frame(height: 150)
                                 .zIndex(10)
+                            } else {
+                                Rectangle()
+                                    .frame(height: 150)
+                                    .opacity(0.001)
+                                    .zIndex(10)
                             }
                             
                             // MARK: - 周计划

@@ -133,19 +133,37 @@ struct CyberApp: App {
     
     private func addDynamicQuickActions() {
         UIApplication.shared.shortcutItems = [
+            //            UIApplicationShortcutItem(
+            //                type: "checkCardForce",
+            //                localizedTitle: "打卡信息确认",
+            //                localizedSubtitle: nil,
+            //                icon: UIApplicationShortcutIcon(systemImageName: "wallet.pass"),
+            //                userInfo: nil
+            //            ),
+            //            UIApplicationShortcutItem(
+            //                type: "syncTodo",
+            //                localizedTitle: "同步待办事项",
+            //                localizedSubtitle: nil,
+            //                icon: UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath"),
+            //                userInfo: nil
+            //            ),
             UIApplicationShortcutItem(
-                type: "checkCardForce",
-                localizedTitle: "打卡信息确认",
-                localizedSubtitle: nil,
-                icon: UIApplicationShortcutIcon(systemImageName: "wallet.pass"),
-                userInfo: nil
+                type: "alert",
+                localizedTitle: "警戒模式",
+                localizedSubtitle: "米家摄像头开机并检测人形",
+                icon:UIApplicationShortcutIcon(systemImageName: "eye")
             ),
             UIApplicationShortcutItem(
-                type: "syncTodo",
-                localizedTitle: "同步待办事项",
+                type: "noAlert",
+                localizedTitle: "退出警戒模式",
                 localizedSubtitle: nil,
-                icon: UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath"),
-                userInfo: nil
+                icon:UIApplicationShortcutIcon(systemImageName: "eye.slash")
+            ),
+            UIApplicationShortcutItem(
+                type: "hcmCheckCard",
+                localizedTitle: "HCM 打卡",
+                localizedSubtitle: nil,
+                icon:UIApplicationShortcutIcon(systemImageName: "menucard.fill")
             ),
             UIApplicationShortcutItem(
                 type: "bodyMassManage",
@@ -159,6 +177,20 @@ struct CyberApp: App {
     private func handleQuickAction() {
         guard let shortcutItem = appDelegate.shortcutItem else { return }
         switch shortcutItem.type {
+        case "alert":
+            UIApplication.shared.open(URL(string:Default.UrlScheme.shortcutUrl(
+                Default.UrlScheme.alertShortcutName))!)
+            break
+        case "noAlert":
+            UIApplication.shared.open(URL(string:Default.UrlScheme.shortcutUrl(
+                Default.UrlScheme.noAlertShortcutName))!)
+            break
+        case "hcmCheckCard":
+            if let name = cyberService.settings[Setting.hcmShortcutName], name != "" {
+                let url = URL(string: Default.UrlScheme.shortcutUrl(name))!
+                UIApplication.shared.open(url)
+            }
+            break
         case "syncTodo":
             cyberService.syncTodo {
                 cyberService.fetchSummary()

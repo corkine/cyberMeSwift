@@ -60,7 +60,7 @@ extension Dashboard {
     static func updateWidget(inSeconds inSec: Int64) {
         //print("updating widget call")
         let now = Date()
-        if now.timeIntervalSince(lastUpdate) > Double(inSec) {
+        if now.timeIntervalSince(lastUpdate) >= Double(inSec) {
             lastUpdate = now
             print("updating widget action call")
             WidgetCenter.shared.reloadAllTimelines()

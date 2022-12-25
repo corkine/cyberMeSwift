@@ -127,6 +127,8 @@ struct CyberMeWidgetEntryView : View {
         let needFitness = needWarnFitness(data)
         let bg = WidgetBackground(rawValue: UserDefaults(suiteName: Default.groupName)!
             .string(forKey: "widgetBG") ?? "mountain")
+        let alertOn = UserDefaults(suiteName: Default.groupName)!
+            .bool(forKey: "alert")
         
         return VStack(alignment:.leading) {
             HStack {
@@ -255,6 +257,11 @@ struct CyberMeWidgetEntryView : View {
                     if data.todo.count - 3 > 0 {
                         Text("其它 \(data.todo.count - 3) 个")
                             .padding(.trailing, 3)
+                    }
+                    if alertOn {
+                        Image(systemName: "video")
+                            .padding(.trailing, 3)
+                            .padding(.bottom, 1)
                     }
                     Text("UPDATE \(updateStr)")
                         .kerning(0.1)

@@ -29,7 +29,7 @@ class CyberService: ObservableObject {
     
     var subs = Set<AnyCancellable>()
     
-    static let userDefault = UserDefaults(suiteName: "group.cyberme.share")!
+    static let userDefault = UserDefaults(suiteName: Default.groupName)!
     
     @Published var summaryData = ISummary.default
     @Published var gaming = false

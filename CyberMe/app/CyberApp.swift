@@ -179,13 +179,13 @@ struct CyberApp: App {
         switch shortcutItem.type {
         case "alert":
             CyberService.userDefault.set(true, forKey: "alert")
-            Dashboard.updateWidget(inSeconds: 0)
+            //Dashboard.updateWidget(inSeconds: 0)
             UIApplication.shared.open(URL(string:Default.UrlScheme.shortcutUrl(
                 Default.UrlScheme.alertShortcutName))!)
             break
         case "noAlert":
             CyberService.userDefault.set(false, forKey: "alert")
-            Dashboard.updateWidget(inSeconds: 0)
+            //Dashboard.updateWidget(inSeconds: 0)
             UIApplication.shared.open(URL(string:Default.UrlScheme.shortcutUrl(
                 Default.UrlScheme.noAlertShortcutName))!)
             break

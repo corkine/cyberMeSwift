@@ -259,9 +259,11 @@ struct CyberMeWidgetEntryView : View {
                             .padding(.trailing, 3)
                     }
                     if alertOn {
-                        Image(systemName: "video")
-                            .padding(.trailing, 3)
-                            .padding(.bottom, 1)
+                        Link(destination: URL(string: CyberUrl.showMiHome)!) {
+                            Image(systemName: "video")
+                                .padding(.trailing, 3)
+                                .padding(.bottom, 1)
+                        }
                     }
                     Text("UPDATE \(updateStr)")
                         .kerning(0.1)

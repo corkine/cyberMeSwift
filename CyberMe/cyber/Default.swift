@@ -14,6 +14,7 @@ enum Default {
         /// 图标右键菜单跳转的快捷指令名称，FIXME 提供设置
         static let alertShortcutName = "alert"
         static let noAlertShortcutName = "noAlert"
+        static let miHome = "mihome://home"
     }
     static let groupName = "group.cyberme.share"
 }
@@ -37,4 +38,6 @@ enum CyberUrl {
 
     static let showBodyMass = "cyberme://showBodyMass"
     static let showWeather = "cyberme://showWeather"
+    
+    static let showMiHome = "cyberme://miHome"
 }

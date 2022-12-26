@@ -123,8 +123,10 @@ struct CyberApp: App {
             }
             break
         case _ where input.hasPrefix(CyberUrl.showWeather):
-            let url = URL(string: Default.UrlScheme.caiyunWeather)!
-            UIApplication.shared.open(url)
+            UIApplication.shared.open(URL(string: Default.UrlScheme.caiyunWeather)!)
+            break
+        case _ where input.hasPrefix(CyberUrl.showMiHome):
+            UIApplication.shared.open(URL(string: Default.UrlScheme.miHome)!)
             break
         default:
             print("no handler for \(url)")

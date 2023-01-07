@@ -140,6 +140,9 @@ struct BodyMassChartView: View {
     func normalize(_ data: [Float], height:Float) -> [Float] {
         let min = data.min()!
         let max = data.max()!
+        if (min == max) {
+            return data.map { _ in 0 }
+        }
         let each = height / Float(max - min)
         return data.map { i in Float((max - i)) * each }
     }

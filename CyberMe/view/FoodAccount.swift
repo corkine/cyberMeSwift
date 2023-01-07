@@ -51,6 +51,8 @@ struct FoodAccountView: View {
     @State var showAdd = false
     @State var showBodyMass = false
     
+    @EnvironmentObject var service: CyberService
+    
     @AppStorage("food.showCompleted")
     var foodShowCompleted = true
     
@@ -233,6 +235,7 @@ struct FoodAccountView: View {
                 })
                 .sheet(isPresented: $showBodyMass, content: {
                     BodyMassView()
+                        .environmentObject(service)
                 })
                 .navigationTitle("饮食账单")
         }

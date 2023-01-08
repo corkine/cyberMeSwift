@@ -8,6 +8,10 @@
 import Foundation
 import Combine
 
+enum StoreLevel: Int, CaseIterable {
+    case cache, server, local
+}
+
 struct ISummary: Hashable {
     struct TodoItem: Codable, Hashable, Identifiable {
         var time:String
@@ -34,9 +38,20 @@ struct ISummary: Hashable {
         var exercise: Int?
         var mindful: Double?
         var goalActive: Double
+        var storeLevel: StoreLevel = .cache
         enum CodingKeys: String, CodingKey {
             case active, rest, stand, exercise, mindful, goalActive = "goal-active"
         }
+        //        init(from decoder: Decoder) throws {
+        //            let c = try decoder.container(keyedBy: CodingKeys.self)
+        //            self.active = try c.decode(Double.self, forKey: .active)
+        //            self.rest = try c.decode(Double.self, forKey: .rest)
+        //            self.stand = try c.decode(Int.self, forKey: .stand)
+        //            self.exercise = try? c.decode(Int.self, forKey: .exercise)
+        //            self.mindful = try? c.decode(Double.self, forKey: .mindful)
+        //            self.goalActive = try c.decode(Double.self, forKey: .goalActive)
+        //            self.storeLevel = StoreLevel.server
+        //        }
     }
     struct WorkItem: Codable, Hashable {
         var NeedWork: Bool
@@ -220,8 +235,9 @@ extension CyberService {
             if let data = data {
                 do {
                     let response = try JSONDecoder().decode(CyberResult<ISummary>.self, from: data)
-                    if let data = response.data {
+                    if var data = response.data {
                         DispatchQueue.main.async {
+                            data.fitness.storeLevel = .server
                             self.summaryData = data
                         }
                     } else {

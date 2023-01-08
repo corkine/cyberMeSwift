@@ -31,7 +31,16 @@ class CyberService: ObservableObject {
     
     static let userDefault = UserDefaults(suiteName: Default.groupName)!
     
-    @Published var summaryData = ISummary.default
+    @Published var summaryData = ISummary.default {
+        willSet {
+            var newValue = newValue
+            if newValue.fitness.storeLevel.rawValue < summaryData.fitness.storeLevel.rawValue {
+                print("setting summaryData with old storeLevel fitness data detected.")
+                newValue.fitness = summaryData.fitness
+            }
+        }
+    }
+    
     @Published var gaming = false
     @Published var landing = false
     @Published var readme = false
@@ -78,114 +87,35 @@ class CyberService: ObservableObject {
     
     @Published var bodyMass: [Float] = []
     
-    /// DashboardView 请求 Web 服务获取待办事项、本周计划等信息，从 HealthKit 读取数据并展示
-    /// （保证 HealthKit 最新数据覆盖 Web 服务的健身和体重数据）
-    func setDashboardData() {
-        let summaryPublisher = self.fetchSummaryPublisher()?.share()
-        guard let summaryPublisher = summaryPublisher else { return }
-        if Self.autoUpdateHealthInfo {
-            self.refreshAndUploadHealthInfoPublisher()
-                .zip(summaryPublisher)
-                .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    print("finished fetch zipped dashboard data...")
-                } receiveValue: { (tuple, summary) in
-                    let (bm, fit) = tuple
-                    var summary = summary
-                    if let fit = fit { summary.fitness = fit }
-                    self.bodyMass = bm ?? []
-                    self.summaryData = summary
-                }
-                .store(in: &self.subs)
-        } else {
-            summaryPublisher
-                .receive(on: DispatchQueue.main)
-                .handleEvents(receiveCompletion: {_ in
-                    print("finished fetch dashboard data(just summary)...")
-                })
-                .assign(to: \.summaryData, on: self)
-                .store(in: &self.subs)
-        }
-    }
-    
     func setDashboardDataIfNeed() {
         if self.updateCacheAndNeedAction || !Self.slowApi {
-            self.setDashboardData()
-        }
-    }
-    
-    func refreshAndUploadHealthInfoPublisher() -> AnyPublisher<([Float]?,ISummary.FitnessItem?),Never> {
-        let publisher = PassthroughSubject<([Float]?,ISummary.FitnessItem?),TimeOut>()
-        self.healthManager?.withPermission {
-            self.healthManager?.fetchWidgetData { data, err in
-                if let data = data {
-                    publisher.send((self.healthManager!.healthBodyMassData2ChartData(data: data), nil))
-                } else {
-                    print("not fetched widget data")
-                    publisher.send((nil, nil))
-                }
-            }
-            self.healthManager?.fetchWorkoutData { sumType in
-                self.uploadHealth(data:
-                                    [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
-                                                      activeEnergy: sumType.0,
-                                                      basalEnergy: sumType.1,
-                                                      standTime: sumType.2,
-                                                      exerciseTime: sumType.3,
-                                                      mindful: sumType.4)])
-                print("updating fitness with healthKit value: \(sumType)")
-                publisher.send((nil,
-                    ISummary.FitnessItem(active: sumType.0,
-                                         rest: sumType.1,
-                                         stand: sumType.2,
-                                         exercise: sumType.3,
-                                         mindful: sumType.4,
-                                         goalActive: 500)))
-            }
-        }
-        return publisher
-                .collect(2)
-                .timeout(.seconds(5), scheduler: DispatchQueue.global(qos: .background), customError: { timeout })
-                .map { items in
-                    let bodyMass = items.compactMap(\.0).first
-                    let fitnessItem = items.compactMap(\.1).first
-                    return (bodyMass, fitnessItem)
-                }
-                .replaceError(with: (nil, nil))
-                .first()
-                .eraseToAnyPublisher()
-    }
-    
-    func refreshAndUploadHealthInfo() {
-        self.healthManager?.withPermission {
-            self.healthManager?.fetchWidgetData { data, err in
-                if let data = data {
-                    DispatchQueue.main.async {
-                        self.bodyMass = self.healthManager!.healthBodyMassData2ChartData(data: data)
-                    }
-                } else {
-                    print("not fetched data")
-                }
-            }
-            self.healthManager?.fetchWorkoutData { sumType in
-                self.uploadHealth(data:
-                                    [HMUploadDateData(time: Date.dateFormatter.string(from: .today),
-                                                      activeEnergy: sumType.0,
-                                                      basalEnergy: sumType.1,
-                                                      standTime: sumType.2,
-                                                      exerciseTime: sumType.3,
-                                                      mindful: sumType.4)])
-                DispatchQueue.main.async {
-                    print("updating fitness with healthKit value: \(sumType)")
-                    self.summaryData.fitness =
-                    ISummary.FitnessItem(active: sumType.0,
-                                         rest: sumType.1,
-                                         stand: sumType.2,
-                                         exercise: sumType.3,
-                                         mindful: sumType.4,
-                                         goalActive: 500)
-                }
-            }
+            self.fetchSummary()
+            self.refreshAndUploadHealthInfo()
+            //        let summaryPublisher = self.fetchSummaryPublisher()?.share()
+            //        guard let summaryPublisher = summaryPublisher else { return }
+            //        if Self.autoUpdateHealthInfo {
+            //            self.refreshAndUploadHealthInfoPublisher()
+            //                .zip(summaryPublisher)
+            //                .receive(on: DispatchQueue.main)
+            //                .sink { _ in
+            //                    print("finished fetch zipped dashboard data...")
+            //                } receiveValue: { (tuple, summary) in
+            //                    let (bm, fit) = tuple
+            //                    var summary = summary
+            //                    if let fit = fit { summary.fitness = fit }
+            //                    self.bodyMass = bm ?? []
+            //                    self.summaryData = summary
+            //                }
+            //                .store(in: &self.subs)
+            //        } else {
+            //            summaryPublisher
+            //                .receive(on: DispatchQueue.main)
+            //                .handleEvents(receiveCompletion: {_ in
+            //                    print("finished fetch dashboard data(just summary)...")
+            //                })
+            //                .assign(to: \.summaryData, on: self)
+            //                .store(in: &self.subs)
+            //        }
         }
     }
     

@@ -23,6 +23,23 @@ enum TimeUtil {
         let currentTime: String = formatter.string(from: day)
         return currentTime
     }
+    static func format(fromStr:String?,fromFormat:String=javaLikeFormat) -> Date? {
+        if fromStr == nil {
+            return nil
+        }
+        let f = DateFormatter()
+        f.dateFormat = fromFormat
+        return f.date(from: fromStr!)
+    }
+    static func formatTo(fromStr:String,fromFormat:String=javaLikeFormat,toFormat:String="HH:mm") -> String {
+        let f = DateFormatter()
+        f.dateFormat = fromFormat
+        guard let d = f.date(from: fromStr) else {
+            return "X:X"
+        }
+        f.dateFormat = toFormat
+        return f.string(from: d)
+    }
     static var javaLikeFormat = "yyyy-MM-dd'T'HH:mm:ss"
     static func getWeedayFromeDate(date: Date, withMonth: Bool = false) -> String {
         let calendar = Calendar.current

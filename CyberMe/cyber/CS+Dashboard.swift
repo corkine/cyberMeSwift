@@ -185,6 +185,38 @@ extension ISummary: Decodable {
 }
 
 extension CyberService {
+    func setDashboardDataIfNeed() {
+        if self.updateCacheAndNeedAction || !Self.slowApi {
+            self.fetchSummary()
+            self.refreshAndUploadHealthInfo()
+            //        let summaryPublisher = self.fetchSummaryPublisher()?.share()
+            //        guard let summaryPublisher = summaryPublisher else { return }
+            //        if Self.autoUpdateHealthInfo {
+            //            self.refreshAndUploadHealthInfoPublisher()
+            //                .zip(summaryPublisher)
+            //                .receive(on: DispatchQueue.main)
+            //                .sink { _ in
+            //                    print("finished fetch zipped dashboard data...")
+            //                } receiveValue: { (tuple, summary) in
+            //                    let (bm, fit) = tuple
+            //                    var summary = summary
+            //                    if let fit = fit { summary.fitness = fit }
+            //                    self.bodyMass = bm ?? []
+            //                    self.summaryData = summary
+            //                }
+            //                .store(in: &self.subs)
+            //        } else {
+            //            summaryPublisher
+            //                .receive(on: DispatchQueue.main)
+            //                .handleEvents(receiveCompletion: {_ in
+            //                    print("finished fetch dashboard data(just summary)...")
+            //                })
+            //                .assign(to: \.summaryData, on: self)
+            //                .store(in: &self.subs)
+            //        }
+        }
+    }
+    
     func fetchSummaryPublisher() -> AnyPublisher<ISummary,Never>? {
         if syncTodoNow { return nil }
         guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {

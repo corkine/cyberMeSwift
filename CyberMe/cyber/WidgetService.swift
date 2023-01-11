@@ -24,9 +24,43 @@ struct Dashboard: Codable {
     var tempSmartInfo: (Temp?,Bool) { Date().hour >= 19 ? (tempFutureInfo, false) : (tempInfo, true) }
     var fitnessInfo: Fitness?
     var todo:[Todo]
+    var tickets:[Ticket]
     var updateAt: Int64
     var needDiaryReport: Bool
     var needPlantWater: Bool
+    struct Ticket: Codable {
+        var orderNo:String?
+        var date:String?
+        var start:String?
+        var end:String?
+        var trainNo:String?
+        var siteNo:String?
+        var checkNo:String?
+        var originData:String?
+        var id:String?
+        var isUncomming:Bool {
+            guard let d = TimeUtil.format(fromStr: date) else {
+                return true
+            }
+            return Date().timeIntervalSince1970 < d.timeIntervalSince1970
+        }
+        var description:String {
+            let date = date == nil ? "" : TimeUtil.formatTo(fromStr: date!) + " "
+            let start = start == nil ? "" : start! + " "
+            let train = trainNo == nil ? "火车 " : trainNo! + ", "
+            let check = checkNo == nil ? "" : ", " + checkNo! + "检票 "
+            return "\(date)\(start)\(train)\(siteNo ?? "")\(check)"
+        }
+        static let `default` = Ticket(orderNo: "ET101",
+                                      date: "2023-01-11T17:00:00",
+                                      start: "武汉站",
+                                      end: "郑州东",
+                                      trainNo: "G507",
+                                      siteNo: "6车12A号",
+                                      checkNo: "14B",
+                                      originData: "原始信息",
+                                      id: "AQMkADA")
+    }
     struct Todo: Codable,Hashable,Identifiable {
         var title:String
         var isFinished:Bool
@@ -66,17 +100,17 @@ extension Dashboard {
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
-    static let demoTodo = [Todo(title: "提醒事项1", isFinished: true),
-                           Todo(title: "提醒事项2", isFinished: false),
-                           Todo(title: "提醒事项3", isFinished: true),
-                           Todo(title: "提醒事项4", isFinished: false)]
+    static let demoTodo = [Todo(title: "吃饭", isFinished: false),
+                           Todo(title: "睡觉", isFinished: false),
+                           Todo(title: "打豆豆", isFinished: true),
+                           Todo(title: "提醒事项", isFinished: false)]
     static let demo = Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "", tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
-                                todo: demoTodo, updateAt:
+                                todo: demoTodo, tickets: [Ticket.default], updateAt:
                                     Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
     static func failed(error:Error?) -> Dashboard {
         Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "请求失败：\(String(describing: error))",
-                  todo: demoTodo, updateAt:
-                                        Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
+                  todo: demoTodo, tickets: [], updateAt:
+                    Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
     }
 }
 

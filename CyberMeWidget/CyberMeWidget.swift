@@ -123,12 +123,15 @@ struct CyberMeWidgetEntryView : View {
 
 
     var body: some View {
-        let data = entry.dashboard
+        var data = entry.dashboard
         let needFitness = needWarnFitness(data)
         let bg = WidgetBackground(rawValue: UserDefaults(suiteName: Default.groupName)!
             .string(forKey: "widgetBG") ?? "mountain")
         let alertOn = UserDefaults(suiteName: Default.groupName)!
             .bool(forKey: "alert")
+        data.todo = data.tickets.filter(\.isUncomming).map { ticket in
+            Dashboard.Todo(title: ticket.description, isFinished: false)
+        } + data.todo
         
         return VStack(alignment:.leading) {
             HStack {

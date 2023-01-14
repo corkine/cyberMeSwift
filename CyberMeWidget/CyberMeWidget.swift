@@ -96,20 +96,6 @@ struct CyberMeWidgetEntryView : View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
     
-    /// 是否显示核酸结果：早 8:00 - 9:00 显示（非周末）
-    /// 暂时改为每天显示，除了晚上 8 点后
-    var needShowAcidResult: Bool {
-        let now = Date()
-        if now.hour <= 20 {
-            return true
-        }
-        //        if now.weekday < 6 {
-        //            let hour = now.hour
-        //            return hour >= 8 && hour < 9
-        //        }
-        return false
-    }
-    
     /// 如果工作日没有打卡或者是周六 8:00 - 20:00，则显示
     func needHCMCard(_ data: Dashboard) -> Bool {
         let now = Date()
@@ -279,15 +265,6 @@ struct CyberMeWidgetEntryView : View {
                                 .bold()
                                 .opacity(1)
                                 //.padding(.leading, 3)
-                        }
-                    }
-                    if needShowAcidResult {
-                        Link(destination: URL(string: CyberUrl.healthCard)!) {
-                            Text("健康码")
-                                .kerning(0)
-                                .bold()
-                                .opacity(1)
-                                .padding(.leading, 3)
                         }
                     }
                 }

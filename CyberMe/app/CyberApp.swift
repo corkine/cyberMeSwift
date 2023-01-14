@@ -106,10 +106,6 @@ struct CyberApp: App {
         case _ where input.hasPrefix(CyberUrl.syncWidget):
             Dashboard.updateWidget(inSeconds: 0)
             break
-        case _ where input.hasPrefix(CyberUrl.healthCard):
-            let url = URL(string: Default.UrlScheme.alipayHealthApp)!
-            UIApplication.shared.open(url)
-            break
         case _ where input.hasPrefix(CyberUrl.showBodyMass):
             cyberService.showBodyMassSheetFetch = (true, true)
             break

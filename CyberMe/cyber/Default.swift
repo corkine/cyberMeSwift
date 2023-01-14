@@ -7,7 +7,6 @@
 
 enum Default {
     enum UrlScheme {
-        static let alipayHealthApp = "alipay://platformapi/startapp?appId=2021001132656455"
         static let caiyunWeather = "caiyunapppro://weather"
         static let todoApp = "x-msauth-to-do://today"
         static func shortcutUrl(_ name: String) -> String { "shortcuts://run-shortcut?name=\(name)" }
@@ -33,7 +32,6 @@ enum CyberUrl {
     static let syncTodo = "cyberme://syncTodo"
     static let syncWidget = "cyberme://syncWidget"
 
-    static let healthCard = "cyberme://healthcard"
     static let uploadHealthData = "cyberme://uploadHealthData"
 
     static let showBodyMass = "cyberme://showBodyMass"

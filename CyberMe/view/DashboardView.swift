@@ -65,7 +65,7 @@ struct DashboardView: View {
                                         geo: proxy,
                                         height: 150)
                             
-                            if !service.bodyMass.isEmpty {
+                            if service.bodyMass.count >= 2 {
                                 ZStack {
                                     Color("backgroundGray")
                                     VStack(alignment: .leading,
@@ -74,6 +74,8 @@ struct DashboardView: View {
                                         BodyMassChartView(
                                             data: service.bodyMass,
                                             color: .red)
+                                        Text("没有数据，锻炼并记录一段时间后再来吧")
+                                            .padding(.top, 2)
                                     }
                                     .padding(.top, 18)
                                     .padding([.leading, .trailing], 25)

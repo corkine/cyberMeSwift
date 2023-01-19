@@ -115,9 +115,10 @@ struct CyberMeWidgetEntryView : View {
             .string(forKey: "widgetBG") ?? "mountain")
         let alertOn = UserDefaults(suiteName: Default.groupName)!
             .bool(forKey: "alert")
-        data.todo = data.tickets.filter(\.isUncomming).map { ticket in
+        let fakeTodo = data.tickets.filter(\.isUncomming).map { ticket in
             Dashboard.Todo(title: ticket.description, isFinished: false)
-        } + data.todo
+        }
+        data.todo = fakeTodo + data.todo
         
         return VStack(alignment:.leading) {
             HStack {
@@ -226,15 +227,23 @@ struct CyberMeWidgetEntryView : View {
                 if !data.todo.isEmpty {
                     VStack(alignment: .leading, spacing: 2) {
                         ForEach(data.todo.prefix(3), id: \.self) { item in
-                            if item.isFinished {
-                                Text(item.title)
-                                    .strikethrough()
-                                    .font(.system(size: basic + 4))
-                                    .lineLimit(1)
+                            if !fakeTodo.isEmpty && fakeTodo.contains(where: { t in t.title == item.title }) {
+                                Link(destination: URL(string: CyberUrl.show12306)!) {
+                                    Text(item.title)
+                                        .font(.system(size: basic + 4))
+                                        .lineLimit(1)
+                                }
                             } else {
-                                Text(item.title)
-                                    .font(.system(size: basic + 4))
-                                    .lineLimit(1)
+                                if item.isFinished {
+                                    Text(item.title)
+                                        .strikethrough()
+                                        .font(.system(size: basic + 4))
+                                        .lineLimit(1)
+                                } else {
+                                    Text(item.title)
+                                        .font(.system(size: basic + 4))
+                                        .lineLimit(1)
+                                }
                             }
                         }
                     }

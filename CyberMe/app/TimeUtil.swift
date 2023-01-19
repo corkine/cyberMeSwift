@@ -40,6 +40,10 @@ enum TimeUtil {
         f.dateFormat = toFormat
         return f.string(from: d)
     }
+    static func diffDay(startDate:Date, endDate:Date) -> Int {
+        let diff:DateComponents = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
+        return diff.day!
+    }
     static var javaLikeFormat = "yyyy-MM-dd'T'HH:mm:ss"
     static func getWeedayFromeDate(date: Date, withMonth: Bool = false) -> String {
         let calendar = Calendar.current

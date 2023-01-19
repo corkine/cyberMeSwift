@@ -45,11 +45,19 @@ struct Dashboard: Codable {
             return Date().timeIntervalSince1970 < d.timeIntervalSince1970
         }
         var description:String {
+            var isTomorrow = false
+            if let date = TimeUtil.format(fromStr: date ?? "") {
+                let diff = TimeUtil.diffDay(startDate: Date.today, endDate: date)
+                if diff == 1 {
+                    isTomorrow = true
+                }
+            }
+            let prefix = isTomorrow ? "明天 " : ""
             let date = date == nil ? "" : TimeUtil.formatTo(fromStr: date!) + " "
             let start = start == nil ? "" : start! + " "
             let train = trainNo == nil ? "火车 " : trainNo! + ", "
             let check = checkNo == nil ? "" : ", " + checkNo! + "检票 "
-            return "\(date)\(start)\(train)\(siteNo ?? "")\(check)"
+            return "\(prefix)\(date)\(start)\(train)\(siteNo ?? "")\(check)"
         }
         static let `default` = Ticket(orderNo: "ET101",
                                       date: "2023-01-11T17:00:00",

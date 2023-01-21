@@ -127,6 +127,8 @@ struct CyberApp: App {
         case _ where input.hasPrefix(CyberUrl.show12306):
             UIApplication.shared.open(URL(string: Default.UrlScheme.train12306)!)
             break
+        case _ where input.hasPrefix(CyberUrl.showCal):
+            UIApplication.shared.open(URL(string: Default.UrlScheme.calApp)!)
         default:
             print("no handler for \(url)")
         }

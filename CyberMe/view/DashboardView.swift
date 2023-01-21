@@ -74,8 +74,6 @@ struct DashboardView: View {
                                         BodyMassChartView(
                                             data: service.bodyMass,
                                             color: .red)
-                                        Text("没有数据，锻炼并记录一段时间后再来吧")
-                                            .padding(.top, 2)
                                     }
                                     .padding(.top, 18)
                                     .padding([.leading, .trailing], 25)
@@ -87,11 +85,6 @@ struct DashboardView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .frame(height: 150)
                                 .zIndex(10)
-                            } else {
-                                Rectangle()
-                                    .frame(height: 150)
-                                    .opacity(0.001)
-                                    .zIndex(10)
                             }
                             
                             // MARK: - 周计划
@@ -117,7 +110,10 @@ struct DashboardView: View {
                                     .scaledToFill()
                                     .padding(.leading, -20)
                                     .padding(.trailing, -10)
-                                    .padding(.top, -200)
+                                    .padding(.top,
+                                             summary.weekPlan.isEmpty ?
+                                                service.bodyMass.count < 2 ? -100 : -200 :
+                                                service.bodyMass.count < 2 ? -200 : -100)
                                     .zIndex(0)
                             }
                         }

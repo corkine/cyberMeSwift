@@ -126,15 +126,15 @@ struct CyberMeWidgetEntryView : View {
                 Link(data.workStatus,
                      destination: URL(string: "cyberme://checkCardForce")!)
                     .padding(.trailing, -5)
-                VStack(alignment:.leading) {
-                    Link(destination: URL(string: CyberUrl.syncTodo)!) {
+                Link(destination: URL(string: CyberUrl.showCal)!) {
+                    VStack(alignment:.leading) {
                         Text("我的一天")
                             .kerning(0.6)
                             .bold()
                             .font(.system(size: basic))
+                        Text(dateStr)
+                            .font(.system(size: basic - 3))
                     }
-                    Text(dateStr)
-                        .font(.system(size: basic - 3))
                 }
                 Spacer()
                 // MARK: 顶部提醒日报、健身信息

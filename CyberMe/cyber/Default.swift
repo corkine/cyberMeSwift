@@ -15,6 +15,8 @@ enum Default {
         static let noAlertShortcutName = "noAlert"
         static let miHome = "mihome://home"
         static let train12306 = "cn.12306://home"
+        static let healthApp = "x-apple-health://home"
+        static let calApp = "x-apple-calevent://home"
     }
     static let groupName = "group.cyberme.share"
 }
@@ -37,8 +39,7 @@ enum CyberUrl {
 
     static let showBodyMass = "cyberme://showBodyMass"
     static let showWeather = "cyberme://showWeather"
-    
     static let showMiHome = "cyberme://miHome"
-    
     static let show12306 = "cyberme://12306"
+    static let showCal = "cyberme://cal"
 }

@@ -18,14 +18,32 @@ struct DashboardView: View {
                     HStack(alignment:.top) {
                         VStack(alignment:.leading,spacing: 10) {
                             HStack(alignment:.center) {
-                                Button("我的一天") {
-                                    service.syncTodo {
-                                        service.fetchSummary()
-                                        Dashboard.updateWidget(inSeconds: 0)
-                                    }
-                                }
+                                Text("我的一天")
                                 .font(.title2)
                                 .foregroundColor(Color.blue)
+                                .contextMenu {
+                                    Button("同步 Microsoft TODO") {
+                                        service.syncTodo {
+                                            service.fetchSummary()
+                                            Dashboard.updateWidget(inSeconds: 0)
+                                        }
+                                    }
+                                    Button("标记今天不工作") {
+                                        service.forceWork(work: false) {
+                                            Dashboard.updateWidget(inSeconds: 0)
+                                        }
+                                    }
+                                    Button("标记今天工作") {
+                                        service.forceWork(work: true) {
+                                            Dashboard.updateWidget(inSeconds: 0)
+                                        }
+                                    }
+                                    Button("取消今天标记") {
+                                        service.forceWork(clean:true) {
+                                            Dashboard.updateWidget(inSeconds: 0)
+                                        }
+                                    }
+                                }
                                 
                                 Spacer()
             

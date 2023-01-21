@@ -300,6 +300,25 @@ extension CyberService {
         }
     }
     
+    fileprivate struct ForceWork: Encodable {
+        var forceWork: Bool
+        var cleanForce: Bool
+    }
+    
+    func forceWork(work:Bool = false, clean:Bool = false, completed:@escaping ()->Void = {}) {
+        uploadJSON(api: CyberService.forceWorkUrl,
+                   data: ForceWork(forceWork: work, cleanForce: clean)) {
+            result, error in
+            if let result = result, error == nil {
+                print("forceWork result: \(result)")
+                completed()
+            }
+            if let error = error {
+                print("forceWork error: \(error)")
+            }
+        }
+    }
+    
     func syncTodo(completed:@escaping ()->Void = {}) {
         syncTodoNow = true
         loadJSON(from: CyberService.syncTodoUrl, for: SimpleResult.self)

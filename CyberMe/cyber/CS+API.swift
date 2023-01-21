@@ -15,6 +15,7 @@ extension CyberService {
     static let uploadHealthUrl = "cyber/fitness/appUpload"
     static let checkCardUrl = "cyber/check/now?plainText=false&preferCacheSuccess=true"
     static let checkCardForce = "cyber/check/now?plainText=false&useCache=false"
+    static let forceWorkUrl = "cyber/dashboard/today-work-info"
     static let syncTodoUrl = "cyber/todo/sync"
     static func addLogUrl(_ itemId: String) -> String {
         return "cyber/week-plan/update-item/\(itemId)/add-log"

@@ -45,6 +45,9 @@ class CyberService: ObservableObject {
     @Published var landing = false
     @Published var readme = false
     
+    // MAKR: - 车票 -
+    @Published var ticketInfo: [TicketInfo] = []
+    
     // MARK: - 食物 -
     @Published var foodCount = 0
     

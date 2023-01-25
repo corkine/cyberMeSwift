@@ -337,4 +337,54 @@ extension CyberService {
         }
     }
     
+    struct TicketInfo: Decodable, Identifiable {
+        var id: String
+        var orderNo: String?
+        var start: String?
+        var startFull: String? {
+            start == nil ? nil : start!.hasSuffix("站") ? start! : start! + "站"
+        }
+        var end: String?
+        var endFull: String? {
+            end == nil ? nil : end!.hasSuffix("站") ? end! : end! + "站"
+        }
+        var date: String?
+        var trainNo: String?
+        var siteNo: String?
+        var siteNoFull: String? {
+            siteNo == nil ? nil : siteNo!.hasSuffix("号") ? siteNo! : siteNo! + "号"
+        }
+        var originData: String?
+        var isUncomming:Bool {
+            guard let d = TimeUtil.format(fromStr: date) else {
+                return true
+            }
+            return Date().timeIntervalSince1970 < d.timeIntervalSince1970
+        }
+        var dateFormat:String {
+            var isTomorrow = false
+            if let date = TimeUtil.format(fromStr: date ?? "") {
+                let diff = TimeUtil.diffDay(startDate: Date.today, endDate: date)
+                if diff == 1 {
+                    isTomorrow = true
+                }
+                let formatter = DateFormatter()
+                formatter.dateFormat = isTomorrow ? "明天 HH:mm" : "yyyy-MM-dd HH:mm"
+                let currentTime: String = formatter.string(from: date)
+                return currentTime
+            }
+            return date ?? "未知日期"
+        }
+    }
+    
+    func recentTicket(completed:@escaping ()->Void = {}) {
+        loadJSON(from: CyberService.ticketUrl, for: CyberResult<[TicketInfo]>.self) { res, err in
+            if let res = res {
+                let data = res.data ?? []
+                self.ticketInfo = data
+                completed()
+            }
+        }
+    }
+    
 }

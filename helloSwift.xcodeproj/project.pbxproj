@@ -36,6 +36,7 @@
 		195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D3028BFA2C600239F01 /* ContentView.swift */; };
 		195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
 		195A3D3628BFA2C700239F01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3528BFA2C700239F01 /* Preview Assets.xcassets */; };
+		195DCC6929815AC800C615AD /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195DCC6829815AC800C615AD /* TicketView.swift */; };
 		196106A02924EDC2005D08D7 /* SimpleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1961069F2924EDC2005D08D7 /* SimpleInfoView.swift */; };
 		19625BA228D365B600860518 /* CyberHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA128D365B600860518 /* CyberHomeView.swift */; };
 		19625BA528D36D9E00860518 /* CyberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA428D36D9E00860518 /* CyberService.swift */; };
@@ -150,6 +151,7 @@
 		195A3D3028BFA2C600239F01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		195A3D3228BFA2C700239F01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		195A3D3528BFA2C700239F01 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		195DCC6829815AC800C615AD /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		1961069F2924EDC2005D08D7 /* SimpleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInfoView.swift; sourceTree = "<group>"; };
 		19625BA128D365B600860518 /* CyberHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberHomeView.swift; sourceTree = "<group>"; };
 		19625BA428D36D9E00860518 /* CyberService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberService.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				19F4DC01291E2585006B7D92 /* DashboardView.swift */,
 				1961069F2924EDC2005D08D7 /* SimpleInfoView.swift */,
 				194ABAD7292CF5E70000F8D4 /* FitnessView.swift */,
+				195DCC6829815AC800C615AD /* TicketView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				194ABAD8292CF5E70000F8D4 /* FitnessView.swift in Sources */,
 				199BA890291653FE0080925D /* SettingView.swift in Sources */,
 				193548E3290CF5CD00B2266C /* Default.swift in Sources */,
+				195DCC6929815AC800C615AD /* TicketView.swift in Sources */,
 				190995B92900112A000B5770 /* CS+API.swift in Sources */,
 				19F4DC02291E2585006B7D92 /* DashboardView.swift in Sources */,
 				1948B76528F858CD009BECD0 /* TimeUtil.swift in Sources */,

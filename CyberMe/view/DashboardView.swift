@@ -10,6 +10,7 @@ import SwiftUI
 struct DashboardView: View {
     @EnvironmentObject var service:CyberService
     @Environment(\.colorScheme) var currentMode
+    @State var showTicketAlert: Bool = false
     var summary: ISummary
     var body: some View {
         NavigationView {
@@ -26,6 +27,11 @@ struct DashboardView: View {
                                         service.syncTodo {
                                             service.fetchSummary()
                                             Dashboard.updateWidget(inSeconds: 0)
+                                        }
+                                    }
+                                    Button("最近车票信息") {
+                                        service.recentTicket {
+                                            self.showTicketAlert = true
                                         }
                                     }
                                     Button("标记今天不工作") {
@@ -68,13 +74,16 @@ struct DashboardView: View {
                                 .padding(.bottom, 5)
                             
                             // MARK: - 健身卡片
-                            Button("形体之山") {
-                                service.refreshAndUploadHealthInfo()
-                            }
+                            Text("形体之山")
                             .font(.title2)
                             .foregroundColor(Color.blue)
                             .padding(.top, 10)
                             .padding(.bottom, 5)
+                            .contextMenu {
+                                Button("同步 Apple Health") {
+                                    service.refreshAndUploadHealthInfo()
+                                }
+                            }
                             
                             FitnessView(data:
                                             (Int(summary.fitness.active),
@@ -143,6 +152,10 @@ struct DashboardView: View {
                     }
                 }
                 .navigationTitle("\(TimeUtil.getWeedayFromeDate(date: Date(), withMonth: true))")
+                .sheet(isPresented: $showTicketAlert) {
+                    TicketView(info: service.ticketInfo)
+                        .padding(.top, 30)
+                }
                 //.padding(.top, 0.2)
             }
         }

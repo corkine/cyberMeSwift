@@ -362,14 +362,19 @@ extension CyberService {
             return Date().timeIntervalSince1970 < d.timeIntervalSince1970
         }
         var dateFormat:String {
-            var isTomorrow = false
             if let date = TimeUtil.format(fromStr: date ?? "") {
                 let diff = TimeUtil.diffDay(startDate: Date.today, endDate: date)
-                if diff == 1 {
-                    isTomorrow = true
+                var format = "yyyy-MM-dd"
+                switch diff {
+                    case 0: format = "今天"
+                    case 1: format = "明天"
+                    case 2: format = "后天"
+                    case -1: format = "昨天"
+                    case -2: format = "前天"
+                    default: break
                 }
                 let formatter = DateFormatter()
-                formatter.dateFormat = isTomorrow ? "明天 HH:mm" : "yyyy-MM-dd HH:mm"
+                formatter.dateFormat = "\(format) HH:mm"
                 let currentTime: String = formatter.string(from: date)
                 return currentTime
             }

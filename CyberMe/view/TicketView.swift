@@ -86,7 +86,7 @@ struct TicketView_Previews: PreviewProvider {
         TicketView(info: [CyberService.TicketInfo(
             id: "abc",
             start: "武汉东",
-            end: "邓州东",
+            end: "武汉",
             date: "2023-01-26T13:23:00",
             trainNo: "G1234",
             siteNo: "A13B",

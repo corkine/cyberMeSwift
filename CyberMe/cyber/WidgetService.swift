@@ -62,7 +62,7 @@ struct Dashboard: Codable {
         static let `default` = Ticket(orderNo: "ET101",
                                       date: "2023-01-11T17:00:00",
                                       start: "武汉站",
-                                      end: "郑州东",
+                                      end: "武汉东",
                                       trainNo: "G507",
                                       siteNo: "6车12A号",
                                       checkNo: "14B",

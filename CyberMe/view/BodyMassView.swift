@@ -26,6 +26,14 @@ struct BodyMassView: View {
     @State var showErrorMessage = false
     @State var errorMessage = ""
     
+    var canDrawPoint: Bool {
+        service.bodyMass.count >= 2
+    }
+    
+    var canAppendAndDrawPoint: Bool {
+        service.bodyMass.count >= 1
+    }
+    
     var body: some View {
         VStack(alignment:.center) {
             // MARK: 旗标
@@ -41,7 +49,7 @@ struct BodyMassView: View {
                     Text("30 天走势")
                         .font(.system(size: 30, weight: .bold))
                     // 如果少于两个数据，则不显示
-                    if service.bodyMass.count >= 2 {
+                    if canDrawPoint {
                         BodyMassChartView(data: service.bodyMass,
                                           color: Color("weightDiff"))
                         .frame(height: 110)
@@ -54,6 +62,7 @@ struct BodyMassView: View {
                 .padding(.leading, 30)
                 Spacer()
             }
+            .fixedSize(horizontal: !canDrawPoint, vertical: false)
             .padding(.top, 20)
             Spacer()
             // MARK: 体重秤
@@ -87,7 +96,9 @@ struct BodyMassView: View {
             Button("记录体重") {
                 if let w = Double(weight) {
                     print("记录体重值为 \(w)")
-                    service.bodyMass.append(Float(w).roundTo(places: 2))
+                    if canAppendAndDrawPoint {
+                        service.bodyMass.append(Float(w).roundTo(places: 2))
+                    }
                     service.uploadBodyMass(value: w)
                     service.healthManager?.setBodyMass(w, callback: { result, err in
                         if !result {

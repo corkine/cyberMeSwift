@@ -54,7 +54,7 @@ struct CyberMeWidgetEntryView : View {
         let now = Date()
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "zh_CN")
-        formatter.dateFormat = "MM月dd日 E"
+        formatter.dateFormat = "M月d日 E"//"MM月dd日 E"
         return formatter.string(from: now)
     }
     
@@ -127,14 +127,10 @@ struct CyberMeWidgetEntryView : View {
                      destination: URL(string: "cyberme://checkCardForce")!)
                     .padding(.trailing, -5)
                 Link(destination: URL(string: CyberUrl.showCal)!) {
-                    VStack(alignment:.leading) {
-                        Text("我的一天")
-                            .kerning(0.6)
-                            .bold()
-                            .font(.system(size: basic))
-                        Text(dateStr)
-                            .font(.system(size: basic - 3))
-                    }
+                    Text(dateStr)
+                        .kerning(0.6)
+                        .bold()
+                        .font(.custom("American TypeWriter", size: basic + 3))
                 }
                 Spacer()
                 // MARK: 顶部提醒日报、健身信息

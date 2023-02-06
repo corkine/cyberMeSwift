@@ -129,7 +129,6 @@ struct CyberMeWidgetEntryView : View {
                 Link(destination: URL(string: CyberUrl.showCal)!) {
                     Text(dateStr)
                         .kerning(0.6)
-                        .bold()
                         .font(.custom("American TypeWriter", size: basic + 3))
                 }
                 Spacer()

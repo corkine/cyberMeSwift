@@ -31,7 +31,6 @@
 		194ABAD8292CF5E70000F8D4 /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194ABAD7292CF5E70000F8D4 /* FitnessView.swift */; };
 		194ABAD9292D28950000F8D4 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
 		194ABADA292D28DB0000F8D4 /* CS+Health.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90DB291F65EE00373BEF /* CS+Health.swift */; };
-		194FEEE42951329600D63AB2 /* NaTie.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 194FEEE32951329600D63AB2 /* NaTie.gpx */; };
 		195A3D2F28BFA2C600239F01 /* CyberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D2E28BFA2C600239F01 /* CyberApp.swift */; };
 		195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D3028BFA2C600239F01 /* ContentView.swift */; };
 		195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
@@ -145,7 +144,6 @@
 		1948B76328F6EDBC009BECD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1948B76428F858CD009BECD0 /* TimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
 		194ABAD7292CF5E70000F8D4 /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
-		194FEEE32951329600D63AB2 /* NaTie.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = NaTie.gpx; sourceTree = "<group>"; };
 		195A3D2B28BFA2C600239F01 /* CyberMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		195A3D2E28BFA2C600239F01 /* CyberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberApp.swift; sourceTree = "<group>"; };
 		195A3D3028BFA2C600239F01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -280,7 +278,6 @@
 		195A3D2228BFA2C600239F01 = {
 			isa = PBXGroup;
 			children = (
-				194FEEE32951329600D63AB2 /* NaTie.gpx */,
 				19BD734828CAB6400062B8D9 /* README.md */,
 				195A3D2D28BFA2C600239F01 /* CyberMe */,
 				19CE75F928D23A5F00AF8AFF /* CyberMeMac */,
@@ -575,7 +572,6 @@
 			files = (
 				19D6C3B928D1510A00ED5D4B /* hikeData.json in Resources */,
 				195A3D3628BFA2C700239F01 /* Preview Assets.xcassets in Resources */,
-				194FEEE42951329600D63AB2 /* NaTie.gpx in Resources */,
 				195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */,
 				19BD734728CA07AF0062B8D9 /* landmarkData.json in Resources */,
 			);

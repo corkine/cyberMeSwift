@@ -109,6 +109,7 @@ extension CyberService {
                                          exercise: sumType.3,
                                          mindful: sumType.4,
                                          goalActive: 500, storeLevel: .local)
+                    self.objectWillChange.send()
                 }
             }
         }

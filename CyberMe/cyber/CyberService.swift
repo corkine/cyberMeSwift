@@ -31,13 +31,17 @@ class CyberService: ObservableObject {
     
     static let userDefault = UserDefaults(suiteName: Default.groupName)!
     
-    @Published var summaryData = ISummary.default {
-        willSet {
-            var newValue = newValue
-            if newValue.fitness.storeLevel.rawValue < summaryData.fitness.storeLevel.rawValue {
-                print("setting summaryData with old storeLevel fitness data detected.")
-                newValue.fitness = summaryData.fitness
-            }
+    @Published var summaryData = ISummary.default
+    
+    func updateSummary(sum:ISummary) {
+        //print("updating summary with \(sum.fitness), now summaryData is \(summaryData.fitness)")
+        var sum = sum
+        if sum.fitness.storeLevel.rawValue < summaryData.fitness.storeLevel.rawValue {
+            print("setting summaryData with old storeLevel fitness data detected.")
+            sum.fitness = summaryData.fitness
+            summaryData = sum
+        } else {
+            summaryData = sum
         }
     }
     

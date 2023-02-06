@@ -270,7 +270,7 @@ extension CyberService {
                     if var data = response.data {
                         DispatchQueue.main.async {
                             data.fitness.storeLevel = .server
-                            self.summaryData = data
+                            self.updateSummary(sum: data)
                         }
                     } else {
                         self.alertInfomation = "解码 Summary 数据出错"

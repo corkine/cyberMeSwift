@@ -102,17 +102,16 @@ extension CyberService {
                                                       mindful: sumType.4)])
                 DispatchQueue.main.async {
                     print("updating fitness with healthKit value: \(sumType)")
-                    self.summaryData.fitness =
-                    ISummary.FitnessItem(active: sumType.0,
-                                         rest: sumType.1,
-                                         stand: sumType.2,
-                                         exercise: sumType.3,
-                                         mindful: sumType.4,
-                                         goalActive: 500, storeLevel: .local)
-                    self.objectWillChange.send()
+                    var sd = self.summaryData
+                    sd.fitness = ISummary.FitnessItem(active: sumType.0,
+                                                     rest: sumType.1,
+                                                     stand: sumType.2,
+                                                     exercise: sumType.3,
+                                                     mindful: sumType.4,
+                                                     goalActive: 500, storeLevel: .local)
+                    self.updateSummary(sum: sd)
                 }
             }
         }
     }
-    
 }

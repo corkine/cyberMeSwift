@@ -8,8 +8,6 @@
 import WidgetKit
 import SwiftUI
 
-var widgetLocationManager = WidgetLocationManager()
-
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), dashboard: Dashboard.demo)
@@ -23,11 +21,11 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
         CyberService.fetchDashboard { dashboard, error in
             if let dashboard = dashboard {
-                widgetLocationManager.fetchLocation(handler: { (loc, err) in
+                WidgetLocation.fetchIfTime(handler: { (loc, err) in
                     if let err = err {
                         CyberService.sendNotice(msg: "Error when fetch location: \(err.localizedDescription)")
                     } else {
-                        CyberService.sendNotice(msg: loc!.description)
+                        CyberService.trackUrl(location: loc!, by: "corkine@CMIXR")
                     }
                 })
                 let currentDate = Date()

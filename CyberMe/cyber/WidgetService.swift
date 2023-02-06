@@ -7,6 +7,7 @@
 
 import Foundation
 import WidgetKit
+import CoreLocation
 
 enum WidgetBackground: String, CaseIterable, Identifiable {
     case blue, mountain
@@ -125,16 +126,10 @@ extension Dashboard {
 extension CyberService {
     static var dashboard: Dashboard?
     
-    static func urlencode(_ string: String) -> String {
-        var allowedQueryParamAndKey = NSCharacterSet.urlQueryAllowed
-        allowedQueryParamAndKey.remove(charactersIn: "!*'\"();:@&=+$,/?%#[]% ")
-        return string.addingPercentEncoding(withAllowedCharacters: allowedQueryParamAndKey) ?? string
-    }
-    
     static func sendNotice(msg:String) {
         let token = UserDefaults(suiteName: "group.cyberme.share")!
             .string(forKey: "cyber-token") ?? ""
-        guard let url = URL(string: baseUrl + Self.noticeUrl + urlencode(msg)) else {
+        guard let url = URL(string: baseUrl + Self.noticeUrl + Self.urlencode(msg)) else {
             print("End point is Invalid")
             return
         }
@@ -143,6 +138,22 @@ extension CyberService {
         request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             print("send notice \(String(describing: data)), \(String(describing: response))")
+        }.resume()
+    }
+    
+    static func trackUrl(location:CLLocation, by:String) {
+        let token = UserDefaults(suiteName: "group.cyberme.share")!
+            .string(forKey: "cyber-token") ?? ""
+        guard let url = URL(string: baseUrl + Self.trackUrl(lo: location.coordinate.longitude,
+                                                            la: location.coordinate.latitude,
+                                                            by: by)) else {
+            print("End point is Invalid")
+            return
+        }
+        var request = URLRequest(url: url)
+        request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            print("set track \(String(describing: data)), \(String(describing: response))")
         }.resume()
     }
     
@@ -221,5 +232,55 @@ class BackgroundManager : NSObject, URLSessionDelegate, URLSessionDownloadDelega
         self.completionHandler!()
         WidgetCenter.shared.reloadTimelines(ofKind: "CyberMeWidget")
         print("Background update")
+    }
+}
+
+enum WidgetLocation {
+    static var lastUpdate = 0.0
+    static let duration = 60 * 4.5
+    static var updateCacheAndNeedAction: Bool {
+        let now = Date().timeIntervalSince1970
+        let res = now - lastUpdate
+        let result =  res > duration
+        if result {
+            lastUpdate = now
+        }
+        return result
+    }
+    static var manager = WidgetLocationManager()
+    static func fetchIfTime(handler: @escaping (CLLocation?,Error?) -> Void) {
+        if updateCacheAndNeedAction {
+            manager.fetchLocation(handler: handler)
+        }
+    }
+}
+
+class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
+    var locationManager: CLLocationManager?
+    private var handler: ((CLLocation?,Error?) -> Void)?
+
+    override init() {
+        super.init()
+        DispatchQueue.main.async {
+            self.locationManager = CLLocationManager()
+            self.locationManager!.delegate = self
+            if self.locationManager!.authorizationStatus == .notDetermined {
+                self.locationManager!.requestWhenInUseAuthorization()
+            }
+        }
+    }
+    
+    func fetchLocation(handler: @escaping (CLLocation?,Error?) -> Void) {
+        self.handler = handler
+        self.locationManager?.requestLocation()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.handler!(locations.last!, nil)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+        self.handler!(nil, error)
     }
 }

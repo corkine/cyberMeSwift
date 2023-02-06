@@ -19,6 +19,9 @@ extension CyberService {
     static let syncTodoUrl = "cyber/todo/sync"
     static let ticketUrl = "cyber/ticket/recent"
     static let noticeUrl = "cyber/notice?message="
+    static func trackUrl(lo:Double, la:Double, by:String) -> String {
+        return "cyber/location?lo=\(lo)&la=\(la)&by=\(urlencode(by))"
+    }
     static func addLogUrl(_ itemId: String) -> String {
         return "cyber/week-plan/update-item/\(itemId)/add-log"
     }
@@ -29,4 +32,9 @@ extension CyberService {
         return "cyber/week-plan/update-item/\(itemId)/update-log"
     }
     static let editWeekPlanItemUrl = "cyber/week-plan/modify-item"
+    static func urlencode(_ string: String) -> String {
+        var allowedQueryParamAndKey = NSCharacterSet.urlQueryAllowed
+        allowedQueryParamAndKey.remove(charactersIn: "!*'\"();:@&=+$,/?%#[]% ")
+        return string.addingPercentEncoding(withAllowedCharacters: allowedQueryParamAndKey) ?? string
+    }
 }

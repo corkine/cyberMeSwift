@@ -21,8 +21,6 @@
 		193548E4290CF86200B2266C /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
 		193C8A1B291223EE00FF975F /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Number+Extension.swift */; };
 		193C8A1C291223EE00FF975F /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Number+Extension.swift */; };
-		193EADE6299123E9006148FF /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193EADE5299123E9006148FF /* Location.swift */; };
-		193EADE7299123E9006148FF /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193EADE5299123E9006148FF /* Location.swift */; };
 		1948648028D883A500064104 /* PhPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948647F28D883A500064104 /* PhPicker.swift */; };
 		1948648228D89DF300064104 /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948648128D89DF300064104 /* TodoView.swift */; };
 		1948B75F28F6C569009BECD0 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* WidgetService.swift */; };
@@ -140,7 +138,6 @@
 		193548D7290CD99F00B2266C /* FoodAccount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodAccount.xcdatamodel; sourceTree = "<group>"; };
 		193548E2290CF5CD00B2266C /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		193C8A1A291223EE00FF975F /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
-		193EADE5299123E9006148FF /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		1948647F28D883A500064104 /* PhPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhPicker.swift; sourceTree = "<group>"; };
 		1948648128D89DF300064104 /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		1948B75E28F6C569009BECD0 /* WidgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetService.swift; sourceTree = "<group>"; };
@@ -394,7 +391,6 @@
 			isa = PBXGroup;
 			children = (
 				195A3D2E28BFA2C600239F01 /* CyberApp.swift */,
-				193EADE5299123E9006148FF /* Location.swift */,
 				1948B76428F858CD009BECD0 /* TimeUtil.swift */,
 				19FF8EC429001FCA009C96C3 /* View+Extension.swift */,
 				193C8A1A291223EE00FF975F /* Number+Extension.swift */,
@@ -649,7 +645,6 @@
 				19625BA228D365B600860518 /* CyberHomeView.swift in Sources */,
 				19CE761628D240D500AF8AFF /* LandmarkCommands.swift in Sources */,
 				195A3D2F28BFA2C600239F01 /* CyberApp.swift in Sources */,
-				193EADE6299123E9006148FF /* Location.swift in Sources */,
 				19D6C3BB28D1514300ED5D4B /* Model.swift in Sources */,
 				190995BC29001135000B5770 /* CS+Setting.swift in Sources */,
 				19D2A9E028D489AE009C81C4 /* Bullseye.swift in Sources */,
@@ -695,7 +690,6 @@
 				190995BD29001135000B5770 /* CS+Setting.swift in Sources */,
 				194ABAD9292D28950000F8D4 /* HealthManager.swift in Sources */,
 				19FF8EC629001FCA009C96C3 /* View+Extension.swift in Sources */,
-				193EADE7299123E9006148FF /* Location.swift in Sources */,
 				193548E4290CF86200B2266C /* Default.swift in Sources */,
 				193C8A1C291223EE00FF975F /* Number+Extension.swift in Sources */,
 				1948B76628F858CD009BECD0 /* TimeUtil.swift in Sources */,

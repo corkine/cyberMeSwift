@@ -34,7 +34,6 @@ class CyberService: ObservableObject {
     @Published var summaryData = ISummary.default
     
     func updateSummary(sum:ISummary) {
-        //print("updating summary with \(sum.fitness), now summaryData is \(summaryData.fitness)")
         var sum = sum
         if sum.fitness.storeLevel.rawValue < summaryData.fitness.storeLevel.rawValue {
             print("setting summaryData with old storeLevel fitness data detected.")

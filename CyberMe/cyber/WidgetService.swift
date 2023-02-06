@@ -153,7 +153,11 @@ extension CyberService {
         var request = URLRequest(url: url)
         request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
-            print("set track \(String(describing: data)), \(String(describing: response))")
+            if let resp = response {
+                print("set track \(String(describing: resp))")
+            } else {
+                print("set track failed, no response!")
+            }
         }.resume()
     }
     
@@ -237,7 +241,7 @@ class BackgroundManager : NSObject, URLSessionDelegate, URLSessionDownloadDelega
 
 enum WidgetLocation {
     static var lastUpdate = 0.0
-    static let duration = 60 * 4.5
+    static let duration = 180.0 //60 * 4.5
     static var updateCacheAndNeedAction: Bool {
         let now = Date().timeIntervalSince1970
         let res = now - lastUpdate
@@ -250,7 +254,10 @@ enum WidgetLocation {
     static var manager = WidgetLocationManager()
     static func fetchIfTime(handler: @escaping (CLLocation?,Error?) -> Void) {
         if updateCacheAndNeedAction {
+            print("start fetch location")
             manager.fetchLocation(handler: handler)
+        } else {
+            print("not spec time, skip fetch location")
         }
     }
 }
@@ -276,6 +283,7 @@ class WidgetLocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("location fetched \(locations)")
         self.handler!(locations.last!, nil)
     }
     

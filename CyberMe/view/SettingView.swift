@@ -26,23 +26,25 @@ struct ProfileView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 15) {
                 Text("小应用")
-                Button("BullsEye Game") {
-                    withAnimation {
-                        service.gaming = true
+                Group {
+                    Button("BullsEye Game") {
+                        withAnimation {
+                            service.gaming = true
+                        }
                     }
-                }
-                Button("Landmarks") {
-                    withAnimation {
-                        service.landing = true
+                    Button("Landmarks") {
+                        withAnimation {
+                            service.landing = true
+                        }
                     }
-                }
-                Button("ReadMe") {
-                    withAnimation {
-                        service.readme = true
+                    Button("ReadMe") {
+                        withAnimation {
+                            service.readme = true
+                        }
                     }
-                }
-                Button("体重管理") {
-                    showBodyMassSheet = true
+                    Button("体重管理") {
+                        showBodyMassSheet = true
+                    }
                 }
                 Divider()
                 HStack(alignment: .center) {

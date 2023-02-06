@@ -125,6 +125,27 @@ extension Dashboard {
 extension CyberService {
     static var dashboard: Dashboard?
     
+    static func urlencode(_ string: String) -> String {
+        var allowedQueryParamAndKey = NSCharacterSet.urlQueryAllowed
+        allowedQueryParamAndKey.remove(charactersIn: "!*'\"();:@&=+$,/?%#[]% ")
+        return string.addingPercentEncoding(withAllowedCharacters: allowedQueryParamAndKey) ?? string
+    }
+    
+    static func sendNotice(msg:String) {
+        let token = UserDefaults(suiteName: "group.cyberme.share")!
+            .string(forKey: "cyber-token") ?? ""
+        guard let url = URL(string: baseUrl + Self.noticeUrl + urlencode(msg)) else {
+            print("End point is Invalid")
+            return
+        }
+        var request = URLRequest(url: url)
+        print("requesting for \(request)")
+        request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            print("send notice \(String(describing: data)), \(String(describing: response))")
+        }.resume()
+    }
+    
     static func fetchDashboard(completion:@escaping (Dashboard?, Error?) -> Void) {
         let token = UserDefaults(suiteName: "group.cyberme.share")!
             .string(forKey: "cyber-token") ?? ""

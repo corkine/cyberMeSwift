@@ -18,6 +18,7 @@ extension CyberService {
     static let forceWorkUrl = "cyber/dashboard/today-work-info"
     static let syncTodoUrl = "cyber/todo/sync"
     static let ticketUrl = "cyber/ticket/recent"
+    static let noticeUrl = "cyber/notice?message="
     static func addLogUrl(_ itemId: String) -> String {
         return "cyber/week-plan/update-item/\(itemId)/add-log"
     }

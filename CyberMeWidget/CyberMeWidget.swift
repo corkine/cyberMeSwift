@@ -136,7 +136,7 @@ struct CyberMeWidgetEntryView : View {
                 Link(destination: URL(string: CyberUrl.showCal)!) {
                     Text(dateStr)
                         .kerning(0.6)
-                        .font(.custom("American TypeWriter", size: basic + 3))
+                        .font(.system(size: basic + 3))
                 }
                 Spacer()
                 // MARK: 顶部提醒日报、健身信息

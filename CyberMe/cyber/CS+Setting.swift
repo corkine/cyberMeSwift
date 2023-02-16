@@ -109,4 +109,13 @@ extension CyberService {
             userDefault.set(newValue, forKey: "slowApi")
         }
     }
+    
+    static var gpsPeriod: Int {
+        get {
+            userDefault.integer(forKey: "gpsPeriod")
+        }
+        set {
+            userDefault.set(newValue < 0 ? 0 : newValue, forKey: "gpsPeriod")
+        }
+    }
 }

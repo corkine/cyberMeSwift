@@ -241,10 +241,11 @@ class BackgroundManager : NSObject, URLSessionDelegate, URLSessionDownloadDelega
 
 enum WidgetLocation {
     static var lastUpdate = 0.0
-    static let duration = 180.0 //60 * 4.5
     static var updateCacheAndNeedAction: Bool {
         let now = Date().timeIntervalSince1970
         let res = now - lastUpdate
+        let duration = Double(CyberService.gpsPeriod) * 60.0
+        if duration == 0 { return false }
         let result =  res > duration
         if result {
             lastUpdate = now
@@ -253,11 +254,13 @@ enum WidgetLocation {
     }
     static var manager = WidgetLocationManager()
     static func fetchIfTime(handler: @escaping (CLLocation?,Error?) -> Void) {
-        if updateCacheAndNeedAction {
-            print("start fetch location")
-            manager.fetchLocation(handler: handler)
-        } else {
-            print("not spec time, skip fetch location")
+        DispatchQueue.global(qos: .background).async {
+            if updateCacheAndNeedAction {
+                print("start fetch location")
+                manager.fetchLocation(handler: handler)
+            } else {
+                print("not spec time, skip fetch location")
+            }
         }
     }
 }

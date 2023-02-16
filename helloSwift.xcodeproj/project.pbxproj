@@ -74,6 +74,7 @@
 		19D6C3BB28D1514300ED5D4B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D6C3BA28D1514300ED5D4B /* Model.swift */; };
 		19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D6C3BC28D1522E00ED5D4B /* Hike.swift */; };
 		19DBD54F28D61E190086B710 /* LeaderBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DBD54E28D61E190086B710 /* LeaderBoard.swift */; };
+		19E7F6FA299E56C400AB5D68 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */; };
 		19F4DC02291E2585006B7D92 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F4DC01291E2585006B7D92 /* DashboardView.swift */; };
 		19FD182928D9CBB0004F97B3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180028D9CB27004F97B3 /* WidgetKit.framework */; };
 		19FD182A28D9CBB0004F97B3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180228D9CB27004F97B3 /* SwiftUI.framework */; };
@@ -200,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19E7F6FA299E56C400AB5D68 /* SwiftUIFlowLayout in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +465,9 @@
 				19FD183228D9CBB1004F97B3 /* PBXTargetDependency */,
 			);
 			name = helloSwift;
+			packageProductDependencies = (
+				19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */,
+			);
 			productName = helloSwift;
 			productReference = 195A3D2B28BFA2C600239F01 /* CyberMe.app */;
 			productType = "com.apple.product-type.application";
@@ -553,6 +558,9 @@
 				Base,
 			);
 			mainGroup = 195A3D2228BFA2C600239F01;
+			packageReferences = (
+				19E7F6F8299E56C400AB5D68 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */,
+			);
 			productRefGroup = 195A3D2C28BFA2C600239F01 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1116,6 +1124,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		19E7F6F8299E56C400AB5D68 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/globulus/swiftui-flow-layout";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19E7F6F8299E56C400AB5D68 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */;
+			productName = SwiftUIFlowLayout;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		193548D6290CD99F00B2266C /* FoodAccount.xcdatamodeld */ = {

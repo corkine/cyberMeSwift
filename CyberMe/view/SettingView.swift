@@ -36,6 +36,17 @@ struct ProfileView: View {
     @State private var slowApi = false
     @State private var gpsPeriod = 3
     @State private var showGpsHelp = false
+    @State private var showLogin = false
+    @State private var username = ""
+    @State private var password = ""
+    @State private var hcmShortcutName = "checkCardHCM"
+    
+    init() {
+        //aviod onChange trigger multi-times
+        _widgetBG = State(initialValue: WidgetBackground(rawValue: CyberService.widgetBG)!)
+        _autoUpldateHealthInfo = State(initialValue: CyberService.autoUpdateHealthInfo)
+        _slowApi = State(initialValue: CyberService.slowApi)
+    }
     
     var body: some View {
         NavigationView {
@@ -75,7 +86,10 @@ struct ProfileView: View {
                 }
                 .alert(isPresented: $showGpsHelp) {
                     Alert(title: Text(""),
-                          message: Text("将在桌面组件自动定时刷新或由主程序进入后台触发刷新时，在 \(gpsPeriod) 分钟内执行一次 GPS 定位。一般情况下 3 分钟间隔将导致 1 小时定位 5 次左右"), dismissButton: .default(Text("确定"), action: {
+                          message: Text("""
+                                        将在桌面组件自动定时刷新或由主程序进入后台触发刷新时，在 \(gpsPeriod)\
+                                        分钟内执行一次 GPS 定位。一般情况下 3 分钟间隔将导致 1 小时定位 5 次左右
+                                        """), dismissButton: .default(Text("确定"), action: {
                         showGpsHelp = false
                     }))
                 }
@@ -84,17 +98,54 @@ struct ProfileView: View {
                     Toggle("自动更新健身记录", isOn: $autoUpldateHealthInfo)
                     Toggle("请求 API 节流", isOn: $slowApi)
                 }
-                // MARK: -- 清空凭证和设置
-                Group {
-                    Button("清空凭证") {
-                        service.clearLoginToken()
-                    }
-                    Button("清空设置") {
-                        service.clearSettings()
-                    }
+                // MARK: -- 更新凭证和设置
+                Button("更新凭证") {
+                    showLogin = true
                 }
                 .padding(.top, 10)
-                .foregroundColor(.red)
+                .sheet(isPresented: $showLogin) {
+                    Form {
+                        TextField("用户名", text: $username)
+                            .autocorrectionDisabled(true)
+                            .autocapitalization(.none)
+                        SecureField("密码", text: $password)
+                            .textContentType(.password)
+                            .autocapitalization(.none)
+                        HStack {
+                            Text("HCM 快捷指令名称")
+                                .fixedSize()
+                            Divider()
+                            TextField("", text: $hcmShortcutName)
+                                .autocorrectionDisabled(true)
+                                .autocapitalization(.none)
+                        }
+                    }
+                    .onAppear {
+                        username = "corkine"
+                        password = ""
+                        hcmShortcutName = service.settings["hcmShortcutName"] ?? hcmShortcutName
+                    }
+                    .onDisappear {
+                        var needReloadTimeline = false
+                        if !password.isEmpty && !username.isEmpty {
+                            service.setLoginToken(user: username, pass: password)
+                            service.fetchSummary()
+                            needReloadTimeline = true
+                        }
+                        if !hcmShortcutName.isEmpty {
+                            if let hs = service.settings["hcmShortcutName"],
+                               hs == hcmShortcutName {
+                               return
+                            }
+                            service.settings.updateValue(hcmShortcutName,
+                                                         forKey: "hcmShortcutName")
+                            needReloadTimeline = true
+                        }
+                        if needReloadTimeline {
+                            WidgetCenter.shared.reloadAllTimelines()
+                        }
+                    }
+                }
                 Spacer()
             }
             .padding(25)
@@ -102,7 +153,7 @@ struct ProfileView: View {
         }
         .onChange(of: widgetBG) {
             CyberService.widgetBG = $0.rawValue
-            Dashboard.updateWidget(inSeconds: 0)
+            Dashboard.updateWidget(inSeconds: 1)
         }
         .onChange(of: gpsPeriod) { CyberService.gpsPeriod = $0 }
         .onChange(of: slowApi) { CyberService.slowApi = $0 }

@@ -224,7 +224,7 @@ extension CyberService {
             return nil
         }
         var request = URLRequest(url: url)
-        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(self.getLoginToken())", forHTTPHeaderField: "Authorization")
         let publisher = PassthroughSubject<ISummary,Never>()
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -262,7 +262,7 @@ extension CyberService {
             return
         }
         var request = URLRequest(url: url)
-        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(self.getLoginToken())", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {

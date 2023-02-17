@@ -58,33 +58,12 @@ class CyberService: ObservableObject {
     @Published var alertInfomation: String?
     @Published var syncTodoNow = false
     
-    // MARK: - 登录 -
-    var token: String = "" {
-        didSet {
-            if token != "" {
-                let _ = self.fetchSummary()
-                WidgetCenter.shared.reloadAllTimelines()
-            }
-        }
-    }
-    @Published var showLogin = false
-    
-    // MARK: - 设置 -
-    var settings: [String:String] = [:] {
-        didSet {
-            print("settings now set to \(settings)")
-        }
-    }
-    @Published var showSettings = false
-    
     // MARK: - HealthKit: BodyMass -
     @Published var showBodyMassSheetFetch = (false, false)
     
     var healthManager: HealthManager?
     
     init() {
-        self.token = getLoginToken() ?? ""
-        self.settings = getSettings() ?? [:]
         self.foodCount = getFoodCount()
         if HKHealthStore.isHealthDataAvailable() {
             healthManager = HealthManager()
@@ -125,7 +104,7 @@ class CyberService: ObservableObject {
         }
         //print("requesting for \(CyberService.baseUrl + urlString)")
         var request = URLRequest(url: url)
-        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(self.getLoginToken())", forHTTPHeaderField: "Authorization")
         request.httpMethod = "GET"
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
@@ -156,7 +135,7 @@ class CyberService: ObservableObject {
             return
         }
         var request = URLRequest(url: url)
-        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(self.getLoginToken())", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "Post"
         let jsonData = try! JSONEncoder().encode(data)
@@ -179,7 +158,7 @@ class CyberService: ObservableObject {
             return
         }
         var request = URLRequest(url: url)
-        request.setValue("Basic \(self.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(self.getLoginToken())", forHTTPHeaderField: "Authorization")
         request.httpMethod = "Post"
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {

@@ -12,6 +12,7 @@ import CommonCrypto
 import CryptoKit
 
 extension CyberService {
+    // MARK: - Token -
     func genToken(password:String, expiredSeconds: Int) -> String? {
         let willExpired = Int(Date().timeIntervalSince1970 * 1000) + Int(expiredSeconds * 1000)
         let first = password + "::" + String(willExpired)
@@ -26,63 +27,41 @@ extension CyberService {
         return hash.base64EncodedString()
     }
     
-    func getLoginToken() -> String? {
-        let res = Self.userDefault.string(forKey: "cyber-token")
-        if res == nil {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.showLogin = true
-            }
-        }
-        return res
+    func getLoginToken() -> String {
+        return Self.userDefault.string(forKey: "cyber-token") ?? ""
     }
     
     func setLoginToken(user:String, pass:String) {
         guard let passToken = genToken(password: pass, expiredSeconds: 60 * 60 * 24 * 10) else {
             print("error to set token for user \(user)")
-            showLogin = true
             return
         }
         let allToken = (user + ":" + passToken).data(using: .utf8)?.base64EncodedString()
         print("gen token \(String(describing: allToken))")
         Self.userDefault.set(allToken, forKey: "cyber-token")
-        token = allToken!
-        showLogin = false
     }
     
-    func clearLoginToken() {
-        Self.userDefault.removeObject(forKey: "cyber-token")
-        showLogin = true
+    // MARK: - Settings -
+    var settings: [String:String] {
+        get {
+            let res = Self.userDefault.dictionary(forKey: "settings")
+            return res as? [String:String] ?? [:]
+        }
+        set {
+            Self.userDefault.set(newValue, forKey: "settings")
+        }
     }
     
-    func setSettings(_ data: [String:String]) {
-        Self.userDefault.set(data, forKey: "settings")
-        showSettings = false
-    }
-    
-    func clearSettings() {
-        Self.userDefault.removeObject(forKey: "settings")
-        showSettings = true
-    }
-    
+    // MARK: - FootCount -
     func setFoodCount(_ count: Int) {
         Self.userDefault.set(count, forKey: "foodCount")
-        
     }
     
     func getFoodCount() -> Int {
         Self.userDefault.integer(forKey: "foodCount")
     }
     
-    func getSettings() -> [String:String]? {
-        let res = Self.userDefault.dictionary(forKey: "settings")
-        if res == nil {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.showSettings = true
-            }
-        }
-        return res as? [String:String]
-    }
-    
+    // MARK: - More -
     static var autoUpdateHealthInfo: Bool {
         get {
             userDefault.bool(forKey: "autoUpdateHealthInfo")

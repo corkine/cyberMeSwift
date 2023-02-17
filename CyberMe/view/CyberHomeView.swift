@@ -39,29 +39,6 @@ struct CyberHome: View {
                     Text("正在同步，请稍后")
                 }
             }
-            .sheet(isPresented: $service.showLogin) {
-                Form {
-                    TextField("用户名", text: $username)
-                        .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
-                    SecureField("密码", text: $password)
-                        .textContentType(.password)
-                        .autocapitalization(.none)
-                    Button("确定") {
-                        service.setLoginToken(user: username, pass: password)
-                    }
-                }
-            }
-            .sheet(isPresented: $service.showSettings) {
-                Form {
-                    TextField("HCM 打卡快捷指令名称", text: $hcmShortcutName)
-                        .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
-                    Button("确定") {
-                        service.setSettings(["hcmShortcutName":hcmShortcutName])
-                    }
-                }
-            }
             .onReceive(service.$showBodyMassSheetFetch, perform: { showFetch in
                 let (show, fetch) = showFetch
                 showBodyMassView = show

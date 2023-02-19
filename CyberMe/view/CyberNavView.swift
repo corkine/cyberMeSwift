@@ -40,8 +40,8 @@ struct MainApp: View {
                         }
                         .tag(Tab.profile)
                 }
-                .onChange(of: service.goToView, perform: { v in
-                    if v != nil && v == .foodBalanceAdd {
+                .onReceive(service.$goToView, perform: { v in
+                    if let v = v, v == .foodBalanceAdd {
                         selection = .balance
                     }
                 })

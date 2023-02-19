@@ -237,7 +237,7 @@ struct FoodBalanceView: View {
                     BodyMassView()
                         .environmentObject(service)
                 })
-                .onChange(of: service.goToView, perform: { v in
+                .onReceive(service.$goToView, perform: { v in
                     if let v = v, v == .foodBalanceAdd {
                         showAdd = true
                     }

@@ -44,7 +44,7 @@
 		197C90DA291F659D00373BEF /* CS+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D8291F653E00373BEF /* CS+Dashboard.swift */; };
 		197C90DC291F65EE00373BEF /* CS+Health.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90DB291F65EE00373BEF /* CS+Health.swift */; };
 		199BA88E291653D00080925D /* CyberNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88D291653D00080925D /* CyberNavView.swift */; };
-		199BA890291653FE0080925D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88F291653FE0080925D /* SettingView.swift */; };
+		199BA890291653FE0080925D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88F291653FE0080925D /* ProfileView.swift */; };
 		19B925762906A5370039948A /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
 		19B925782906AD830039948A /* BodyMassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925772906AD830039948A /* BodyMassView.swift */; };
 		19BD734728CA07AF0062B8D9 /* landmarkData.json in Resources */ = {isa = PBXBuildFile; fileRef = 19BD734628CA07AF0062B8D9 /* landmarkData.json */; };
@@ -158,7 +158,7 @@
 		197C90D8291F653E00373BEF /* CS+Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Dashboard.swift"; sourceTree = "<group>"; };
 		197C90DB291F65EE00373BEF /* CS+Health.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Health.swift"; sourceTree = "<group>"; };
 		199BA88D291653D00080925D /* CyberNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberNavView.swift; sourceTree = "<group>"; };
-		199BA88F291653FE0080925D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		199BA88F291653FE0080925D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		19B925752906A5370039948A /* HealthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
 		19B925772906AD830039948A /* BodyMassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMassView.swift; sourceTree = "<group>"; };
 		19BD734628CA07AF0062B8D9 /* landmarkData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = landmarkData.json; sourceTree = "<group>"; };
@@ -265,7 +265,7 @@
 			children = (
 				199BA88D291653D00080925D /* CyberNavView.swift */,
 				19625BA128D365B600860518 /* CyberHomeView.swift */,
-				199BA88F291653FE0080925D /* SettingView.swift */,
+				199BA88F291653FE0080925D /* ProfileView.swift */,
 				1948648128D89DF300064104 /* TodoView.swift */,
 				19B925772906AD830039948A /* BodyMassView.swift */,
 				193548D3290C132B00B2266C /* FoodAccount.swift */,
@@ -631,7 +631,7 @@
 				197C90DC291F65EE00373BEF /* CS+Health.swift in Sources */,
 				190C4D3928D7D80C00C1CAE1 /* ReadMe.swift in Sources */,
 				194ABAD8292CF5E70000F8D4 /* FitnessView.swift in Sources */,
-				199BA890291653FE0080925D /* SettingView.swift in Sources */,
+				199BA890291653FE0080925D /* ProfileView.swift in Sources */,
 				193548E3290CF5CD00B2266C /* Default.swift in Sources */,
 				195DCC6929815AC800C615AD /* TicketView.swift in Sources */,
 				190995B92900112A000B5770 /* CS+API.swift in Sources */,

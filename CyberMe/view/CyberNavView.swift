@@ -11,7 +11,7 @@ import HealthKit
 
 struct CyberNav: View {
     @State var selection: Tab = .today
-    @EnvironmentObject var service:CyberService
+    @EnvironmentObject var service: CyberService
 
     private var badgePosition: CGFloat = 2
     private var tabsCount: CGFloat = 3
@@ -44,7 +44,7 @@ struct CyberNav: View {
                                 Label("Eat & Drink", systemImage: "flame")
                             }
                             .tag(Tab.eat)
-                        ProfileView()
+                        ProfileView(service: service)
                             .tabItem {
                                 Label("Settings", systemImage: "slider.horizontal.3")
                             }

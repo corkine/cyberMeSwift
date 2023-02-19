@@ -12,6 +12,63 @@ import CommonCrypto
 import CryptoKit
 
 extension CyberService {
+    
+    class Setting: ObservableObject {
+        typealias CS = CyberService
+        let service: CyberService
+        @Published var widgetBG: WidgetBackground
+        @Published var autoUpdateHealthInfo: Bool
+        @Published var slowApi: Bool
+        @Published var gpsPeriod: Int
+        @Published var username: String
+        @Published var password: String = ""
+        @Published var hcmShortcutName: String
+        init(service: CyberService) {
+            self.service = service
+            widgetBG = WidgetBackground(rawValue: CyberService.widgetBG)!
+            autoUpdateHealthInfo = CyberService.autoUpdateHealthInfo
+            slowApi = CyberService.slowApi
+            gpsPeriod = CyberService.gpsPeriod
+            username = service.settings["username"] ?? ""
+            hcmShortcutName = service.settings["hcmShortcutName"] ?? "checkCardHCM"
+        }
+        func saveToCyber() {
+            print("saving to cyber \(self)")
+            var needUploadWidget = false
+            var needUpdateDashboard = false
+            if widgetBG.rawValue != CS.widgetBG {
+                CS.widgetBG = widgetBG.rawValue
+                needUploadWidget = true
+            }
+            if autoUpdateHealthInfo != CS.autoUpdateHealthInfo {
+                CS.autoUpdateHealthInfo = autoUpdateHealthInfo
+            }
+            if slowApi != CS.slowApi {
+                CS.slowApi = slowApi
+            }
+            if gpsPeriod != CS.gpsPeriod {
+                CS.gpsPeriod = gpsPeriod
+            }
+            if username != "" && password != "" {
+                service.setLoginToken(user: username, pass: password)
+                service.settings.updateValue(username, forKey: "username")
+                needUploadWidget = true
+                needUpdateDashboard = true
+            }
+            let storedName = service.settings["hcmShortcutName"]
+            if storedName == nil || storedName! != hcmShortcutName {
+                service.settings.updateValue(hcmShortcutName, forKey: "hcmShortcutName")
+            }
+            
+            if needUpdateDashboard {
+                service.fetchSummary()
+            }
+            if needUploadWidget {
+                Dashboard.updateWidget(inSeconds: 0)
+            }
+        }
+    }
+    
     // MARK: - Token -
     func genToken(password:String, expiredSeconds: Int) -> String? {
         let willExpired = Int(Date().timeIntervalSince1970 * 1000) + Int(expiredSeconds * 1000)
@@ -49,6 +106,18 @@ extension CyberService {
         }
         set {
             Self.userDefault.set(newValue, forKey: "settings")
+        }
+    }
+    
+    static func ofUserDefault<T>(t: T.Type, key: String, defaultValue: T? = nil) -> T {
+        if t == Bool.self {
+            return userDefault.bool(forKey: key) as! T
+        } else if t == String.self {
+            return userDefault.string(forKey: key) as! T
+        } else if t == Int.self {
+            return userDefault.integer(forKey: key) as! T
+        } else {
+            return userDefault.object(forKey: key) as! T
         }
     }
     

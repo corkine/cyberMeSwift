@@ -75,6 +75,8 @@ class CyberService: ObservableObject {
     // MARK: - 节流 -
     var lastUpdate = 0.0
     
+    var settingDirty = false
+    
     var updateCacheAndNeedAction: Bool {
         let now = Date().timeIntervalSince1970
         let res = now - lastUpdate

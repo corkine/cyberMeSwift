@@ -15,7 +15,7 @@
 		190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3A28D7D81800C1CAE1 /* Book.swift */; };
 		190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3C28D7E34300C1CAE1 /* DetailView.swift */; };
 		193323A228D2264F0038AD74 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193323A128D2264F0038AD74 /* Feature.swift */; };
-		193548D4290C132B00B2266C /* FoodAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548D3290C132B00B2266C /* FoodAccount.swift */; };
+		193548D4290C132B00B2266C /* FoodBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548D3290C132B00B2266C /* FoodBalanceView.swift */; };
 		193548D8290CD99F00B2266C /* FoodAccount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 193548D6290CD99F00B2266C /* FoodAccount.xcdatamodeld */; };
 		193548E3290CF5CD00B2266C /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
 		193548E4290CF86200B2266C /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
@@ -135,7 +135,7 @@
 		190C4D3A28D7D81800C1CAE1 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		190C4D3C28D7E34300C1CAE1 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		193323A128D2264F0038AD74 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
-		193548D3290C132B00B2266C /* FoodAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAccount.swift; sourceTree = "<group>"; };
+		193548D3290C132B00B2266C /* FoodBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBalanceView.swift; sourceTree = "<group>"; };
 		193548D7290CD99F00B2266C /* FoodAccount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodAccount.xcdatamodel; sourceTree = "<group>"; };
 		193548E2290CF5CD00B2266C /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		193C8A1A291223EE00FF975F /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
@@ -268,7 +268,7 @@
 				199BA88F291653FE0080925D /* ProfileView.swift */,
 				1948648128D89DF300064104 /* TodoView.swift */,
 				19B925772906AD830039948A /* BodyMassView.swift */,
-				193548D3290C132B00B2266C /* FoodAccount.swift */,
+				193548D3290C132B00B2266C /* FoodBalanceView.swift */,
 				19F4DC01291E2585006B7D92 /* DashboardView.swift */,
 				1961069F2924EDC2005D08D7 /* SimpleInfoView.swift */,
 				194ABAD7292CF5E70000F8D4 /* FitnessView.swift */,
@@ -626,7 +626,7 @@
 				193323A228D2264F0038AD74 /* Feature.swift in Sources */,
 				19CE75EA28D22EB400AF8AFF /* Helper.swift in Sources */,
 				190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */,
-				193548D4290C132B00B2266C /* FoodAccount.swift in Sources */,
+				193548D4290C132B00B2266C /* FoodBalanceView.swift in Sources */,
 				197C90D7291F620C00373BEF /* CS+WeekPlan.swift in Sources */,
 				197C90DC291F65EE00373BEF /* CS+Health.swift in Sources */,
 				190C4D3928D7D80C00C1CAE1 /* ReadMe.swift in Sources */,

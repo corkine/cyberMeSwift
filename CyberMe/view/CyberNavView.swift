@@ -9,65 +9,82 @@ import SwiftUI
 import WidgetKit
 import HealthKit
 
-struct CyberNav: View {
-    @State var selection: Tab = .today
+struct MainApp: View {
+    
+    enum Tab { case dashboard, balance, profile }
+    
     @EnvironmentObject var service: CyberService
-
+    @State var selection: Tab = .dashboard
+    
     private var badgePosition: CGFloat = 2
     private var tabsCount: CGFloat = 3
-    
-    enum Tab { case today, eat, setting }
+
     var body: some View {
-        if service.gaming {
+        GeometryReader { geometry in
+            ZStack(alignment: .bottomLeading) {
+                // TabView
+                TabView(selection: $selection) {
+                    CyberHome()
+                        .tabItem {
+                            Label("Today", systemImage: "house")
+                        }
+                        .tag(Tab.dashboard)
+                    FoodBalanceView()
+                        .tabItem {
+                            Label("Balance", systemImage: "repeat")
+                        }
+                        .tag(Tab.balance)
+                    ProfileView()
+                        .tabItem {
+                            Label("Profile", systemImage: "person")
+                        }
+                        .tag(Tab.profile)
+                }
+                .onChange(of: service.goToView, perform: { v in
+                    if v != nil && v == .foodBalanceAdd {
+                        selection = .balance
+                    }
+                })
+                .accentColor(.blue)
+                .transition(.moveAndFade)
+                
+                // Badge View
+                ZStack {
+                    Circle()
+                        .foregroundColor(.red)
+                    
+                    Text("\(service.balanceCount)")
+                        .foregroundColor(.white)
+                        .font(Font.system(size: 12))
+                }
+                .frame(width: 20, height: 20)
+                .offset(x: ( ( 2 * self.badgePosition) - 1 ) * ( geometry.size.width / ( 2 * self.tabsCount ) ) + 7, y: -25)
+                .opacity(service.balanceCount == 0 ? 0 : 1)
+            }
+        }
+        .ignoresSafeArea(.keyboard)
+    }
+}
+
+struct CyberNav: View {
+    
+    @EnvironmentObject var service: CyberService
+    
+    var body: some View {
+        switch service.app {
+        case .gaming:
             Bullseye().accentColor(.red)
                 .transition(.scale)
-        } else if service.landing {
+        case .landing:
             ContentView()
                 .environmentObject(ModelData())
                 .transition(.scale)
-        } else if service.readme {
+        case .readme:
             ReadMe()
                 .environmentObject(Library())
                 .transition(.scale)
-        } else {
-            GeometryReader { geometry in
-                ZStack(alignment: .bottomLeading) {
-                    // TabView
-                    TabView(selection: $selection) {
-                        CyberHome()
-                            .tabItem {
-                                Label("Today", systemImage: "house")
-                            }
-                            .tag(Tab.today)
-                        FoodAccountView()
-                            .tabItem {
-                                Label("Eat & Drink", systemImage: "flame")
-                            }
-                            .tag(Tab.eat)
-                        ProfileView(service: service)
-                            .tabItem {
-                                Label("Settings", systemImage: "slider.horizontal.3")
-                            }
-                            .tag(Tab.setting)
-                    }
-                    .accentColor(.blue)
-                    .transition(.moveAndFade)
-                    
-                    // Badge View
-                    ZStack {
-                        Circle()
-                            .foregroundColor(.red)
-                        
-                        Text("\(service.foodCount)")
-                            .foregroundColor(.white)
-                            .font(Font.system(size: 12))
-                    }
-                    .frame(width: 20, height: 20)
-                    .offset(x: ( ( 2 * self.badgePosition) - 1 ) * ( geometry.size.width / ( 2 * self.tabsCount ) ) + 7, y: -25)
-                    .opacity(service.foodCount == 0 ? 0 : 1)
-                }
-            }
-            .ignoresSafeArea(.keyboard)
+        default:
+            MainApp()
         }
     }
 }

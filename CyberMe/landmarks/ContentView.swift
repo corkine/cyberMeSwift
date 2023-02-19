@@ -60,7 +60,7 @@ struct CategoryHome: View {
                             Label("User Profile", systemImage: "person.crop.circle")
                         }
                         Button {
-                            service.landing = false
+                            service.app = .mainApp
                         } label: {
                             Label("EXIT", systemImage: "xmark")
                         }

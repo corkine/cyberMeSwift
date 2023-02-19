@@ -138,7 +138,7 @@ struct BottomView: View {
             Spacer()
             Button("EXIT") {
                 withAnimation {
-                    service.gaming = false
+                    service.app = .mainApp
                 }
             }.accentColor(.white)
             Spacer()
@@ -229,12 +229,6 @@ struct Bullseye: View {
         .sheet(isPresented: $showLeadingBoard, content: {
             LeaderBoard(logs: game.logs)
         })
-        .onAppear {
-            service.gaming = true
-        }
-        .onDisappear{
-            service.gaming = false
-        }
     }
 }
 

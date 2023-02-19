@@ -187,7 +187,7 @@ struct ReadMe: View {
                 ToolbarItem {
                     Button {
                         withAnimation {
-                            service.readme = false
+                            service.app = .mainApp
                         }
                     } label: {
                         Label("EXIT", systemImage: "pip.exit")

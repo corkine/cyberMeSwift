@@ -15,9 +15,9 @@ struct SmallAppView: View {
     @State var showBodyMassSheet: Bool = false
     var body: some View {
         FlowLayout(mode: .scrollable,
-                   items: [("BullsEye Game", { service.gaming = true }),
-                           ("Landmarks", { service.landing = true }),
-                           ("ReadMe", { service.readme = true }),
+                   items: [("BullsEye Game", { service.app = .gaming }),
+                           ("Landmarks", { service.app = .landing }),
+                           ("ReadMe", { service.app = .readme }),
                            ("体重管理", { showBodyMassSheet = true })],
                    itemSpacing: 10) { (name, call) in
             Button(name) { withAnimation { call() } }
@@ -29,7 +29,7 @@ struct SmallAppView: View {
     }
 }
 
-struct ProfileView: View {
+struct SettingView: View {
     
     init(service: CyberService) {
         setting = CyberService.Setting(service: service)
@@ -37,9 +37,84 @@ struct ProfileView: View {
     
     @ObservedObject var setting: CyberService.Setting
     @State private var showGpsHelp = false
-    @State private var showSaveDone = false
-    @State private var showLogin = false
     @State private var password = ""
+    @State private var showLogin = false
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            Label("偏好设置", systemImage: "gear")
+                .foregroundColor(.primary)
+                .font(.title2)
+                .padding(.top, 10)
+                .padding(.bottom, 10)
+            // MARK: -- 组件背景
+            HStack(alignment: .center, spacing: 20) {
+                Text("桌面组件背景")
+                Picker("桌面组件背景", selection: $setting.widgetBG) {
+                    Text("蓝色").tag(WidgetBackground.blue)
+                    Text("桂林阳朔的群山").tag(WidgetBackground.mountain)
+                }
+                .pickerStyle(.segmented)
+            }
+            // MARK: -- 组件 GPS 定位周期
+            Stepper(value: $setting.gpsPeriod, in: 0...30) {
+                Text(setting.gpsPeriod <= 0 ?
+                     "未开启组件定期 GPS 定位" :
+                        "GPS 定位周期：\(setting.gpsPeriod) 分钟")
+                .onLongPressGesture(perform: {
+                    showGpsHelp = true
+                })
+            }
+            .alert(isPresented: $showGpsHelp) {
+                Alert(title: Text(""),
+                      message: Text("""
+                                    将在桌面组件自动定时刷新或由主程序进入后台触发刷新时，在 \(setting.gpsPeriod)\
+                                    分钟内执行一次 GPS 定位。一般情况下 3 分钟间隔将导致 1 小时定位 5 次左右
+                                    """), dismissButton: .default(Text("确定"), action: {
+                    showGpsHelp = false
+                }))
+            }
+            // MARK: -- API 节流
+            Group {
+                Toggle("自动更新健身记录", isOn: $setting.autoUpdateHealthInfo)
+                Toggle("请求 API 节流", isOn: $setting.slowApi)
+            }
+            // MARK: -- HCM 打卡快捷指令名称
+            HStack {
+                Text("HCM 快捷指令名称")
+                    .fixedSize()
+                Spacer()
+                TextField("", text: $setting.hcmShortcutName)
+                    .multilineTextAlignment(.trailing)
+                    .autocorrectionDisabled(true)
+                    .autocapitalization(.none)
+                    .frame(width: 140)
+            }
+            // MARK: -- 更新凭证和设置
+            Button("更新用户凭证") {
+                showLogin = true
+            }
+            .padding(.top, 6)
+            .sheet(isPresented: $showLogin) {
+                Form {
+                    TextField("用户名", text: $setting.username)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                    SecureField("密码", text: $setting.password)
+                        .textContentType(.password)
+                        .autocapitalization(.none)
+                }.onAppear { setting.password = "" }
+            }
+            Spacer()
+        }
+        .onDisappear(perform: setting.saveToCyber)
+        .padding(25)
+    }
+}
+
+struct ProfileView: View {
+    
+    @EnvironmentObject var service: CyberService
     @State private var showSetting = false
     
     var body: some View {
@@ -52,83 +127,13 @@ struct ProfileView: View {
                 SmallAppView()
                 Button(action: { self.showSetting = true }) {
                     Label("偏好设置", systemImage: "gear")
-                        .foregroundColor(.black)
+                        .foregroundColor(.primary)
                         .font(.title2)
                 }
                 Spacer()
             }
             .sheet(isPresented: $showSetting) {
-                VStack(alignment: .leading, spacing: 15) {
-                    HStack(alignment: .center) {
-                        Text("设置项").font(.title2)
-                        Rectangle()
-                            .fill(.gray.opacity(0.1))
-                            .frame(height: 1)
-                    }
-                    .padding(.top, 10)
-                    .padding(.bottom, 10)
-                    // MARK: -- 组件背景
-                    HStack(alignment: .center, spacing: 20) {
-                        Text("桌面组件背景")
-                        Picker("桌面组件背景", selection: $setting.widgetBG) {
-                            Text("蓝色").tag(WidgetBackground.blue)
-                            Text("桂林阳朔的群山").tag(WidgetBackground.mountain)
-                        }
-                        .pickerStyle(.segmented)
-                    }
-                    // MARK: -- 组件 GPS 定位周期
-                    Stepper(value: $setting.gpsPeriod, in: 0...30) {
-                        Text(setting.gpsPeriod <= 0 ?
-                             "未开启组件定期 GPS 定位" :
-                                "GPS 定位周期：\(setting.gpsPeriod) 分钟")
-                        .onLongPressGesture(perform: {
-                            showGpsHelp = true
-                        })
-                    }
-                    .alert(isPresented: $showGpsHelp) {
-                        Alert(title: Text(""),
-                              message: Text("""
-                                            将在桌面组件自动定时刷新或由主程序进入后台触发刷新时，在 \(setting.gpsPeriod)\
-                                            分钟内执行一次 GPS 定位。一般情况下 3 分钟间隔将导致 1 小时定位 5 次左右
-                                            """), dismissButton: .default(Text("确定"), action: {
-                            showGpsHelp = false
-                        }))
-                    }
-                    // MARK: -- API 节流
-                    Group {
-                        Toggle("自动更新健身记录", isOn: $setting.autoUpdateHealthInfo)
-                        Toggle("请求 API 节流", isOn: $setting.slowApi)
-                    }
-                    // MARK: -- HCM 打卡快捷指令名称
-                    HStack {
-                        Text("HCM 快捷指令名称")
-                            .fixedSize()
-                        Spacer()
-                        TextField("", text: $setting.hcmShortcutName)
-                            .multilineTextAlignment(.trailing)
-                            .autocorrectionDisabled(true)
-                            .autocapitalization(.none)
-                            .frame(width: 140)
-                    }
-                    // MARK: -- 更新凭证和设置
-                    Button("更新用户凭证") {
-                        showLogin = true
-                    }
-                    .padding(.top, 6)
-                    .sheet(isPresented: $showLogin) {
-                        Form {
-                            TextField("用户名", text: $setting.username)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
-                            SecureField("密码", text: $setting.password)
-                                .textContentType(.password)
-                                .autocapitalization(.none)
-                        }.onAppear { setting.password = "" }
-                    }
-                    Spacer()
-                }
-                .onDisappear(perform: setting.saveToCyber)
-                .padding(25)
+                SettingView(service: service)
             }
             .padding(25)
             .navigationTitle("个人中心")
@@ -139,7 +144,7 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var service = CyberService()
     static var previews: some View {
-        ProfileView(service: service)
+        ProfileView()
             .environmentObject(service)
         //SmallAppView(service: service)
     }

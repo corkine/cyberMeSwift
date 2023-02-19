@@ -153,7 +153,7 @@ struct CyberApp: App {
             UIApplicationShortcutItem(
                 type: "alert",
                 localizedTitle: "警戒模式",
-                localizedSubtitle: "米家摄像头开机并检测人形",
+                localizedSubtitle: nil,
                 icon:UIApplicationShortcutIcon(systemImageName: "eye")
             ),
             UIApplicationShortcutItem(
@@ -166,11 +166,11 @@ struct CyberApp: App {
                 type: "hcmCheckCard",
                 localizedTitle: "HCM 打卡",
                 localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "menucard.fill")
+                icon:UIApplicationShortcutIcon(systemImageName: "checkmark.square")
             ),
             UIApplicationShortcutItem(
-                type: "bodyMassManage",
-                localizedTitle: "体重管理",
+                type: "foodBalanceAdd",
+                localizedTitle: "平衡条目添加",
                 localizedSubtitle: nil,
                 icon:UIApplicationShortcutIcon(systemImageName: "scalemass")
             )
@@ -210,6 +210,9 @@ struct CyberApp: App {
             }
             break
         case "addLog":
+            break
+        case "foodBalanceAdd":
+            cyberService.goToView = .foodBalanceAdd
             break
         case "bodyMassManage":
             cyberService.showBodyMassSheetFetch = (true,true)

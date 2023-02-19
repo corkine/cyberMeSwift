@@ -31,6 +31,7 @@ class CyberService: ObservableObject {
     
     static let userDefault = UserDefaults(suiteName: Default.groupName)!
     
+    // MARK: - 面板 -
     @Published var summaryData = ISummary.default
     
     func updateSummary(sum:ISummary) {
@@ -44,15 +45,23 @@ class CyberService: ObservableObject {
         }
     }
     
-    @Published var gaming = false
-    @Published var landing = false
-    @Published var readme = false
+    // MARK: - 小程序 -
+    enum ShowingApp: String, CaseIterable {
+        case gaming, landing, readme, mainApp
+    }
+    @Published var app: ShowingApp = .mainApp
     
-    // MAKR: - 车票 -
+    // MARK: - 跳转 -
+    enum GoToView: String, CaseIterable {
+        case foodBalanceAdd
+    }
+    @Published var goToView: GoToView?
+    
+    // MARK: - 车票 -
     @Published var ticketInfo: [TicketInfo] = []
     
-    // MARK: - 食物 -
-    @Published var foodCount = 0
+    // MARK: - 平衡 -
+    @Published var balanceCount = 0
     
     // MARK: - 提示 -
     @Published var alertInfomation: String?
@@ -64,7 +73,7 @@ class CyberService: ObservableObject {
     var healthManager: HealthManager?
     
     init() {
-        self.foodCount = getFoodCount()
+        self.balanceCount = getBlanceCount()
         if HKHealthStore.isHealthDataAvailable() {
             healthManager = HealthManager()
         }
@@ -87,7 +96,7 @@ class CyberService: ObservableObject {
         return result
     }
     
-    // MARK: - API -
+    // MARK: - URLRequest API -
     enum FetchError: Error {
         case badRequest, badJSON, urlParseError
     }

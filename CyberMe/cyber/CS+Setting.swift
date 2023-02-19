@@ -122,12 +122,12 @@ extension CyberService {
     }
     
     // MARK: - FootCount -
-    func setFoodCount(_ count: Int) {
-        Self.userDefault.set(count, forKey: "foodCount")
+    func setBlanceCount(_ count: Int) {
+        Self.userDefault.set(count, forKey: "blanceCount")
     }
     
-    func getFoodCount() -> Int {
-        Self.userDefault.integer(forKey: "foodCount")
+    func getBlanceCount() -> Int {
+        Self.userDefault.integer(forKey: "blanceCount")
     }
     
     // MARK: - More -

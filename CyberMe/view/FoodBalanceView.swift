@@ -1,5 +1,5 @@
 //
-//  FoodAccount.swift
+//  FoodBalance.swift
 //  helloSwift
 //
 //  Created by Corkine on 2022/10/28.
@@ -46,19 +46,19 @@ enum FoodCategory: String, CaseIterable, Identifiable {
     }
 }
 
-struct FoodAccountView: View {
+struct FoodBalanceView: View {
     @State var filter: FoodCategory = .all
     @State var showAdd = false
     @State var showBodyMass = false
     
     @EnvironmentObject var service: CyberService
     
-    @AppStorage("food.showCompleted")
+    @AppStorage("blance.showCompleted")
     var foodShowCompleted = true
     
     struct FetchView: View {
 
-        @Binding var foodShowCompleted: Bool
+        @Binding var showCompleted: Bool
         
         @Environment(\.managedObjectContext) var context
         
@@ -83,7 +83,7 @@ struct FoodAccountView: View {
                 req.predicate = sol
             }
             _newItems = FetchRequest(fetchRequest: req)
-            _foodShowCompleted = foodShowCompleted
+            _showCompleted = foodShowCompleted
         }
         
         @State var op = 0.0
@@ -93,7 +93,7 @@ struct FoodAccountView: View {
                 SwiftUI.Section {
                     ForEach(newItems) { item in
                         NavigationLink(destination: {
-                            FoodAccountEditView(item: item)
+                            FoodBalanceEditView(item: item)
                         }, label: {
                             HStack {
                                 VStack(alignment: .leading) {
@@ -121,7 +121,7 @@ struct FoodAccountView: View {
                                         try! context.save()
                                     }
                                 } label: {
-                                    Label("标记已抵账", systemImage: "arrow.3.trianglepath")
+                                    Label("标记已结束", systemImage: "arrow.3.trianglepath")
                                 }
                                 Divider()
                             }
@@ -137,14 +137,14 @@ struct FoodAccountView: View {
                 } header: {
                     HStack {
                         Image(systemName: "list.dash")
-                        Text("已入账")
+                        Text("正进行")
                     }
                 }
-                if foodShowCompleted {
+                if showCompleted {
                     SwiftUI.Section {
                         ForEach(solvedItems) { item in
                             NavigationLink(destination: {
-                                FoodAccountEditView(item: item)
+                                FoodBalanceEditView(item: item)
                             }, label: {
                                 HStack {
                                     VStack(alignment: .leading) {
@@ -164,7 +164,7 @@ struct FoodAccountView: View {
                                         try! context.save()
                                     }
                                 } label: {
-                                    Label("标记未抵账", systemImage: "list.dash")
+                                    Label("标记未结束", systemImage: "list.dash")
                                 }
                                 Divider()
                                 Button {
@@ -179,7 +179,7 @@ struct FoodAccountView: View {
                     } header: {
                         HStack {
                             Image(systemName: "arrow.3.trianglepath")
-                            Text("已抵账")
+                            Text("已完成")
                         }
                     }
                 }
@@ -191,8 +191,8 @@ struct FoodAccountView: View {
                 }
             }
             .onChange(of: newItems.count) { count in
-                service.setFoodCount(count)
-                service.foodCount = count
+                service.setBlanceCount(count)
+                service.balanceCount = count
             }
         }
     }
@@ -223,7 +223,7 @@ struct FoodAccountView: View {
                             .pickerStyle(.inline)
                             
                             Toggle(isOn: $foodShowCompleted) {
-                                Label("显示已抵账的条目", systemImage: "arrow.3.trianglepath")
+                                Label("显示已完成的条目", systemImage: "arrow.3.trianglepath")
                             }
                         } label: {
                             Label("过滤", systemImage: "gearshape.fill")
@@ -231,13 +231,18 @@ struct FoodAccountView: View {
                     }
                 }
                 .sheet(isPresented: $showAdd, content: {
-                    FoodAccountAddView(showAdd: $showAdd)
+                    FoodBalanceAddView(showAdd: $showAdd)
                 })
                 .sheet(isPresented: $showBodyMass, content: {
                     BodyMassView()
                         .environmentObject(service)
                 })
-                .navigationTitle("饮食账单")
+                .onChange(of: service.goToView, perform: { v in
+                    if let v = v, v == .foodBalanceAdd {
+                        showAdd = true
+                    }
+                })
+                .navigationTitle("饮食平衡")
         }
     }
 }
@@ -273,7 +278,7 @@ extension Binding where Value == Optional<String> {
     }
 }
 
-struct FoodAccountEditView: View {
+struct FoodBalanceEditView: View {
     @State var item: FoodAccountDAO
     @State var showAlert = false
     @State var errorMessage = ""
@@ -361,11 +366,11 @@ struct FoodAccountEditView: View {
     }
 }
 
-struct FoodAccountAddView: View {
+struct FoodBalanceAddView: View {
     @Binding var showAdd: Bool
     @State var name = ""
     @State var category = FoodCategory.energy
-    @State var calories = ""
+    @State var calories = "100"
     @State var note = ""
     @State var date = Date()
     @State var showAlert = false
@@ -468,9 +473,9 @@ struct FoodAccountAddView: View {
     }
 }
 
-struct FoodAccountView_Previews: PreviewProvider {
+struct FoodBalanceView_Previews: PreviewProvider {
     static var previews: some View {
-        FoodAccountView()
+        FoodBalanceView()
         //        Text("Hello")
         //            .sheet(isPresented: .constant(true)) {
         //                FoodAccountAddView(showAdd: .constant(true))

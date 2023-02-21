@@ -13,18 +13,25 @@ import SwiftUIFlowLayout
 struct SmallAppView: View {
     @EnvironmentObject var service: CyberService
     @State var showBodyMassSheet: Bool = false
+    @State var showTicket: Bool = false
+    @State var tickets: [CyberService.TicketInfo] = []
     var body: some View {
         FlowLayout(mode: .scrollable,
                    items: [("BullsEye Game", { service.app = .gaming }),
                            ("Landmarks", { service.app = .landing }),
                            ("ReadMe", { service.app = .readme }),
-                           ("体重管理", { showBodyMassSheet = true })],
+                           ("体重管理", { showBodyMassSheet = true }),
+                           ("12306 最近车票", { service.recentTicket { self.tickets = $0 }})],
                    itemSpacing: 10) { (name, call) in
             Button(name) { withAnimation { call() } }
                 .padding(.vertical, -5) }
        .padding(.leading, -9)
        .sheet(isPresented: $showBodyMassSheet) {
            BodyMassView()
+       }
+       .sheet(isPresented: Binding(get: {!tickets.isEmpty},
+                                   set: { if !$0 { tickets = []}})) {
+           TicketView(info: $tickets)
        }
     }
 }

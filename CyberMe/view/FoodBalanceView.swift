@@ -240,6 +240,7 @@ struct FoodBalanceView: View {
                 .onReceive(service.$goToView, perform: { v in
                     if let v = v, v == .foodBalanceAdd {
                         showAdd = true
+                        service.goToView = nil
                     }
                 })
                 .navigationTitle("饮食平衡")

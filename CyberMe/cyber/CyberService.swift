@@ -57,15 +57,11 @@ class CyberService: ObservableObject {
     }
     @Published var goToView: GoToView?
     
-    // MARK: - 车票 -
-    @Published var ticketInfo: [TicketInfo] = []
-    
     // MARK: - 平衡 -
     @Published var balanceCount = 0
     
     // MARK: - 提示 -
     @Published var alertInfomation: String?
-    @Published var syncTodoNow = false
     
     // MARK: - HealthKit: BodyMass -
     @Published var showBodyMassSheetFetch = (false, false)

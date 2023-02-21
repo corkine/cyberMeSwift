@@ -10,7 +10,8 @@ import SwiftUI
 struct DashboardView: View {
     @EnvironmentObject var service:CyberService
     @Environment(\.colorScheme) var currentMode
-    @State var showTicketAlert: Bool = false
+    @State var tickets: [CyberService.TicketInfo] = []
+    @State var syncTodo = false
     var summary: ISummary
     var body: some View {
         NavigationView {
@@ -19,21 +20,25 @@ struct DashboardView: View {
                     HStack(alignment:.top) {
                         VStack(alignment:.leading,spacing: 10) {
                             HStack(alignment:.center) {
+                                // MARK: - 我的一天 -
                                 Text("我的一天")
                                 .font(.title2)
                                 .foregroundColor(Color.blue)
                                 .contextMenu {
+                                    // MARK: TODO 同步
                                     Button("同步 Microsoft TODO") {
+                                        syncTodo = true
                                         service.syncTodo {
+                                            syncTodo = false
                                             service.fetchSummary()
                                             Dashboard.updateWidget(inSeconds: 0)
                                         }
                                     }
+                                    // MARK: 车票信息
                                     Button("最近车票信息") {
-                                        service.recentTicket {
-                                            self.showTicketAlert = true
-                                        }
+                                        service.recentTicket { tickets = $0 }
                                     }
+                                    // MARK: 工作和休假标记
                                     Button("标记今天不工作") {
                                         service.forceWork(work: false) {
                                             Dashboard.updateWidget(inSeconds: 0)
@@ -64,7 +69,17 @@ struct DashboardView: View {
 
                             }
                             .padding(.bottom, 10)
-                            
+                            .fullScreenCover(isPresented: $syncTodo) {
+                                VStack(spacing: 20) {
+                                    ProgressView()
+                                        .progressViewStyle(.circular)
+                                    Text("正在同步，请稍后")
+                                }
+                            }
+                            .sheet(isPresented: Binding(get: {!tickets.isEmpty},
+                                                        set: {if !$0 {tickets = []}})) {
+                                TicketView(info: $tickets)
+                            }
                             
                             ToDoView(todo: summary.todo,
                                      weekPlan: summary.weekPlan)
@@ -92,6 +107,7 @@ struct DashboardView: View {
                                         geo: proxy,
                                         height: 150)
                             
+                            // MARK: 30 天体重趋势
                             if service.bodyMass.count >= 2 {
                                 ZStack {
                                     Color("backgroundGray")
@@ -152,10 +168,6 @@ struct DashboardView: View {
                     }
                 }
                 .navigationTitle("\(TimeUtil.getWeedayFromeDate(date: Date(), withMonth: true))")
-                .sheet(isPresented: $showTicketAlert) {
-                    TicketView(info: service.ticketInfo)
-                        .padding(.top, 30)
-                }
                 //.padding(.top, 0.2)
             }
         }

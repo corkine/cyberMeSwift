@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TicketView: View {
-    var info: [CyberService.TicketInfo] = []
+    @Binding var info: [CyberService.TicketInfo]
     var uncommingInfo: [CyberService.TicketInfo] {
         info.filter { t in t.isUncomming }
     }
@@ -83,13 +83,13 @@ struct TicketView: View {
 
 struct TicketView_Previews: PreviewProvider {
     static var previews: some View {
-        TicketView(info: [CyberService.TicketInfo(
+        TicketView(info: .constant([CyberService.TicketInfo(
             id: "abc",
             start: "武汉东",
             end: "武汉",
             date: "2023-01-26T13:23:00",
             trainNo: "G1234",
             siteNo: "A13B",
-            originData: "ABCD")])
+            originData: "ABCD")]))
     }
 }

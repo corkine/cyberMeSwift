@@ -218,7 +218,6 @@ extension CyberService {
     }
     
     func fetchSummaryPublisher() -> AnyPublisher<ISummary,Never>? {
-        if syncTodoNow { return nil }
         guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {
             print("End point is Invalid")
             return nil
@@ -256,7 +255,6 @@ extension CyberService {
     }
     
     func fetchSummary() {
-        if syncTodoNow { return  }
         guard let url = URL(string: CyberService.baseUrl + CyberService.summaryUrl) else {
             print("End point is Invalid")
             return
@@ -320,18 +318,13 @@ extension CyberService {
     }
     
     func syncTodo(completed:@escaping ()->Void = {}) {
-        syncTodoNow = true
         loadJSON(from: CyberService.syncTodoUrl, for: SimpleResult.self)
         { [weak self] data, error in
             guard let self = self else { return }
             if let error = error {
-                self.syncTodoNow = false
                 DispatchQueue.main.async {
                     self.alertInfomation = "同步失败：\(error)"
                 }
-            }
-            if let _ = data {
-                self.syncTodoNow = false
             }
             completed()
         }
@@ -382,12 +375,11 @@ extension CyberService {
         }
     }
     
-    func recentTicket(completed:@escaping ()->Void = {}) {
+    func recentTicket(completed:@escaping ([TicketInfo])->Void = {_ in }) {
         loadJSON(from: CyberService.ticketUrl, for: CyberResult<[TicketInfo]>.self) { res, err in
             if let res = res {
                 let data = res.data ?? []
-                self.ticketInfo = data
-                completed()
+                completed(data)
             }
         }
     }

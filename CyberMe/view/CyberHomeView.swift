@@ -32,13 +32,6 @@ struct CyberHome: View {
                     service.alertInfomation = nil
                 }))
             }
-            .fullScreenCover(isPresented: $service.syncTodoNow) {
-                VStack(spacing: 20) {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                    Text("正在同步，请稍后")
-                }
-            }
             .onReceive(service.$showBodyMassSheetFetch, perform: { showFetch in
                 let (show, fetch) = showFetch
                 showBodyMassView = show

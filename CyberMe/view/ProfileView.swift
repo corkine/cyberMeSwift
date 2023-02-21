@@ -110,6 +110,15 @@ struct SettingView: View {
                     SecureField("密码", text: $setting.password)
                         .textContentType(.password)
                         .autocapitalization(.none)
+                    HStack {
+                        Text("服务端点")
+                        TextField("endpoint", text: $setting.endpoint)
+                            .autocorrectionDisabled(true)
+                            .autocapitalization(.none)
+                            .foregroundColor(setting.endpoint.starts(with: "https://")
+                                             ? .primary : .red)
+                            .multilineTextAlignment(.trailing)
+                    }
                 }.onAppear { setting.password = "" }
             }
             Spacer()

@@ -23,6 +23,7 @@ extension CyberService {
         @Published var username: String
         @Published var password: String = ""
         @Published var hcmShortcutName: String
+        @Published var endpoint: String
         init(service: CyberService) {
             self.service = service
             widgetBG = WidgetBackground(rawValue: CyberService.widgetBG)!
@@ -31,6 +32,7 @@ extension CyberService {
             gpsPeriod = CyberService.gpsPeriod
             username = service.settings["username"] ?? ""
             hcmShortcutName = service.settings["hcmShortcutName"] ?? "checkCardHCM"
+            endpoint = CyberService.endpoint
         }
         func saveToCyber() {
             print("saving to cyber \(self)")
@@ -58,6 +60,9 @@ extension CyberService {
             let storedName = service.settings["hcmShortcutName"]
             if storedName == nil || storedName! != hcmShortcutName {
                 service.settings.updateValue(hcmShortcutName, forKey: "hcmShortcutName")
+            }
+            if endpoint != CS.endpoint {
+                CS.endpoint = endpoint
             }
             
             if needUpdateDashboard {
@@ -146,6 +151,21 @@ extension CyberService {
         }
         set {
             userDefault.set(newValue, forKey: "widgetBG")
+        }
+    }
+    
+    static var endpoint: String {
+        get {
+            let res = userDefault.string(forKey: "endpoint") ?? "https://cyber.mazhangjing.com/"
+            return res
+        }
+        set {
+            var newValue = newValue
+            if !newValue.hasSuffix("/") {
+                newValue = newValue.appending("/")
+            }
+            Self.baseUrl = newValue
+            userDefault.set(newValue, forKey: "endpoint")
         }
     }
     

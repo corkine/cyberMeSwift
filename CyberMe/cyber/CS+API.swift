@@ -8,7 +8,7 @@
 import Foundation
 
 extension CyberService {
-    static let baseUrl = "https://cyber.mazhangjing.com/"
+    static var baseUrl = CyberService.endpoint
     static let summaryUrl = "cyber/client/ios-summary?day=5"
     static let dashboardUrl = "cyber/client/ios-widget"
     static let uploadBodyMassUrl = "cyber/client/ios-body-mass"

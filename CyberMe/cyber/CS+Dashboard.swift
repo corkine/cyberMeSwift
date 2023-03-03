@@ -264,14 +264,22 @@ extension CyberService {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
-                    let response = try JSONDecoder().decode(CyberResult<ISummary>.self, from: data)
+                    let decoder = JSONDecoder()
+                    let response = try decoder.decode(CyberResult<ISummary>.self, from: data)
                     if var data = response.data {
                         DispatchQueue.main.async {
                             data.fitness.storeLevel = .server
                             self.updateSummary(sum: data)
                         }
                     } else {
-                        self.alertInfomation = "解码 Summary 数据出错"
+                        let response = try decoder.decode(SimpleResult.self, from: data)
+                        DispatchQueue.main.async {
+                            if response.message.contains("access denied") {
+                                self.alertInfomation = "用户凭证过期，请重新登录。"
+                            } else {
+                                self.alertInfomation = response.message                                
+                            }
+                        }
                     }
                 } catch {
                     print("error decode: \(error)")

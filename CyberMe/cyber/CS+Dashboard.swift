@@ -325,8 +325,8 @@ extension CyberService {
         }
     }
     
-    func syncTodo(completed:@escaping ()->Void = {}) {
-        loadJSON(from: CyberService.syncTodoUrl, for: SimpleResult.self)
+    func syncTodo(isLogin:Bool = false, completed:@escaping ()->Void = {}) {
+        loadJSON(from: !isLogin ? CyberService.syncTodoUrl : CyberService.hcmAutoLoginUrl, for: SimpleResult.self)
         { [weak self] data, error in
             guard let self = self else { return }
             if let error = error {

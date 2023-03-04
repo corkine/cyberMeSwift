@@ -34,6 +34,13 @@ struct DashboardView: View {
                                             Dashboard.updateWidget(inSeconds: 0)
                                         }
                                     }
+                                    // MARK: HCM 登录
+                                    Button("尝试 HCM 登录") {
+                                        syncTodo = true
+                                        service.syncTodo(isLogin: true) {
+                                            syncTodo = false
+                                        }
+                                    }
                                     // MARK: 车票信息
                                     Button("最近车票信息") {
                                         service.recentTicket { tickets = $0 }

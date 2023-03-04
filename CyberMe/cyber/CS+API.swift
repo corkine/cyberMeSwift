@@ -17,6 +17,7 @@ extension CyberService {
     static let checkCardForce = "cyber/check/now?plainText=false&useCache=false"
     static let forceWorkUrl = "cyber/dashboard/today-work-info"
     static let syncTodoUrl = "cyber/todo/sync"
+    static let hcmAutoLoginUrl = "cyber/check/set_token_auto"
     static let ticketUrl = "cyber/ticket/recent"
     static let noticeUrl = "cyber/notice?message="
     static func trackUrl(lo:Double, la:Double, by:String) -> String {

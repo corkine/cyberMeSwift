@@ -41,7 +41,12 @@ enum TimeUtil {
         return f.string(from: d)
     }
     static func diffDay(startDate:Date, endDate:Date) -> Int {
-        let diff:DateComponents = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
+        let calendar = Calendar.current
+        let sc = calendar.dateComponents([.year, .month, .day], from: startDate)
+        let ec = calendar.dateComponents([.year, .month, .day], from: endDate)
+        let sd = calendar.date(from: sc)!
+        let ed = calendar.date(from: ec)!
+        let diff:DateComponents = Calendar.current.dateComponents([.day], from: sd, to: ed)
         return diff.day!
     }
     static var javaLikeFormat = "yyyy-MM-dd'T'HH:mm:ss"

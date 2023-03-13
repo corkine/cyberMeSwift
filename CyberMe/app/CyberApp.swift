@@ -12,6 +12,9 @@ import UIKit
 import os
 import CoreData
 
+import Flutter
+import FlutterPluginRegistrant
+
 private enum CoreDataStack {
   static var viewContext: NSManagedObjectContext = {
     let container = NSPersistentContainer(name: "FoodAccount")
@@ -229,6 +232,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: AppDelegate.self)
     )
+    static let flutterEngine = FlutterEngine(name: "flutterEngine")
     static var cyberService: CyberService?
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions
@@ -244,6 +248,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             //reschedule by using:
             //self.scheduleFetch()
         }
+        Self.flutterEngine.run();
+        GeneratedPluginRegistrant.register(with: Self.flutterEngine);
         return true
     }
 

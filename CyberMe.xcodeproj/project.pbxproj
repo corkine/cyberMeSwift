@@ -50,22 +50,7 @@
 		19BD734728CA07AF0062B8D9 /* landmarkData.json in Resources */ = {isa = PBXBuildFile; fileRef = 19BD734628CA07AF0062B8D9 /* landmarkData.json */; };
 		19CE75EA28D22EB400AF8AFF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE75E928D22EB400AF8AFF /* Helper.swift */; };
 		19CE75ED28D2307F00AF8AFF /* Landmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE75EC28D2307F00AF8AFF /* Landmarks.swift */; };
-		19CE75FD28D23A5F00AF8AFF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE75FC28D23A5F00AF8AFF /* ContentView.swift */; };
-		19CE75FF28D23A6300AF8AFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19CE75FE28D23A6300AF8AFF /* Assets.xcassets */; };
-		19CE760228D23A6300AF8AFF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19CE760128D23A6300AF8AFF /* Preview Assets.xcassets */; };
-		19CE760728D23AAB00AF8AFF /* CyberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D2E28BFA2C600239F01 /* CyberApp.swift */; };
-		19CE760828D23AAB00AF8AFF /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D6C3BA28D1514300ED5D4B /* Model.swift */; };
-		19CE760A28D23AAB00AF8AFF /* Landmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE75EC28D2307F00AF8AFF /* Landmarks.swift */; };
-		19CE760B28D23AAB00AF8AFF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE75E928D22EB400AF8AFF /* Helper.swift */; };
-		19CE760C28D23AAB00AF8AFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
-		19CE760D28D23AAB00AF8AFF /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D6C3B628D14C4000ED5D4B /* Badge.swift */; };
-		19CE760E28D23AAB00AF8AFF /* Hike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D6C3BC28D1522E00ED5D4B /* Hike.swift */; };
-		19CE760F28D23AAF00AF8AFF /* landmarkData.json in Resources */ = {isa = PBXBuildFile; fileRef = 19BD734628CA07AF0062B8D9 /* landmarkData.json */; };
-		19CE761028D23AB100AF8AFF /* hikeData.json in Resources */ = {isa = PBXBuildFile; fileRef = 19D6C3B828D1510A00ED5D4B /* hikeData.json */; };
-		19CE761228D23D8200AF8AFF /* LandmarksMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE761128D23D8200AF8AFF /* LandmarksMac.swift */; };
-		19CE761428D23F9C00AF8AFF /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE761328D23F9C00AF8AFF /* Settings.swift */; };
 		19CE761628D240D500AF8AFF /* LandmarkCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE761528D240D500AF8AFF /* LandmarkCommands.swift */; };
-		19CE761728D240D500AF8AFF /* LandmarkCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE761528D240D500AF8AFF /* LandmarkCommands.swift */; };
 		19D2A9E028D489AE009C81C4 /* Bullseye.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D2A9DF28D489AE009C81C4 /* Bullseye.swift */; };
 		19D2A9E528D4B045009C81C4 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D2A9E428D4B045009C81C4 /* Game.swift */; };
 		19D2A9F028D4B4F6009C81C4 /* CyberMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D2A9EF28D4B4F6009C81C4 /* CyberMeTests.swift */; };
@@ -85,6 +70,9 @@
 		19FF8EC629001FCA009C96C3 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Extension.swift */; };
 		19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */; };
 		19FFA8FB290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFA8F9290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift */; };
+		84376522E52B6DA0DD7F90CB /* Pods_CyberMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB6572031E5726A7E6A420FB /* Pods_CyberMe.framework */; };
+		9BF113D6D7032BDB23CF07A8 /* Pods_CyberMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96930C78D94F002916DDAF4D /* Pods_CyberMeTests.framework */; };
+		F7FC36BCA7EE7B086A71B41F /* Pods_CyberMeWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EA66437F02558A0FF33CFC /* Pods_CyberMeWidgetExtension.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +117,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02EA66437F02558A0FF33CFC /* Pods_CyberMeWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CyberMeWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0ADD21E37E120044B182076E /* Pods-CyberMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CyberMe.debug.xcconfig"; path = "Target Support Files/Pods-CyberMe/Pods-CyberMe.debug.xcconfig"; sourceTree = "<group>"; };
+		148496DCB6E3323B2A760627 /* Pods-CyberMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CyberMeTests.debug.xcconfig"; path = "Target Support Files/Pods-CyberMeTests/Pods-CyberMeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		190995B82900112A000B5770 /* CS+API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+API.swift"; sourceTree = "<group>"; };
 		190995BB29001135000B5770 /* CS+Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Setting.swift"; sourceTree = "<group>"; };
 		190C4D3828D7D80C00C1CAE1 /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
@@ -165,7 +156,6 @@
 		19BD734828CAB6400062B8D9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		19CE75E928D22EB400AF8AFF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		19CE75EC28D2307F00AF8AFF /* Landmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landmarks.swift; sourceTree = "<group>"; };
-		19CE75F828D23A5F00AF8AFF /* MacLandmarks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacLandmarks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19CE75FC28D23A5F00AF8AFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		19CE75FE28D23A6300AF8AFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19CE760128D23A6300AF8AFF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -194,6 +184,12 @@
 		19FF8EC829002041009C96C3 /* CyberMeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		19FFA8F9290FC16800024E87 /* FoodAccountDAO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccountDAO+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2D3E95706CAEE0BD6BCEEF9F /* Pods-CyberMeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CyberMeTests.release.xcconfig"; path = "Target Support Files/Pods-CyberMeTests/Pods-CyberMeTests.release.xcconfig"; sourceTree = "<group>"; };
+		3F0995D45C5BA8AE39A93EC8 /* Pods-CyberMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CyberMe.release.xcconfig"; path = "Target Support Files/Pods-CyberMe/Pods-CyberMe.release.xcconfig"; sourceTree = "<group>"; };
+		96930C78D94F002916DDAF4D /* Pods_CyberMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CyberMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9B926CF202D6B4ABF90BC02 /* Pods-CyberMeWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CyberMeWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-CyberMeWidgetExtension/Pods-CyberMeWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		EB6572031E5726A7E6A420FB /* Pods_CyberMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CyberMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F49F23E5809EB49DBE1EF385 /* Pods-CyberMeWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CyberMeWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-CyberMeWidgetExtension/Pods-CyberMeWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,13 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19E7F6FA299E56C400AB5D68 /* SwiftUIFlowLayout in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		19CE75F528D23A5F00AF8AFF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				84376522E52B6DA0DD7F90CB /* Pods_CyberMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BF113D6D7032BDB23CF07A8 /* Pods_CyberMeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +216,7 @@
 			files = (
 				19FD182A28D9CBB0004F97B3 /* SwiftUI.framework in Frameworks */,
 				19FD182928D9CBB0004F97B3 /* WidgetKit.framework in Frameworks */,
+				F7FC36BCA7EE7B086A71B41F /* Pods_CyberMeWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +279,7 @@
 				19FD182B28D9CBB0004F97B3 /* CyberMeWidget */,
 				19FD17FF28D9CB27004F97B3 /* Frameworks */,
 				195A3D2C28BFA2C600239F01 /* Products */,
+				EABBB441DD37E808531248A7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -294,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				195A3D2B28BFA2C600239F01 /* CyberMe.app */,
-				19CE75F828D23A5F00AF8AFF /* MacLandmarks.app */,
 				19D2A9ED28D4B4F6009C81C4 /* CyberMeTests.xctest */,
 				19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */,
 			);
@@ -431,6 +423,9 @@
 			children = (
 				19FD180028D9CB27004F97B3 /* WidgetKit.framework */,
 				19FD180228D9CB27004F97B3 /* SwiftUI.framework */,
+				EB6572031E5726A7E6A420FB /* Pods_CyberMe.framework */,
+				96930C78D94F002916DDAF4D /* Pods_CyberMeTests.framework */,
+				02EA66437F02558A0FF33CFC /* Pods_CyberMeWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -446,25 +441,42 @@
 			path = CyberMeWidget;
 			sourceTree = "<group>";
 		};
+		EABBB441DD37E808531248A7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0ADD21E37E120044B182076E /* Pods-CyberMe.debug.xcconfig */,
+				3F0995D45C5BA8AE39A93EC8 /* Pods-CyberMe.release.xcconfig */,
+				148496DCB6E3323B2A760627 /* Pods-CyberMeTests.debug.xcconfig */,
+				2D3E95706CAEE0BD6BCEEF9F /* Pods-CyberMeTests.release.xcconfig */,
+				F49F23E5809EB49DBE1EF385 /* Pods-CyberMeWidgetExtension.debug.xcconfig */,
+				E9B926CF202D6B4ABF90BC02 /* Pods-CyberMeWidgetExtension.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		195A3D2A28BFA2C600239F01 /* helloSwift */ = {
+		195A3D2A28BFA2C600239F01 /* CyberMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 195A3D4F28BFA2C800239F01 /* Build configuration list for PBXNativeTarget "helloSwift" */;
+			buildConfigurationList = 195A3D4F28BFA2C800239F01 /* Build configuration list for PBXNativeTarget "CyberMe" */;
 			buildPhases = (
+				C102946AF18B53615B6BAB44 /* [CP] Check Pods Manifest.lock */,
+				45FECC592AB1A0B467DEFDAD /* [CP-User] Run Flutter Build hello_flutter Script */,
 				195A3D2728BFA2C600239F01 /* Sources */,
 				195A3D2828BFA2C600239F01 /* Frameworks */,
 				195A3D2928BFA2C600239F01 /* Resources */,
 				19CE757D28D22B4A00AF8AFF /* Embed Watch Content */,
 				19FD180D28D9CB28004F97B3 /* Embed App Extensions */,
+				F7425DA7ECE612157C84B2F2 /* [CP-User] Embed Flutter Build hello_flutter Script */,
+				BDC85593F725377739150FB8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				19FD183228D9CBB1004F97B3 /* PBXTargetDependency */,
 			);
-			name = helloSwift;
+			name = CyberMe;
 			packageProductDependencies = (
 				19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */,
 			);
@@ -472,27 +484,11 @@
 			productReference = 195A3D2B28BFA2C600239F01 /* CyberMe.app */;
 			productType = "com.apple.product-type.application";
 		};
-		19CE75F728D23A5F00AF8AFF /* MacLandmarks */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 19CE760428D23A6300AF8AFF /* Build configuration list for PBXNativeTarget "MacLandmarks" */;
-			buildPhases = (
-				19CE75F428D23A5F00AF8AFF /* Sources */,
-				19CE75F528D23A5F00AF8AFF /* Frameworks */,
-				19CE75F628D23A5F00AF8AFF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MacLandmarks;
-			productName = MacLandmarks;
-			productReference = 19CE75F828D23A5F00AF8AFF /* MacLandmarks.app */;
-			productType = "com.apple.product-type.application";
-		};
 		19D2A9EC28D4B4F6009C81C4 /* CyberMeTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 19D2A9F328D4B4F6009C81C4 /* Build configuration list for PBXNativeTarget "CyberMeTests" */;
 			buildPhases = (
+				2AC39069DE554A645125BC57 /* [CP] Check Pods Manifest.lock */,
 				19D2A9E928D4B4F6009C81C4 /* Sources */,
 				19D2A9EA28D4B4F6009C81C4 /* Frameworks */,
 				19D2A9EB28D4B4F6009C81C4 /* Resources */,
@@ -511,6 +507,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 19FD183428D9CBB1004F97B3 /* Build configuration list for PBXNativeTarget "CyberMeWidgetExtension" */;
 			buildPhases = (
+				DF9B5DDB967522D2C0C71945 /* [CP] Check Pods Manifest.lock */,
 				19FD182428D9CBB0004F97B3 /* Sources */,
 				19FD182528D9CBB0004F97B3 /* Frameworks */,
 				19FD182628D9CBB0004F97B3 /* Resources */,
@@ -537,9 +534,6 @@
 					195A3D2A28BFA2C600239F01 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
-					19CE75F728D23A5F00AF8AFF = {
-						CreatedOnToolsVersion = 13.2.1;
-					};
 					19D2A9EC28D4B4F6009C81C4 = {
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 195A3D2A28BFA2C600239F01;
@@ -549,7 +543,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 195A3D2628BFA2C600239F01 /* Build configuration list for PBXProject "helloSwift" */;
+			buildConfigurationList = 195A3D2628BFA2C600239F01 /* Build configuration list for PBXProject "CyberMe" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -565,8 +559,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				195A3D2A28BFA2C600239F01 /* helloSwift */,
-				19CE75F728D23A5F00AF8AFF /* MacLandmarks */,
+				195A3D2A28BFA2C600239F01 /* CyberMe */,
 				19D2A9EC28D4B4F6009C81C4 /* CyberMeTests */,
 				19FD182728D9CBB0004F97B3 /* CyberMeWidgetExtension */,
 			);
@@ -582,18 +575,6 @@
 				195A3D3628BFA2C700239F01 /* Preview Assets.xcassets in Resources */,
 				195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */,
 				19BD734728CA07AF0062B8D9 /* landmarkData.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		19CE75F628D23A5F00AF8AFF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				19CE760228D23A6300AF8AFF /* Preview Assets.xcassets in Resources */,
-				19CE760F28D23AAF00AF8AFF /* landmarkData.json in Resources */,
-				19CE760C28D23AAB00AF8AFF /* Assets.xcassets in Resources */,
-				19CE75FF28D23A6300AF8AFF /* Assets.xcassets in Resources */,
-				19CE761028D23AB100AF8AFF /* hikeData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +594,112 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2AC39069DE554A645125BC57 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CyberMeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		45FECC592AB1A0B467DEFDAD /* [CP-User] Run Flutter Build hello_flutter Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "[CP-User] Run Flutter Build hello_flutter Script";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../cyberMeFlutter/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
+		};
+		BDC85593F725377739150FB8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CyberMe/Pods-CyberMe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CyberMe/Pods-CyberMe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CyberMe/Pods-CyberMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C102946AF18B53615B6BAB44 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CyberMe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF9B5DDB967522D2C0C71945 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CyberMeWidgetExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F7425DA7ECE612157C84B2F2 /* [CP-User] Embed Flutter Build hello_flutter Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "[CP-User] Embed Flutter Build hello_flutter Script";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../cyberMeFlutter/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh embed_and_thin";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		195A3D2728BFA2C600239F01 /* Sources */ = {
@@ -663,23 +750,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		19CE75F428D23A5F00AF8AFF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				19CE75FD28D23A5F00AF8AFF /* ContentView.swift in Sources */,
-				19CE760D28D23AAB00AF8AFF /* Badge.swift in Sources */,
-				19CE760B28D23AAB00AF8AFF /* Helper.swift in Sources */,
-				19CE761728D240D500AF8AFF /* LandmarkCommands.swift in Sources */,
-				19CE761228D23D8200AF8AFF /* LandmarksMac.swift in Sources */,
-				19CE760A28D23AAB00AF8AFF /* Landmarks.swift in Sources */,
-				19CE760E28D23AAB00AF8AFF /* Hike.swift in Sources */,
-				19CE761428D23F9C00AF8AFF /* Settings.swift in Sources */,
-				19CE760728D23AAB00AF8AFF /* CyberApp.swift in Sources */,
-				19CE760828D23AAB00AF8AFF /* Model.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		19D2A9E928D4B4F6009C81C4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -712,7 +782,7 @@
 /* Begin PBXTargetDependency section */
 		19D2A9F228D4B4F6009C81C4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 195A3D2A28BFA2C600239F01 /* helloSwift */;
+			target = 195A3D2A28BFA2C600239F01 /* CyberMe */;
 			targetProxy = 19D2A9F128D4B4F6009C81C4 /* PBXContainerItemProxy */;
 		};
 		19FD183228D9CBB1004F97B3 /* PBXTargetDependency */ = {
@@ -841,6 +911,7 @@
 		};
 		195A3D5028BFA2C800239F01 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0ADD21E37E120044B182076E /* Pods-CyberMe.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -880,6 +951,7 @@
 		};
 		195A3D5128BFA2C800239F01 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F0995D45C5BA8AE39A93EC8 /* Pods-CyberMe.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -917,66 +989,9 @@
 			};
 			name = Release;
 		};
-		19CE760528D23A6300AF8AFF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MacLandmarks/MacLandmarks.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"MacLandmarks/Preview Content\"";
-				DEVELOPMENT_TEAM = MUN22RF257;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.landmark.MacLandmarks;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		19CE760628D23A6300AF8AFF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MacLandmarks/MacLandmarks.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"MacLandmarks/Preview Content\"";
-				DEVELOPMENT_TEAM = MUN22RF257;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.landmark.MacLandmarks;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		19D2A9F428D4B4F6009C81C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 148496DCB6E3323B2A760627 /* Pods-CyberMeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -996,6 +1011,7 @@
 		};
 		19D2A9F528D4B4F6009C81C4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D3E95706CAEE0BD6BCEEF9F /* Pods-CyberMeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1015,6 +1031,7 @@
 		};
 		19FD183528D9CBB1004F97B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F49F23E5809EB49DBE1EF385 /* Pods-CyberMeWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1046,6 +1063,7 @@
 		};
 		19FD183628D9CBB1004F97B3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E9B926CF202D6B4ABF90BC02 /* Pods-CyberMeWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1078,7 +1096,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		195A3D2628BFA2C600239F01 /* Build configuration list for PBXProject "helloSwift" */ = {
+		195A3D2628BFA2C600239F01 /* Build configuration list for PBXProject "CyberMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				195A3D4D28BFA2C800239F01 /* Debug */,
@@ -1087,20 +1105,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		195A3D4F28BFA2C800239F01 /* Build configuration list for PBXNativeTarget "helloSwift" */ = {
+		195A3D4F28BFA2C800239F01 /* Build configuration list for PBXNativeTarget "CyberMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				195A3D5028BFA2C800239F01 /* Debug */,
 				195A3D5128BFA2C800239F01 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		19CE760428D23A6300AF8AFF /* Build configuration list for PBXNativeTarget "MacLandmarks" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				19CE760528D23A6300AF8AFF /* Debug */,
-				19CE760628D23A6300AF8AFF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

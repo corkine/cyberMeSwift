@@ -9,6 +9,7 @@ import SwiftUI
 import WidgetKit
 import HealthKit
 import SwiftUIFlowLayout
+import Flutter
 
 struct SmallAppView: View {
     @EnvironmentObject var service: CyberService
@@ -21,6 +22,7 @@ struct SmallAppView: View {
                            ("Landmarks", { service.app = .landing }),
                            ("ReadMe", { service.app = .readme }),
                            ("体重管理", { showBodyMassSheet = true }),
+                           ("Flutter", { openFlutterApp() }),
                            ("12306 最近车票", { service.recentTicket { self.tickets = $0 }})],
                    itemSpacing: 10) { (name, call) in
             Button(name) { withAnimation { call() } }
@@ -34,6 +36,27 @@ struct SmallAppView: View {
            TicketView(info: $tickets)
        }
     }
+    
+    func openFlutterApp() {
+        // Get the RootViewController.
+        guard
+          let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
+          let window = windowScene.windows.first(where: \.isKeyWindow),
+          let rootViewController = window.rootViewController
+        else { return }
+
+        // Create the FlutterViewController.
+        let flutterViewController = FlutterViewController(
+          // Access the Flutter Engine via AppDelegate.
+          engine: AppDelegate.flutterEngine,
+          nibName: nil,
+          bundle: nil)
+        flutterViewController.modalPresentationStyle = .overCurrentContext
+        flutterViewController.isViewOpaque = false
+
+        rootViewController.present(flutterViewController, animated: true)
+      }
 }
 
 struct SettingView: View {

@@ -1,0 +1,35 @@
+{
+  "name": "flutter_image_compress",
+  "version": "1.0.0",
+  "summary": "Compress image with native Objective-C with faster speed.",
+  "description": "Compress image with native Objective-C with faster speed.",
+  "homepage": "http://github.com/fluttercandies/flutter_image_compress",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "fluttercandies": "email@example.com"
+  },
+  "source": {
+    "path": "."
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "Classes/**/*",
+  "public_header_files": "Classes/**/*.h",
+  "dependencies": {
+    "Flutter": [
+
+    ],
+    "Mantle": [
+
+    ],
+    "SDWebImage": [
+
+    ],
+    "SDWebImageWebPCoder": [
+
+    ]
+  }
+}

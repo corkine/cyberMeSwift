@@ -462,14 +462,14 @@
 			buildConfigurationList = 195A3D4F28BFA2C800239F01 /* Build configuration list for PBXNativeTarget "CyberMe" */;
 			buildPhases = (
 				C102946AF18B53615B6BAB44 /* [CP] Check Pods Manifest.lock */,
-				45FECC592AB1A0B467DEFDAD /* [CP-User] Run Flutter Build hello_flutter Script */,
+				532E8E673CC2D54B0020034D /* [CP-User] Run Flutter Build cyberme_flutter Script */,
 				195A3D2728BFA2C600239F01 /* Sources */,
 				195A3D2828BFA2C600239F01 /* Frameworks */,
 				195A3D2928BFA2C600239F01 /* Resources */,
 				19CE757D28D22B4A00AF8AFF /* Embed Watch Content */,
 				19FD180D28D9CB28004F97B3 /* Embed App Extensions */,
-				F7425DA7ECE612157C84B2F2 /* [CP-User] Embed Flutter Build hello_flutter Script */,
 				BDC85593F725377739150FB8 /* [CP] Embed Pods Frameworks */,
+				15E4CFDBBEEECD616F582242 /* [CP-User] Embed Flutter Build cyberme_flutter Script */,
 			);
 			buildRules = (
 			);
@@ -596,6 +596,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		15E4CFDBBEEECD616F582242 /* [CP-User] Embed Flutter Build cyberme_flutter Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "[CP-User] Embed Flutter Build cyberme_flutter Script";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../cyberme_flutter/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh embed_and_thin";
+		};
 		2AC39069DE554A645125BC57 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -618,15 +628,15 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		45FECC592AB1A0B467DEFDAD /* [CP-User] Run Flutter Build hello_flutter Script */ = {
+		532E8E673CC2D54B0020034D /* [CP-User] Run Flutter Build cyberme_flutter Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			name = "[CP-User] Run Flutter Build hello_flutter Script";
+			name = "[CP-User] Run Flutter Build cyberme_flutter Script";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../cyberMeFlutter/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
+			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../cyberme_flutter/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh build";
 		};
 		BDC85593F725377739150FB8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -688,16 +698,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		F7425DA7ECE612157C84B2F2 /* [CP-User] Embed Flutter Build hello_flutter Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "[CP-User] Embed Flutter Build hello_flutter Script";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\nset -u\nsource \"${SRCROOT}/../cyberMeFlutter/.ios/Flutter/flutter_export_environment.sh\"\nexport VERBOSE_SCRIPT_LOGGING=1 && \"$FLUTTER_ROOT\"/packages/flutter_tools/bin/xcode_backend.sh embed_and_thin";
 		};
 /* End PBXShellScriptBuildPhase section */
 

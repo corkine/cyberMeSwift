@@ -6,7 +6,7 @@ target 'CyberMe' do
   use_frameworks!
 
   # Pods for CyberMe
-  flutter_application_path = '../cyberMeFlutter'
+  flutter_application_path = '../cyberme_flutter'
   load File.join(flutter_application_path, '.ios', 'Flutter', 'podhelper.rb')
   install_all_flutter_pods(flutter_application_path)
   

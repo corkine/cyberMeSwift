@@ -24,6 +24,7 @@ extension CyberService {
         @Published var password: String = ""
         @Published var hcmShortcutName: String
         @Published var endpoint: String
+        @Published var lockLineWithWeather: Bool
         init(service: CyberService) {
             self.service = service
             widgetBG = WidgetBackground(rawValue: CyberService.widgetBG)!
@@ -33,6 +34,7 @@ extension CyberService {
             username = service.settings["username"] ?? ""
             hcmShortcutName = service.settings["hcmShortcutName"] ?? "checkCardHCM"
             endpoint = CyberService.endpoint
+            lockLineWithWeather = CyberService.lockLineUseWeather
         }
         func saveToCyber() {
             print("saving to cyber \(self)")
@@ -44,6 +46,10 @@ extension CyberService {
             }
             if autoUpdateHealthInfo != CS.autoUpdateHealthInfo {
                 CS.autoUpdateHealthInfo = autoUpdateHealthInfo
+            }
+            if lockLineWithWeather != CS.lockLineUseWeather {
+                CS.lockLineUseWeather = lockLineWithWeather
+                needUploadWidget = true
             }
             if slowApi != CS.slowApi {
                 CS.slowApi = slowApi
@@ -142,6 +148,15 @@ extension CyberService {
         }
         set {
             userDefault.set(newValue, forKey: "autoUpdateHealthInfo")
+        }
+    }
+    
+    static var lockLineUseWeather: Bool {
+        get {
+            userDefault.bool(forKey: "useWeather")
+        }
+        set {
+            userDefault.set(newValue, forKey: "useWeather")
         }
     }
     

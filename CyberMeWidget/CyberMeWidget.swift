@@ -54,6 +54,9 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct CyberMeWidgetEntryView : View {
+    
+    @Environment(\.widgetFamily) var family
+    
     var entry: Provider.Entry
     let basic: CGFloat = 11.5
     
@@ -113,9 +116,15 @@ struct CyberMeWidgetEntryView : View {
         if !data.offWork { return true }
         return false
     }
-
-
-    var body: some View {
+    
+    var magicNumber: String {
+        let calendar = Calendar.current
+        let today = Date()
+        let dayOfYear = calendar.ordinality(of: .day, in: .year, for: today)
+        return "\(dayOfYear! + 51776)"
+    }
+    
+    var largeView: some View {
         var data = entry.dashboard
         let needFitness = needWarnFitness(data)
         let bg = WidgetBackground(rawValue: UserDefaults(suiteName: Default.groupName)!
@@ -265,7 +274,7 @@ struct CyberMeWidgetEntryView : View {
                                 .padding(.bottom, 1)
                         }
                     }
-                    Text("UPDATE \(updateStr)")
+                    Text("UPDATE \(updateStr) \(magicNumber)")
                         .kerning(0.1)
                         .bold()
                         .padding(.trailing, 3)
@@ -292,6 +301,111 @@ struct CyberMeWidgetEntryView : View {
         .foregroundColor(.white)
         .widgetURL(URL(string: CyberUrl.syncWidget))
     }
+    
+    var todoView: some View {
+        var data = entry.dashboard
+        let fakeTodo = data.tickets.filter(\.isUncomming).map { ticket in
+            Dashboard.Todo(title: ticket.description, isFinished: false)
+        }
+        data.todo = Array((fakeTodo + data.todo).prefix(3))
+        
+        return VStack(alignment: .leading, spacing: 2) {
+            ForEach(data.todo.prefix(3), id: \.self) { item in
+                if !fakeTodo.isEmpty && fakeTodo.contains(where: { t in t.title == item.title }) {
+                    Link(destination: URL(string: CyberUrl.show12306)!) {
+                        Text(item.title)
+                            .font(.system(size: basic + 4))
+                            .lineLimit(1)
+                    }
+                } else {
+                    if item.isFinished {
+                        Text(item.title)
+                            .strikethrough()
+                            .font(.system(size: basic + 4))
+                            .lineLimit(1)
+                    } else {
+                        Text(item.title)
+                            .font(.system(size: basic + 4))
+                            .lineLimit(1)
+                    }
+                }
+            }
+        }
+    }
+    
+    var workView: some View {
+        let data = entry.dashboard
+        let finishWork = !data.needDiaryReport && data.offWork
+        return ZStack {
+            if #available(iOSApplicationExtension 16.0, *) {
+                AccessoryWidgetBackground()
+            } else {
+                Color.white.opacity(0.2)
+            }
+            VStack(spacing: 2) {
+                if finishWork {
+                    Image(systemName: "moon.fill")
+                       .padding(.bottom, 3)
+                }
+                HStack(spacing: 2) {
+                     if data.needDiaryReport {
+                         Text("日报")
+                     }
+                     if !data.offWork {
+                         Text("打卡")
+                     }
+               }
+               .font(.system(size: finishWork ? 17 : 14))
+               .padding(.bottom, 3)
+               Text(magicNumber)
+                    .font(.system(size: finishWork ? 14 : 10))
+            }
+        }
+    }
+    
+    var weatherView: some View {
+        let data = entry.dashboard
+        let (temp, isYesterday) = data.tempSmartInfo
+        var weatherInfo = data.weatherInfo == nil || ((data.weatherInfo?.isEmpty) != nil) ? "没有天气信息" : data.weatherInfo!
+        let tempHighDetail = temp != nil && temp!.diffHigh != nil && Int(temp!.diffHigh!) != 0
+        let tempLowDetail = temp != nil && temp!.diffLow != nil && Int(temp!.diffLow!) != 0
+        
+        let useWeather = UserDefaults(suiteName: Default.groupName)!.bool(forKey: "showWeather")
+        if !useWeather {
+            var bodyMassNum = data.fitnessInfo?.bodyMassDay30 ?? 0.0
+            var bodyMass = String(format: "%.1f", bodyMassNum)
+            bodyMass = bodyMass == "0.0" ? "0" : bodyMass
+            var bodyMassStr = bodyMass == "0.0" ? "" :
+            "\(bodyMassNum <= 0 ? "▼" : "▲")\(bodyMass)kg"
+            
+            var mind = data.fitnessInfo?.mindful ?? 0.0
+            var mindStr = mind != 0.0 ? "🫧" : "⚠︎Balance"
+            weatherInfo = "\(bodyMassStr)  \(mindStr)"
+        } 
+        
+        if let temp = temp {
+            let highTemp = "↑\(Int(temp.high))\(tempHighDetail ? String(format: "%+.0f", temp.diffHigh!) : "")"
+            let lowTemp = "↓\(Int(temp.low))\(tempLowDetail ? String(format: "%+.0f", temp.diffLow!) : "")"
+            return Text("\(isYesterday ? "*" : "")\(highTemp)\(lowTemp) \(weatherInfo)")
+        } else {
+            return Text("\(weatherInfo)")
+        }
+    }
+
+    var body: some View {
+        switch family {
+        case .systemMedium:
+            largeView
+        case .accessoryInline:
+            weatherView
+        case .accessoryRectangular:
+            todoView
+        case .accessoryCircular:
+            workView
+        default:
+            Text("Not Support")
+        }
+    }
 }
 
 @main
@@ -299,14 +413,25 @@ struct CyberMeWidget: Widget {
     let kind: String = "CyberMeWidget"
     
     let backgroundData = BackgroundManager()
+    
+    var supportFamilies: [WidgetFamily] {
+        if #available(iOSApplicationExtension 16.0, *) {
+            return [WidgetFamily.systemMedium,
+                    WidgetFamily.accessoryInline,
+                    WidgetFamily.accessoryCircular,
+                    WidgetFamily.accessoryRectangular]
+        } else {
+            return [WidgetFamily.systemMedium]
+        }
+    }
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             CyberMeWidgetEntryView(entry: entry)
         }
-        .supportedFamilies([.systemMedium])
+        .supportedFamilies(supportFamilies)
         .configurationDisplayName("CyberMe")
-        .description("智能的提供你最关注的信息")
+        .description("Cloud Life Easy")
         .onBackgroundURLSessionEvents { (sessionIdentifier, completion) in
             if sessionIdentifier == self.kind {
                 self.backgroundData.update()
@@ -317,11 +442,35 @@ struct CyberMeWidget: Widget {
     }
 }
 
+//@main
+//struct CyberMeWidgets: WidgetBundle {
+//    @WidgetBundleBuilder
+//    var body: some Widget {
+//        CyberMeWidget()
+//    }
+//}
+
 struct CyberMeWidget_Previews: PreviewProvider {
     static var previews: some View {
-        CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                  dashboard: Dashboard.demo))
+        if #available(iOSApplicationExtension 16.0, *) {
+            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                      dashboard: Dashboard.demo))
+            .preferredColorScheme(.dark)
+            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+            .previewDisplayName("Todo")
+            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                      dashboard: Dashboard.demo))
+            .previewContext(WidgetPreviewContext(family: .accessoryInline))
+            .previewDisplayName("Weather")
+            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                      dashboard: Dashboard.demo))
+            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+            .previewDisplayName("Work")
+        } else {
+            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                      dashboard: Dashboard.demo))
             .preferredColorScheme(.dark)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
+        }
     }
 }

@@ -106,6 +106,7 @@ struct SettingView: View {
             }
             // MARK: -- API 节流
             Group {
+                Toggle("锁屏单行组件显示天气", isOn: $setting.lockLineWithWeather)
                 Toggle("自动更新健身记录", isOn: $setting.autoUpdateHealthInfo)
                 Toggle("请求 API 节流", isOn: $setting.slowApi)
             }

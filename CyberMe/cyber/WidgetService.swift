@@ -89,11 +89,13 @@ struct Dashboard: Codable {
         var mindful: Double?
         var goalActive: Double
         var goalCut: Double
+        var bodyMassDay30: Double?
         enum CodingKeys: String, CodingKey {
             case active
             case rest
             case goalActive = "goal-active"
             case goalCut = "goal-cut"
+            case bodyMassDay30 = "body-mass-day-30"
         }
     }
 }

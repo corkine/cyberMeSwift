@@ -93,6 +93,7 @@ struct Dashboard: Codable {
         enum CodingKeys: String, CodingKey {
             case active
             case rest
+            case mindful
             case goalActive = "goal-active"
             case goalCut = "goal-cut"
             case bodyMassDay30 = "body-mass-day-30"

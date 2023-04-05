@@ -136,6 +136,16 @@ struct CyberMeWidgetEntryView : View {
         }
         data.todo = fakeTodo + data.todo
         
+        let bodyMassNum = data.fitnessInfo?.bodyMassDay30 ?? 0.0
+        var bodyMass = String(format: "%.1f", bodyMassNum)
+        bodyMass = bodyMass == "0.0" ? "0" : bodyMass
+        let bodyMassStr = bodyMass == "0.0" ? "" :
+        "\(bodyMassNum >= 0 ? "▼" : "▲")\(bodyMass)kg"
+        
+        let mind = data.fitnessInfo?.mindful ?? 0.0
+        let mindStr = mind != 0.0 ? "🫧" : "⚠︎M"
+        let fitInfo = "\(bodyMassStr) \(mindStr)"
+        
         return VStack(alignment:.leading) {
             HStack {
                 // MARK: 顶部左侧
@@ -147,6 +157,8 @@ struct CyberMeWidgetEntryView : View {
                         .kerning(0.6)
                         .font(.system(size: basic + 3))
                 }
+                Text(fitInfo)
+                    .font(.system(size: basic + 2))
                 Spacer()
                 // MARK: 顶部提醒日报、健身信息
                 if data.needDiaryReport && needFitness {
@@ -372,14 +384,14 @@ struct CyberMeWidgetEntryView : View {
         
         let useWeather = UserDefaults(suiteName: Default.groupName)!.bool(forKey: "showWeather")
         if !useWeather {
-            var bodyMassNum = data.fitnessInfo?.bodyMassDay30 ?? 0.0
+            let bodyMassNum = data.fitnessInfo?.bodyMassDay30 ?? 0.0
             var bodyMass = String(format: "%.1f", bodyMassNum)
             bodyMass = bodyMass == "0.0" ? "0" : bodyMass
-            var bodyMassStr = bodyMass == "0.0" ? "" :
+            let bodyMassStr = bodyMass == "0.0" ? "" :
             "\(bodyMassNum <= 0 ? "▼" : "▲")\(bodyMass)kg"
             
-            var mind = data.fitnessInfo?.mindful ?? 0.0
-            var mindStr = mind != 0.0 ? "🫧" : "⚠︎Balance"
+            let mind = data.fitnessInfo?.mindful ?? 0.0
+            let mindStr = mind != 0.0 ? "🫧" : "⚠︎Balance"
             weatherInfo = "\(bodyMassStr)  \(mindStr)"
         } 
         
@@ -466,6 +478,10 @@ struct CyberMeWidget_Previews: PreviewProvider {
                                                       dashboard: Dashboard.demo))
             .previewContext(WidgetPreviewContext(family: .accessoryCircular))
             .previewDisplayName("Work")
+            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                      dashboard: Dashboard.demo))
+            .preferredColorScheme(.dark)
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
         } else {
             CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
                                                       dashboard: Dashboard.demo))

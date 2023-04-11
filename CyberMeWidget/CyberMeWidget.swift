@@ -181,23 +181,29 @@ struct CyberMeWidgetEntryView : View {
                 if !data.cardCheck.isEmpty {
                     ZStack {
                         Color.white.opacity(0.22)
-                        if data.cardCheck.count == 1 {
-                            HStack(spacing:1) {
-                                Text(data.cardCheck[0])
-                            }
-                            .font(.system(size: basic))
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 3)
-                        } else if data.cardCheck.count >= 2 {
-                            HStack(spacing:1) {
-                                Text(data.cardCheck[0])
-                                Text("|").opacity(0.2)
-                                Text(data.cardCheck[data.cardCheck.count - 1])
-                            }
-                            .font(.system(size: basic))
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 3)
+                        HStack(spacing:1) {
+                            Text(data.cardCheck.last ?? "Nil")
                         }
+                        .font(.system(size: basic))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 3)
+                        //if data.cardCheck.count == 1 {
+                        //    HStack(spacing:1) {
+                        //        Text(data.cardCheck[0])
+                        //    }
+                        //    .font(.system(size: basic))
+                        //    .padding(.horizontal, 6)
+                        //    .padding(.vertical, 3)
+                        //} else if data.cardCheck.count >= 2 {
+                        //    HStack(spacing:1) {
+                        //        Text(data.cardCheck[0])
+                        //        Text("|").opacity(0.2)
+                        //        Text(data.cardCheck[data.cardCheck.count - 1])
+                        //    }
+                        //    .font(.system(size: basic))
+                        //    .padding(.horizontal, 6)
+                        //    .padding(.vertical, 3)
+                        //}
                     }
                     .fixedSize(horizontal: true, vertical: true)
                     .clipShape(RoundedRectangle(cornerRadius: 10))

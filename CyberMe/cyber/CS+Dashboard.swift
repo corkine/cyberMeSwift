@@ -27,7 +27,7 @@ struct ISummary: Hashable {
     struct MovieItem: Codable, Hashable, Identifiable {
         var name:String
         var url:String
-        var data:[String]
+        var data:[String]?
         var last_update:String
         var id:String { url }
     }

@@ -6,7 +6,7 @@
 
 另参见： [BackEnd Server by Clojure](https://github.com/corkine/cyberMe) | [OpenSource Version](https://github.com/corkine/OpenCyberMe)
 
-CyberMe iOS 客户端程序。后端基于 cyber.mazhangjing.com API 提供服务。
+CyberMe iOS 客户端程序。后端基于 mazhangjing.com API 提供服务。
 
 > 此仓库基于 SwiftUI 5 和 Xcode 14 开发，Target 为 iOS 14
 

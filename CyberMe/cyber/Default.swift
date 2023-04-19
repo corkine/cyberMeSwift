@@ -42,4 +42,5 @@ enum CyberUrl {
     static let showMiHome = "cyberme://miHome"
     static let show12306 = "cyberme://12306"
     static let showCal = "cyberme://cal"
+    static let goLink = "cyberme://go"
 }

@@ -137,7 +137,7 @@ struct CyberMeWidgetEntryView : View {
         data.todo = fakeTodo + data.todo
         
         let bodyMassNum = data.fitnessInfo?.bodyMassDay30 ?? 0.0
-        var bodyMass = String(format: "%.1f", bodyMassNum)
+        var bodyMass = String(format: "%.1f", abs(bodyMassNum))
         bodyMass = bodyMass == "0.0" ? "0" : bodyMass
         let bodyMassStr = bodyMass == "0.0" ? "" :
         "\(bodyMassNum >= 0 ? "▼" : "▲")\(bodyMass)kg"
@@ -292,14 +292,14 @@ struct CyberMeWidgetEntryView : View {
                                 .padding(.bottom, 1)
                         }
                     }
-                    Text("UPDATE \(updateStr) \(magicNumber)")
+                    Text("UP \(updateStr) \(magicNumber)")
                         .kerning(0.1)
                         .bold()
                         .padding(.trailing, 3)
-                    if needHCMCard(data) {
+                    if needHCMCard(data) || true {
                         Link(destination: URL(string: CyberUrl.checkCardHCM)!) {
-                            Text("HCM打卡")
-                                .kerning(0)
+                            Text("HCM")
+                                .kerning(0.3)
                                 .bold()
                                 .opacity(1)
                                 //.padding(.leading, 3)

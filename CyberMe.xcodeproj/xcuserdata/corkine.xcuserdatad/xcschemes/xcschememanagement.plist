@@ -41,6 +41,11 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>cyberShare.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -70,6 +75,11 @@
 			<true/>
 		</dict>
 		<key>19D2A9EC28D4B4F6009C81C4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>19E9C08929F02FC900B4FFC4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -18,7 +18,10 @@ struct CyberResult<Item:Decodable>: Decodable {
     var data: Item?
 }
 
-typealias SimpleResult = CyberResult<Int>
+struct SimpleResult: Decodable {
+    var message: String
+    var status: Int
+}
 
 struct TimeOut: Error { }
 
@@ -56,6 +59,10 @@ class CyberService: ObservableObject {
         case foodBalanceAdd
     }
     @Published var goToView: GoToView?
+    
+    // MARK: - 短链 -
+    @Published var showGoView: Bool = false
+    var originUrl = ""
     
     // MARK: - 平衡 -
     @Published var balanceCount = 0
@@ -151,6 +158,7 @@ class CyberService: ObservableObject {
                 if let response = try? JSONDecoder().decode(SimpleResult.self, from: data) {
                     action(response, error)
                 } else {
+                    print("can't decode post result to simpleResult")
                     action(nil, error)
                 }
             } else {

@@ -18,6 +18,23 @@ struct HMUploadDateData: Codable {
 }
 
 extension CyberService {
+    fileprivate struct UploadAddShort: Codable {
+        var keyword: String
+        var redirectURL: String
+        var note: String = "由 CyberMe iOS 添加"
+        var override: Bool = false
+    }
+    func addShortLink(keyword:String, originUrl:String, focus: Bool,
+                      callback: @escaping (Bool) -> Void = { _ in }) {
+        let data = UploadAddShort(keyword: keyword, redirectURL: originUrl, override: focus)
+        uploadJSON(api: CyberService.goAddUrl, data: data) {
+            response, error in
+            print("upload create shortlink action: data: \(data)," +
+                  "response: \(response.debugDescription)," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response?.status ?? -1 > 0)
+        }
+    }
     func uploadHealth(data: [HMUploadDateData]) {
         uploadJSON(api: CyberService.uploadHealthUrl, data: data) { response, error in
             print("upload health action: data: \(data)," +

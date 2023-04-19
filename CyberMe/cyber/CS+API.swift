@@ -20,6 +20,7 @@ extension CyberService {
     static let hcmAutoLoginUrl = "cyber/check/set_token_auto"
     static let ticketUrl = "cyber/ticket/recent"
     static let noticeUrl = "cyber/notice?message="
+    static let goAddUrl = "cyber/go/add"
     static func trackUrl(lo:Double, la:Double, by:String) -> String {
         return "cyber/location?lo=\(lo)&la=\(la)&by=\(urlencode(by))"
     }

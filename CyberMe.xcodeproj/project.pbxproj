@@ -60,6 +60,9 @@
 		19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D6C3BC28D1522E00ED5D4B /* Hike.swift */; };
 		19DBD54F28D61E190086B710 /* LeaderBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DBD54E28D61E190086B710 /* LeaderBoard.swift */; };
 		19E7F6FA299E56C400AB5D68 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */; };
+		19E9C08D29F02FC900B4FFC4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9C08C29F02FC900B4FFC4 /* ShareViewController.swift */; };
+		19E9C09429F02FC900B4FFC4 /* CyberShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		19E9C09929F037E000B4FFC4 /* ShortLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9C09829F037E000B4FFC4 /* ShortLinkView.swift */; };
 		19F4DC02291E2585006B7D92 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F4DC01291E2585006B7D92 /* DashboardView.swift */; };
 		19FD182928D9CBB0004F97B3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180028D9CB27004F97B3 /* WidgetKit.framework */; };
 		19FD182A28D9CBB0004F97B3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180228D9CB27004F97B3 /* SwiftUI.framework */; };
@@ -82,6 +85,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 195A3D2A28BFA2C600239F01;
 			remoteInfo = helloSwift;
+		};
+		19E9C09229F02FC900B4FFC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 195A3D2328BFA2C600239F01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19E9C08929F02FC900B4FFC4;
+			remoteInfo = cyberShare;
 		};
 		19FD183128D9CBB1004F97B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -109,6 +119,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				19E9C09429F02FC900B4FFC4 /* CyberShare.appex in Embed App Extensions */,
 				19FD183328D9CBB1004F97B3 /* CyberMeWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -172,6 +183,10 @@
 		19D6C3BA28D1514300ED5D4B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		19D6C3BC28D1522E00ED5D4B /* Hike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hike.swift; sourceTree = "<group>"; };
 		19DBD54E28D61E190086B710 /* LeaderBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoard.swift; sourceTree = "<group>"; };
+		19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CyberShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		19E9C08C29F02FC900B4FFC4 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		19E9C09129F02FC900B4FFC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		19E9C09829F037E000B4FFC4 /* ShortLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortLinkView.swift; sourceTree = "<group>"; };
 		19F4DC01291E2585006B7D92 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		19FD180028D9CB27004F97B3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		19FD180228D9CB27004F97B3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -207,6 +222,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BF113D6D7032BDB23CF07A8 /* Pods_CyberMeTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		19E9C08729F02FC900B4FFC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +287,7 @@
 				1961069F2924EDC2005D08D7 /* SimpleInfoView.swift */,
 				194ABAD7292CF5E70000F8D4 /* FitnessView.swift */,
 				195DCC6829815AC800C615AD /* TicketView.swift */,
+				19E9C09829F037E000B4FFC4 /* ShortLinkView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -277,6 +300,7 @@
 				19CE75F928D23A5F00AF8AFF /* CyberMeMac */,
 				19D2A9EE28D4B4F6009C81C4 /* CyberMeTests */,
 				19FD182B28D9CBB0004F97B3 /* CyberMeWidget */,
+				19E9C08B29F02FC900B4FFC4 /* CyberShare */,
 				19FD17FF28D9CB27004F97B3 /* Frameworks */,
 				195A3D2C28BFA2C600239F01 /* Products */,
 				EABBB441DD37E808531248A7 /* Pods */,
@@ -289,6 +313,7 @@
 				195A3D2B28BFA2C600239F01 /* CyberMe.app */,
 				19D2A9ED28D4B4F6009C81C4 /* CyberMeTests.xctest */,
 				19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */,
+				19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -418,6 +443,15 @@
 			path = CyberMeTests;
 			sourceTree = "<group>";
 		};
+		19E9C08B29F02FC900B4FFC4 /* CyberShare */ = {
+			isa = PBXGroup;
+			children = (
+				19E9C08C29F02FC900B4FFC4 /* ShareViewController.swift */,
+				19E9C09129F02FC900B4FFC4 /* Info.plist */,
+			);
+			path = CyberShare;
+			sourceTree = "<group>";
+		};
 		19FD17FF28D9CB27004F97B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +509,7 @@
 			);
 			dependencies = (
 				19FD183228D9CBB1004F97B3 /* PBXTargetDependency */,
+				19E9C09329F02FC900B4FFC4 /* PBXTargetDependency */,
 			);
 			name = CyberMe;
 			packageProductDependencies = (
@@ -503,6 +538,23 @@
 			productReference = 19D2A9ED28D4B4F6009C81C4 /* CyberMeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		19E9C08929F02FC900B4FFC4 /* CyberShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19E9C09729F02FC900B4FFC4 /* Build configuration list for PBXNativeTarget "CyberShare" */;
+			buildPhases = (
+				19E9C08629F02FC900B4FFC4 /* Sources */,
+				19E9C08729F02FC900B4FFC4 /* Frameworks */,
+				19E9C08829F02FC900B4FFC4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CyberShare;
+			productName = cyberShare;
+			productReference = 19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		19FD182728D9CBB0004F97B3 /* CyberMeWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 19FD183428D9CBB1004F97B3 /* Build configuration list for PBXNativeTarget "CyberMeWidgetExtension" */;
@@ -528,7 +580,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					195A3D2A28BFA2C600239F01 = {
@@ -537,6 +589,9 @@
 					19D2A9EC28D4B4F6009C81C4 = {
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 195A3D2A28BFA2C600239F01;
+					};
+					19E9C08929F02FC900B4FFC4 = {
+						CreatedOnToolsVersion = 14.1;
 					};
 					19FD182728D9CBB0004F97B3 = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -562,6 +617,7 @@
 				195A3D2A28BFA2C600239F01 /* CyberMe */,
 				19D2A9EC28D4B4F6009C81C4 /* CyberMeTests */,
 				19FD182728D9CBB0004F97B3 /* CyberMeWidgetExtension */,
+				19E9C08929F02FC900B4FFC4 /* CyberShare */,
 			);
 		};
 /* End PBXProject section */
@@ -579,6 +635,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		19D2A9EB28D4B4F6009C81C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		19E9C08829F02FC900B4FFC4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -727,6 +790,7 @@
 				19D2A9E528D4B045009C81C4 /* Game.swift in Sources */,
 				19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */,
 				1948648228D89DF300064104 /* TodoView.swift in Sources */,
+				19E9C09929F037E000B4FFC4 /* ShortLinkView.swift in Sources */,
 				196106A02924EDC2005D08D7 /* SimpleInfoView.swift in Sources */,
 				19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */,
 				197C90D9291F653E00373BEF /* CS+Dashboard.swift in Sources */,
@@ -758,6 +822,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		19E9C08629F02FC900B4FFC4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19E9C08D29F02FC900B4FFC4 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		19FD182428D9CBB0004F97B3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -784,6 +856,11 @@
 			isa = PBXTargetDependency;
 			target = 195A3D2A28BFA2C600239F01 /* CyberMe */;
 			targetProxy = 19D2A9F128D4B4F6009C81C4 /* PBXContainerItemProxy */;
+		};
+		19E9C09329F02FC900B4FFC4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 19E9C08929F02FC900B4FFC4 /* CyberShare */;
+			targetProxy = 19E9C09229F02FC900B4FFC4 /* PBXContainerItemProxy */;
 		};
 		19FD183228D9CBB1004F97B3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1029,6 +1106,60 @@
 			};
 			name = Release;
 		};
+		19E9C09529F02FC900B4FFC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MUN22RF257;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = cyberShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CyberShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.landmark.cyberShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		19E9C09629F02FC900B4FFC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MUN22RF257;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = cyberShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CyberShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.landmark.cyberShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		19FD183528D9CBB1004F97B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F49F23E5809EB49DBE1EF385 /* Pods-CyberMeWidgetExtension.debug.xcconfig */;
@@ -1119,6 +1250,15 @@
 			buildConfigurations = (
 				19D2A9F428D4B4F6009C81C4 /* Debug */,
 				19D2A9F528D4B4F6009C81C4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		19E9C09729F02FC900B4FFC4 /* Build configuration list for PBXNativeTarget "CyberShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19E9C09529F02FC900B4FFC4 /* Debug */,
+				19E9C09629F02FC900B4FFC4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

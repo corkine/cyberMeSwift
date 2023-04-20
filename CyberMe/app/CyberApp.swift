@@ -134,8 +134,12 @@ struct CyberApp: App {
             UIApplication.shared.open(URL(string: Default.UrlScheme.calApp)!)
         case _ where input.hasPrefix(CyberUrl.goLink):
             print("handle add short link \(url)")
-            cyberService.originUrl = String(url.description.split(separator: "?").last ?? "").replacingOccurrences(of: "url=", with: "")
+            cyberService.originUrl = url.queryOf("url") ?? ""
             cyberService.showGoView = true
+        case _ where input.hasPrefix(CyberUrl.addNoteLink):
+            print("handle add note link \(url)")
+            cyberService.noteContent = url.queryOf("content") ?? ""
+            cyberService.showAddNoteView = true
         default:
             print("no handler for \(url)")
         }

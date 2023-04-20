@@ -3,11 +3,25 @@ import Social
 import CoreServices
 import UniformTypeIdentifiers
 
+extension String {
+    func fromBase64() -> String? {
+        guard let data = Data(base64Encoded: self) else {
+            return nil
+        }
+        return String(data: data, encoding: .utf8)
+    }
+
+    func toBase64() -> String {
+        return Data(self.utf8).base64EncodedString()
+    }
+}
+
 class ShareViewController: UIViewController {
 
     private let typeText = UTType.text
     private let typeURL = UTType.url
     private var appURLString = "cyberme://go?url="
+    private var noteURLPrefix = "cyberme://addNote?content="
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -50,6 +64,9 @@ class ShareViewController: UIViewController {
                     if let firstMatch = matches.first, let range = Range(firstMatch.range, in: text) {
                         print(text[range])
                         self.appURLString += text[range]
+                        self.openMainApp()
+                    } else {
+                        self.appURLString = self.noteURLPrefix + text.toBase64()
                         self.openMainApp()
                     }
                 } catch let error {

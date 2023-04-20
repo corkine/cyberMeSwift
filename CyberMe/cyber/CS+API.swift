@@ -21,6 +21,7 @@ extension CyberService {
     static let ticketUrl = "cyber/ticket/recent"
     static let noticeUrl = "cyber/notice?message="
     static let goAddUrl = "cyber/go/add"
+    static let noteAddUrl = "cyber/note"
     static func trackUrl(lo:Double, la:Double, by:String) -> String {
         return "cyber/location?lo=\(lo)&la=\(la)&by=\(urlencode(by))"
     }

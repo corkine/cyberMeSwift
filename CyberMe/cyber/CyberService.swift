@@ -64,6 +64,9 @@ class CyberService: ObservableObject {
     @Published var showGoView: Bool = false
     var originUrl = ""
     
+    @Published var showAddNoteView: Bool = false
+    var noteContent = ""
+    
     // MARK: - 平衡 -
     @Published var balanceCount = 0
     

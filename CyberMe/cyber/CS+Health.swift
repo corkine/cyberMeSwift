@@ -35,6 +35,25 @@ extension CyberService {
             callback(response?.status ?? -1 > 0)
         }
     }
+    fileprivate struct UploadNote: Codable {
+        var content: String
+        var from: String = "由 CyberMe iOS 添加"
+        var liveSeconds: Int
+        var id: Int?
+    }
+    func addNote(content:String,
+                 id: Int? = nil,
+                 liveSeconds: Int = 60 * 60,
+                 callback: @escaping (Bool) -> Void = { _ in }) {
+        let data = UploadNote(content: content, liveSeconds: liveSeconds, id: id)
+        uploadJSON(api: CyberService.noteAddUrl, data: data) {
+            response, error in
+            print("upload create note action: data: \(data)," +
+                  "response: \(response.debugDescription)," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response?.status ?? -1 > 0)
+        }
+    }
     func uploadHealth(data: [HMUploadDateData]) {
         uploadJSON(api: CyberService.uploadHealthUrl, data: data) { response, error in
             print("upload health action: data: \(data)," +

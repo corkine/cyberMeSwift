@@ -66,11 +66,11 @@ struct ShortLinkSheetModifier: ViewModifier {
                     })) :
                     Alert(title: Text(""),
                           message: Text("添加失败，存在重复项"),
-                          primaryButton: .default(Text("取消"), action: {
+                          primaryButton: .destructive(Text("取消"), action: {
                               showResult = false
                               showSheet = false
                           }),
-                          secondaryButton: .default(Text("取消"), action: {
+                          secondaryButton: .default(Text("重试"), action: {
                               showResult = false
                     }))
                 }

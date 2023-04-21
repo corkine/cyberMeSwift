@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIFlowLayout
 
 struct DashboardView: View {
     @EnvironmentObject var service:CyberService
@@ -13,6 +14,52 @@ struct DashboardView: View {
     @State var tickets: [CyberService.TicketInfo] = []
     @State var syncTodo = false
     var summary: ISummary
+    
+    @ViewBuilder var myDayContextMenu: some View {
+        // MARK: TODO 同步
+        Button("同步 Microsoft TODO") {
+            syncTodo = true
+            service.syncTodo {
+                syncTodo = false
+                service.fetchSummary()
+                Dashboard.updateWidget(inSeconds: 0)
+            }
+        }
+        // MARK: HCM 登录
+        Button("尝试 HCM 登录") {
+            syncTodo = true
+            service.syncTodo(isLogin: true) {
+                syncTodo = false
+            }
+        }
+        // MARK: 车票信息
+        Button("最近车票信息") {
+            service.recentTicket { tickets = $0 }
+        }
+        // MARK: 工作和休假标记
+        Button("标记今天不工作") {
+            service.forceWork(work: false) {
+                Dashboard.updateWidget(inSeconds: 0)
+            }
+        }
+        Button("标记今天工作") {
+            service.forceWork(work: true) {
+                Dashboard.updateWidget(inSeconds: 0)
+            }
+        }
+        Button("取消今天标记") {
+            service.forceWork(clean:true) {
+                Dashboard.updateWidget(inSeconds: 0)
+            }
+        }
+    }
+    
+    @ViewBuilder var healthContextMenu: some View {
+        Button("同步 Apple Health") {
+            service.refreshAndUploadHealthInfo()
+        }
+    }
+    
     var body: some View {
         NavigationView {
             GeometryReader { proxy in
@@ -24,44 +71,7 @@ struct DashboardView: View {
                                 Text("我的一天")
                                 .font(.title2)
                                 .foregroundColor(Color.blue)
-                                .contextMenu {
-                                    // MARK: TODO 同步
-                                    Button("同步 Microsoft TODO") {
-                                        syncTodo = true
-                                        service.syncTodo {
-                                            syncTodo = false
-                                            service.fetchSummary()
-                                            Dashboard.updateWidget(inSeconds: 0)
-                                        }
-                                    }
-                                    // MARK: HCM 登录
-                                    Button("尝试 HCM 登录") {
-                                        syncTodo = true
-                                        service.syncTodo(isLogin: true) {
-                                            syncTodo = false
-                                        }
-                                    }
-                                    // MARK: 车票信息
-                                    Button("最近车票信息") {
-                                        service.recentTicket { tickets = $0 }
-                                    }
-                                    // MARK: 工作和休假标记
-                                    Button("标记今天不工作") {
-                                        service.forceWork(work: false) {
-                                            Dashboard.updateWidget(inSeconds: 0)
-                                        }
-                                    }
-                                    Button("标记今天工作") {
-                                        service.forceWork(work: true) {
-                                            Dashboard.updateWidget(inSeconds: 0)
-                                        }
-                                    }
-                                    Button("取消今天标记") {
-                                        service.forceWork(clean:true) {
-                                            Dashboard.updateWidget(inSeconds: 0)
-                                        }
-                                    }
-                                }
+                                .contextMenu { myDayContextMenu }
                                 
                                 Spacer()
             
@@ -101,11 +111,7 @@ struct DashboardView: View {
                             .foregroundColor(Color.blue)
                             .padding(.top, 10)
                             .padding(.bottom, 5)
-                            .contextMenu {
-                                Button("同步 Apple Health") {
-                                    service.refreshAndUploadHealthInfo()
-                                }
-                            }
+                            .contextMenu { healthContextMenu }
                             
                             FitnessView(data:
                                             (Int(summary.fitness.active),
@@ -135,6 +141,16 @@ struct DashboardView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .frame(height: 150)
                                 .zIndex(10)
+                            }
+                            
+                            // MARK: - 影视更新
+                            if !summary.movie.isEmpty {
+                                Text("影视更新")
+                                    .font(.title2)
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 15)
+                                MovieUpdateView(items: summary.movie)
+                                    .zIndex(10)
                             }
                             
                             // MARK: - 周计划
@@ -182,12 +198,18 @@ struct DashboardView: View {
 }
 
 struct DashboardView_Previews: PreviewProvider {
+    static var service = CyberService()
     static var previews: some View {
         var defaultSummary = ISummary.default
         defaultSummary.isDemo = false
+        defaultSummary.movie = [
+            ISummary.MovieItem(name: "曼达洛人", url: "https://123.com", data: ["S03E02"], last_update: "20220301"),
+            ISummary.MovieItem(name: "曼达洛人", url: "https://123.com", data: ["S03E02"], last_update: "20220301"),
+            ISummary.MovieItem(name: "曼达洛人", url: "https://123.com", data: ["S03E02"], last_update: "20220301")
+        ]
         defaultSummary.weekPlan[0].logs![0].name = "Very Long Very Long Very Long Very Long Very Long Very Long"
         return DashboardView(summary: defaultSummary)
-            .previewDevice(.init(rawValue: "iPhone XR"))
+            .environmentObject(service)
         //DashboardInfoView()
         //DashboardPlanView()
     }
@@ -295,10 +317,31 @@ struct DashboardPlanView: View {
     @State var editLog: ISummary.WeekPlanItem.WeekPlanLog?
     @State var editPlan: ISummary.WeekPlanItem?
     @State var updateLogRemoveDate: Bool = false
+    
     init(weekPlan: ISummary.WeekPlanItem, proxy: GeometryProxy) {
         self.proxy = proxy
         self.weekPlan = weekPlan
     }
+    
+    @ViewBuilder
+    func logContextMenu(_ log:ISummary.WeekPlanItem.WeekPlanLog) -> some View {
+        Button("修改") {
+            updateLogRemoveDate = false
+            editLog = log
+        }
+        Button("移到最前") {
+            moveItem(log: log, type: .toStart)
+        }
+        Button("移到最后") {
+            moveItem(log: log, type: .toEnd)
+        }
+        Divider()
+        Button("删除") {
+            removeLogAndRefresh(log.id)
+        }
+        .accentColor(Color.red)
+    }
+    
     var body: some View {
         ZStack {
             // MARK: 背景
@@ -360,24 +403,7 @@ struct DashboardPlanView: View {
                         HStack(alignment:.bottom, spacing: 0.0) {
                             VStack(alignment:.leading, spacing: 4) {
                                 ForEach(weekPlan.logs ?? [], id:\.self) { log in
-                                    Text(log.name)
-                                        .contextMenu {
-                                            Button("修改") {
-                                                updateLogRemoveDate = false
-                                                editLog = log
-                                            }
-                                            Button("移到最前") {
-                                                moveItem(log: log, type: .toStart)
-                                            }
-                                            Button("移到最后") {
-                                                moveItem(log: log, type: .toEnd)
-                                            }
-                                            Divider()
-                                            Button("删除") {
-                                                removeLogAndRefresh(log.id)
-                                            }
-                                            .accentColor(Color.red)
-                                        }
+                                    Text(log.name).contextMenu { logContextMenu(log) }
                                 }
                                 .lineLimit(1)
                             }
@@ -426,5 +452,33 @@ struct DashboardPlanView: View {
                         update: log.update, type: type) {err in
             service.fetchSummary()
         }
+    }
+}
+
+struct MovieUpdateView: View {
+    var items: [ISummary.MovieItem]
+    var body: some View {
+        FlowLayout(mode: .scrollable,
+                   items: self.items,
+                   itemSpacing: 5) { movie in
+            HStack(spacing: 0) {
+                Text(movie.name)
+                Text("|")
+                    .padding(.horizontal, 5)
+                    .opacity(0.1)
+                Text(movie.lastData ?? "NEW")
+                    .opacity(0.5)
+            }
+            .padding(.horizontal, 15)
+            .padding(.vertical, 10)
+            .background(Color("backgroundGray"))
+            .cornerRadius(10)
+            .onTapGesture {
+                if let url = URL(string: movie.url) {
+                    UIApplication.shared.open(url)
+                }
+            }
+        }
+        .padding(.leading, -5)
     }
 }

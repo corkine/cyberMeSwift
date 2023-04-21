@@ -28,6 +28,9 @@ struct ISummary: Hashable {
         var name:String
         var url:String
         var data:[String]?
+        var lastData: String? {
+            data?.sorted().last
+        }
         var last_update:String
         var id:String { url }
     }

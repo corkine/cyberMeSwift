@@ -54,6 +54,18 @@ extension CyberService {
             callback(response?.status ?? -1 > 0)
         }
     }
+    func addTrackExpress(no:String,
+                         overwrite:Bool,
+                         name:String?,
+                         callback: @escaping (SimpleResult?) -> Void = { _ in }) {
+        let url = CyberService.addTrackExpress(no: no, name: name, rewriteIfExist: overwrite)
+        loadJSON(from: url, for: SimpleResult.self) { response, error in
+            print("upload add track express action: \(url)," +
+                  "response: \(response.debugDescription)," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response)
+        }
+    }
     func uploadHealth(data: [HMUploadDateData]) {
         uploadJSON(api: CyberService.uploadHealthUrl, data: data) { response, error in
             print("upload health action: data: \(data)," +

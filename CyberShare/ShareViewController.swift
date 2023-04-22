@@ -22,6 +22,7 @@ class ShareViewController: UIViewController {
     private let typeURL = UTType.url
     private var appURLString = "cyberme://go?url="
     private var noteURLPrefix = "cyberme://addNote?content="
+    private var addExpressCheckPrefix = "cyberme://addExpressTrack?no="
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -66,6 +67,8 @@ class ShareViewController: UIViewController {
                         self.appURLString += text[range]
                         self.openMainApp()
                     } else {
+                        // TODO HERE
+                        
                         self.appURLString = self.noteURLPrefix + text.toBase64()
                         self.openMainApp()
                     }

@@ -41,6 +41,15 @@ struct CyberApp: App {
     @Environment(\.scenePhase) private var phase
     @StateObject var cyberService = CyberService()
     @State var tappedCheckCard = false
+    func checkAddExpress() {
+        if let content = UIPasteboard.general.string {
+            if !content.isEmpty && (content.allSatisfy({ $0.isNumber }) || content.lowercased().starts(with: "sf")) {
+                cyberService.showExpressTrack = true
+                return
+            }
+        }
+        cyberService.showExpressTrack = false
+    }
     var body: some Scene {
         WindowGroup {
             CyberNav()
@@ -52,6 +61,7 @@ struct CyberApp: App {
             switch newValue {
             case .active:
                 handleQuickAction()
+                checkAddExpress()
                 cyberService.setDashboardDataIfNeed()
                 Dashboard.updateWidget(inSeconds: 300)
                 break

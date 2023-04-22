@@ -27,6 +27,7 @@ struct MainApp: View {
                     CyberHome()
                         .modifier(ShortLinkSheetModifier(showSheet: $service.showGoView))
                         .modifier(LastNoteSheetModifier(showSheet: $service.showAddNoteView))
+                        .modifier(ExpressCheckAddSheetModifier(showSheet: $service.showExpressTrack))
                         .tabItem {
                             Label("Today", systemImage: "house")
                         }

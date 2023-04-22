@@ -32,6 +32,7 @@
 		194ABAD9292D28950000F8D4 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
 		194ABADA292D28DB0000F8D4 /* CS+Health.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90DB291F65EE00373BEF /* CS+Health.swift */; };
 		194B0B5129F157B100324E52 /* LastNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194B0B5029F157B100324E52 /* LastNoteView.swift */; };
+		1957D61329F4114800EE5334 /* ExpressCheckAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61229F4114800EE5334 /* ExpressCheckAddView.swift */; };
 		195A3D2F28BFA2C600239F01 /* CyberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D2E28BFA2C600239F01 /* CyberApp.swift */; };
 		195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D3028BFA2C600239F01 /* ContentView.swift */; };
 		195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
@@ -149,6 +150,7 @@
 		1948B76428F858CD009BECD0 /* TimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
 		194ABAD7292CF5E70000F8D4 /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
 		194B0B5029F157B100324E52 /* LastNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNoteView.swift; sourceTree = "<group>"; };
+		1957D61229F4114800EE5334 /* ExpressCheckAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressCheckAddView.swift; sourceTree = "<group>"; };
 		195A3D2B28BFA2C600239F01 /* CyberMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		195A3D2E28BFA2C600239F01 /* CyberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberApp.swift; sourceTree = "<group>"; };
 		195A3D3028BFA2C600239F01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				195DCC6829815AC800C615AD /* TicketView.swift */,
 				19E9C09829F037E000B4FFC4 /* ShortLinkView.swift */,
 				194B0B5029F157B100324E52 /* LastNoteView.swift */,
+				1957D61229F4114800EE5334 /* ExpressCheckAddView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -796,6 +799,7 @@
 				19E9C09929F037E000B4FFC4 /* ShortLinkView.swift in Sources */,
 				196106A02924EDC2005D08D7 /* SimpleInfoView.swift in Sources */,
 				19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */,
+				1957D61329F4114800EE5334 /* ExpressCheckAddView.swift in Sources */,
 				197C90D9291F653E00373BEF /* CS+Dashboard.swift in Sources */,
 				195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */,
 				194B0B5129F157B100324E52 /* LastNoteView.swift in Sources */,

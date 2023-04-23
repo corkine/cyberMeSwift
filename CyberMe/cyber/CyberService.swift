@@ -67,6 +67,11 @@ class CyberService: ObservableObject {
     @Published var showAddNoteView: Bool = false
     var noteContent = ""
     
+    @Published var showGptQuestionView: Bool = false
+    var questionContent = ""
+    
+    @Published var showLastDiary: Bool = false
+    
     @Published var showExpressTrack: Bool = false
     
     // MARK: - 平衡 -

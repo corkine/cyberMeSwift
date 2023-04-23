@@ -66,6 +66,33 @@ extension CyberService {
             callback(response)
         }
     }
+    fileprivate struct MarkMovieWatched: Codable {
+        var name:String
+        var watched:String
+    }
+    func markMovieWatched(name:String, watched:String,
+                          callback: @escaping (SimpleResult?) -> Void = { _ in }) {
+        let data = MarkMovieWatched(name: name, watched: watched)
+        uploadJSON(api: (CyberService.markMovieWatched +
+                   "?watched=\(watched)&name=\(name)").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
+                   data: data) { response, error in
+            print("upload markMovieWatched action: data: \(data)," +
+                  "response: \(response?.message ?? "nil")," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response)
+        }
+    }
+    func gptSimpleQuestion(question:String,
+                           callback: @escaping (CyberResult<String>?) -> Void = { _ in }) {
+        loadJSON(from: (CyberService.gptSimpleQuestion + "?question=\(question)")
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
+                 for: CyberResult<String>.self) { response, error in
+            print("gpt simple question action: data: \(question)," +
+                  "response: \(response?.message ?? "nil")," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response)
+        }
+    }
     func uploadHealth(data: [HMUploadDateData]) {
         uploadJSON(api: CyberService.uploadHealthUrl, data: data) { response, error in
             print("upload health action: data: \(data)," +

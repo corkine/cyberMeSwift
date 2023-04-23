@@ -28,6 +28,8 @@ struct MainApp: View {
                         .modifier(ShortLinkSheetModifier(showSheet: $service.showGoView))
                         .modifier(LastNoteSheetModifier(showSheet: $service.showAddNoteView))
                         .modifier(ExpressCheckAddSheetModifier(showSheet: $service.showExpressTrack))
+                        .modifier(LastDiarySheetModifier(showSheet: $service.showLastDiary))
+                        .modifier(GptAnswerSheetModifier(showSheet: $service.showGptQuestionView))
                         .tabItem {
                             Label("Today", systemImage: "house")
                         }

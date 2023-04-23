@@ -28,8 +28,11 @@ struct ISummary: Hashable {
         var name:String
         var url:String
         var data:[String]?
+        var watched:[String]?
         var lastData: String? {
-            data?.sorted().last
+            let watched = Set(watched ?? [])
+            let all = Set(data ?? [])
+            return all.subtracting(watched).sorted().last
         }
         var last_update:String
         var id:String { url }
@@ -45,16 +48,6 @@ struct ISummary: Hashable {
         enum CodingKeys: String, CodingKey {
             case active, rest, stand, exercise, mindful, goalActive = "goal-active"
         }
-        //        init(from decoder: Decoder) throws {
-        //            let c = try decoder.container(keyedBy: CodingKeys.self)
-        //            self.active = try c.decode(Double.self, forKey: .active)
-        //            self.rest = try c.decode(Double.self, forKey: .rest)
-        //            self.stand = try c.decode(Int.self, forKey: .stand)
-        //            self.exercise = try? c.decode(Int.self, forKey: .exercise)
-        //            self.mindful = try? c.decode(Double.self, forKey: .mindful)
-        //            self.goalActive = try c.decode(Double.self, forKey: .goalActive)
-        //            self.storeLevel = StoreLevel.server
-        //        }
     }
     struct WorkItem: Codable, Hashable {
         var NeedWork: Bool
@@ -147,6 +140,33 @@ struct ISummary: Hashable {
         static let `default` =
         WeekPlanItem(id: "1001", name: "周计划 101", category: "learn", logs: [WeekPlanItem.WeekPlanLog(id: "101", name: "日志 101", update: "2022-01-01", progressDelta: 10),WeekPlanItem.WeekPlanLog(id: "102", name: "日志 102", update: "2022-01-02", progressDelta: 12)])
     }
+    struct DiaryItem: Codable, Hashable {
+        var id: Int
+        var title: String
+        var content: String
+        var info: DiaryItemInfo
+        struct DiaryItemInfo: Codable, Hashable {
+            var day: String?
+            var score: String?
+            var labels: [String]?
+            var isDraft: Bool
+            enum CodingKeys: String, CodingKey {
+                case day, score, labels, isDraft = "is-draft?"
+            }
+        }
+        var createAt: String
+        var updateAt: String
+        enum CodingKeys: String, CodingKey {
+            case id, title, content, info, createAt = "create_at", updateAt = "update_at"
+        }
+    }
+    struct DiaryInfo: Codable, Hashable {
+        var draftCount: Int?
+        var today: [DiaryItem]?
+        enum CodingKeys: String, CodingKey {
+            case draftCount = "draft-count", today
+        }
+    }
     var isDemo = false
     var todo: [String:[TodoItem]]
     var movie: [MovieItem]
@@ -156,8 +176,9 @@ struct ISummary: Hashable {
     var clean: CleanItem?
     var express: [ExpressItem]
     var weekPlan: [WeekPlanItem]
+    var diary: DiaryInfo?
     enum CodingKeys: String, CodingKey {
-        case todo, movie, fitness, work, weekPlan, express
+        case todo, movie, fitness, work, weekPlan, express, diary
     }
 }
 
@@ -181,6 +202,7 @@ extension ISummary: Decodable {
         //self.clean = try f.decode(CleanItem.self, forKey: .clean)
         self.weekPlan = try f.decode([WeekPlanItem].self, forKey: .weekPlan)
         self.express = try f.decode([ExpressItem].self, forKey: .express)
+        self.diary = try f.decode(DiaryInfo.self, forKey: .diary)
     }
     static var `default`: ISummary =
     ISummary(isDemo: true,

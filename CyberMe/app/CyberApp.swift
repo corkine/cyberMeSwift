@@ -150,6 +150,11 @@ struct CyberApp: App {
             print("handle add note link \(url)")
             cyberService.noteContent = url.queryOf("content") ?? ""
             cyberService.showAddNoteView = true
+        case _ where input.hasPrefix(CyberUrl.gptQuestion):
+            cyberService.questionContent = "AUTO" + (url.queryOf("question") ?? "讲个笑话。")
+            cyberService.showGptQuestionView = true
+        case _ where input.hasPrefix(CyberUrl.showLastDiary):
+            cyberService.showLastDiary = true
         default:
             print("no handler for \(url)")
         }

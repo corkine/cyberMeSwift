@@ -36,6 +36,14 @@ struct DashboardView: View {
         Button("最近车票信息") {
             service.recentTicket { tickets = $0 }
         }
+        // MARK: 最近日记
+        Button("最近日记") {
+            service.showLastDiary = true
+        }
+        // MARK: GPT
+        Button("ChatGPT 问答") {
+            service.showGptQuestionView = true
+        }
         // MARK: 工作和休假标记
         Button("标记今天不工作") {
             service.forceWork(work: false) {
@@ -60,128 +68,140 @@ struct DashboardView: View {
         }
     }
     
+    @ViewBuilder var buildTodoPart: some View {
+        HStack(alignment:.center) {
+            Text("我的一天")
+            .font(.title2)
+            .foregroundColor(Color.blue)
+            .contextMenu { myDayContextMenu }
+            
+            Spacer()
+
+            Button {
+                UIApplication.shared.open(URL(string: Default.UrlScheme.todoApp)!)
+            } label: {
+                Label("", systemImage: "plus")
+                    .labelStyle(.iconOnly)
+            }
+            .scaleEffect(1.2)
+            .padding(.trailing, 8)
+
+        }
+        .padding(.bottom, 10)
+        .fullScreenCover(isPresented: $syncTodo) {
+            VStack(spacing: 20) {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                Text("正在同步，请稍后")
+            }
+        }
+        .sheet(isPresented: Binding(get: {!tickets.isEmpty},
+                                    set: {if !$0 {tickets = []}})) {
+            TicketView(info: $tickets)
+        }
+        
+        ToDoView(todo: summary.todo,
+                 weekPlan: summary.weekPlan)
+    }
+    
+    @ViewBuilder func buildHealthPart(proxy:GeometryProxy) -> some View {
+        // MARK: 健身卡片
+        Text("形体之山")
+        .font(.title2)
+        .foregroundColor(Color.blue)
+        .padding(.top, 10)
+        .padding(.bottom, 5)
+        .contextMenu { healthContextMenu }
+        
+        FitnessView(data:
+                        (Int(summary.fitness.active),
+                         Int(summary.fitness.exercise ?? 0),
+                         Int(summary.fitness.mindful ?? 0)),
+                    geo: proxy,
+                    height: 150)
+        
+        // MARK: 30 天体重趋势
+        if service.bodyMass.count >= 2 {
+            ZStack {
+                Color("backgroundGray")
+                VStack(alignment: .leading,
+                spacing: 10) {
+                    Text("30 天体重趋势")
+                    BodyMassChartView(
+                        data: service.bodyMass,
+                        color: .red)
+                }
+                .padding(.top, 18)
+                .padding([.leading, .trailing], 25)
+                .padding(.bottom, 15)
+            }
+            .onTapGesture {
+                service.showBodyMassSheetFetch = (true, false)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .frame(height: 150)
+            .zIndex(10)
+        }
+    }
+    
+    var updateMovie: [ISummary.MovieItem] {
+        summary.movie.filter { $0.lastData != nil }
+    }
+    
     var body: some View {
         NavigationView {
             GeometryReader { proxy in
                 ScrollView(.vertical,showsIndicators:false) {
                     HStack(alignment:.top) {
                         VStack(alignment:.leading,spacing: 10) {
-                            HStack(alignment:.center) {
-                                // MARK: - 我的一天 -
-                                Text("我的一天")
-                                .font(.title2)
-                                .foregroundColor(Color.blue)
-                                .contextMenu { myDayContextMenu }
-                                
-                                Spacer()
-            
-                                Button {
-                                    UIApplication.shared.open(URL(string: Default.UrlScheme.todoApp)!)
-                                } label: {
-                                    Label("", systemImage: "plus")
-                                        .labelStyle(.iconOnly)
-                                }
-                                .scaleEffect(1.2)
-                                .padding(.trailing, 8)
-
-                            }
-                            .padding(.bottom, 10)
-                            .fullScreenCover(isPresented: $syncTodo) {
-                                VStack(spacing: 20) {
-                                    ProgressView()
-                                        .progressViewStyle(.circular)
-                                    Text("正在同步，请稍后")
-                                }
-                            }
-                            .sheet(isPresented: Binding(get: {!tickets.isEmpty},
-                                                        set: {if !$0 {tickets = []}})) {
-                                TicketView(info: $tickets)
-                            }
+                            // MARK: - 我的一天
+                            buildTodoPart
                             
-                            ToDoView(todo: summary.todo,
-                                     weekPlan: summary.weekPlan)
-                            
+                            // MARK: - 工作状态
                             DashboardInfoView(summary: summary)
                                 .padding(.top, 30)
                                 .padding(.bottom, 5)
                             
-                            // MARK: - 健身卡片
-                            Text("形体之山")
-                            .font(.title2)
-                            .foregroundColor(Color.blue)
-                            .padding(.top, 10)
-                            .padding(.bottom, 5)
-                            .contextMenu { healthContextMenu }
+                            // MARK: - 形体之山
+                            buildHealthPart(proxy: proxy)
                             
-                            FitnessView(data:
-                                            (Int(summary.fitness.active),
-                                             Int(summary.fitness.exercise ?? 0),
-                                             Int(summary.fitness.mindful ?? 0)),
-                                        geo: proxy,
-                                        height: 150)
-                            
-                            // MARK: 30 天体重趋势
-                            if service.bodyMass.count >= 2 {
-                                ZStack {
-                                    Color("backgroundGray")
-                                    VStack(alignment: .leading,
-                                    spacing: 10) {
-                                        Text("30 天体重趋势")
-                                        BodyMassChartView(
-                                            data: service.bodyMass,
-                                            color: .red)
-                                    }
-                                    .padding(.top, 18)
-                                    .padding([.leading, .trailing], 25)
-                                    .padding(.bottom, 15)
-                                }
-                                .onTapGesture {
-                                    service.showBodyMassSheetFetch = (true, false)
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                                .frame(height: 150)
-                                .zIndex(10)
+                            // MARK: - 影视更新
+                            if !updateMovie.isEmpty {
+                                Text("影视更新")
+                                    .font(.title2)
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 15)
+                                MovieUpdateView(items: updateMovie)
+                                    .zIndex(10)
                             }
                             
-                            Group {
-                                // MARK: - 影视更新
-                                if !summary.movie.isEmpty {
-                                    Text("影视更新")
-                                        .font(.title2)
-                                        .foregroundColor(.blue)
-                                        .padding(.top, 15)
-                                    MovieUpdateView(items: summary.movie)
-                                        .zIndex(10)
-                                }
-                                
-                                // MARK: - 快递更新
-                                if !summary.express.isEmpty {
-                                    Text("快递更新")
-                                        .font(.title2)
-                                        .foregroundColor(.blue)
-                                        .padding(.top, 15)
-                                    ExpressUpdateView(items: summary.express)
-                                        .zIndex(10)
-                                }
-                                
-                                // MARK: - 周计划
-                                if !summary.weekPlan.isEmpty {
-                                    Text("本周计划")
-                                        .font(.title2)
-                                        .foregroundColor(Color.blue)
-                                        .padding(.top, 15)
-                                    
-                                    ForEach(summary.weekPlan, id: \.id) { plan in
-                                        DashboardPlanView(weekPlan: plan, proxy: proxy)
-                                    }
-                                    .padding(.bottom, 0)
+                            // MARK: - 快递更新
+                            if !summary.express.isEmpty {
+                                Text("快递更新")
+                                    .font(.title2)
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 15)
+                                ExpressUpdateView(items: summary.express)
                                     .zIndex(10)
+                            }
+                            
+                            // MARK: - 周计划
+                            if !summary.weekPlan.isEmpty {
+                                Text("本周计划")
+                                    .font(.title2)
+                                    .foregroundColor(Color.blue)
+                                    .padding(.top, 15)
+                                
+                                ForEach(summary.weekPlan, id: \.id) { plan in
+                                    DashboardPlanView(weekPlan: plan, proxy: proxy)
                                 }
+                                .padding(.bottom, 0)
+                                .zIndex(10)
                             }
             
                             Spacer()
                             
-                            // MARK: - 背景
+                            // MARK: - 背景 -
                             if currentMode == .light {
                                 Image("background_image")
                                     .resizable()
@@ -203,7 +223,6 @@ struct DashboardView: View {
                     }
                 }
                 .navigationTitle("\(TimeUtil.getWeedayFromeDate(date: Date(), withMonth: true))")
-                //.padding(.top, 0.2)
             }
         }
     }
@@ -468,6 +487,9 @@ struct DashboardPlanView: View {
 }
 
 struct MovieUpdateView: View {
+    @EnvironmentObject var service: CyberService
+    @State var showAlert = false
+    @State var response: SimpleResult?
     var items: [ISummary.MovieItem]
     var body: some View {
         FlowLayout(mode: .scrollable,
@@ -489,6 +511,22 @@ struct MovieUpdateView: View {
                 if let url = URL(string: movie.url) {
                     UIApplication.shared.open(url)
                 }
+            }
+            .onLongPressGesture {
+                service.markMovieWatched(name: movie.name, watched: movie.lastData ?? "") {
+                    response in
+                    self.response = response
+                    showAlert = true
+                }
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("结果"),
+                      message: Text(response?.message ?? "内部错误"),
+                      dismissButton: .default(Text("确定")){
+                          showAlert = false
+                          response = nil
+                          service.fetchSummary()
+                      })
             }
         }
         .padding(.leading, -5)

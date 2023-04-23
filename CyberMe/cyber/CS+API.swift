@@ -22,6 +22,8 @@ extension CyberService {
     static let noticeUrl = "cyber/notice?message="
     static let goAddUrl = "cyber/go/add"
     static let noteAddUrl = "cyber/note"
+    static let markMovieWatched = "cyber/movie/url-update"
+    static let gptSimpleQuestion = "cyber/gpt/simple-question"
     static func addTrackExpress(no:String,name:String?,rewriteIfExist:Bool = false) -> String {
         let origin = "cyber/express/track?no=\(no)&rewriteIfExist=\(rewriteIfExist ? "true" : "false")&note=\(name ?? "📦")"
         return origin.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? origin

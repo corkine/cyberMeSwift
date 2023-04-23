@@ -65,6 +65,7 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
                 .onAppear {
                     id = UIPasteboard.general.string ?? ""
                     name = ""
+                    isSF = id.lowercased().starts(with: "sf")
                 }
                 .onDisappear {
                     print("dismissed track")
@@ -89,7 +90,7 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
                               showResult = false
                               showSheet = false
                           }),
-                          secondaryButton: .destructive(Text("覆盖并重试"), action: {
+                          secondaryButton: .destructive(Text(overwrite ? "重试" : "覆盖并重试"), action: {
                               showResult = false
                               overwrite = true
                           }))

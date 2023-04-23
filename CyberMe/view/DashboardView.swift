@@ -143,28 +143,40 @@ struct DashboardView: View {
                                 .zIndex(10)
                             }
                             
-                            // MARK: - 影视更新
-                            if !summary.movie.isEmpty {
-                                Text("影视更新")
-                                    .font(.title2)
-                                    .foregroundColor(.blue)
-                                    .padding(.top, 15)
-                                MovieUpdateView(items: summary.movie)
-                                    .zIndex(10)
-                            }
-                            
-                            // MARK: - 周计划
-                            if !summary.weekPlan.isEmpty {
-                                Text("本周计划")
-                                    .font(.title2)
-                                    .foregroundColor(Color.blue)
-                                    .padding(.top, 15)
-                                
-                                ForEach(summary.weekPlan, id: \.id) { plan in
-                                    DashboardPlanView(weekPlan: plan, proxy: proxy)
+                            Group {
+                                // MARK: - 影视更新
+                                if !summary.movie.isEmpty {
+                                    Text("影视更新")
+                                        .font(.title2)
+                                        .foregroundColor(.blue)
+                                        .padding(.top, 15)
+                                    MovieUpdateView(items: summary.movie)
+                                        .zIndex(10)
                                 }
-                                .padding(.bottom, 0)
-                                .zIndex(10)
+                                
+                                // MARK: - 快递更新
+                                if !summary.express.isEmpty {
+                                    Text("快递更新")
+                                        .font(.title2)
+                                        .foregroundColor(.blue)
+                                        .padding(.top, 15)
+                                    ExpressUpdateView(items: summary.express)
+                                        .zIndex(10)
+                                }
+                                
+                                // MARK: - 周计划
+                                if !summary.weekPlan.isEmpty {
+                                    Text("本周计划")
+                                        .font(.title2)
+                                        .foregroundColor(Color.blue)
+                                        .padding(.top, 15)
+                                    
+                                    ForEach(summary.weekPlan, id: \.id) { plan in
+                                        DashboardPlanView(weekPlan: plan, proxy: proxy)
+                                    }
+                                    .padding(.bottom, 0)
+                                    .zIndex(10)
+                                }
                             }
             
                             Spacer()
@@ -480,5 +492,32 @@ struct MovieUpdateView: View {
             }
         }
         .padding(.leading, -5)
+    }
+}
+
+struct ExpressUpdateView: View {
+    var items: [ISummary.ExpressItem]
+    var body: some View {
+        VStack(spacing: 10) {
+            ForEach(items, id: \.id) { item in
+                VStack(alignment:.leading) {
+                    HStack {
+                        Circle()
+                            .fill(Color.green)
+                            .frame(width: 15,height: 15)
+                        Text(item.name ?? "📦")
+                        Spacer()
+                    }
+                    Text(item.info ?? "")
+                        .lineLimit(1)
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray)
+                }
+                .padding(.horizontal, 15)
+                .padding(.vertical, 10)
+                .background(Color("backgroundGray"))
+                .cornerRadius(10)
+            }
+        }
     }
 }

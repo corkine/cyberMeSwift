@@ -108,6 +108,13 @@ struct ISummary: Hashable {
         var HabitHint: String
         var MarvelCount: Int
     }
+    struct ExpressItem: Codable, Hashable {
+        var id:String
+        var name:String?
+        var status:Int
+        var last_update:String?
+        var info:String?
+    }
     struct WeekPlanItem: Codable, Hashable, Identifiable {
         var id: String
         var name: String
@@ -147,9 +154,10 @@ struct ISummary: Hashable {
     var work: WorkItem
     var blue: BlueItem?
     var clean: CleanItem?
+    var express: [ExpressItem]
     var weekPlan: [WeekPlanItem]
     enum CodingKeys: String, CodingKey {
-        case todo, movie, fitness, work, weekPlan
+        case todo, movie, fitness, work, weekPlan, express
     }
 }
 
@@ -172,6 +180,7 @@ extension ISummary: Decodable {
         //self.blue = try f.decode(BlueItem.self, forKey: .blue)
         //self.clean = try f.decode(CleanItem.self, forKey: .clean)
         self.weekPlan = try f.decode([WeekPlanItem].self, forKey: .weekPlan)
+        self.express = try f.decode([ExpressItem].self, forKey: .express)
     }
     static var `default`: ISummary =
     ISummary(isDemo: true,
@@ -184,6 +193,8 @@ extension ISummary: Decodable {
         WorkItem.SignIn(source: "", time: "18:30")], WorkHour: 3.4),
              blue: BlueItem(UpdateTime: "NotKnown", IsTodayBlue: true, WeekBlueCount: 10, MonthBlueCount: 10, MaxNoBlueDay: 10, Day120BalanceDay: 10, MaxNoBlueDayFirstDay: "2022-01-01", MarvelCount: 30),
              clean: CleanItem(MorningBrushTeeth: true, NightBrushTeeth: true, MorningCleanFace: true, NightCleanFace: true, HabitCountUntilNow: 30, HabitHint: "1+1?", MarvelCount: 40),
+             express: [ExpressItem(id: "123", name: "物品1", status: 1, info: "2022-02-20 22222222222222 已签收"),
+                       ExpressItem(id: "123", name: "物品2", status: 1, info: "2022-02-20 22222222222222 已签收")],
              weekPlan: [WeekPlanItem.default, WeekPlanItem.default])
 }
 

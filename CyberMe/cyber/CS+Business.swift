@@ -51,11 +51,26 @@ extension CyberService {
     /// 快递追踪
     func addTrackExpress(no:String,
                          overwrite:Bool,
+                         addToWaitList:Bool,
                          name:String?,
                          callback: @escaping (SimpleResult?) -> Void = { _ in }) {
-        let url = CyberService.addTrackExpress(no: no, name: name, rewriteIfExist: overwrite)
+        let url = CyberService.addTrackExpress(no: no, name: name,
+                                               addToWaitList: addToWaitList,
+                                               rewriteIfExist: overwrite)
         loadJSON(from: url, for: SimpleResult.self) { response, error in
-            print("upload add track express action: \(url)," +
+            print("add track express action: \(url)," +
+                  "response: \(response.debugDescription)," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response)
+        }
+    }
+    
+    /// 快递追踪删除
+    func deleteTrackExpress(no:String,
+                            callback: @escaping (SimpleResult?) -> Void = { _ in }) {
+        let url = CyberService.deleteTrackExpress + no
+        loadJSON(from: url, for: SimpleResult.self) { response, error in
+            print("delete track express action: \(url)," +
                   "response: \(response.debugDescription)," +
                   "error: \(error?.localizedDescription ?? "nil")")
             callback(response)

@@ -529,6 +529,9 @@ struct MovieUpdateView: View {
 }
 
 struct ExpressUpdateView: View {
+    @EnvironmentObject var service: CyberService
+    @State var showSheet = false
+    @State var deleteItem: ISummary.ExpressItem?
     var items: [ISummary.ExpressItem]
     var body: some View {
         VStack(spacing: 10) {
@@ -536,7 +539,7 @@ struct ExpressUpdateView: View {
                 VStack(alignment:.leading) {
                     HStack {
                         Circle()
-                            .fill(Color.green)
+                            .fill(item.status == 1 ? Color.green : Color.orange)
                             .frame(width: 15,height: 15)
                         Text(item.name ?? "📦")
                         Spacer()
@@ -550,7 +553,24 @@ struct ExpressUpdateView: View {
                 .padding(.vertical, 10)
                 .background(Color("backgroundGray"))
                 .cornerRadius(10)
+                .onLongPressGesture { deleteItem = item; showSheet = true }
             }
+        }
+        .alert(isPresented: $showSheet) {
+            Alert(title: Text("确定删除\(deleteItem!.name ?? "")追踪吗？"),
+            message: Text("删除后将不能恢复。"),
+                  primaryButton: .cancel {
+                showSheet = false
+            }, secondaryButton: .destructive(Text("删除")) {
+                guard let id = deleteItem?.id else { showSheet = false; return }
+                service.deleteTrackExpress(no: id) { _ in
+                    showSheet = false
+                    //刷新 Dashboard
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(6)) {
+                        service.fetchSummary()
+                    }
+                }
+            })
         }
     }
 }

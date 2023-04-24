@@ -43,7 +43,9 @@ struct CyberApp: App {
     @State var tappedCheckCard = false
     func checkAddExpress() {
         if let content = UIPasteboard.general.string {
-            if !content.isEmpty && (content.allSatisfy({ $0.isNumber }) || content.lowercased().starts(with: "sf")) {
+            if !content.isEmpty && (content.allSatisfy({ $0.isNumber })
+                                    || content.lowercased().starts(with: "sf")
+                                    || content.lowercased().starts(with: "jd")) {
                 cyberService.showExpressTrack = true
                 return
             }

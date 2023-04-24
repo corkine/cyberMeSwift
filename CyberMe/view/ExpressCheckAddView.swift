@@ -14,6 +14,7 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
     @State var isSF = false
     @State var sfSuffix = ""
     @State var overwrite = false
+    @State var addToWait = false
     @State var showResult = false
     @State var addResult = false
     @State var respMessage = ""
@@ -44,12 +45,16 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
                         Toggle(isOn: $overwrite) {
                             Text("覆盖现有追踪")
                         }
+                        Toggle(isOn: $addToWait) {
+                            Text("如果不存在，则加入到等待列表")
+                        }
                         TextField("快递备注", text: $name)
                         HStack {
                             Spacer()
                             Button("开始追踪") {
                                 service.addTrackExpress(no: isSF ? "\(id):\(sfSuffix)" : id,
                                                         overwrite: overwrite,
+                                                        addToWaitList: addToWait,
                                                         name: name.isEmpty ? nil : name) {
                                     res in
                                     showResult = true
@@ -63,7 +68,9 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
                     }
                 }
                 .onAppear {
-                    id = UIPasteboard.general.string ?? ""
+                    // 不一定是复制 App 订单号过来的（纯数字或 sf 或 jd 开头订单号）
+                    // 如果手动打开此 Sheet，则这里试图提取和解析，如果失败，则粘贴所有内容要求用户自行剔除
+                    id = extractCode(from: UIPasteboard.general.string ?? "")
                     name = ""
                     isSF = id.lowercased().starts(with: "sf")
                 }
@@ -90,12 +97,25 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
                               showResult = false
                               showSheet = false
                           }),
-                          secondaryButton: .destructive(Text(overwrite ? "重试" : "覆盖并重试"), action: {
+                          secondaryButton: .destructive(Text("重试"), action: {
                               showResult = false
                               overwrite = true
+                              addToWait = true
                           }))
                 }
             }
+    }
+    
+    /// 提取快递单号，可能是 10 位以上的纯数字、JD 或 JDV 或 SF 开头的，10 位以上的纯数字
+    func extractCode(from text: String) -> String {
+        let pattern = #"((JDV|JD|SF)\d{10,})|(\d{10,})"#
+        let regex = try! NSRegularExpression(pattern: pattern)
+        let range = NSRange(location: 0, length: text.utf16.count)
+        if let match = regex.firstMatch(in: text, options: [], range: range) {
+            return (text as NSString).substring(with: match.range)
+        } else {
+            return text
+        }
     }
 }
 

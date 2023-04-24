@@ -24,7 +24,8 @@ struct SmallAppView: View {
                            ("GPT 问答", { service.showGptQuestionView = true }),
                            ("今天日记", { service.showLastDiary = true }),
                            ("短链接跳转", { service.showGoView = true }),
-                           ("跨平台笔记", { service.showAddNoteView = true })],
+                           ("跨平台笔记", { service.showAddNoteView = true }),
+                           ("快递追踪", { service.showExpressTrack = true })],
                    itemSpacing: 10) { (name, call) in
             Button(name) { withAnimation { call() } }
                 .padding(.vertical, -5) }

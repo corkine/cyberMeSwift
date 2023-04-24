@@ -74,6 +74,7 @@ class CyberService: ObservableObject {
     @Published var showLastDiary: Bool = false
     
     @Published var showExpressTrack: Bool = false
+    var expressTrackFromAutoDetect = false
     
     @Published var showTicketView: Bool = false
     

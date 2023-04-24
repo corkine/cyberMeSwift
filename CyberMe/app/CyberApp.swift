@@ -46,6 +46,7 @@ struct CyberApp: App {
             if !content.isEmpty && (content.allSatisfy({ $0.isNumber })
                                     || content.lowercased().starts(with: "sf")
                                     || content.lowercased().starts(with: "jd")) {
+                cyberService.expressTrackFromAutoDetect = true
                 cyberService.showExpressTrack = true
                 return
             }

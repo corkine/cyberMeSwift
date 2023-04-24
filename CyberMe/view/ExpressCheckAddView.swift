@@ -75,12 +75,14 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
                     isSF = id.lowercased().starts(with: "sf")
                 }
                 .onDisappear {
-                    print("dismissed track")
                     id = ""
                     name = ""
                     isSF = false
                     sfSuffix = ""
-                    UIPasteboard.general.string = ""
+                    if service.expressTrackFromAutoDetect {
+                        UIPasteboard.general.string = ""
+                        service.expressTrackFromAutoDetect = false
+                    }
                     showSheet = false
                 }
                 .alert(isPresented: $showResult) {
@@ -114,7 +116,7 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
         if let match = regex.firstMatch(in: text, options: [], range: range) {
             return (text as NSString).substring(with: match.range)
         } else {
-            return text
+            return ""
         }
     }
 }

@@ -6,23 +6,25 @@
 //
 import Foundation
 
-/// 周计划查询项目
-struct WeekPlanAddLog: Codable, Hashable {
-    var planId: String? //for post
-    var name: String
-    var progressDelta: Double
-    var description: String?
-    enum CodingKeys: String, CodingKey {
-        case planId
-        case name
-        case progressDelta = "progress-delta"
-        case description
-    }
-}
-
 extension CyberService {
+    fileprivate struct WeekPlanAddLog: Codable, Hashable {
+        var planId: String? //for post
+        var name: String
+        var progressDelta: Double
+        var description: String?
+        enum CodingKeys: String, CodingKey {
+            case planId
+            case name
+            case progressDelta = "progress-delta"
+            case description
+        }
+    }
+    
     /// 添加周计划项目
-    func addLog(_ log: WeekPlanAddLog, action:@escaping () -> Void = {}) {
+    func addLog(planId: String?, name: String, progressDelta: Double,
+                action:@escaping () -> Void = {}) {
+        let log = WeekPlanAddLog(planId: planId, name: name, progressDelta: progressDelta,
+                                 description: "由待办事项在 CyberMe iOS 添加")
         uploadJSON(api: CyberService.addLogUrl(log.planId!), data: log) { [self] data, err in
             if let data = data {
                 if data.status <= 0 {

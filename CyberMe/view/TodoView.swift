@@ -53,11 +53,9 @@ struct ToDoView: View {
         .padding(.leading, 2.0)
     }
     func addLogAndRefresh(_ item: ISummary.TodoItem, _ plan: ISummary.WeekPlanItem) {
-        service.addLog(
-            WeekPlanAddLog(planId: plan.id,
-                           name: "\(TimeUtil.getWeedayFromeDate(date: Date()))：\(item.title)",
-                           progressDelta: 10.0,
-                           description: "由待办事项在 CyberMe iOS 添加")) {
+        service.addLog(planId: plan.id,
+                       name: "\(TimeUtil.getWeedayFromeDate(date: Date()))：\(item.title)",
+                       progressDelta: 10.0) {
                service.fetchSummary()
            }
     }

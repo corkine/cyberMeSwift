@@ -8,13 +8,12 @@
 import HealthKit
 import Combine
 
-enum HealthServerKind: String, Hashable {
-    case activeEnergy, basalEnergy, standTime, exerciseTime
-}
-
-typealias HMUploadData = (Double,Double,Int,Int,Double)
-
 class HealthManager {
+    enum HealthServerKind: String, Hashable {
+        case activeEnergy, basalEnergy, standTime, exerciseTime
+    }
+    
+    typealias HMUploadData = (Double,Double,Int,Int,Double)
     
     let store = HKHealthStore()
     

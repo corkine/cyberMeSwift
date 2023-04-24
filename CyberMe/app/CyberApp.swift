@@ -163,20 +163,6 @@ struct CyberApp: App {
     
     private func addDynamicQuickActions() {
         UIApplication.shared.shortcutItems = [
-            //            UIApplicationShortcutItem(
-            //                type: "checkCardForce",
-            //                localizedTitle: "打卡信息确认",
-            //                localizedSubtitle: nil,
-            //                icon: UIApplicationShortcutIcon(systemImageName: "wallet.pass"),
-            //                userInfo: nil
-            //            ),
-            //            UIApplicationShortcutItem(
-            //                type: "syncTodo",
-            //                localizedTitle: "同步待办事项",
-            //                localizedSubtitle: nil,
-            //                icon: UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath"),
-            //                userInfo: nil
-            //            ),
             UIApplicationShortcutItem(
                 type: "alert",
                 localizedTitle: "警戒模式",
@@ -196,10 +182,10 @@ struct CyberApp: App {
                 icon:UIApplicationShortcutIcon(systemImageName: "checkmark.square")
             ),
             UIApplicationShortcutItem(
-                type: "foodBalanceAdd",
-                localizedTitle: "平衡条目添加",
+                type: "todayDiary",
+                localizedTitle: "今天日记",
                 localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "scalemass")
+                icon:UIApplicationShortcutIcon(systemImageName: "book.closed")
             )
         ]
     }
@@ -243,6 +229,9 @@ struct CyberApp: App {
             break
         case "bodyMassManage":
             cyberService.showBodyMassView(withFetch: true)
+            break
+        case "todayDiary":
+            cyberService.showLastDiary = true
             break
         default:
             break

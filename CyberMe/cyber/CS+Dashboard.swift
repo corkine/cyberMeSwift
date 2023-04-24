@@ -22,7 +22,9 @@ struct ISummary: Hashable {
         var create_at:String
         var importance:String
         var id:String { title }
-        static var `default`: TodoItem = TodoItem(time: "2022-10-13", title: "待办事项 A", list: "🍚 工作", status: "completed", create_at: "2022-10-13", importance: "high")
+        static var `default`: TodoItem = TodoItem(time: "2022-10-13", title: "待办事项 A",
+                                                  list: "🍚 工作", status: "completed",
+                                                  create_at: "2022-10-13", importance: "high")
     }
     struct MovieItem: Codable, Hashable, Identifiable {
         var name:String
@@ -138,7 +140,9 @@ struct ISummary: Hashable {
             lastUpdate = "last-update", logs
         }
         static let `default` =
-        WeekPlanItem(id: "1001", name: "周计划 101", category: "learn", logs: [WeekPlanItem.WeekPlanLog(id: "101", name: "日志 101", update: "2022-01-01", progressDelta: 10),WeekPlanItem.WeekPlanLog(id: "102", name: "日志 102", update: "2022-01-02", progressDelta: 12)])
+        WeekPlanItem(id: "1001", name: "周计划 101", category: "learn",
+                     logs: [WeekPlanItem.WeekPlanLog(id: "101", name: "日志 101", update: "2022-01-01", progressDelta: 10),
+                            WeekPlanItem.WeekPlanLog(id: "102", name: "日志 102", update: "2022-01-02", progressDelta: 12)])
     }
     struct DiaryItem: Codable, Hashable {
         var id: Int
@@ -198,8 +202,6 @@ extension ISummary: Decodable {
         self.fitness = try f.decode(FitnessItem.self, forKey: .fitness)
         
         self.work = try f.decode(WorkItem.self, forKey: .work)
-        //self.blue = try f.decode(BlueItem.self, forKey: .blue)
-        //self.clean = try f.decode(CleanItem.self, forKey: .clean)
         self.weekPlan = try f.decode([WeekPlanItem].self, forKey: .weekPlan)
         self.express = try f.decode([ExpressItem].self, forKey: .express)
         self.diary = try f.decode(DiaryInfo.self, forKey: .diary)
@@ -225,31 +227,6 @@ extension CyberService {
         if self.updateCacheAndNeedAction || !Self.slowApi {
             self.fetchSummary()
             self.refreshAndUploadHealthInfo()
-            //        let summaryPublisher = self.fetchSummaryPublisher()?.share()
-            //        guard let summaryPublisher = summaryPublisher else { return }
-            //        if Self.autoUpdateHealthInfo {
-            //            self.refreshAndUploadHealthInfoPublisher()
-            //                .zip(summaryPublisher)
-            //                .receive(on: DispatchQueue.main)
-            //                .sink { _ in
-            //                    print("finished fetch zipped dashboard data...")
-            //                } receiveValue: { (tuple, summary) in
-            //                    let (bm, fit) = tuple
-            //                    var summary = summary
-            //                    if let fit = fit { summary.fitness = fit }
-            //                    self.bodyMass = bm ?? []
-            //                    self.summaryData = summary
-            //                }
-            //                .store(in: &self.subs)
-            //        } else {
-            //            summaryPublisher
-            //                .receive(on: DispatchQueue.main)
-            //                .handleEvents(receiveCompletion: {_ in
-            //                    print("finished fetch dashboard data(just summary)...")
-            //                })
-            //                .assign(to: \.summaryData, on: self)
-            //                .store(in: &self.subs)
-            //        }
         }
     }
     
@@ -371,60 +348,6 @@ extension CyberService {
                 }
             }
             completed()
-        }
-    }
-    
-    struct TicketInfo: Decodable, Identifiable {
-        var id: String
-        var orderNo: String?
-        var start: String?
-        var startFull: String? {
-            start == nil ? nil : start!.hasSuffix("站") ? start! : start! + "站"
-        }
-        var end: String?
-        var endFull: String? {
-            end == nil ? nil : end!.hasSuffix("站") ? end! : end! + "站"
-        }
-        var date: String?
-        var trainNo: String?
-        var siteNo: String?
-        var siteNoFull: String? {
-            siteNo == nil ? nil : siteNo!.hasSuffix("号") ? siteNo! : siteNo! + "号"
-        }
-        var originData: String?
-        var isUncomming:Bool {
-            guard let d = TimeUtil.format(fromStr: date) else {
-                return true
-            }
-            return Date().timeIntervalSince1970 < d.timeIntervalSince1970
-        }
-        var dateFormat:String {
-            if let date = TimeUtil.format(fromStr: date ?? "") {
-                let diff = TimeUtil.diffDay(startDate: Date.today, endDate: date)
-                var format = "yyyy-MM-dd"
-                switch diff {
-                    case 0: format = "今天"
-                    case 1: format = "明天"
-                    case 2: format = "后天"
-                    case -1: format = "昨天"
-                    case -2: format = "前天"
-                    default: break
-                }
-                let formatter = DateFormatter()
-                formatter.dateFormat = "\(format) HH:mm"
-                let currentTime: String = formatter.string(from: date)
-                return currentTime
-            }
-            return date ?? "未知日期"
-        }
-    }
-    
-    func recentTicket(completed:@escaping ([TicketInfo])->Void = {_ in }) {
-        loadJSON(from: CyberService.ticketUrl, for: CyberResult<[TicketInfo]>.self) { res, err in
-            if let res = res {
-                let data = res.data ?? []
-                completed(data)
-            }
         }
     }
     

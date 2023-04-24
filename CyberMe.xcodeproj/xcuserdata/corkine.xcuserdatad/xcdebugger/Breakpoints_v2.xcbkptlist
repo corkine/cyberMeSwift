@@ -39,22 +39,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "53DB55AA-F62A-4589-BD5C-098368D3E7AB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CyberMe/cyber/WidgetService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "sendNotice(msg:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "E9286A96-3762-4077-BABE-45C9ACB0AD05"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -114,54 +98,6 @@
             endingLineNumber = "36"
             landmarkName = "locationManager(_:didFailWithError:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "ABCAA972-7368-4A7E-A7ED-25F86F78D0B7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CyberMe/cyber/WidgetService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "trackUrl(location:by:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "ABCAA972-7368-4A7E-A7ED-25F86F78D0B7 - 1f7a765cbeeb6b77"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static CyberMe.CyberService.trackUrl(location: __C.CLLocation, by: Swift.String) -&gt; ()"
-                  moduleName = "CyberMe"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/corkine/Desktop/learnSwiftUI/CyberMe/cyber/WidgetService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "1280">
-               </Location>
-               <Location
-                  uuid = "ABCAA972-7368-4A7E-A7ED-25F86F78D0B7 - 1f7a765cbeeb6b77"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static CyberMe.CyberService.trackUrl(location: __C.CLLocation, by: Swift.String) -&gt; ()"
-                  moduleName = "CyberMe"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/corkine/Desktop/learnSwiftUI/CyberMe/cyber/WidgetService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "1624">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

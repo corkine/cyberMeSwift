@@ -8,102 +8,29 @@
 import Foundation
 import Combine
 
-struct HMUploadDateData: Codable {
-    var time: String
-    var activeEnergy: Double
-    var basalEnergy: Double
-    var standTime: Int
-    var exerciseTime: Int
-    var mindful: Double
-}
-
 extension CyberService {
-    fileprivate struct UploadAddShort: Codable {
-        var keyword: String
-        var redirectURL: String
-        var note: String = "由 CyberMe iOS 添加"
-        var override: Bool = false
+    fileprivate struct HMUploadDateData: Codable {
+        var time: String
+        var activeEnergy: Double
+        var basalEnergy: Double
+        var standTime: Int
+        var exerciseTime: Int
+        var mindful: Double
     }
-    func addShortLink(keyword:String, originUrl:String, focus: Bool,
-                      callback: @escaping (Bool) -> Void = { _ in }) {
-        let data = UploadAddShort(keyword: keyword, redirectURL: originUrl, override: focus)
-        uploadJSON(api: CyberService.goAddUrl, data: data) {
-            response, error in
-            print("upload create shortlink action: data: \(data)," +
-                  "response: \(response.debugDescription)," +
-                  "error: \(error?.localizedDescription ?? "nil")")
-            callback(response?.status ?? -1 > 0)
-        }
-    }
-    fileprivate struct UploadNote: Codable {
-        var content: String
-        var from: String = "由 CyberMe iOS 添加"
-        var liveSeconds: Int
-        var id: Int?
-    }
-    func addNote(content:String,
-                 id: Int? = nil,
-                 liveSeconds: Int = 60 * 60,
-                 callback: @escaping (Bool) -> Void = { _ in }) {
-        let data = UploadNote(content: content, liveSeconds: liveSeconds, id: id)
-        uploadJSON(api: CyberService.noteAddUrl, data: data) {
-            response, error in
-            print("upload create note action: data: \(data)," +
-                  "response: \(response.debugDescription)," +
-                  "error: \(error?.localizedDescription ?? "nil")")
-            callback(response?.status ?? -1 > 0)
-        }
-    }
-    func addTrackExpress(no:String,
-                         overwrite:Bool,
-                         name:String?,
-                         callback: @escaping (SimpleResult?) -> Void = { _ in }) {
-        let url = CyberService.addTrackExpress(no: no, name: name, rewriteIfExist: overwrite)
-        loadJSON(from: url, for: SimpleResult.self) { response, error in
-            print("upload add track express action: \(url)," +
-                  "response: \(response.debugDescription)," +
-                  "error: \(error?.localizedDescription ?? "nil")")
-            callback(response)
-        }
-    }
-    fileprivate struct MarkMovieWatched: Codable {
-        var name:String
-        var watched:String
-    }
-    func markMovieWatched(name:String, watched:String,
-                          callback: @escaping (SimpleResult?) -> Void = { _ in }) {
-        let data = MarkMovieWatched(name: name, watched: watched)
-        uploadJSON(api: (CyberService.markMovieWatched +
-                   "?watched=\(watched)&name=\(name)").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
-                   data: data) { response, error in
-            print("upload markMovieWatched action: data: \(data)," +
-                  "response: \(response?.message ?? "nil")," +
-                  "error: \(error?.localizedDescription ?? "nil")")
-            callback(response)
-        }
-    }
-    func gptSimpleQuestion(question:String,
-                           callback: @escaping (CyberResult<String>?) -> Void = { _ in }) {
-        loadJSON(from: (CyberService.gptSimpleQuestion + "?question=\(question)")
-            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
-                 for: CyberResult<String>.self) { response, error in
-            print("gpt simple question action: data: \(question)," +
-                  "response: \(response?.message ?? "nil")," +
-                  "error: \(error?.localizedDescription ?? "nil")")
-            callback(response)
-        }
-    }
-    func uploadHealth(data: [HMUploadDateData]) {
+    /// 健身数据上传
+    fileprivate func uploadHealth(data: [HMUploadDateData]) {
         uploadJSON(api: CyberService.uploadHealthUrl, data: data) { response, error in
             print("upload health action: data: \(data)," +
                   "response: \(response?.message ?? "nil")," +
                   "error: \(error?.localizedDescription ?? "nil")")
         }
     }
+    
     fileprivate struct UploadBodyMassData: Codable {
         var date: String
         var value: Double
     }
+    /// 体重数据上传
     func uploadBodyMass(value: Double) {
         uploadJSON(api: CyberService.uploadBodyMassUrl,
                    data: UploadBodyMassData(date: TimeUtil.getDate(),

@@ -16,10 +16,21 @@ extension View {
 }
 #endif
 
+struct BodyMassSheetModifier: ViewModifier {
+    @Binding var showSheet: Bool
+    func body(content: Content) -> some View {
+        content
+            .sheet(isPresented: $showSheet) {
+                BodyMassView()
+                    .onDisappear {
+                        showSheet = false
+                    }
+            }
+    }
+}
+
 struct BodyMassView: View {
     @EnvironmentObject var service:CyberService
-    
-    @State var withFetch: Bool = true
     
     @State var weight = ""
     
@@ -117,7 +128,7 @@ struct BodyMassView: View {
             .padding(.bottom, 30)
         }
         .onAppear {
-            if withFetch { service.refreshAndUploadHealthInfo() }
+            if service.bodyMassShowWithFetch { service.refreshAndUploadHealthInfo() }
         }
         .onDisappear {
             Dashboard.updateWidget(inSeconds: 0)

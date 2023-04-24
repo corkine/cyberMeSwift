@@ -17,45 +17,53 @@ struct GptAnswerSheetModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .sheet(isPresented: $showSheet) {
-                GeometryReader { proxy in
-                    Form {
-                        ZStack(alignment:.leading) {
-                            RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
-                                .fill(Color.white.opacity(0.00001))
-                            Text("🔮 Q&A")
-                                .font(.system(size: 30))
-                                .padding(.vertical, 10)
-                        }
-                        .onTapGesture {
-                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        }
-                        TextField("请输入问题", text: $question)
+                VStack {
+                    ZStack(alignment:.leading) {
+                        RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
+                            .fill(Color.white.opacity(0.00001))
+                        Text("🔮 GPT Q&A")
+                            .font(.system(size: 30))
+                            .padding(.vertical, 10)
+                    }
+                    .onTapGesture {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
+                    HStack {
+                        TextField("在这里输入你的问题",text: $question)
                             .padding(.horizontal, 5)
-                        TextEditor(text: $answer)
-                            .frame(height: proxy.size.height / 1.5)
-                        HStack {
-                            Text("")
-                            Spacer()
-                            Button(copyDone ? "已复制到剪贴板" : "复制到剪贴板") {
-                                UIPasteboard.general.string = answer
-                                copyDone = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                                    copyDone = false
-                                }
+                        Image(systemName: "xmark")
+                            .foregroundColor(.gray.opacity(0.3))
+                            .onTapGesture {
+                                question = ""
                             }
-                            .foregroundColor(.blue)
-                            Spacer()
-                        }
-                        HStack {
-                            Spacer()
-                            Button(thinking ? "正在思考..." : "询问 ChatGPT") {
-                                callGpt()
+                    }
+                    .padding(.vertical, 10)
+                    TextEditor(text: $answer)
+                        .layoutPriority(100)
+                    Divider()
+                        .padding(.bottom, 5)
+                    HStack {
+                        Spacer()
+                        Button(copyDone ? "已复制到剪贴板" : "复制到剪贴板") {
+                            UIPasteboard.general.string = answer
+                            copyDone = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                                copyDone = false
                             }
-                            .disabled(question.isEmpty || thinking)
-                            Spacer()
                         }
+                        .foregroundColor(.blue)
+                        Spacer()
+                        Divider()
+                        Spacer()
+                        Button(thinking ? "正在思考..." : "询问 GPT") {
+                            callGpt()
+                        }
+                        .disabled(question.isEmpty || thinking)
+                        Spacer()
                     }
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 30)
                 .onAppear {
                     question = service.questionContent
                     if question.hasPrefix("AUTO") {
@@ -66,6 +74,7 @@ struct GptAnswerSheetModifier: ViewModifier {
                     }
                 }
                 .onDisappear {
+                    service.questionContent = ""
                     question = ""
                     answer = ""
                     copyDone = false
@@ -75,6 +84,7 @@ struct GptAnswerSheetModifier: ViewModifier {
             }
     }
     func callGpt() {
+        answer = ""
         thinking = true
         service.gptSimpleQuestion(question: question) {
             response in

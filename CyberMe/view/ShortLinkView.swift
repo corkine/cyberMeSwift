@@ -19,6 +19,9 @@ struct ShortLinkSheetModifier: ViewModifier {
         content
             .sheet(isPresented: $showSheet) {
                 Form {
+                    Text("🔗 短链接跳转")
+                        .font(.system(size: 30))
+                        .padding(.top, 10)
                     HStack {
                         Text("https://mazhangjing.com/")
                             .accentColor(.primary.opacity(1))

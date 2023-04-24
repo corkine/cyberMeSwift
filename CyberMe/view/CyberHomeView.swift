@@ -17,9 +17,6 @@ struct CyberHome: View {
     @State var showAlert = false
     @State var hcmShortcutName = Setting.hcmShortcutName
     
-    @State var showBodyMassView = false
-    @State var bodyMassViewFetch = true
-    
     var body: some View {
         DashboardView(summary: service.summaryData)
             .onReceive(service.$alertInfomation, perform: { info in
@@ -31,14 +28,6 @@ struct CyberHome: View {
                       dismissButton: .default(Text("确定"), action: {
                     service.alertInfomation = nil
                 }))
-            }
-            .onReceive(service.$showBodyMassSheetFetch, perform: { showFetch in
-                let (show, fetch) = showFetch
-                showBodyMassView = show
-                bodyMassViewFetch = fetch
-            })
-            .sheet(isPresented: $showBodyMassView) {
-                BodyMassView(withFetch: bodyMassViewFetch)
             }
             .onAppear { service.setDashboardDataIfNeed() }
     }

@@ -11,7 +11,6 @@ import SwiftUIFlowLayout
 struct DashboardView: View {
     @EnvironmentObject var service:CyberService
     @Environment(\.colorScheme) var currentMode
-    @State var tickets: [CyberService.TicketInfo] = []
     @State var syncTodo = false
     var summary: ISummary
     
@@ -34,14 +33,14 @@ struct DashboardView: View {
         }
         // MARK: 车票信息
         Button("最近车票信息") {
-            service.recentTicket { tickets = $0 }
+            service.showTicketView = true
         }
-        // MARK: 最近日记
-        Button("最近日记") {
+        // MARK: 今天日记
+        Button("今天日记") {
             service.showLastDiary = true
         }
         // MARK: GPT
-        Button("ChatGPT 问答") {
+        Button("GPT 问答") {
             service.showGptQuestionView = true
         }
         // MARK: 工作和休假标记
@@ -95,10 +94,6 @@ struct DashboardView: View {
                 Text("正在同步，请稍后")
             }
         }
-        .sheet(isPresented: Binding(get: {!tickets.isEmpty},
-                                    set: {if !$0 {tickets = []}})) {
-            TicketView(info: $tickets)
-        }
         
         ToDoView(todo: summary.todo,
                  weekPlan: summary.weekPlan)
@@ -136,7 +131,7 @@ struct DashboardView: View {
                 .padding(.bottom, 15)
             }
             .onTapGesture {
-                service.showBodyMassSheetFetch = (true, false)
+                service.showBodyMassView(withFetch: false)
             }
             .clipShape(RoundedRectangle(cornerRadius: 20))
             .frame(height: 150)

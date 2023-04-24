@@ -17,19 +17,20 @@ struct LastNoteSheetModifier: ViewModifier {
         content
             .sheet(isPresented: $showSheet) {
                 GeometryReader { proxy in
-                    Form {
+                    VStack {
                         ZStack(alignment:.leading) {
-                            RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
+                            RoundedRectangle(cornerSize: CGSize(width: 10, height: 5))
                                 .fill(Color.white.opacity(0.00001))
                             Text("📒 笔记")
                                 .font(.system(size: 30))
-                                .padding(.vertical, 10)
                         }
                         .onTapGesture {
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
                         TextEditor(text: $text)
-                            .frame(height: proxy.size.height / 1.4)
+                            .layoutPriority(100)
+                        Divider()
+                            .padding(.bottom, 10)
                         HStack {
                             Spacer()
                             Button("添加到笔记") {
@@ -44,6 +45,8 @@ struct LastNoteSheetModifier: ViewModifier {
                         }
                     }
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 30)
                 .onAppear {
                     text = service.noteContent.fromBase64() ?? ""
                 }

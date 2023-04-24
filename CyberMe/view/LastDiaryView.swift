@@ -18,7 +18,7 @@ struct LastDiarySheetModifier: ViewModifier {
         content
             .sheet(isPresented: $showSheet) {
                 GeometryReader { proxy in
-                    Form {
+                    VStack {
                         ZStack(alignment:.leading) {
                             RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
                                 .fill(Color.white.opacity(0.00001))
@@ -30,7 +30,9 @@ struct LastDiarySheetModifier: ViewModifier {
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         }
                         TextEditor(text: $text)
-                            .frame(height: proxy.size.height / 1.4)
+                            .layoutPriority(100)
+                        Divider()
+                            .padding(.bottom, 10)
                         HStack {
                             Spacer()
                             Button(copyDone ? "已复制到剪贴板" : "复制到剪贴板") {
@@ -44,6 +46,8 @@ struct LastDiarySheetModifier: ViewModifier {
                             Spacer()
                         }
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 30)
                 }
                 .onChange(of: service.summaryData, perform: { data in
                     guard let diary = data.diary?.today?.first else { return }
@@ -51,7 +55,11 @@ struct LastDiarySheetModifier: ViewModifier {
                     text = diary.content
                 })
                 .onAppear {
-                    guard let diary = service.summaryData.diary?.today?.first else { return }
+                    guard let diary = service.summaryData.diary?.today?.first else {
+                        title = "没有日记"
+                        text = "没有找到今天的日记"
+                        return
+                    }
                     title = diary.title
                     text = diary.content
                 }

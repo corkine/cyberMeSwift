@@ -60,7 +60,7 @@ class CyberService: ObservableObject {
     }
     @Published var goToView: GoToView?
     
-    // MARK: - 短链 -
+    // MARK: - Sheet -
     @Published var showGoView: Bool = false
     var originUrl = ""
     
@@ -74,6 +74,17 @@ class CyberService: ObservableObject {
     
     @Published var showExpressTrack: Bool = false
     
+    @Published var showTicketView: Bool = false
+    
+    @Published var showBodyMassView: Bool = false
+    
+    var bodyMassShowWithFetch = false
+    
+    func showBodyMassView(withFetch: Bool = false) {
+        showBodyMassView = true
+        bodyMassShowWithFetch = withFetch
+    }
+    
     // MARK: - 平衡 -
     @Published var balanceCount = 0
     
@@ -81,8 +92,6 @@ class CyberService: ObservableObject {
     @Published var alertInfomation: String?
     
     // MARK: - HealthKit: BodyMass -
-    @Published var showBodyMassSheetFetch = (false, false)
-    
     var healthManager: HealthManager?
     
     init() {

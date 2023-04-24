@@ -120,7 +120,7 @@ struct CyberApp: App {
             Dashboard.updateWidget(inSeconds: 0)
             break
         case _ where input.hasPrefix(CyberUrl.showBodyMass):
-            cyberService.showBodyMassSheetFetch = (true, true)
+            cyberService.showBodyMassView(withFetch: true)
             break
         case _ where input.hasPrefix(CyberUrl.uploadHealthData):
             if let name = cyberService.settings[Setting.syncHealthShortcutName],
@@ -151,7 +151,8 @@ struct CyberApp: App {
             cyberService.noteContent = url.queryOf("content") ?? ""
             cyberService.showAddNoteView = true
         case _ where input.hasPrefix(CyberUrl.gptQuestion):
-            cyberService.questionContent = "AUTO" + (url.queryOf("question") ?? "讲个笑话。")
+            cyberService.questionContent = "AUTO" + (url.queryOf("question")?.fromBase64() ?? "讲个笑话。")
+            print("handle gpt question \(cyberService.questionContent)")
             cyberService.showGptQuestionView = true
         case _ where input.hasPrefix(CyberUrl.showLastDiary):
             cyberService.showLastDiary = true
@@ -241,7 +242,7 @@ struct CyberApp: App {
             cyberService.goToView = .foodBalanceAdd
             break
         case "bodyMassManage":
-            cyberService.showBodyMassSheetFetch = (true,true)
+            cyberService.showBodyMassView(withFetch: true)
             break
         default:
             break

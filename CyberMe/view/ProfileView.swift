@@ -13,28 +13,22 @@ import Flutter
 
 struct SmallAppView: View {
     @EnvironmentObject var service: CyberService
-    @State var showBodyMassSheet: Bool = false
-    @State var showTicket: Bool = false
-    @State var tickets: [CyberService.TicketInfo] = []
     var body: some View {
         FlowLayout(mode: .scrollable,
                    items: [("BullsEye Game", { service.app = .gaming }),
                            ("Landmarks", { service.app = .landing }),
                            ("ReadMe", { service.app = .readme }),
-                           ("体重管理", { showBodyMassSheet = true }),
-                           ("Flutter", { openFlutterApp() }),
-                           ("12306 最近车票", { service.recentTicket { self.tickets = $0 }})],
+                           ("体重管理", { service.showBodyMassView = true }),
+                           ("Flutter Demo", { openFlutterApp() }),
+                           ("12306 最近车票", { service.showTicketView = true }),
+                           ("GPT 问答", { service.showGptQuestionView = true }),
+                           ("今天日记", { service.showLastDiary = true }),
+                           ("短链接跳转", { service.showGoView = true }),
+                           ("跨平台笔记", { service.showAddNoteView = true })],
                    itemSpacing: 10) { (name, call) in
             Button(name) { withAnimation { call() } }
                 .padding(.vertical, -5) }
        .padding(.leading, -9)
-       .sheet(isPresented: $showBodyMassSheet) {
-           BodyMassView()
-       }
-       .sheet(isPresented: Binding(get: {!tickets.isEmpty},
-                                   set: { if !$0 { tickets = []}})) {
-           TicketView(info: $tickets)
-       }
     }
     
     func openFlutterApp() {

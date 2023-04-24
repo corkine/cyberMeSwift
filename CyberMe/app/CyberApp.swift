@@ -151,9 +151,17 @@ struct CyberApp: App {
             cyberService.noteContent = url.queryOf("content") ?? ""
             cyberService.showAddNoteView = true
         case _ where input.hasPrefix(CyberUrl.gptQuestion):
-            cyberService.questionContent = "AUTO" + (url.queryOf("question")?.fromBase64() ?? "讲个笑话。")
-            print("handle gpt question \(cyberService.questionContent)")
-            cyberService.showGptQuestionView = true
+            if let question = url.queryOf("question"),
+               let decodeQuestion = question.fromBase64() {
+                cyberService.questionContent = "AUTO" + decodeQuestion
+                print("handle gpt question \(cyberService.questionContent)")
+                cyberService.showGptQuestionView = true
+            } else if let translate = url.queryOf("translate"),
+                      let decodeTraslate = translate.fromBase64() {
+                cyberService.questionContent = "AUTO" + decodeTraslate
+                print("handle gpt translate \(cyberService.questionContent)")
+                cyberService.showGptTranslateView = true
+            }
         case _ where input.hasPrefix(CyberUrl.showLastDiary):
             cyberService.showLastDiary = true
         default:

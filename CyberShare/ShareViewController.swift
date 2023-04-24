@@ -10,10 +10,21 @@ extension String {
         }
         return String(data: data, encoding: .utf8)
     }
-
+    
     func toBase64() -> String {
         return Data(self.utf8).base64EncodedString()
     }
+    
+    
+    func containsChineseCharacters() -> Bool {
+        for char in self.unicodeScalars {
+            if (0x4E00...0x9FA5).contains(char.value) {
+                return true
+            }
+        }
+        return false
+    }
+    
 }
 
 class ShareViewController: UIViewController {
@@ -22,6 +33,7 @@ class ShareViewController: UIViewController {
     private let typeURL = UTType.url
     private var appURLString = "cyberme://go?url="
     private var noteURLPrefix = "cyberme://addNote?content="
+    private var translateUrlPrefix = "cyberme://gpt?translate="
     private var addExpressCheckPrefix = "cyberme://addExpressTrack?no="
 
     override func viewDidAppear(_ animated: Bool) {
@@ -67,10 +79,14 @@ class ShareViewController: UIViewController {
                         self.appURLString += text[range]
                         self.openMainApp()
                     } else {
-                        // TODO HERE
-                        
-                        self.appURLString = self.noteURLPrefix + text.toBase64()
-                        self.openMainApp()
+                        // 如果不包含中文字符，则执行翻译，反之添加笔记
+                        if !text.containsChineseCharacters() {
+                            self.appURLString = self.translateUrlPrefix + text.toBase64()
+                            self.openMainApp()
+                        } else {
+                            self.appURLString = self.noteURLPrefix + text.toBase64()
+                            self.openMainApp()
+                        }
                     }
                 } catch let error {
                     print("Do-Try Error: \(error.localizedDescription)")

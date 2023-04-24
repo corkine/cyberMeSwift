@@ -68,6 +68,7 @@ class CyberService: ObservableObject {
     var noteContent = ""
     
     @Published var showGptQuestionView: Bool = false
+    @Published var showGptTranslateView: Bool = false
     var questionContent = ""
     
     @Published var showLastDiary: Bool = false

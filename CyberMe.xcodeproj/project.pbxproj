@@ -37,6 +37,7 @@
 		1957D61729F5922200EE5334 /* GptAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61629F5922200EE5334 /* GptAnswerView.swift */; };
 		1957D61C29F66F5F00EE5334 /* CS+Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61B29F66F5F00EE5334 /* CS+Ticket.swift */; };
 		1957D61E29F6704C00EE5334 /* CS+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61D29F6704C00EE5334 /* CS+Business.swift */; };
+		1957D62029F6804F00EE5334 /* GptTranslateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61F29F6804F00EE5334 /* GptTranslateView.swift */; };
 		195A3D2F28BFA2C600239F01 /* CyberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D2E28BFA2C600239F01 /* CyberApp.swift */; };
 		195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D3028BFA2C600239F01 /* ContentView.swift */; };
 		195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
@@ -159,6 +160,7 @@
 		1957D61629F5922200EE5334 /* GptAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GptAnswerView.swift; sourceTree = "<group>"; };
 		1957D61B29F66F5F00EE5334 /* CS+Ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Ticket.swift"; sourceTree = "<group>"; };
 		1957D61D29F6704C00EE5334 /* CS+Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Business.swift"; sourceTree = "<group>"; };
+		1957D61F29F6804F00EE5334 /* GptTranslateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GptTranslateView.swift; sourceTree = "<group>"; };
 		195A3D2B28BFA2C600239F01 /* CyberMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		195A3D2E28BFA2C600239F01 /* CyberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberApp.swift; sourceTree = "<group>"; };
 		195A3D3028BFA2C600239F01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				1957D61229F4114800EE5334 /* ExpressCheckAddView.swift */,
 				1957D61429F58A1800EE5334 /* LastDiaryView.swift */,
 				1957D61629F5922200EE5334 /* GptAnswerView.swift */,
+				1957D61F29F6804F00EE5334 /* GptTranslateView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -809,6 +812,7 @@
 				19D2A9E528D4B045009C81C4 /* Game.swift in Sources */,
 				19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */,
 				1948648228D89DF300064104 /* TodoView.swift in Sources */,
+				1957D62029F6804F00EE5334 /* GptTranslateView.swift in Sources */,
 				19E9C09929F037E000B4FFC4 /* ShortLinkView.swift in Sources */,
 				196106A02924EDC2005D08D7 /* SimpleInfoView.swift in Sources */,
 				19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */,

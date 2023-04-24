@@ -30,6 +30,7 @@ struct MainApp: View {
                         .modifier(ExpressCheckAddSheetModifier(showSheet: $service.showExpressTrack))
                         .modifier(LastDiarySheetModifier(showSheet: $service.showLastDiary))
                         .modifier(GptAnswerSheetModifier(showSheet: $service.showGptQuestionView))
+                        .modifier(GptTranslateSheetModifier(showSheet: $service.showGptTranslateView))
                         .modifier(TicketSheetModifier(showSheet: $service.showTicketView))
                         .modifier(BodyMassSheetModifier(showSheet: $service.showBodyMassView))
                         .tabItem {

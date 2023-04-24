@@ -22,6 +22,7 @@ struct SmallAppView: View {
                            ("Flutter Demo", { openFlutterApp() }),
                            ("12306 最近车票", { service.showTicketView = true }),
                            ("GPT 问答", { service.showGptQuestionView = true }),
+                           ("GPT 翻译", { service.showGptTranslateView = true }),
                            ("今天日记", { service.showLastDiary = true }),
                            ("短链接跳转", { service.showGoView = true }),
                            ("跨平台笔记", { service.showAddNoteView = true }),

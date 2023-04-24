@@ -40,7 +40,7 @@ CyberMe iOS 客户端程序。后端基于 CyberMe API 提供服务。
 
 ### Share Sheet 和剪贴板集成、Shortcut、URLScheme 和 GPT 集成
 
-![](https://static2.mazhangjing.com/cyber/202304/c81ea2ef_图片.png)
+![](https://static2.mazhangjing.com/cyber/202304/e600a86a_图片.png)
 
 通过分享菜单传入 URL 以创建短链接跳转。
 

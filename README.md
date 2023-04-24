@@ -8,7 +8,7 @@
 
 CyberMe iOS 客户端程序。后端基于 CyberMe API 提供服务。
 
-> 此仓库基于 SwiftUI 5 和 Xcode 14 开发，Target 为 iOS 14
+> 此仓库基于 SwiftUI 5 和 Xcode 14 开发，Target 为 iOS 14，但亦为 iOS 16 锁屏小组件提供了支持。
 
 ![](https://static2.mazhangjing.com/cyber/202210/53c2bcf4_图片.png)
 
@@ -38,9 +38,17 @@ CyberMe iOS 客户端程序。后端基于 CyberMe API 提供服务。
 
 提供基于 Core Data 的饮食管理。可以随手“入账”高热量食物、饮品的消费，并且在近期通过运动锻炼来将其“抵账”。
 
-通过分享菜单传入 URL 以创建短链接跳转，传入文本以创建私人笔记。
+### Share Sheet 和剪贴板集成、Shortcut、URLScheme 和 GPT 集成
+
+![](https://static2.mazhangjing.com/cyber/202304/70a353ae_图片.png)
+
+通过分享菜单传入 URL 以创建短链接跳转。
+
+通过分享菜单传入文本以创建私人笔记。
 
 通过剪贴板读取快递单号以创建快递状态追踪。
+
+通过唤醒 Siri 语音输入并通过 URLScheme 跳转到 GPT 问答获取答案。
 
 ### 嵌入 Flutter 应用
 
@@ -49,3 +57,5 @@ CyberMe iOS 客户端程序。后端基于 CyberMe API 提供服务。
 ### 其他
 
 代码库还包括一些 SwiftUI 与 Swift 特性示例应用（小游戏、图书管理、景点介绍）。
+
+

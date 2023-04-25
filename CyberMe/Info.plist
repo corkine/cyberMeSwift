@@ -4,6 +4,8 @@
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>CyberMe 需要获取你的位置信息</string>
+    <key>FLTEnableImpeller</key>
+    <true/>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>cyberme.refresh</string>

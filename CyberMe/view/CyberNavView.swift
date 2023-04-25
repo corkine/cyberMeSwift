@@ -24,19 +24,24 @@ struct MainApp: View {
             ZStack(alignment: .bottomLeading) {
                 // TabView
                 TabView(selection: $selection) {
-                    CyberHome()
-                        .modifier(ShortLinkSheetModifier(showSheet: $service.showGoView))
-                        .modifier(LastNoteSheetModifier(showSheet: $service.showAddNoteView))
-                        .modifier(ExpressCheckAddSheetModifier(showSheet: $service.showExpressTrack))
-                        .modifier(LastDiarySheetModifier(showSheet: $service.showLastDiary))
-                        .modifier(GptAnswerSheetModifier(showSheet: $service.showGptQuestionView))
-                        .modifier(GptTranslateSheetModifier(showSheet: $service.showGptTranslateView))
-                        .modifier(TicketSheetModifier(showSheet: $service.showTicketView))
-                        .modifier(BodyMassSheetModifier(showSheet: $service.showBodyMassView))
-                        .tabItem {
-                            Label("Today", systemImage: "house")
-                        }
-                        .tag(Tab.dashboard)
+                    if #available(iOS 15.0, *) {
+                        CyberHome()
+                            .modifier(ShortLinkSheetModifier(showSheet: $service.showGoView))
+                            .modifier(LastNoteSheetModifier(showSheet: $service.showAddNoteView))
+                            .modifier(ExpressCheckAddSheetModifier(showSheet: $service.showExpressTrack))
+                            .modifier(LastDiarySheetModifier(showSheet: $service.showLastDiary))
+                            .modifier(GptAnswerSheetModifier(showSheet: $service.showGptQuestionView))
+                            .modifier(GptTranslateSheetModifier(showSheet: $service.showGptTranslateView))
+                            .modifier(TicketSheetModifier(showSheet: $service.showTicketView))
+                            .modifier(BodyMassSheetModifier(showSheet: $service.showBodyMassView))
+                            .modifier(StoryBoardModifier(showSheet: $service.showStoryBook))
+                            .tabItem {
+                                Label("Today", systemImage: "house")
+                            }
+                            .tag(Tab.dashboard)
+                    } else {
+                        // Fallback on earlier versions
+                    }
                     FoodBalanceView()
                         .tabItem {
                             Label("Balance", systemImage: "repeat")

@@ -76,6 +76,8 @@ class CyberService: ObservableObject {
     @Published var showExpressTrack: Bool = false
     var expressTrackFromAutoDetect = false
     
+    @Published var showStoryBook: Bool = false
+    
     @Published var showTicketView: Bool = false
     
     @Published var showBodyMassView: Bool = false

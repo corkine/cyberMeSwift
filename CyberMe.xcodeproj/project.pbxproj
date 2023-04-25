@@ -38,6 +38,9 @@
 		1957D61C29F66F5F00EE5334 /* CS+Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61B29F66F5F00EE5334 /* CS+Ticket.swift */; };
 		1957D61E29F6704C00EE5334 /* CS+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61D29F6704C00EE5334 /* CS+Business.swift */; };
 		1957D62029F6804F00EE5334 /* GptTranslateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61F29F6804F00EE5334 /* GptTranslateView.swift */; };
+		1957D62229F7F95300EE5334 /* StoryBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D62129F7F95300EE5334 /* StoryBoardView.swift */; };
+		1957D62429F7F9B900EE5334 /* CS+Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D62329F7F9B900EE5334 /* CS+Story.swift */; };
+		1957D62E29F81D9800EE5334 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 1957D62D29F81D9800EE5334 /* Introspect */; };
 		195A3D2F28BFA2C600239F01 /* CyberApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D2E28BFA2C600239F01 /* CyberApp.swift */; };
 		195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195A3D3028BFA2C600239F01 /* ContentView.swift */; };
 		195A3D3328BFA2C700239F01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 195A3D3228BFA2C700239F01 /* Assets.xcassets */; };
@@ -161,6 +164,8 @@
 		1957D61B29F66F5F00EE5334 /* CS+Ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Ticket.swift"; sourceTree = "<group>"; };
 		1957D61D29F6704C00EE5334 /* CS+Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Business.swift"; sourceTree = "<group>"; };
 		1957D61F29F6804F00EE5334 /* GptTranslateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GptTranslateView.swift; sourceTree = "<group>"; };
+		1957D62129F7F95300EE5334 /* StoryBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryBoardView.swift; sourceTree = "<group>"; };
+		1957D62329F7F9B900EE5334 /* CS+Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Story.swift"; sourceTree = "<group>"; };
 		195A3D2B28BFA2C600239F01 /* CyberMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		195A3D2E28BFA2C600239F01 /* CyberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberApp.swift; sourceTree = "<group>"; };
 		195A3D3028BFA2C600239F01 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -227,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19E7F6FA299E56C400AB5D68 /* SwiftUIFlowLayout in Frameworks */,
+				1957D62E29F81D9800EE5334 /* Introspect in Frameworks */,
 				84376522E52B6DA0DD7F90CB /* Pods_CyberMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +313,7 @@
 				1957D61429F58A1800EE5334 /* LastDiaryView.swift */,
 				1957D61629F5922200EE5334 /* GptAnswerView.swift */,
 				1957D61F29F6804F00EE5334 /* GptTranslateView.swift */,
+				1957D62129F7F95300EE5334 /* StoryBoardView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -412,6 +419,7 @@
 				197C90DB291F65EE00373BEF /* CS+Health.swift */,
 				1957D61B29F66F5F00EE5334 /* CS+Ticket.swift */,
 				197C90D6291F620C00373BEF /* CS+WeekPlan.swift */,
+				1957D62329F7F9B900EE5334 /* CS+Story.swift */,
 				1948B75E28F6C569009BECD0 /* WidgetService.swift */,
 				19B925752906A5370039948A /* HealthManager.swift */,
 			);
@@ -535,6 +543,7 @@
 			name = CyberMe;
 			packageProductDependencies = (
 				19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */,
+				1957D62D29F81D9800EE5334 /* Introspect */,
 			);
 			productName = helloSwift;
 			productReference = 195A3D2B28BFA2C600239F01 /* CyberMe.app */;
@@ -630,6 +639,7 @@
 			mainGroup = 195A3D2228BFA2C600239F01;
 			packageReferences = (
 				19E7F6F8299E56C400AB5D68 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */,
+				1957D62C29F81D9800EE5334 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 195A3D2C28BFA2C600239F01 /* Products */;
 			projectDirPath = "";
@@ -805,10 +815,12 @@
 				199BA890291653FE0080925D /* ProfileView.swift in Sources */,
 				193548E3290CF5CD00B2266C /* Default.swift in Sources */,
 				1957D61529F58A1800EE5334 /* LastDiaryView.swift in Sources */,
+				1957D62429F7F9B900EE5334 /* CS+Story.swift in Sources */,
 				195DCC6929815AC800C615AD /* TicketView.swift in Sources */,
 				190995B92900112A000B5770 /* CS+API.swift in Sources */,
 				19F4DC02291E2585006B7D92 /* DashboardView.swift in Sources */,
 				1948B76528F858CD009BECD0 /* TimeUtil.swift in Sources */,
+				1957D62229F7F95300EE5334 /* StoryBoardView.swift in Sources */,
 				19D2A9E528D4B045009C81C4 /* Game.swift in Sources */,
 				19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */,
 				1948648228D89DF300064104 /* TodoView.swift in Sources */,
@@ -1303,6 +1315,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1957D62C29F81D9800EE5334 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.3;
+			};
+		};
 		19E7F6F8299E56C400AB5D68 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/globulus/swiftui-flow-layout";
@@ -1314,6 +1334,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1957D62D29F81D9800EE5334 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1957D62C29F81D9800EE5334 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
 		19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 19E7F6F8299E56C400AB5D68 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */;

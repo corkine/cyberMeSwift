@@ -61,6 +61,7 @@ struct GptAnswerSheetModifier: ViewModifier {
                         .disabled(question.isEmpty || thinking)
                         Spacer()
                     }
+                    .padding(.bottom, 10)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 30)

@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct GptTranslateSheetModifier: ViewModifier {
     @State var question: String = ""
     @State var answer: String = ""
     @State var copyDone: Bool = false
     @State var thinking: Bool = false
+    @State var chinese2Eng: Bool = false
+    @FocusState var focus: Bool
     @Binding var showSheet: Bool
     @EnvironmentObject var service: CyberService
     func body(content: Content) -> some View {
@@ -21,31 +24,50 @@ struct GptTranslateSheetModifier: ViewModifier {
                     ZStack(alignment:.leading) {
                         RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
                             .fill(Color.white.opacity(0.00001))
-                        HStack {
-                            Image(systemName: "character.bubble.fill")
-                                .font(.system(size: 26))
-                            Text("GPT Translate")
-                                .font(.system(size: 30))
-                                .padding(.vertical, 10)
+                        HStack(alignment:.lastTextBaseline) {
+                            HStack {
+                                Image(systemName: "character.bubble.fill")
+                                    .font(.system(size: 26))
+                                Text("GPT Translate")
+                                    .font(.system(size: 30))
+                                    .padding(.vertical, 10)
+                            }
+                            Spacer()
+                            Text(chinese2Eng ? "中译英" : "英译中")
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                                .padding(.trailing, 10)
+                                .onTapGesture {
+                                    chinese2Eng.toggle()
+                                }
                         }
                     }
                     .onTapGesture {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
                     TextEditor(text: $question)
+                        .focused($focus)
                         .layoutPriority(100)
                     Divider()
                     TextEditor(text: $answer)
-                        .onLongPressGesture {
-                            question = ""
-                            answer = ""
-                        }
                         .layoutPriority(100)
                     Divider()
                         .padding(.bottom, 5)
                     HStack {
                         Spacer()
-                        Button(copyDone ? "已复制到剪贴板" : "复制译文") {
+                        Button("清空") {
+                            answer = ""
+                            question = ""
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                focus = true
+                            }
+                        }
+                        Group {
+                            Spacer()
+                            Divider()
+                            Spacer()
+                        }
+                        Button(copyDone ? "已复制" : "复制译文") {
                             UIPasteboard.general.string = answer
                             copyDone = true
                             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
@@ -53,15 +75,18 @@ struct GptTranslateSheetModifier: ViewModifier {
                             }
                         }
                         .foregroundColor(.blue)
-                        Spacer()
-                        Divider()
-                        Spacer()
+                        Group {
+                            Spacer()
+                            Divider()
+                            Spacer()
+                        }
                         Button(thinking ? "正在翻译..." : "翻译") {
                             callGpt()
                         }
                         .disabled(question.isEmpty || thinking)
                         Spacer()
                     }
+                    .padding(.bottom, 10)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 30)
@@ -87,7 +112,7 @@ struct GptTranslateSheetModifier: ViewModifier {
     func callGpt() {
         answer = ""
         thinking = true
-        service.gptSimpleQuestion(question: "翻译这句话：\(question)") {
+        service.gptSimpleQuestion(question: chinese2Eng ? "翻译这句话：\(question)" : "将下面的文字翻译为英文：\(question)") {
             response in
             thinking = false
             guard let resp = response else { return }
@@ -96,6 +121,7 @@ struct GptTranslateSheetModifier: ViewModifier {
     }
 }
 
+@available(iOS 15.0, *)
 struct GptTranslateModifier_Previews: PreviewProvider {
     static var service = CyberService()
     static var previews: some View {

@@ -160,23 +160,25 @@ struct DashboardView: View {
                             // MARK: - 形体之山
                             buildHealthPart(proxy: proxy)
                             
-                            // MARK: - 影视更新
-                            if !updateMovie.isEmpty {
-                                Text("影视更新")
-                                    .font(.title2)
-                                    .foregroundColor(.blue)
-                                    .padding(.top, 15)
-                                MovieUpdateView(items: updateMovie)
-                                    .zIndex(10)
-                            }
-                            
                             // MARK: - 快递更新
                             if !summary.express.isEmpty {
                                 Text("快递更新")
                                     .font(.title2)
                                     .foregroundColor(.blue)
                                     .padding(.top, 15)
+                                    .zIndex(10)
                                 ExpressUpdateView(items: summary.express)
+                                    .zIndex(10)
+                            }
+                            
+                            // MARK: - 影视更新
+                            if !updateMovie.isEmpty {
+                                Text("影视更新")
+                                    .font(.title2)
+                                    .foregroundColor(.blue)
+                                    .padding(.top, 15)
+                                    .zIndex(10)
+                                MovieUpdateView(items: updateMovie)
                                     .zIndex(10)
                             }
                             
@@ -211,7 +213,7 @@ struct DashboardView: View {
                             }
                         }
                         .padding(.top, 20)
-                        .padding(.leading, 20)
+                        .padding(.leading, 15)
                         .padding(.trailing, 5)
                         .opacity(summary.isDemo ? 0 : 1)
                         Spacer()
@@ -553,15 +555,13 @@ struct ExpressUpdateView: View {
                 .padding(.vertical, 10)
                 .background(Color("backgroundGray"))
                 .cornerRadius(10)
-                .onLongPressGesture { deleteItem = item; showSheet = true }
+                .onTapGesture { deleteItem = item; showSheet = true }
             }
         }
         .alert(isPresented: $showSheet) {
-            Alert(title: Text("确定删除\(deleteItem!.name ?? "")追踪吗？"),
-            message: Text("删除后将不能恢复。"),
-                  primaryButton: .cancel {
-                showSheet = false
-            }, secondaryButton: .destructive(Text("删除")) {
+            Alert(title: Text("\(deleteItem!.name ?? "📦快递")"),
+                  message: Text("\(deleteItem?.info ?? "没有信息")"),
+                  primaryButton: .destructive(Text("删除")) {
                 guard let id = deleteItem?.id else { showSheet = false; return }
                 service.deleteTrackExpress(no: id) { _ in
                     showSheet = false
@@ -570,6 +570,8 @@ struct ExpressUpdateView: View {
                         service.fetchSummary()
                     }
                 }
+            }, secondaryButton: .default(Text("确定")) {
+                showSheet = false
             })
         }
     }

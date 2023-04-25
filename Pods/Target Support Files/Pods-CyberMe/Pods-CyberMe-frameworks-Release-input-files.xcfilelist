@@ -3,7 +3,6 @@ ${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImageWebPCoder/SDWebImageWebPCoder.framework
 ${BUILT_PRODUCTS_DIR}/flutter_image_compress/flutter_image_compress.framework
-${BUILT_PRODUCTS_DIR}/home_widget/home_widget.framework
 ${BUILT_PRODUCTS_DIR}/image_picker_ios/image_picker_ios.framework
 ${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework
 ${BUILT_PRODUCTS_DIR}/quick_actions_ios/quick_actions_ios.framework

@@ -78,12 +78,14 @@ struct StoryBookView: View {
 struct StoryView: View {
     typealias Story = CyberService.StoryDetail
     @EnvironmentObject var service: CyberService
+    @Environment(\.presentationMode) var presentationMode
     var bookName: String
     var storyName: String
     @State private var story: Story?
     @State private var showAlert: Bool = false
     @State private var offset = CGFloat.zero
-    @State private var nowHash: Int = -1
+    @State private var nowHash: Int = 0
+    @State private var markNoRead: Bool = true
     var buildContent: some View {
         let content = (story?.content)!
         let pages = content.split(separator: "\n")
@@ -103,6 +105,10 @@ struct StoryView: View {
                 .clipped()
             LazyVStack(alignment:.leading) {
                 Text("")
+                    .onDisappear {
+                        print("start recording progress...")
+                        markNoRead = false
+                    }
                 ForEach(pages.indices) { idx in
                     Text(pages[idx])
                         .lineSpacing(5)
@@ -163,11 +169,22 @@ struct StoryView: View {
             .onDisappear {
                 story = nil
                 showAlert = false
-                print("setting offset for \(bookName):\(storyName) off \(nowHash)")
-                UserDefaults.standard.set(nowHash, forKey: "\(bookName):\(storyName)")
+                if markNoRead {
+                    print("clear offset for \(bookName):\(storyName)")
+                    UserDefaults.standard.removeObject(forKey: "\(bookName):\(storyName)")
+                } else {
+                    print("setting offset for \(bookName):\(storyName) off \(nowHash)")
+                    UserDefaults.standard.set(nowHash, forKey: "\(bookName):\(storyName)")
+                }
+                markNoRead = true
             }
             .navigationTitle(storyName)
             .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarItems(trailing: Button( nowHash == 0 ? "" : "未读") {
+                print("setting no read")
+                markNoRead = true
+                self.presentationMode.wrappedValue.dismiss()
+            })
             .alert(isPresented: $showAlert, content: {
                 Alert(title: Text("错误"), message: Text("无法解析获取数据"))
             })

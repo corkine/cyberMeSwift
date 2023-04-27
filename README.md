@@ -12,6 +12,8 @@ CyberMe iOS 客户端程序。后端基于 CyberMe API 提供服务。
 
 ![](https://static2.mazhangjing.com/cyber/202210/53c2bcf4_图片.png)
 
+<img src="https://files.flutter-io.cn/flutter-cn/landing/916809aa4c8f73ad70d2.svg" width="150">
+
 ## 特性
 
 ![](https://static2.mazhangjing.com/20221124/2cf8_Snipaste_2022-11-24_10-20-21.png)

@@ -20,6 +20,9 @@ extension CyberService {
             end == nil ? nil : end!.hasSuffix("站") ? end! : end! + "站"
         }
         var date: String?
+        var dateParsed: Date? {
+            TimeUtil.format(fromStr: date)
+        }
         var trainNo: String?
         var siteNo: String?
         var siteNoFull: String? {
@@ -59,6 +62,50 @@ extension CyberService {
                 let data = res.data ?? []
                 completed(data)
             }
+        }
+    }
+    
+    fileprivate struct AddTicketInfo: Codable {
+        var start: String
+        var end: String
+        var date: String //yyyyMMdd_HH:mm
+        var trainNo: String
+        var siteNo: String
+        var orderNo: String
+        var id: String
+        var originData: String
+    }
+    
+    func addTicket(start:String, end:String, date:Date, trainNo:String, siteNo:String,
+                   originData: String?,
+                   callback: @escaping (SimpleResult?)->Void) {
+        let url = "cyber/ticket/add"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd_HH:mm"
+        let info = AddTicketInfo(start: start, end: end,
+                                 date: dateFormatter.string(from: date),
+                                 trainNo: trainNo, siteNo: siteNo,
+                                 orderNo: "",
+                                 id: "", originData: originData ?? "由 iOS 手动添加")
+        uploadJSON(api: url, data: info) { response, error in
+            print("upload add ticket action: data: \(info)," +
+                  "response: \(String(describing: response))," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response)
+        }
+    }
+    
+    func deleteTicketByDate(date:Date,
+                            callback: @escaping (SimpleResult?)->Void) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd_HH:mm"
+        let dateFormatted = dateFormatter.string(from: date)
+        let url = "cyber/ticket/delete-date/\(dateFormatted)"
+        loadJSON(from: url, for: SimpleResult.self) { response, error in
+            print("delete ticket action: data: \(dateFormatted)," +
+                  "response: \(String(describing: response))," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response)
         }
     }
 }

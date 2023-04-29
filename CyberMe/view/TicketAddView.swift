@@ -63,6 +63,23 @@ struct TicketAddSheetModifier: ViewModifier {
                     trainNo = ""
                     siteNo = ""
                     //TODO 后期增加剪贴板解析
+                    if let paste = UIPasteboard.general.string,
+                       let genData = parseText(paste) {
+                        start = genData.start
+                        end = genData.end
+                        trainNo = genData.trainNo
+                        siteNo = genData.siteNo
+                        let calendar = Calendar.current
+                        var dateComponents = DateComponents()
+                        dateComponents.year = genData.year
+                        dateComponents.month = genData.month
+                        dateComponents.day = genData.day
+                        dateComponents.hour = genData.hour
+                        dateComponents.minute = genData.minute
+                        if let date = calendar.date(from: dateComponents) {
+                            self.date = date
+                        }
+                    }
                 }
                 .onDisappear {
                     if let exitCall = exitCall {
@@ -90,6 +107,39 @@ struct TicketAddSheetModifier: ViewModifier {
                 }
             }
     }
+    
+    fileprivate struct ParsedData {
+        var start: String
+        var end: String
+        var year: Int
+        var month: Int
+        var day: Int
+        var hour: Int
+        var minute: Int
+        var trainNo: String
+        var siteNo: String
+    }
+    
+    fileprivate func parseText(_ text: String) -> ParsedData? {
+        let regex = try! NSRegularExpression(pattern: "(\\d{4})年(\\d{2})月(\\d{2})日(\\d{2}):(\\d{2})开，(.*?)-(.*?)，(.*?)次列车,(.*?)，", options: [])
+        let matches = regex.matches(in: text, options: [], range: NSRange(location: 0, length: text.count))
+        guard let match = matches.first else {
+            return nil
+        }
+        guard let year = Int((text as NSString).substring(with: match.range(at: 1))),
+        let month = Int((text as NSString).substring(with: match.range(at: 2))),
+        let day = Int((text as NSString).substring(with: match.range(at: 3))),
+        let hour = Int((text as NSString).substring(with: match.range(at: 4))),
+        let minute = Int((text as NSString).substring(with: match.range(at: 5)))
+        else { return nil }
+        var parsedData = ParsedData(start: "", end: "", year: year, month: month, day: day, hour: hour, minute: minute, trainNo: "", siteNo: "")
+        parsedData.start = (text as NSString).substring(with: match.range(at: 6))
+        parsedData.end = (text as NSString).substring(with: match.range(at: 7))
+        parsedData.trainNo = (text as NSString).substring(with: match.range(at: 8))
+        parsedData.siteNo = (text as NSString).substring(with: match.range(at: 9))
+        return parsedData
+    }
+    
 }
 
 struct TicketAddView_Previews: PreviewProvider {

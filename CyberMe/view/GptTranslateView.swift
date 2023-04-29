@@ -91,7 +91,13 @@ struct GptTranslateSheetModifier: ViewModifier {
                 .padding(.horizontal, 20)
                 .padding(.top, 30)
                 .onAppear {
+                    //先试图从 URLScheme 内存区获取内容，如果没有，则试图从剪贴板读取，然后设置翻译语言转换，如果
+                    //是从 URLScheme 来的，则问题带有 AUTO，去除并自动调用 GPT
                     question = service.questionContent
+                    if question.isEmpty {
+                        if let paste = UIPasteboard.general.string, !paste.isEmpty { question = paste }
+                    }
+                    chinese2Eng = question.containsChineseCharacters()
                     if question.hasPrefix("AUTO") {
                         question = String(question.dropFirst(4))
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {

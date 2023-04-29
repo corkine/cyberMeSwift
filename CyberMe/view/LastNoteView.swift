@@ -30,7 +30,6 @@ struct LastNoteSheetModifier: ViewModifier {
                         TextEditor(text: $text)
                             .layoutPriority(100)
                         Divider()
-                            .padding(.bottom, 10)
                         HStack {
                             Spacer()
                             Button("添加到笔记") {
@@ -43,12 +42,16 @@ struct LastNoteSheetModifier: ViewModifier {
                             .foregroundColor(.blue)
                             Spacer()
                         }
+                        .padding(.bottom, 10)
                     }
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 30)
                 .onAppear {
                     text = service.noteContent.fromBase64() ?? ""
+                    if text.isEmpty {
+                        text = UIPasteboard.general.string ?? ""
+                    }
                 }
                 .onDisappear {
                     service.noteContent = ""

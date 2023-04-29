@@ -32,7 +32,6 @@ struct LastDiarySheetModifier: ViewModifier {
                         TextEditor(text: $text)
                             .layoutPriority(100)
                         Divider()
-                            .padding(.bottom, 10)
                         HStack {
                             Spacer()
                             Button(copyDone ? "已复制到剪贴板" : "复制到剪贴板") {
@@ -45,6 +44,7 @@ struct LastDiarySheetModifier: ViewModifier {
                             .foregroundColor(.blue)
                             Spacer()
                         }
+                        .padding(.bottom, 10)
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 30)

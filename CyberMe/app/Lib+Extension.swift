@@ -32,4 +32,14 @@ extension String {
     func toBase64() -> String {
         return Data(self.utf8).base64EncodedString()
     }
+    
+    func containsChineseCharacters() -> Bool {
+        for char in self.unicodeScalars {
+            if (0x4E00...0x9FA5).contains(char.value) {
+                return true
+            }
+        }
+        return false
+    }
+    
 }

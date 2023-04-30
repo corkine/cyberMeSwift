@@ -24,6 +24,11 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>CyberMeStatusBar.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
 		<key>CyberMeWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -43,12 +48,19 @@
 		</dict>
 		<key>cyberShare.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
-			<integer>21</integer>
+			<integer>6</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>192E141029FE2EE2005468DA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>195A3D2A28BFA2C600239F01</key>
 		<dict>
 			<key>primary</key>

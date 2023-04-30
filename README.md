@@ -58,6 +58,12 @@ CyberMe iOS 客户端程序。后端基于 CyberMe API 提供服务。
 
 本应用嵌入了 Flutter 引擎，Flutter 应用参见 [CyberMe Client by Flutter](https://github.com/corkine/cyberMeFlutter)。
 
+### macOS 菜单栏
+
+![](https://static2.mazhangjing.com/cyber/202304/c621e517_图片.png)
+
+提供一个 macOS 菜单栏图标，点击后执行 `netstat -rn` 显示前三条路由，提供一个按钮 `Toggle VPN` 来执行脚本，可用于提供脚本触发根据当天日期更新 Wireguard 配置文件对端端口号，脚本可通过执行 `wg-quick up/down wg0` 来创建 VPN 隧道并添加/删除路由。通过观察当前路由状态即可确定是否连接 VPN，点击按钮即可切换 VPN 连接状态。
+
 ### 其他
 
 代码库还包括一些 SwiftUI 与 Swift 特性示例应用（小游戏、图书管理、景点介绍）。

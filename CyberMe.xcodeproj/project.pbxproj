@@ -14,6 +14,11 @@
 		190C4D3928D7D80C00C1CAE1 /* ReadMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3828D7D80C00C1CAE1 /* ReadMe.swift */; };
 		190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3A28D7D81800C1CAE1 /* Book.swift */; };
 		190C4D3D28D7E34300C1CAE1 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C4D3C28D7E34300C1CAE1 /* DetailView.swift */; };
+		192E141429FE2EE2005468DA /* StatusBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192E141329FE2EE2005468DA /* StatusBarApp.swift */; };
+		192E141829FE2EE2005468DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192E141729FE2EE2005468DA /* Assets.xcassets */; };
+		192E141B29FE2EE2005468DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192E141A29FE2EE2005468DA /* Preview Assets.xcassets */; };
+		192E142129FE2FBF005468DA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 192E142029FE2FBF005468DA /* Info.plist */; };
+		192E142329FE3095005468DA /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192E142229FE3095005468DA /* RouteView.swift */; };
 		193323A228D2264F0038AD74 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193323A128D2264F0038AD74 /* Feature.swift */; };
 		193548D4290C132B00B2266C /* FoodBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548D3290C132B00B2266C /* FoodBalanceView.swift */; };
 		193548D8290CD99F00B2266C /* FoodAccount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 193548D6290CD99F00B2266C /* FoodAccount.xcdatamodeld */; };
@@ -147,6 +152,13 @@
 		190C4D3828D7D80C00C1CAE1 /* ReadMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadMe.swift; sourceTree = "<group>"; };
 		190C4D3A28D7D81800C1CAE1 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		190C4D3C28D7E34300C1CAE1 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		192E141129FE2EE2005468DA /* CyberMeStatusBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberMeStatusBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		192E141329FE2EE2005468DA /* StatusBarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarApp.swift; sourceTree = "<group>"; };
+		192E141729FE2EE2005468DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		192E141A29FE2EE2005468DA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		192E141C29FE2EE2005468DA /* CyberMeStatusBar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMeStatusBar.entitlements; sourceTree = "<group>"; };
+		192E142029FE2FBF005468DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		192E142229FE3095005468DA /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		193323A128D2264F0038AD74 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		193548D3290C132B00B2266C /* FoodBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBalanceView.swift; sourceTree = "<group>"; };
 		193548D7290CD99F00B2266C /* FoodAccount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodAccount.xcdatamodel; sourceTree = "<group>"; };
@@ -229,6 +241,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		192E140E29FE2EE2005468DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		195A3D2828BFA2C600239F01 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -276,6 +295,27 @@
 				1948647F28D883A500064104 /* PhPicker.swift */,
 			);
 			path = tourtal2;
+			sourceTree = "<group>";
+		};
+		192E141229FE2EE2005468DA /* CyberMeStatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				192E142029FE2FBF005468DA /* Info.plist */,
+				192E141329FE2EE2005468DA /* StatusBarApp.swift */,
+				192E142229FE3095005468DA /* RouteView.swift */,
+				192E141729FE2EE2005468DA /* Assets.xcassets */,
+				192E141C29FE2EE2005468DA /* CyberMeStatusBar.entitlements */,
+				192E141929FE2EE2005468DA /* Preview Content */,
+			);
+			path = CyberMeStatusBar;
+			sourceTree = "<group>";
+		};
+		192E141929FE2EE2005468DA /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				192E141A29FE2EE2005468DA /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		193548D5290CD97E00B2266C /* database */ = {
@@ -330,6 +370,7 @@
 				19D2A9EE28D4B4F6009C81C4 /* CyberMeTests */,
 				19FD182B28D9CBB0004F97B3 /* CyberMeWidget */,
 				19E9C08B29F02FC900B4FFC4 /* CyberShare */,
+				192E141229FE2EE2005468DA /* CyberMeStatusBar */,
 				19FD17FF28D9CB27004F97B3 /* Frameworks */,
 				195A3D2C28BFA2C600239F01 /* Products */,
 				EABBB441DD37E808531248A7 /* Pods */,
@@ -343,6 +384,7 @@
 				19D2A9ED28D4B4F6009C81C4 /* CyberMeTests.xctest */,
 				19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */,
 				19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */,
+				192E141129FE2EE2005468DA /* CyberMeStatusBar.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -523,6 +565,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		192E141029FE2EE2005468DA /* CyberMeStatusBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 192E141F29FE2EE2005468DA /* Build configuration list for PBXNativeTarget "CyberMeStatusBar" */;
+			buildPhases = (
+				192E140D29FE2EE2005468DA /* Sources */,
+				192E140E29FE2EE2005468DA /* Frameworks */,
+				192E140F29FE2EE2005468DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CyberMeStatusBar;
+			productName = CyberMeWGStatusBar;
+			productReference = 192E141129FE2EE2005468DA /* CyberMeStatusBar.app */;
+			productType = "com.apple.product-type.application";
+		};
 		195A3D2A28BFA2C600239F01 /* CyberMe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 195A3D4F28BFA2C800239F01 /* Build configuration list for PBXNativeTarget "CyberMe" */;
@@ -616,6 +675,9 @@
 				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					192E141029FE2EE2005468DA = {
+						CreatedOnToolsVersion = 14.1;
+					};
 					195A3D2A28BFA2C600239F01 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -652,11 +714,22 @@
 				19D2A9EC28D4B4F6009C81C4 /* CyberMeTests */,
 				19FD182728D9CBB0004F97B3 /* CyberMeWidgetExtension */,
 				19E9C08929F02FC900B4FFC4 /* CyberShare */,
+				192E141029FE2EE2005468DA /* CyberMeStatusBar */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		192E140F29FE2EE2005468DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				192E141B29FE2EE2005468DA /* Preview Assets.xcassets in Resources */,
+				192E141829FE2EE2005468DA /* Assets.xcassets in Resources */,
+				192E142129FE2FBF005468DA /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		195A3D2928BFA2C600239F01 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -799,6 +872,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		192E140D29FE2EE2005468DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				192E142329FE3095005468DA /* RouteView.swift in Sources */,
+				192E141429FE2EE2005468DA /* StatusBarApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		195A3D2728BFA2C600239F01 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -914,6 +996,74 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		192E141D29FE2EE2005468DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = CyberMeStatusBar/CyberMeStatusBar.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CyberMeStatusBar/Preview Content\"";
+				DEVELOPMENT_TEAM = MUN22RF257;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CyberMeStatusBar/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CyberMe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.CyberMeStatusBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		192E141E29FE2EE2005468DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = CyberMeStatusBar/CyberMeStatusBar.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CyberMeStatusBar/Preview Content\"";
+				DEVELOPMENT_TEAM = MUN22RF257;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CyberMeStatusBar/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CyberMe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.CyberMeStatusBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		195A3D4D28BFA2C800239F01 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1271,6 +1421,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		192E141F29FE2EE2005468DA /* Build configuration list for PBXNativeTarget "CyberMeStatusBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				192E141D29FE2EE2005468DA /* Debug */,
+				192E141E29FE2EE2005468DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		195A3D2628BFA2C600239F01 /* Build configuration list for PBXProject "CyberMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

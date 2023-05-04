@@ -118,7 +118,7 @@ struct GptTranslateSheetModifier: ViewModifier {
     func callGpt() {
         answer = ""
         thinking = true
-        service.gptSimpleQuestion(question: chinese2Eng ? "翻译这句话：\(question)" : "将下面的文字翻译为英文：\(question)") {
+        service.gptSimpleQuestion(question: chinese2Eng ? "翻译这句话：`\(question)`" : "将下面的文字翻译为英文：`\(question)`") {
             response in
             thinking = false
             guard let resp = response else { return }

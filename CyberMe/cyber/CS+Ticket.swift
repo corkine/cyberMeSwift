@@ -96,11 +96,12 @@ extension CyberService {
     }
     
     func deleteTicketByDate(date:Date,
+                            isCancelled:Bool,
                             callback: @escaping (SimpleResult?)->Void) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd_HH:mm"
         let dateFormatted = dateFormatter.string(from: date)
-        let url = "cyber/ticket/delete-date/\(dateFormatted)"
+        let url = "cyber/ticket/delete-date/\(dateFormatted)?is-canceled=\(isCancelled)"
         loadJSON(from: url, for: SimpleResult.self) { response, error in
             print("delete ticket action: data: \(dateFormatted)," +
                   "response: \(String(describing: response))," +

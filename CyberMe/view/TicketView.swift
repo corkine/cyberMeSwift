@@ -23,7 +23,11 @@ struct TicketSheetModifier: ViewModifier {
     @ViewBuilder func buildMenu(info:CyberService.TicketInfo) -> some View {
         Button {
             guard let date = info.dateParsed else { return }
-            service.deleteTicketByDate(date: date) { result in reqTicket()}
+            service.deleteTicketByDate(date: date, isCancelled: true) { result in reqTicket()}
+        } label: { Text("退票") }
+        Button {
+            guard let date = info.dateParsed else { return }
+            service.deleteTicketByDate(date: date, isCancelled: false) { result in reqTicket()}
         } label: { Text("删除") }
     }
     

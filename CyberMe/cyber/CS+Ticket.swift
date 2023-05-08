@@ -102,6 +102,7 @@ extension CyberService {
         dateFormatter.dateFormat = "yyyyMMdd_HH:mm"
         let dateFormatted = dateFormatter.string(from: date)
         let url = "cyber/ticket/delete-date/\(dateFormatted)?is-canceled=\(isCancelled)"
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         loadJSON(from: url, for: SimpleResult.self) { response, error in
             print("delete ticket action: data: \(dateFormatted)," +
                   "response: \(String(describing: response))," +

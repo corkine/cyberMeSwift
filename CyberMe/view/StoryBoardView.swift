@@ -83,9 +83,9 @@ struct StoryView: View {
     var storyName: String
     @State private var story: Story?
     @State private var showAlert: Bool = false
-    @State private var offset = CGFloat.zero
-    @State private var nowHash: Int = 0
-    @State private var markNoRead: Bool = true
+    @State private var nowContent: String = ""
+    @State private var showRemember: Bool = false
+    @State private var markRemember: Bool = false
     var buildContent: some View {
         let content = (story?.content)!
         let pages = content.split(separator: "\n")
@@ -107,7 +107,7 @@ struct StoryView: View {
                 Text("")
                     .onDisappear {
                         print("start recording progress...")
-                        markNoRead = false
+                        showRemember = true
                     }
                 ForEach(pages.indices) { idx in
                     Text(pages[idx])
@@ -116,8 +116,7 @@ struct StoryView: View {
                         .padding(.bottom, 10)
                         .padding(.leading, 5)
                         .onDisappear {
-                            let hash = pages[idx].hash
-                            nowHash = hash
+                            nowContent = pages[idx]
                         }
                         .id(pages[idx].hash)
                 }
@@ -169,20 +168,20 @@ struct StoryView: View {
             .onDisappear {
                 story = nil
                 showAlert = false
-                if markNoRead {
+                if !markRemember {
                     print("clear offset for \(bookName):\(storyName)")
                     UserDefaults.standard.removeObject(forKey: "\(bookName):\(storyName)")
                 } else {
+                    let nowHash = nowContent.hash
                     print("setting offset for \(bookName):\(storyName) off \(nowHash)")
                     UserDefaults.standard.set(nowHash, forKey: "\(bookName):\(storyName)")
                 }
-                markNoRead = true
+                markRemember = false
             }
             .navigationTitle(storyName)
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(trailing: Button( nowHash == 0 ? "" : "未读") {
-                print("setting no read")
-                markNoRead = true
+            .navigationBarItems(trailing: Button( showRemember ? "下次再读" : "") {
+                markRemember = true
                 self.presentationMode.wrappedValue.dismiss()
             })
             .alert(isPresented: $showAlert, content: {

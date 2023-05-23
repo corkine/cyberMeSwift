@@ -61,6 +61,7 @@ struct CyberApp: App {
                 .onOpenURL(perform: handleOpenUrl)
         }
         .onChange(of: phase) { newValue in
+            AppDelegate.cyberService = cyberService
             switch newValue {
             case .active:
                 handleQuickAction()
@@ -72,7 +73,6 @@ struct CyberApp: App {
                 if self.tappedCheckCard {
                     print("enter background and begin to fetch...")
                     SceneDelegate.needFetch = true
-                    AppDelegate.cyberService = cyberService
                     DispatchQueue.main.async {
                         self.tappedCheckCard = false
                     }
@@ -175,6 +175,24 @@ struct CyberApp: App {
     private func addDynamicQuickActions() {
         UIApplication.shared.shortcutItems = [
             UIApplicationShortcutItem(
+                type: "hcmCheckCard",
+                localizedTitle: "HCM 打卡",
+                localizedSubtitle: nil,
+                icon:UIApplicationShortcutIcon(systemImageName: "checkmark.square")
+            ),
+//            UIApplicationShortcutItem(
+//                type: "todayDiary",
+//                localizedTitle: "今天日记",
+//                localizedSubtitle: nil,
+//                icon:UIApplicationShortcutIcon(systemImageName: "book.closed")
+//            )
+            UIApplicationShortcutItem(
+                type: "syncTodo",
+                localizedTitle: "TODO 同步",
+                localizedSubtitle: nil,
+                icon:UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath")
+            ),
+            UIApplicationShortcutItem(
                 type: "alert",
                 localizedTitle: "警戒模式",
                 localizedSubtitle: nil,
@@ -186,18 +204,6 @@ struct CyberApp: App {
                 localizedSubtitle: nil,
                 icon:UIApplicationShortcutIcon(systemImageName: "eye.slash")
             ),
-            UIApplicationShortcutItem(
-                type: "hcmCheckCard",
-                localizedTitle: "HCM 打卡",
-                localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "checkmark.square")
-            ),
-            UIApplicationShortcutItem(
-                type: "todayDiary",
-                localizedTitle: "今天日记",
-                localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "book.closed")
-            )
         ]
     }
     
@@ -223,7 +229,9 @@ struct CyberApp: App {
             }
             break
         case "syncTodo":
+            cyberService.syncTodo = true
             cyberService.syncTodo {
+                cyberService.syncTodo = false
                 cyberService.fetchSummary()
                 Dashboard.updateWidget(inSeconds: 0)
             }
@@ -274,6 +282,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         Self.flutterEngine.run();
         GeneratedPluginRegistrant.register(with: Self.flutterEngine);
+        
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + .seconds(2)) {
+            CommandRegister.dashboardRegCommand(service: AppDelegate.cyberService!)
+        }
+        
         return true
     }
 

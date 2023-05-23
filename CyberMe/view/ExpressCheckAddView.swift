@@ -75,6 +75,9 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
                     isSF = id.lowercased().starts(with: "sf")
                 }
                 .onDisappear {
+                    if addResult {
+                        Command.expressAdd(id: id).dispatch()
+                    }
                     id = ""
                     name = ""
                     isSF = false
@@ -110,7 +113,7 @@ struct ExpressCheckAddSheetModifier: ViewModifier {
     
     /// 提取快递单号，可能是 10 位以上的纯数字、JD 或 JDV 或 SF 开头的，10 位以上的纯数字
     func extractCode(from text: String) -> String {
-        let pattern = #"((JDV|JD|SF)\d{10,})|(\d{10,})"#
+        let pattern = #"((JDV|JD|SF|YT)\d{10,})|(\d{10,})"#
         let regex = try! NSRegularExpression(pattern: pattern)
         let range = NSRange(location: 0, length: text.utf16.count)
         if let match = regex.firstMatch(in: text, options: [], range: range) {

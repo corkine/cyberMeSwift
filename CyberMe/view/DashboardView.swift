@@ -11,24 +11,23 @@ import SwiftUIFlowLayout
 struct DashboardView: View {
     @EnvironmentObject var service:CyberService
     @Environment(\.colorScheme) var currentMode
-    @State var syncTodo = false
     var summary: ISummary
     
     @ViewBuilder var myDayContextMenu: some View {
         // MARK: TODO 同步
         Button("同步 Microsoft TODO") {
-            syncTodo = true
+            service.syncTodo = true
             service.syncTodo {
-                syncTodo = false
+                service.syncTodo = false
                 service.fetchSummary()
                 Dashboard.updateWidget(inSeconds: 0)
             }
         }
         // MARK: HCM 登录
         Button("尝试 HCM 登录") {
-            syncTodo = true
+            service.syncTodo = true
             service.syncTodo(isLogin: true) {
-                syncTodo = false
+                service.syncTodo = false
             }
         }
         // MARK: 车票信息
@@ -87,7 +86,7 @@ struct DashboardView: View {
 
         }
         .padding(.bottom, 10)
-        .fullScreenCover(isPresented: $syncTodo) {
+        .fullScreenCover(isPresented: $service.syncTodo) {
             VStack(spacing: 20) {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -565,10 +564,7 @@ struct ExpressUpdateView: View {
                 guard let id = deleteItem?.id else { showSheet = false; return }
                 service.deleteTrackExpress(no: id) { _ in
                     showSheet = false
-                    //刷新 Dashboard
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(6)) {
-                        service.fetchSummary()
-                    }
+                    Command.expressDelete(id: id).dispatch(afterSeconds: 5)
                 }
             }, secondaryButton: .default(Text("确定")) {
                 showSheet = false

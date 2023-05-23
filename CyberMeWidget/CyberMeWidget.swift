@@ -121,7 +121,7 @@ struct CyberMeWidgetEntryView : View {
         let calendar = Calendar.current
         let today = Date()
         let dayOfYear = calendar.ordinality(of: .day, in: .year, for: today)
-        return "\(dayOfYear! + 51776)"
+        return "\(dayOfYear! + 52000)"
     }
     
     var largeView: some View {

@@ -82,6 +82,8 @@ class CyberService: ObservableObject {
     
     @Published var showBodyMassView: Bool = false
     
+    @Published var showDapenti: Bool = false
+    
     var bodyMassShowWithFetch = false
     
     func showBodyMassView(withFetch: Bool = false) {
@@ -121,6 +123,9 @@ class CyberService: ObservableObject {
         }
         return result
     }
+    
+    // MARK: - Sync -
+    @Published var syncTodo = false
     
     // MARK: - URLRequest API -
     enum FetchError: Error {

@@ -19,6 +19,7 @@
 		192E141B29FE2EE2005468DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192E141A29FE2EE2005468DA /* Preview Assets.xcassets */; };
 		192E142129FE2FBF005468DA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 192E142029FE2FBF005468DA /* Info.plist */; };
 		192E142329FE3095005468DA /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192E142229FE3095005468DA /* RouteView.swift */; };
+		192E14252A0BB7A7005468DA /* DapentiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192E14242A0BB7A7005468DA /* DapentiView.swift */; };
 		193323A228D2264F0038AD74 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193323A128D2264F0038AD74 /* Feature.swift */; };
 		193548D4290C132B00B2266C /* FoodBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548D3290C132B00B2266C /* FoodBalanceView.swift */; };
 		193548D8290CD99F00B2266C /* FoodAccount.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 193548D6290CD99F00B2266C /* FoodAccount.xcdatamodeld */; };
@@ -26,6 +27,7 @@
 		193548E4290CF86200B2266C /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
 		193C8A1B291223EE00FF975F /* Lib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Lib+Extension.swift */; };
 		193C8A1C291223EE00FF975F /* Lib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Lib+Extension.swift */; };
+		19431E532A18EC4A00210547 /* MessageBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19431E522A18EC4A00210547 /* MessageBus.swift */; };
 		1948648028D883A500064104 /* PhPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948647F28D883A500064104 /* PhPicker.swift */; };
 		1948648228D89DF300064104 /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948648128D89DF300064104 /* TodoView.swift */; };
 		1948B75F28F6C569009BECD0 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* WidgetService.swift */; };
@@ -159,11 +161,13 @@
 		192E141C29FE2EE2005468DA /* CyberMeStatusBar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMeStatusBar.entitlements; sourceTree = "<group>"; };
 		192E142029FE2FBF005468DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		192E142229FE3095005468DA /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
+		192E14242A0BB7A7005468DA /* DapentiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DapentiView.swift; sourceTree = "<group>"; };
 		193323A128D2264F0038AD74 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		193548D3290C132B00B2266C /* FoodBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBalanceView.swift; sourceTree = "<group>"; };
 		193548D7290CD99F00B2266C /* FoodAccount.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodAccount.xcdatamodel; sourceTree = "<group>"; };
 		193548E2290CF5CD00B2266C /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		193C8A1A291223EE00FF975F /* Lib+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Lib+Extension.swift"; sourceTree = "<group>"; };
+		19431E522A18EC4A00210547 /* MessageBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBus.swift; sourceTree = "<group>"; };
 		1948647F28D883A500064104 /* PhPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhPicker.swift; sourceTree = "<group>"; };
 		1948648128D89DF300064104 /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		1948B75E28F6C569009BECD0 /* WidgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetService.swift; sourceTree = "<group>"; };
@@ -357,8 +361,17 @@
 				1957D61629F5922200EE5334 /* GptAnswerView.swift */,
 				1957D61F29F6804F00EE5334 /* GptTranslateView.swift */,
 				1957D62129F7F95300EE5334 /* StoryBoardView.swift */,
+				192E14242A0BB7A7005468DA /* DapentiView.swift */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		19431E512A18EC2C00210547 /* event */ = {
+			isa = PBXGroup;
+			children = (
+				19431E522A18EC4A00210547 /* MessageBus.swift */,
+			);
+			path = event;
 			sourceTree = "<group>";
 		};
 		195A3D2228BFA2C600239F01 = {
@@ -393,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				19D2A9E128D4AF40009C81C4 /* app */,
+				19431E512A18EC2C00210547 /* event */,
 				19D2A9DD28D48953009C81C4 /* cyber */,
 				193C8A1D2912556900FF975F /* view */,
 				193548D5290CD97E00B2266C /* database */,
@@ -921,6 +935,7 @@
 				195A3D3128BFA2C600239F01 /* ContentView.swift in Sources */,
 				194B0B5129F157B100324E52 /* LastNoteView.swift in Sources */,
 				190C4D3B28D7D81800C1CAE1 /* Book.swift in Sources */,
+				19431E532A18EC4A00210547 /* MessageBus.swift in Sources */,
 				19FF8EC529001FCA009C96C3 /* View+Extension.swift in Sources */,
 				19D6C3B728D14C4000ED5D4B /* Badge.swift in Sources */,
 				19B925782906AD830039948A /* BodyMassView.swift in Sources */,
@@ -932,6 +947,7 @@
 				19D6C3BB28D1514300ED5D4B /* Model.swift in Sources */,
 				190995BC29001135000B5770 /* CS+Setting.swift in Sources */,
 				1957D61C29F66F5F00EE5334 /* CS+Ticket.swift in Sources */,
+				192E14252A0BB7A7005468DA /* DapentiView.swift in Sources */,
 				19D2A9E028D489AE009C81C4 /* Bullseye.swift in Sources */,
 				19CE75ED28D2307F00AF8AFF /* Landmarks.swift in Sources */,
 				193548D8290CD99F00B2266C /* FoodAccount.xcdatamodeld in Sources */,

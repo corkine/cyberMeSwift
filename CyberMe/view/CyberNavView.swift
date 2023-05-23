@@ -35,6 +35,7 @@ struct MainApp: View {
                             .modifier(TicketSheetModifier(showSheet: $service.showTicketView))
                             .modifier(BodyMassSheetModifier(showSheet: $service.showBodyMassView))
                             .modifier(StoryBoardModifier(showSheet: $service.showStoryBook))
+                            .modifier(DapentiSheetModifier(showSheet: $service.showDapenti))
                             .tabItem {
                                 Label("Today", systemImage: "house")
                             }

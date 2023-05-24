@@ -126,13 +126,25 @@ struct CyberMeWidgetEntryView : View {
     
     var largeView: some View {
         var data = entry.dashboard
+        data.todo = data.todo.sorted { a, b in
+            if (a.isFinished && b.isFinished) ||
+                (!a.isFinished && !b.isFinished) {
+                return a.create_at > b.create_at
+            } else if a.isFinished {
+                return false;
+            } else if b.isFinished {
+                return true;
+            } else {
+                return false;
+            }
+        }
         let needFitness = needWarnFitness(data)
         let bg = WidgetBackground(rawValue: UserDefaults(suiteName: Default.groupName)!
             .string(forKey: "widgetBG") ?? "mountain")
         let alertOn = UserDefaults(suiteName: Default.groupName)!
             .bool(forKey: "alert")
         let fakeTodo = data.tickets.filter(\.isUncomming).map { ticket in
-            Dashboard.Todo(title: ticket.description, isFinished: false)
+            Dashboard.Todo(title: ticket.description, isFinished: false, create_at: "0")
         }
         data.todo = fakeTodo + data.todo
         
@@ -323,7 +335,7 @@ struct CyberMeWidgetEntryView : View {
     var todoView: some View {
         var data = entry.dashboard
         let fakeTodo = data.tickets.filter(\.isUncomming).map { ticket in
-            Dashboard.Todo(title: ticket.description, isFinished: false)
+            Dashboard.Todo(title: ticket.description, isFinished: false, create_at: "0")
         }
         data.todo = Array((fakeTodo + data.todo).prefix(3))
         

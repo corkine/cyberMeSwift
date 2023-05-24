@@ -73,6 +73,7 @@ struct Dashboard: Codable {
     struct Todo: Codable,Hashable,Identifiable {
         var title:String
         var isFinished:Bool
+        var create_at:String
         var id:String { title }
     }
     struct Temp: Codable {
@@ -112,10 +113,10 @@ extension Dashboard {
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
-    static let demoTodo = [Todo(title: "吃饭", isFinished: false),
-                           Todo(title: "睡觉", isFinished: false),
-                           Todo(title: "打豆豆", isFinished: true),
-                           Todo(title: "提醒事项", isFinished: false)]
+    static let demoTodo = [Todo(title: "吃饭", isFinished: false, create_at: "1"),
+                           Todo(title: "睡觉", isFinished: false, create_at: "2"),
+                           Todo(title: "打豆豆", isFinished: true, create_at: "3"),
+                           Todo(title: "提醒事项", isFinished: false, create_at: "4")]
     static let demo = Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "", tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
                                 todo: demoTodo, tickets: [Ticket.default], updateAt:
                                     Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)

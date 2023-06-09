@@ -131,7 +131,7 @@ extension CyberService {
     static var dashboard: Dashboard?
     
     static func sendNotice(msg:String) {
-        let token = UserDefaults(suiteName: "group.cyberme.share")!
+        let token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
             .string(forKey: "cyber-token") ?? ""
         guard let url = URL(string: baseUrl + Self.noticeUrl + Self.urlencode(msg)) else {
             print("End point is Invalid")
@@ -146,7 +146,7 @@ extension CyberService {
     }
     
     static func trackUrl(location:CLLocation, by:String) {
-        let token = UserDefaults(suiteName: "group.cyberme.share")!
+        let token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
             .string(forKey: "cyber-token") ?? ""
         guard let url = URL(string: baseUrl + Self.trackUrl(lo: location.coordinate.longitude,
                                                             la: location.coordinate.latitude,
@@ -166,7 +166,7 @@ extension CyberService {
     }
     
     static func fetchDashboard(completion:@escaping (Dashboard?, Error?) -> Void) {
-        let token = UserDefaults(suiteName: "group.cyberme.share")!
+        let token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
             .string(forKey: "cyber-token") ?? ""
         if dashboard != nil {
             print("fetch dashboard data from bg")
@@ -202,7 +202,7 @@ class BackgroundManager : NSObject, URLSessionDelegate, URLSessionDownloadDelega
     
     var completionHandler: (() -> Void)? = nil
     
-    var token = UserDefaults(suiteName: "group.cyberme.share")!
+    var token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
         .string(forKey: "cyber-token") ?? ""
     
     lazy var urlSession: URLSession = {

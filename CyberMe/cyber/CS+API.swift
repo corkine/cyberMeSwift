@@ -23,6 +23,7 @@ extension CyberService {
     static let goAddUrl = "cyber/go/add"
     static let noteAddUrl = "cyber/note"
     static let markMovieWatched = "cyber/movie/url-update"
+    static let addTodoistItem = "cyber/todo/new"
     static let gptSimpleQuestion = "cyber/gpt/simple-question"
     static let deleteTrackExpress = "cyber/express/delete?no="
     static func addTrackExpress(no:String,name:String?,addToWaitList:Bool = false,rewriteIfExist:Bool = false) -> String {

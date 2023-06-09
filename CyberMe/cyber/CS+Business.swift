@@ -77,6 +77,24 @@ extension CyberService {
         }
     }
     
+    fileprivate struct TodoistAdd: Codable {
+        var content: String
+        var dueToday: Bool
+        var postSync: Bool
+    }
+    /// 新建提醒事项
+    func addTodoistItem(content:String, dueToday:Bool = false, postSync:Bool = false,
+                        callback:@escaping (SimpleResult?) -> Void = { _ in }) {
+        let data = TodoistAdd(content: content, dueToday: dueToday, postSync: postSync)
+        uploadJSON(api: CyberService.addTodoistItem, data: data) {
+            response, error in
+            print("upload add todoist action: data: \(data)," +
+                  "response: \(response?.message ?? "nil")," +
+                  "error: \(error?.localizedDescription ?? "nil")")
+            callback(response)
+        }
+    }
+    
     fileprivate struct MarkMovieWatched: Codable {
         var name:String
         var watched:String

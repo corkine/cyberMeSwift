@@ -25,6 +25,7 @@ extension CyberService {
         @Published var hcmShortcutName: String
         @Published var endpoint: String
         @Published var lockLineWithWeather: Bool
+        @Published var basePort: String
         init(service: CyberService) {
             self.service = service
             widgetBG = WidgetBackground(rawValue: CyberService.widgetBG)!
@@ -33,6 +34,7 @@ extension CyberService {
             gpsPeriod = CyberService.gpsPeriod
             username = service.settings["username"] ?? ""
             hcmShortcutName = service.settings["hcmShortcutName"] ?? "checkCardHCM"
+            basePort = service.settings["wireguardBasePort"] ?? "21000"
             endpoint = CyberService.endpoint
             lockLineWithWeather = CyberService.lockLineUseWeather
         }
@@ -69,6 +71,11 @@ extension CyberService {
             }
             if endpoint != CS.endpoint {
                 CS.endpoint = endpoint
+            }
+            
+            let wgPort = service.settings["wireguardBasePort"]
+            if wgPort == nil || wgPort! != basePort {
+                service.settings.updateValue(basePort, forKey: "wireguardBasePort")
             }
             
             if needUpdateDashboard {

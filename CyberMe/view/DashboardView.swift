@@ -554,19 +554,28 @@ struct ExpressUpdateView: View {
                 .padding(.vertical, 10)
                 .background(Color("backgroundGray"))
                 .cornerRadius(10)
+                .contextMenu {
+                    Button("停止追踪") {
+                        service.deleteTrackExpress(no: item.id) { _ in
+                            Command.expressDelete(id: item.id).dispatch(afterSeconds: 5)
+                        }
+                    }
+                    Button("停止追踪并添加待办") {
+                        service.deleteTrackExpress(no: item.id) { _ in
+                            service.addTodoistItem(content: "取快递：\(item.name ?? item.id)",
+                                                   dueToday: true, postSync: true) { _ in
+                                Command.expressDelete(id: item.id).dispatch(afterSeconds: 5)
+                            }
+                        }
+                    }
+                }
                 .onTapGesture { deleteItem = item; showSheet = true }
             }
         }
         .alert(isPresented: $showSheet) {
             Alert(title: Text("\(deleteItem!.name ?? "📦快递")"),
                   message: Text("\(deleteItem?.info ?? "没有信息")"),
-                  primaryButton: .destructive(Text("删除")) {
-                guard let id = deleteItem?.id else { showSheet = false; return }
-                service.deleteTrackExpress(no: id) { _ in
-                    showSheet = false
-                    Command.expressDelete(id: id).dispatch(afterSeconds: 5)
-                }
-            }, secondaryButton: .default(Text("确定")) {
+                  dismissButton: .default(Text("确定")) {
                 showSheet = false
             })
         }

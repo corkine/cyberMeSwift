@@ -60,6 +60,8 @@ struct CyberMeWidgetEntryView : View {
     var entry: Provider.Entry
     let basic: CGFloat = 11.5
     
+    var store = UserDefaults(suiteName: Default.groupName)
+    
     var dateStr: String {
         let now = Date()
         let formatter = DateFormatter()
@@ -118,10 +120,12 @@ struct CyberMeWidgetEntryView : View {
     }
     
     var magicNumber: String {
+        let base = (store!.dictionary(forKey: "settings") as? [String:String] ?? [:])["wireguardBasePort"]
+        let baseInt = Int(base ?? "21000") ?? 21000
         let calendar = Calendar.current
         let today = Date()
         let dayOfYear = calendar.ordinality(of: .day, in: .year, for: today)
-        return "\(dayOfYear! + 52000)"
+        return "\(dayOfYear! + baseInt)"
     }
     
     var largeView: some View {
@@ -139,10 +143,8 @@ struct CyberMeWidgetEntryView : View {
             }
         }
         let needFitness = needWarnFitness(data)
-        let bg = WidgetBackground(rawValue: UserDefaults(suiteName: Default.groupName)!
-            .string(forKey: "widgetBG") ?? "mountain")
-        let alertOn = UserDefaults(suiteName: Default.groupName)!
-            .bool(forKey: "alert")
+        let bg = WidgetBackground(rawValue: store!.string(forKey: "widgetBG") ?? "mountain")
+        let alertOn = store!.bool(forKey: "alert")
         let fakeTodo = data.tickets.filter(\.isUncomming).map { ticket in
             Dashboard.Todo(title: ticket.description, isFinished: false, create_at: "0")
         }
@@ -332,6 +334,180 @@ struct CyberMeWidgetEntryView : View {
         .widgetURL(URL(string: CyberUrl.syncWidget))
     }
     
+    var checkCardURL = URL(string: "cyberme://checkCardForce")!
+    
+    var smallView: some View {
+        let data = entry.dashboard
+
+        let needCard = !data.offWork
+        let needFitness = needWarnFitness(data)
+        let needDiaryReport = data.needDiaryReport
+        let needPlan = data.todo.isEmpty
+        let needBreath = (data.fitnessInfo?.mindful ?? 0.0) == 0.0
+        
+        let showCardPlan = needCard && needPlan
+        let showPlan = needPlan
+        let showCardReport = needCard && needDiaryReport
+        let showOnlyCard = needCard
+        let showBreathWorkout = needFitness && needBreath
+        let showBreath = needBreath
+        let showWorkout = needFitness
+        
+        var bg = ""
+        if showCardPlan {
+            bg = "redA"
+        } else if showPlan {
+            bg = "redB"
+        } else if showCardReport {
+            bg = "grayA"
+        } else if showOnlyCard {
+            bg = "grayB"
+        } else if showBreathWorkout {
+            bg = "blueA"
+        } else if showWorkout || showBreath {
+            bg = "blueB"
+        } else {
+            bg = "orange"
+        }
+        
+        return VStack(spacing: 0) {
+            Spacer()
+            if showCardPlan {
+                Link(destination: checkCardURL) {
+                    HStack {
+                        Image("card")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                        Text("打卡")
+                            .font(.title)
+                        Spacer()
+                    }
+                }
+                HStack {
+                    Image("target")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                    Text("计划")
+                        .font(.title)
+                    Spacer()
+                }
+            } else if showPlan {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Image("target")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .offset(x: -5)
+                        Text("计划")
+                            .font(.title)
+                            .padding(.top, -5)
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            } else if showCardReport {
+                Link(destination: checkCardURL) {
+                    HStack {
+                        Image("card")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                        Text("打卡")
+                            .font(.title)
+                        Spacer()
+                    }
+                }
+                HStack {
+                    Image("noticeBoard")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                    Text("日报")
+                        .font(.title)
+                    Spacer()
+                }
+            } else if showOnlyCard {
+                Link(destination: checkCardURL) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Image("card")
+                                .resizable()
+                                .aspectRatio(1, contentMode: .fit)
+                                .offset(x: -5)
+                            Text("打卡")
+                                .font(.title)
+                                .padding(.top, -5)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                }
+            } else if showBreathWorkout {
+                HStack {
+                    Image("mirror")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                    Text("呼吸")
+                        .font(.title)
+                    Spacer()
+                }
+                Link(destination: URL(string: CyberUrl.showBodyMass)!) {
+                    HStack {
+                        Image("bmi")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .scaleEffect(.init(width: 0.9, height: 0.9))
+                        Text("锻炼")
+                            .font(.title)
+                        Spacer()
+                    }
+                }
+            } else if showWorkout {
+                Link(destination: URL(string: CyberUrl.showBodyMass)!) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Image("bmi")
+                                .resizable()
+                                .aspectRatio(1, contentMode: .fit)
+                                .offset(x: -8)
+                                .scaleEffect(.init(width: 0.9, height: 0.9))
+                            Text("锻炼")
+                                .font(.title)
+                                .padding(.top, -5)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                }
+            } else if showBreath {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Image("mirror")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                        Text("呼吸")
+                            .font(.title)
+                            .padding(.top, -5)
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            } else {
+                HStack {
+                    Spacer()
+                    Image("seed")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .frame(width: 80)
+                    Spacer()
+                }
+            }
+            Spacer()
+        }
+        .padding(.all, 14)
+        .background(Color(bg))
+        .foregroundColor(.white)
+        .widgetURL(needCard ? checkCardURL : needFitness ? URL(string: CyberUrl.showBodyMass)! : URL(string: CyberUrl.syncWidget)!)
+    }
+    
     var todoView: some View {
         var data = entry.dashboard
         let fakeTodo = data.tickets.filter(\.isUncomming).map { ticket in
@@ -426,6 +602,8 @@ struct CyberMeWidgetEntryView : View {
         switch family {
         case .systemMedium:
             largeView
+        case .systemSmall:
+            smallView
         case .accessoryInline:
             weatherView
         case .accessoryRectangular:
@@ -447,11 +625,12 @@ struct CyberMeWidget: Widget {
     var supportFamilies: [WidgetFamily] {
         if #available(iOSApplicationExtension 16.0, *) {
             return [WidgetFamily.systemMedium,
+                    WidgetFamily.systemSmall,
                     WidgetFamily.accessoryInline,
                     WidgetFamily.accessoryCircular,
                     WidgetFamily.accessoryRectangular]
         } else {
-            return [WidgetFamily.systemMedium]
+            return [WidgetFamily.systemMedium, WidgetFamily.systemSmall]
         }
     }
 
@@ -482,29 +661,33 @@ struct CyberMeWidget: Widget {
 
 struct CyberMeWidget_Previews: PreviewProvider {
     static var previews: some View {
-        if #available(iOSApplicationExtension 16.0, *) {
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .preferredColorScheme(.dark)
-            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-            .previewDisplayName("Todo")
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .previewContext(WidgetPreviewContext(family: .accessoryInline))
-            .previewDisplayName("Weather")
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
-            .previewDisplayName("Work")
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .preferredColorScheme(.dark)
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
-        } else {
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .preferredColorScheme(.dark)
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
-        }
+        CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                  dashboard: Dashboard.demo))
+        .preferredColorScheme(.dark)
+        .previewContext(WidgetPreviewContext(family: .systemSmall))
+//        if #available(iOSApplicationExtension 16.0, *) {
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .preferredColorScheme(.dark)
+//            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+//            .previewDisplayName("Todo")
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .previewContext(WidgetPreviewContext(family: .accessoryInline))
+//            .previewDisplayName("Weather")
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+//            .previewDisplayName("Work")
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .preferredColorScheme(.dark)
+//            .previewContext(WidgetPreviewContext(family: .systemMedium))
+//        } else {
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .preferredColorScheme(.dark)
+//            .previewContext(WidgetPreviewContext(family: .systemMedium))
+//        }
     }
 }

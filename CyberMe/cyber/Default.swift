@@ -18,7 +18,7 @@ enum Default {
         static let healthApp = "x-apple-health://home"
         static let calApp = "x-apple-calevent://home"
     }
-    static let groupName = "group.cyberme.share"
+    static let groupName = "group.mazhangjing.cyberme.share"
 }
 
 enum Setting {

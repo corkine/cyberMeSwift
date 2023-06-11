@@ -334,12 +334,15 @@ struct CyberMeWidgetEntryView : View {
         .widgetURL(URL(string: CyberUrl.syncWidget))
     }
     
-    var checkCardURL = URL(string: "cyberme://checkCardForce")!
-    
     var smallView: some View {
+        let checkCardURL = URL(string: "cyberme://checkCardForce")!
+        let bodyMassURL = URL(string: CyberUrl.showBodyMass)!
+        let todoURL = URL(string: CyberUrl.showTodoist)!
+        
         let data = entry.dashboard
 
-        let needCard = !data.offWork
+        //工作日晚上 HCM 系统关闭查询，防止数据异常
+        let needCard = !data.offWork && Date.before(hour: 21, minute: 0)
         let needFitness = needWarnFitness(data)
         let needDiaryReport = data.needDiaryReport
         let needPlan = data.todo.isEmpty
@@ -373,21 +376,19 @@ struct CyberMeWidgetEntryView : View {
         return VStack(spacing: 0) {
             Spacer()
             if showCardPlan {
-                Link(destination: checkCardURL) {
-                    HStack {
-                        Image("card")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                        Text("打卡")
-                            .font(.title)
-                        Spacer()
-                    }
+                HStack {
+                    Image("card")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                    Link("打卡", destination: checkCardURL)
+                        .font(.title)
+                    Spacer()
                 }
                 HStack {
                     Image("target")
                         .resizable()
                         .aspectRatio(1, contentMode: .fit)
-                    Text("计划")
+                    Link("计划", destination: todoURL)
                         .font(.title)
                     Spacer()
                 }
@@ -398,7 +399,7 @@ struct CyberMeWidgetEntryView : View {
                             .resizable()
                             .aspectRatio(1, contentMode: .fit)
                             .offset(x: -5)
-                        Text("计划")
+                        Link("计划", destination: todoURL)
                             .font(.title)
                             .padding(.top, -5)
                         Spacer()
@@ -406,15 +407,13 @@ struct CyberMeWidgetEntryView : View {
                     Spacer()
                 }
             } else if showCardReport {
-                Link(destination: checkCardURL) {
-                    HStack {
-                        Image("card")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                        Text("打卡")
-                            .font(.title)
-                        Spacer()
-                    }
+                HStack {
+                    Image("card")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                    Link("打卡", destination: checkCardURL)
+                        .font(.title)
+                    Spacer()
                 }
                 HStack {
                     Image("noticeBoard")
@@ -425,20 +424,18 @@ struct CyberMeWidgetEntryView : View {
                     Spacer()
                 }
             } else if showOnlyCard {
-                Link(destination: checkCardURL) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Image("card")
-                                .resizable()
-                                .aspectRatio(1, contentMode: .fit)
-                                .offset(x: -5)
-                            Text("打卡")
-                                .font(.title)
-                                .padding(.top, -5)
-                            Spacer()
-                        }
+                HStack {
+                    VStack(alignment: .leading) {
+                        Image("card")
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .offset(x: -5)
+                        Link("打卡", destination: checkCardURL)
+                            .font(.title)
+                            .padding(.top, -5)
                         Spacer()
                     }
+                    Spacer()
                 }
             } else if showBreathWorkout {
                 HStack {
@@ -449,33 +446,29 @@ struct CyberMeWidgetEntryView : View {
                         .font(.title)
                     Spacer()
                 }
-                Link(destination: URL(string: CyberUrl.showBodyMass)!) {
-                    HStack {
+                HStack {
+                    Image("bmi")
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                        .scaleEffect(.init(width: 0.9, height: 0.9))
+                    Link("锻炼", destination: bodyMassURL)
+                        .font(.title)
+                    Spacer()
+                }
+            } else if showWorkout {
+                HStack {
+                    VStack(alignment: .leading) {
                         Image("bmi")
                             .resizable()
                             .aspectRatio(1, contentMode: .fit)
+                            .offset(x: -8)
                             .scaleEffect(.init(width: 0.9, height: 0.9))
-                        Text("锻炼")
+                        Link("锻炼", destination: bodyMassURL)
                             .font(.title)
+                            .padding(.top, -5)
                         Spacer()
                     }
-                }
-            } else if showWorkout {
-                Link(destination: URL(string: CyberUrl.showBodyMass)!) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Image("bmi")
-                                .resizable()
-                                .aspectRatio(1, contentMode: .fit)
-                                .offset(x: -8)
-                                .scaleEffect(.init(width: 0.9, height: 0.9))
-                            Text("锻炼")
-                                .font(.title)
-                                .padding(.top, -5)
-                            Spacer()
-                        }
-                        Spacer()
-                    }
+                    Spacer()
                 }
             } else if showBreath {
                 HStack {
@@ -505,7 +498,6 @@ struct CyberMeWidgetEntryView : View {
         .padding(.all, 14)
         .background(Color(bg))
         .foregroundColor(.white)
-        .widgetURL(needCard ? checkCardURL : needFitness ? URL(string: CyberUrl.showBodyMass)! : URL(string: CyberUrl.syncWidget)!)
     }
     
     var todoView: some View {

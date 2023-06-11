@@ -99,5 +99,18 @@ extension Date {
     static var yesterday: Date {
         Calendar.current.date(byAdding: .day, value: -1, to: Date())!
     }
+    static func before(hour:Int, minute:Int = 0) -> Bool {
+        let cal = Calendar.current
+        let now = Date()
+        let comp = cal.dateComponents([.hour, .minute], from: now)
+        guard let ch = comp.hour, let cm = comp.minute else { return false }
+        if ch < hour {
+            return true
+        } else if ch == hour && cm < minute {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 

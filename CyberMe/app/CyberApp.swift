@@ -123,6 +123,7 @@ struct CyberApp: App {
             Dashboard.updateWidget(inSeconds: 0)
             break
         case _ where input.hasPrefix(CyberUrl.showBodyMass):
+            print("calling body mass from widget...")
             cyberService.showBodyMassView(withFetch: true)
             break
         case _ where input.hasPrefix(CyberUrl.uploadHealthData):

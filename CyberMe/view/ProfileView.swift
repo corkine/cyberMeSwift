@@ -120,17 +120,17 @@ struct SettingView: View {
                     .frame(width: 140)
             }
             // MARK: -- Wireguard Base Port
-            HStack {
-                Text("Wireguard 基础端口")
-                    .fixedSize()
-                Spacer()
-                TextField("", text: $setting.basePort)
-                    .multilineTextAlignment(.trailing)
-                    .autocorrectionDisabled(true)
-                    .keyboardType(.numberPad)
-                    .autocapitalization(.none)
-                    .frame(width: 140)
-            }
+            //HStack {
+            //    Text("Wireguard 基础端口")
+            //        .fixedSize()
+            //    Spacer()
+            //    TextField("", text: $setting.basePort)
+            //        .multilineTextAlignment(.trailing)
+            //        .autocorrectionDisabled(true)
+            //        .keyboardType(.numberPad)
+            //        .autocapitalization(.none)
+            //        .frame(width: 140)
+            //}
             // MARK: -- 更新凭证和设置
             Button("更新用户凭证") {
                 showLogin = true

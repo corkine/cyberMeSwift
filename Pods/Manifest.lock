@@ -82,7 +82,7 @@ SPEC CHECKSUMS:
   quick_actions_ios: 5ec8f5f1ae81512ac803fe10c197ebb875767a9e
   SDWebImage: cb032eba469c54e0000e78bcb0a13cdde0a52798
   SDWebImageWebPCoder: 295a6573c512f54ad2dd58098e64e17dcf008499
-  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
 PODFILE CHECKSUM: 83d6bcc62c2ec6053dc7528c7c2ba79bb299e087

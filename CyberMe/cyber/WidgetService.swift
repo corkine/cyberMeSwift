@@ -165,35 +165,32 @@ extension CyberService {
         }.resume()
     }
     
-    static func fetchDashboard(completion:@escaping (Dashboard?, Error?) -> Void) {
+    static func fetchDashboard(location: CLLocation?) async -> (Dashboard?, Error?) {
         let token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
             .string(forKey: "cyber-token") ?? ""
         if dashboard != nil {
             print("fetch dashboard data from bg")
-            completion(dashboard, nil)
+            let oldDash = dashboard
             dashboard = nil
+            return (oldDash, nil)
         } else {
-            guard let url = URL(string: baseUrl + dashboardUrl) else {
-                print("End point is Invalid")
-                return
+            do {
+                var urlComponents = URLComponents(string: baseUrl + dashboardUrl)!
+                if let location = location {
+                    let lat = location.coordinate.latitude
+                    let lon = location.coordinate.longitude
+                    urlComponents.queryItems = [
+                        URLQueryItem(name: "location", value: "\(lat),\(lon)")
+                    ]
+                }
+                var request = URLRequest(url: urlComponents.url!)
+                request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+                print("requesting for \(request)")
+                let (data, _) = try await URLSession.shared.data(for: request)
+                return (try JSONDecoder().decode(Dashboard.self, from: data), nil)
+            } catch {
+                return (nil, error)
             }
-            var request = URLRequest(url: url)
-            print("requesting for \(request)")
-            request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let data = data {
-                    if let response = try? JSONDecoder().decode(Dashboard.self, from: data) {
-                        //print("decoding from \(data)")
-                        completion(response, nil)
-                    } else {
-                        //print("decoding from \(data) failed")
-                        completion(nil, error)
-                    }
-                }
-                if let error = error {
-                    completion(nil, error)
-                }
-            }.resume()
         }
     }
 }
@@ -264,6 +261,15 @@ enum WidgetLocation {
                 manager.fetchLocation(handler: handler)
             } else {
                 print("not spec time, skip fetch location")
+            }
+        }
+    }
+    static func fetchIfTime() async -> (CLLocation?, Error?) {
+        await withUnsafeContinuation { c in
+            if updateCacheAndNeedAction {
+                manager.fetchLocation { l, e in
+                    c.resume(returning: (l, e))
+                }
             }
         }
     }

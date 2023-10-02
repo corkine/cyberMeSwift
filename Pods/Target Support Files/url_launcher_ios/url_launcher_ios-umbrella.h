@@ -11,6 +11,9 @@
 #endif
 
 #import "FLTURLLauncherPlugin.h"
+#import "FLTURLLauncherPlugin_Test.h"
+#import "FULLauncher.h"
+#import "messages.g.h"
 
 FOUNDATION_EXPORT double url_launcher_iosVersionNumber;
 FOUNDATION_EXPORT const unsigned char url_launcher_iosVersionString[];

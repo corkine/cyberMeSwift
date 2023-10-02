@@ -195,6 +195,22 @@ class CyberService: ObservableObject {
         }.resume()
     }
     
+    func uploadJSON<T:Encodable,E:Decodable>(api:String, data:T, decodeFor:E.Type) async -> (CyberResult<E>?, Error?) {
+        let url = URL(string: CyberService.baseUrl + api)!
+        var request = URLRequest(url: url)
+        request.setValue("Basic \(self.getLoginToken())", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "Post"
+        do {
+            let jsonData = try JSONEncoder().encode(data)
+            let (data, _) = try await URLSession.shared.upload(for: request, from: jsonData)
+            let result = try JSONDecoder().decode(CyberResult<E>.self, from: data)
+            return (result, nil)
+        } catch {
+            return (nil, error)
+        }
+    }
+    
     func postEmpty(from urlString: String, action:@escaping (SimpleResult?,Error?) -> Void) {
         guard let url = URL(string: CyberService.baseUrl + urlString) else {
             print("url \(urlString) not a valid url!")

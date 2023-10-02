@@ -19,15 +19,15 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
-        CyberService.fetchDashboard { dashboard, error in
+        Task.detached {
+            let (location, err) = await WidgetLocation.fetchIfTime()
+            if let err = err {
+                CyberService.sendNotice(msg: "Error when fetch location: \(err.localizedDescription)")
+            } else {
+                CyberService.trackUrl(location: location!, by: "corkine@CMIXR")
+            }
+            let (dashboard, error) = await CyberService.fetchDashboard(location: location)
             if let dashboard = dashboard {
-                WidgetLocation.fetchIfTime(handler: { (loc, err) in
-                    if let err = err {
-                        CyberService.sendNotice(msg: "Error when fetch location: \(err.localizedDescription)")
-                    } else {
-                        CyberService.trackUrl(location: loc!, by: "corkine@CMIXR")
-                    }
-                })
                 let currentDate = Date()
                 let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
                 

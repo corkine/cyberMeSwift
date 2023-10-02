@@ -19,6 +19,7 @@ extension CyberService {
     static let syncTodoUrl = "cyber/todo/sync?todoist=true"
     static let hcmAutoLoginUrl = "cyber/check/set_token_auto"
     static let ticketUrl = "cyber/ticket/recent"
+    static let ticketParseUrl = "cyber/client/parse-tickets"
     static let noticeUrl = "cyber/notice?message="
     static let goAddUrl = "cyber/go/add"
     static let noteAddUrl = "cyber/note"

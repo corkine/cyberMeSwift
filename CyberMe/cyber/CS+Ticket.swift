@@ -8,6 +8,14 @@
 import Foundation
 
 extension CyberService {
+    struct ParsedTicketInfo: Decodable {
+        var start: String?
+        var end: String?
+        var date: String?
+        var trainNo: String?
+        var siteNo: String?
+        var checkNo: String?
+    }
     struct TicketInfo: Decodable, Identifiable {
         var id: String
         var orderNo: String?
@@ -63,6 +71,24 @@ extension CyberService {
                 completed(data)
             }
         }
+    }
+    
+    fileprivate struct ParseTicketInfo: Codable {
+        var content: String
+        var dry: Bool
+    }
+    
+    func parseTicket(content:String, dry:Bool) async -> [ParsedTicketInfo] {
+        let (res, _) = await uploadJSON(api: CyberService.ticketParseUrl,
+                                        data: ParseTicketInfo(content: content, dry: dry),
+                                        decodeFor: [ParsedTicketInfo].self)
+        if let res = res {
+            if res.status > 0 {
+                return res.data ?? []
+            }
+        }
+        return []
+        
     }
     
     fileprivate struct AddTicketInfo: Codable {

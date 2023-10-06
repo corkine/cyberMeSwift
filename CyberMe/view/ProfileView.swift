@@ -19,7 +19,7 @@ struct SmallAppView: View {
                            ("Landmarks", { service.app = .landing }),
                            ("ReadMe", { service.app = .readme }),
                            ("体重管理", { service.showBodyMassView = true }),
-                           ("Flutter Demo", { openFlutterApp() }),
+                           ("Flutter Apps", { AppDelegate.openFlutterApp() }),
                            ("12306 最近车票", { service.showTicketView = true }),
                            ("GPT 问答", { service.showGptQuestionView = true }),
                            ("GPT 翻译", { service.showGptTranslateView = true }),
@@ -34,27 +34,6 @@ struct SmallAppView: View {
                 .padding(.vertical, -5) }
        .padding(.leading, -9)
     }
-    
-    func openFlutterApp() {
-        // Get the RootViewController.
-        guard
-          let windowScene = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
-          let window = windowScene.windows.first(where: \.isKeyWindow),
-          let rootViewController = window.rootViewController
-        else { return }
-
-        // Create the FlutterViewController.
-        let flutterViewController = FlutterViewController(
-          // Access the Flutter Engine via AppDelegate.
-          engine: AppDelegate.flutterEngine,
-          nibName: nil,
-          bundle: nil)
-        flutterViewController.modalPresentationStyle = .overCurrentContext
-        flutterViewController.isViewOpaque = false
-
-        rootViewController.present(flutterViewController, animated: true)
-      }
 }
 
 struct SettingView: View {

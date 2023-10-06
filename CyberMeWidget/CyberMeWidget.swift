@@ -26,7 +26,9 @@ struct Provider: TimelineProvider {
             } else {
                 CyberService.trackUrl(location: location!, by: "corkine@CMIXR")
             }
-            let (dashboard, error) = await CyberService.fetchDashboard(location: location)
+        }
+        Task.detached {
+            let (dashboard, error) = await CyberService.fetchDashboard(location: nil)
             if let dashboard = dashboard {
                 let currentDate = Date()
                 let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!

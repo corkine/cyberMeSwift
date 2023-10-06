@@ -180,17 +180,11 @@ struct CyberApp: App {
     private func addDynamicQuickActions() {
         UIApplication.shared.shortcutItems = [
             UIApplicationShortcutItem(
-                type: "hcmCheckCard",
-                localizedTitle: "HCM 打卡",
+                type: "flutterApps",
+                localizedTitle: "Flutter 应用",
                 localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "checkmark.square")
+                icon:UIApplicationShortcutIcon(systemImageName: "bird")
             ),
-//            UIApplicationShortcutItem(
-//                type: "todayDiary",
-//                localizedTitle: "今天日记",
-//                localizedSubtitle: nil,
-//                icon:UIApplicationShortcutIcon(systemImageName: "book.closed")
-//            )
             UIApplicationShortcutItem(
                 type: "syncTodo",
                 localizedTitle: "TODO 同步",
@@ -198,17 +192,23 @@ struct CyberApp: App {
                 icon:UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath")
             ),
             UIApplicationShortcutItem(
-                type: "alert",
-                localizedTitle: "警戒模式",
+                type: "hcmCheckCard",
+                localizedTitle: "HCM 打卡",
                 localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "eye")
+                icon:UIApplicationShortcutIcon(systemImageName: "checkmark.square")
             ),
-            UIApplicationShortcutItem(
-                type: "noAlert",
-                localizedTitle: "退出警戒模式",
-                localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "eye.slash")
-            ),
+//            UIApplicationShortcutItem(
+//                type: "alert",
+//                localizedTitle: "警戒模式",
+//                localizedSubtitle: nil,
+//                icon:UIApplicationShortcutIcon(systemImageName: "eye")
+//            ),
+//            UIApplicationShortcutItem(
+//                type: "noAlert",
+//                localizedTitle: "退出警戒模式",
+//                localizedSubtitle: nil,
+//                icon:UIApplicationShortcutIcon(systemImageName: "eye.slash")
+//            ),
         ]
     }
     
@@ -246,6 +246,9 @@ struct CyberApp: App {
                 Dashboard.updateWidget(inSeconds: 0)
             }
             break
+        case "flutterApps":
+            AppDelegate.openFlutterApp()
+            break
         case "addLog":
             break
         case "foodBalanceAdd":
@@ -271,6 +274,26 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     )
     static let flutterEngine = FlutterEngine(name: "flutterEngine")
     static var cyberService: CyberService?
+    
+    static func openFlutterApp() {
+        guard
+          let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
+          let window = windowScene.windows.first(where: \.isKeyWindow),
+          let rootViewController = window.rootViewController
+        else { return }
+
+        let flutterViewController = FlutterViewController(
+          engine: AppDelegate.flutterEngine,
+          nibName: nil,
+          bundle: nil)
+        flutterViewController.pushRoute("/menu")
+        flutterViewController.modalPresentationStyle = .overCurrentContext
+        flutterViewController.isViewOpaque = false
+
+        rootViewController.present(flutterViewController, animated: true)
+    }
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -285,7 +308,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             //reschedule by using:
             //self.scheduleFetch()
         }
-        Self.flutterEngine.run();
+        Self.flutterEngine.run(withEntrypoint: nil);
         GeneratedPluginRegistrant.register(with: Self.flutterEngine);
         
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + .seconds(2)) {

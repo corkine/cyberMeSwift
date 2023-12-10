@@ -29,16 +29,31 @@
     "Flutter": [
 
     ],
+    "device_info_plus": [
+
+    ],
     "flutter_image_compress": [
 
     ],
+    "flutter_inappwebview": [
+
+    ],
+    "health": [
+
+    ],
     "image_picker_ios": [
+
+    ],
+    "path_provider_foundation": [
 
     ],
     "quick_actions_ios": [
 
     ],
     "shared_preferences_foundation": [
+
+    ],
+    "sqflite": [
 
     ],
     "url_launcher_ios": [

@@ -41,18 +41,6 @@ struct CyberApp: App {
     @Environment(\.scenePhase) private var phase
     @StateObject var cyberService = CyberService()
     @State var tappedCheckCard = false
-    func checkAddExpress() {
-        if let content = UIPasteboard.general.string {
-            if !content.isEmpty && (content.allSatisfy({ $0.isNumber })
-                                    || content.lowercased().starts(with: "sf")
-                                    || content.lowercased().starts(with: "jd")) {
-                cyberService.expressTrackFromAutoDetect = true
-                cyberService.showExpressTrack = true
-                return
-            }
-        }
-        cyberService.showExpressTrack = false
-    }
     var body: some Scene {
         WindowGroup {
             CyberNav()
@@ -65,7 +53,6 @@ struct CyberApp: App {
             switch newValue {
             case .active:
                 handleQuickAction()
-                checkAddExpress()
                 cyberService.setDashboardDataIfNeed()
                 Dashboard.updateWidget(inSeconds: 300)
                 break
@@ -180,35 +167,23 @@ struct CyberApp: App {
     private func addDynamicQuickActions() {
         UIApplication.shared.shortcutItems = [
             UIApplicationShortcutItem(
-                type: "flutterApps",
-                localizedTitle: "Flutter 应用",
-                localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "bird")
-            ),
-            UIApplicationShortcutItem(
-                type: "syncTodo",
-                localizedTitle: "TODO 同步",
-                localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath")
-            ),
-            UIApplicationShortcutItem(
                 type: "hcmCheckCard",
                 localizedTitle: "HCM 打卡",
                 localizedSubtitle: nil,
                 icon:UIApplicationShortcutIcon(systemImageName: "checkmark.square")
             ),
-//            UIApplicationShortcutItem(
-//                type: "alert",
-//                localizedTitle: "警戒模式",
-//                localizedSubtitle: nil,
-//                icon:UIApplicationShortcutIcon(systemImageName: "eye")
-//            ),
-//            UIApplicationShortcutItem(
-//                type: "noAlert",
-//                localizedTitle: "退出警戒模式",
-//                localizedSubtitle: nil,
-//                icon:UIApplicationShortcutIcon(systemImageName: "eye.slash")
-//            ),
+            UIApplicationShortcutItem(
+                type: "flutterApps-bodyMass",
+                localizedTitle: "体重记录",
+                localizedSubtitle: nil,
+                icon:UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath")
+            ),
+            UIApplicationShortcutItem(
+                type: "flutterApps",
+                localizedTitle: "Flutter 应用",
+                localizedSubtitle: nil,
+                icon:UIApplicationShortcutIcon(systemImageName: "bird")
+            ),
         ]
     }
     
@@ -249,6 +224,9 @@ struct CyberApp: App {
         case "flutterApps":
             AppDelegate.openFlutterApp()
             break
+        case "flutterApps-bodyMass":
+            AppDelegate.openFlutterApp(route: "/app/bodyMass")
+            break
         case "addLog":
             break
         case "foodBalanceAdd":
@@ -275,7 +253,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     static let flutterEngine = FlutterEngine(name: "flutterEngine")
     static var cyberService: CyberService?
     
-    static func openFlutterApp() {
+    static func openFlutterApp(route: String = "/menu") {
+        
         guard
           let windowScene = UIApplication.shared.connectedScenes
             .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
@@ -287,9 +266,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
           engine: AppDelegate.flutterEngine,
           nibName: nil,
           bundle: nil)
+        
+        rootViewController.dismiss(animated: true)
+        
         flutterViewController.pushRoute("/menu")
+        if route != "/menu" {
+            flutterViewController.pushRoute(route)
+        }
         flutterViewController.modalPresentationStyle = .overCurrentContext
-        flutterViewController.isViewOpaque = false
+        flutterViewController.isViewOpaque = true
 
         rootViewController.present(flutterViewController, animated: true)
     }

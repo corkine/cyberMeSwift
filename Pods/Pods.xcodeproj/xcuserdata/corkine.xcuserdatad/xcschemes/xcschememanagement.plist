@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Flutter.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -15,6 +20,11 @@
 			<false/>
 		</dict>
 		<key>Mantle.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>OrderedSet.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -44,7 +54,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>device_info_plus.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>flutter_image_compress.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>flutter_inappwebview.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>health.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -59,12 +84,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>path_provider_foundation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>quick_actions_ios.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>shared_preferences_foundation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>sqflite.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

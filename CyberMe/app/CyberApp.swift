@@ -173,10 +173,10 @@ struct CyberApp: App {
                 icon:UIApplicationShortcutIcon(systemImageName: "checkmark.square")
             ),
             UIApplicationShortcutItem(
-                type: "flutterApps-bodyMass",
-                localizedTitle: "体重记录",
+                type: "flutterApps-dynamic",
+                localizedTitle: AppDelegate.lastRoute["name"] ?? "最后应用",
                 localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "arrow.triangle.2.circlepath")
+                icon:UIApplicationShortcutIcon(systemImageName: "bird")
             ),
             UIApplicationShortcutItem(
                 type: "flutterApps",
@@ -224,9 +224,8 @@ struct CyberApp: App {
         case "flutterApps":
             AppDelegate.openFlutterApp()
             break
-        case "flutterApps-bodyMass":
-            AppDelegate.openFlutterApp(route: "/app/bodyMass")
-            break
+        case "flutterApps-dynamic":
+            AppDelegate.openFlutterApp(route: AppDelegate.lastRoute["route"] ?? "/app")
         case "addLog":
             break
         case "foodBalanceAdd":
@@ -279,6 +278,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         rootViewController.present(flutterViewController, animated: true)
     }
     
+    public static var lastRoute = ["name": "最近应用", "route": "/app"]
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -295,6 +296,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         Self.flutterEngine.run(withEntrypoint: nil);
         GeneratedPluginRegistrant.register(with: Self.flutterEngine);
+        let flutterViewController = FlutterViewController(
+          engine: Self.flutterEngine,
+          nibName: nil,
+          bundle: nil)
+        let channel = FlutterMethodChannel(name: "flutter/nativeSimpleChannel", binaryMessenger: flutterViewController.binaryMessenger)
+        channel.setMethodCallHandler({
+            (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+            if call.method == "setLastUsedAppRoute" {
+                let args = call.arguments as! [String:String]
+                Self.lastRoute = args;
+                result(nil)
+            } else {
+                result(FlutterMethodNotImplemented)
+            }
+        })
         
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + .seconds(2)) {
             CommandRegister.dashboardRegCommand(service: AppDelegate.cyberService!)

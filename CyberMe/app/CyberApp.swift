@@ -72,10 +72,33 @@ struct CyberApp: App {
         }
     }
     
+    private func extractParameter(from string: String) -> String? {
+        let pattern = "app=([^&]+)"
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return nil
+        }
+        guard let match = regex.firstMatch(in: string, options: [], range: NSRange(location: 0, length: string.utf16.count)) else {
+            return nil
+        }
+        let range = match.range(at: 1)
+        if let extractedRange = Range(range, in: string) {
+            return String(string[extractedRange])
+        } else {
+            return nil
+        }
+    }
+    
     private func handleOpenUrl(_ url: URL) {
         guard url.scheme == "cyberme" else { return }
         let input = url.description
         switch input {
+        case _ where input.hasPrefix(CyberUrl.flutterApp):
+            let app = extractParameter(from: input) ?? ""
+            let fullRoute = "/app/\(app)"
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                AppDelegate.openFlutterApp(route: fullRoute)
+            }
+            break
         case _ where input.hasPrefix(CyberUrl.checkCardIfNeed):
             if TimeUtil.needCheckCard {
                 cyberService.checkCard {
@@ -176,7 +199,7 @@ struct CyberApp: App {
                 type: "flutterApps-dynamic",
                 localizedTitle: AppDelegate.lastRoute["name"] ?? "最后应用",
                 localizedSubtitle: nil,
-                icon:UIApplicationShortcutIcon(systemImageName: "bird")
+                icon:UIApplicationShortcutIcon(systemImageName: "clock")
             ),
             UIApplicationShortcutItem(
                 type: "flutterApps",
@@ -260,7 +283,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
           let window = windowScene.windows.first(where: \.isKeyWindow),
           let rootViewController = window.rootViewController
         else { return }
-
         let flutterViewController = FlutterViewController(
           engine: AppDelegate.flutterEngine,
           nibName: nil,
@@ -268,10 +290,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         rootViewController.dismiss(animated: true)
         
-        flutterViewController.pushRoute("/menu")
-        if route != "/menu" {
-            flutterViewController.pushRoute(route)
-        }
+        flutterViewController.pushRoute(route)
         flutterViewController.modalPresentationStyle = .overCurrentContext
         flutterViewController.isViewOpaque = true
 

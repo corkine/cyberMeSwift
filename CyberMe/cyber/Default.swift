@@ -29,6 +29,9 @@ enum Setting {
 }
 
 enum CyberUrl {
+    
+    static let flutterApp = "cyberme://flutter"
+    
     static let checkCardHCM = "cyberme://checkCardHCM"
     static let checkCardIfNeed = "cyberme://checkCardIfNeed"
     static let checkCardForce = "cyberme://checkCardForce"

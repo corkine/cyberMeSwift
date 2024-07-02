@@ -8,6 +8,7 @@
 import SwiftUI
 import BackgroundTasks
 import WidgetKit
+import CarPlay
 import UIKit
 import os
 import CoreData
@@ -276,25 +277,49 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     static var cyberService: CyberService?
     
     static func openFlutterApp(route: String = "/menu") {
-        
-        guard
-          let windowScene = UIApplication.shared.connectedScenes
-            .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
-          let window = windowScene.windows.first(where: \.isKeyWindow),
-          let rootViewController = window.rootViewController
-        else { return }
-        let flutterViewController = FlutterViewController(
-          engine: AppDelegate.flutterEngine,
-          nibName: nil,
-          bundle: nil)
-        
-        rootViewController.dismiss(animated: true)
-        
-        flutterViewController.pushRoute(route)
-        flutterViewController.modalPresentationStyle = .overCurrentContext
-        flutterViewController.isViewOpaque = true
+//        guard
+//          let windowScene = UIApplication.shared.connectedScenes
+//            .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
+//          let window = windowScene.windows.first(where: \.isKeyWindow),
+//          let rootViewController = window.rootViewController
+//        else { return }
+//
+//        if flutterEngine.viewController != nil {
+//            flutterEngine.viewController!.dismiss(animated: true)
+//        }
+//
+//        let flutterViewController = FlutterViewController(
+//          engine: flutterEngine,
+//          nibName: nil,
+//          bundle: nil)
+//
+//        flutterViewController.pushRoute(route)
+//        flutterViewController.modalPresentationStyle = .overCurrentContext
+//        flutterViewController.isViewOpaque = true
+//
+//        rootViewController.present(flutterViewController, animated: true)
+        if flutterEngine.viewController == nil {
+            guard
+              let windowScene = UIApplication.shared.connectedScenes
+                .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
+              let window = windowScene.windows.first(where: \.isKeyWindow),
+              let rootViewController = window.rootViewController
+            else { return }
+            let flutterViewController = FlutterViewController(
+              engine: AppDelegate.flutterEngine,
+              nibName: nil,
+              bundle: nil)
 
-        rootViewController.present(flutterViewController, animated: true)
+            flutterViewController.pushRoute(route)
+            flutterViewController.modalPresentationStyle = .overCurrentContext
+            flutterViewController.isViewOpaque = true
+
+            rootViewController.present(flutterViewController, animated: true)
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                flutterEngine.viewController!.pushRoute(route)
+            }
+        }
     }
     
     public static var lastRoute = ["name": "最近应用", "route": "/app"]
@@ -362,17 +387,23 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         configurationForConnecting connectingSceneSession: UISceneSession,
         options: UIScene.ConnectionOptions
     ) -> UISceneConfiguration {
+        
         if let shortcutItem = options.shortcutItem {
             AppDelegate.shortcutItem = shortcutItem
         }
         
-        let sceneConfiguration = UISceneConfiguration(
-            name: "Scene Configuration",
-            sessionRole: connectingSceneSession.role
-        )
-        sceneConfiguration.delegateClass = SceneDelegate.self
-        
-        return sceneConfiguration
+        if connectingSceneSession.role == UISceneSession.Role.carTemplateApplication {
+            let scene = UISceneConfiguration(name: "CarPlay", sessionRole: connectingSceneSession.role)
+            scene.delegateClass = CarPlaySceneDelegate.self
+            return scene
+        } else {
+            let sceneConfiguration = UISceneConfiguration(
+                name: "Scene Configuration",
+                sessionRole: connectingSceneSession.role
+            )
+            sceneConfiguration.delegateClass = SceneDelegate.self
+            return sceneConfiguration
+        }
     }
 }
 

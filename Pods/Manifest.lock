@@ -21,14 +21,12 @@ PODS:
     - flutter_inappwebview
     - health
     - image_picker_ios
+    - pasteboard
     - path_provider_foundation
     - quick_actions_ios
     - shared_preferences_foundation
     - sqflite
     - url_launcher_ios
-  - FMDB (2.7.5):
-    - FMDB/standard (= 2.7.5)
-  - FMDB/standard (2.7.5)
   - health (1.0.4):
     - Flutter
   - image_picker_ios (0.0.1):
@@ -49,15 +47,17 @@ PODS:
     - Mantle/extobjc (= 2.2.0)
   - Mantle/extobjc (2.2.0)
   - OrderedSet (5.0.0)
+  - pasteboard (0.0.1):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - quick_actions_ios (0.0.1):
     - Flutter
-  - SDWebImage (5.18.2):
-    - SDWebImage/Core (= 5.18.2)
-  - SDWebImage/Core (5.18.2)
-  - SDWebImageWebPCoder (0.14.0):
+  - SDWebImage (5.19.2):
+    - SDWebImage/Core (= 5.19.2)
+  - SDWebImage/Core (5.19.2)
+  - SDWebImageWebPCoder (0.14.6):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
   - shared_preferences_foundation (0.0.1):
@@ -65,7 +65,7 @@ PODS:
     - FlutterMacOS
   - sqflite (0.0.3):
     - Flutter
-    - FMDB (>= 2.7.5)
+    - FlutterMacOS
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -77,15 +77,15 @@ DEPENDENCIES:
   - FlutterPluginRegistrant (from `../cyberme_flutter/.ios/Flutter/FlutterPluginRegistrant`)
   - health (from `../cyberme_flutter/.ios/.symlinks/plugins/health/ios`)
   - image_picker_ios (from `../cyberme_flutter/.ios/.symlinks/plugins/image_picker_ios/ios`)
+  - pasteboard (from `../cyberme_flutter/.ios/.symlinks/plugins/pasteboard/ios`)
   - path_provider_foundation (from `../cyberme_flutter/.ios/.symlinks/plugins/path_provider_foundation/darwin`)
   - quick_actions_ios (from `../cyberme_flutter/.ios/.symlinks/plugins/quick_actions_ios/ios`)
   - shared_preferences_foundation (from `../cyberme_flutter/.ios/.symlinks/plugins/shared_preferences_foundation/darwin`)
-  - sqflite (from `../cyberme_flutter/.ios/.symlinks/plugins/sqflite/ios`)
+  - sqflite (from `../cyberme_flutter/.ios/.symlinks/plugins/sqflite/darwin`)
   - url_launcher_ios (from `../cyberme_flutter/.ios/.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
-    - FMDB
     - libwebp
     - Mantle
     - OrderedSet
@@ -107,6 +107,8 @@ EXTERNAL SOURCES:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/health/ios"
   image_picker_ios:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/image_picker_ios/ios"
+  pasteboard:
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/pasteboard/ios"
   path_provider_foundation:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/path_provider_foundation/darwin"
   quick_actions_ios:
@@ -114,29 +116,29 @@ EXTERNAL SOURCES:
   shared_preferences_foundation:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/shared_preferences_foundation/darwin"
   sqflite:
-    :path: "../cyberme_flutter/.ios/.symlinks/plugins/sqflite/ios"
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/sqflite/darwin"
   url_launcher_ios:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_image_compress: 5a5e9aee05b6553048b8df1c3bc456d0afaac433
   flutter_inappwebview: 3d32228f1304635e7c028b0d4252937730bbc6cf
-  FlutterPluginRegistrant: 87af73ba67bd2c9310e20b972dba7c9a26b36604
-  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  FlutterPluginRegistrant: 0470cc4a5cc4f72c187eb1da3e83155e56aff0a9
   health: 5a380c0f6c4f619535845992993964293962e99e
-  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  pasteboard: 982969ebaa7c78af3e6cc7761e8f5e77565d9ce0
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   quick_actions_ios: 5ec8f5f1ae81512ac803fe10c197ebb875767a9e
-  SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
-  SDWebImageWebPCoder: 3027af94522d94df79c21c070894c8a2128927ff
-  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
-  sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
+  SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
+  SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
 PODFILE CHECKSUM: 83d6bcc62c2ec6053dc7528c7c2ba79bb299e087
 

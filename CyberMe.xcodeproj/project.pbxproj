@@ -61,6 +61,7 @@
 		197C90D9291F653E00373BEF /* CS+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D8291F653E00373BEF /* CS+Dashboard.swift */; };
 		197C90DA291F659D00373BEF /* CS+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D8291F653E00373BEF /* CS+Dashboard.swift */; };
 		197C90DC291F65EE00373BEF /* CS+Health.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90DB291F65EE00373BEF /* CS+Health.swift */; };
+		199160CE2C34376900DA7CA2 /* CarPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199160CD2C34376900DA7CA2 /* CarPlay.swift */; };
 		199BA88E291653D00080925D /* CyberNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88D291653D00080925D /* CyberNavView.swift */; };
 		199BA890291653FE0080925D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88F291653FE0080925D /* ProfileView.swift */; };
 		19B925762906A5370039948A /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
@@ -196,6 +197,8 @@
 		197C90D6291F620C00373BEF /* CS+WeekPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+WeekPlan.swift"; sourceTree = "<group>"; };
 		197C90D8291F653E00373BEF /* CS+Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Dashboard.swift"; sourceTree = "<group>"; };
 		197C90DB291F65EE00373BEF /* CS+Health.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Health.swift"; sourceTree = "<group>"; };
+		199160CD2C34376900DA7CA2 /* CarPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlay.swift; sourceTree = "<group>"; };
+		199160CF2C34411200DA7CA2 /* CarPlay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CarPlay.framework; path = System/Library/Frameworks/CarPlay.framework; sourceTree = SDKROOT; };
 		199BA88D291653D00080925D /* CyberNavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberNavView.swift; sourceTree = "<group>"; };
 		199BA88F291653FE0080925D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		19B925752906A5370039948A /* HealthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthManager.swift; sourceTree = "<group>"; };
@@ -502,6 +505,7 @@
 				19FF8EC429001FCA009C96C3 /* View+Extension.swift */,
 				193C8A1A291223EE00FF975F /* Lib+Extension.swift */,
 				195A3D3228BFA2C700239F01 /* Assets.xcassets */,
+				199160CD2C34376900DA7CA2 /* CarPlay.swift */,
 			);
 			path = app;
 			sourceTree = "<group>";
@@ -543,6 +547,7 @@
 		19FD17FF28D9CB27004F97B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				199160CF2C34411200DA7CA2 /* CarPlay.framework */,
 				19FD180028D9CB27004F97B3 /* WidgetKit.framework */,
 				19FD180228D9CB27004F97B3 /* SwiftUI.framework */,
 				EB6572031E5726A7E6A420FB /* Pods_CyberMe.framework */,
@@ -925,6 +930,7 @@
 				19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */,
 				1948648228D89DF300064104 /* TodoView.swift in Sources */,
 				1957D62029F6804F00EE5334 /* GptTranslateView.swift in Sources */,
+				199160CE2C34376900DA7CA2 /* CarPlay.swift in Sources */,
 				19E9C09929F037E000B4FFC4 /* ShortLinkView.swift in Sources */,
 				196106A02924EDC2005D08D7 /* SimpleInfoView.swift in Sources */,
 				19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */,
@@ -1215,7 +1221,7 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "CyberMe 需要读取健康数据以提供更好的目标管理";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CyberMe 需要写入健康数据以持久化您的运动成果";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "CyberMe 需要使用定位信息以保持在线";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CyberMe 需要获取你的位置信息";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1255,7 +1261,7 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "CyberMe 需要读取健康数据以提供更好的目标管理";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "CyberMe 需要写入健康数据以持久化您的运动成果";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "CyberMe 需要使用定位信息以保持在线";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "CyberMe 需要获取你的位置信息";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

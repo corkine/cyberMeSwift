@@ -11,7 +11,7 @@
     "Flutter Dev Team": "flutter-dev@googlegroups.com"
   },
   "platforms": {
-    "ios": "11.0"
+    "ios": "12.0"
   },
   "source_files": [
     "Classes",
@@ -42,6 +42,9 @@
 
     ],
     "image_picker_ios": [
+
+    ],
+    "pasteboard": [
 
     ],
     "path_provider_foundation": [

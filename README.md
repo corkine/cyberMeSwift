@@ -10,11 +10,11 @@ CyberMe iOS 客户端程序。后端基于 CyberMe API 提供服务。
 
 > 此仓库基于 SwiftUI 5 和 Xcode 14 开发，Target 为 iOS 14，但亦为 iOS 16 锁屏小组件提供了支持。
 
-![](https://static2.mazhangjing.com/cyber/202210/53c2bcf4_图片.png)
-
 <img src="https://files.flutter-io.cn/flutter-cn/landing/916809aa4c8f73ad70d2.svg" width="150">
 
-<img src="https://static2.mazhangjing.com/cyber/202407/a9fee2da_image.png" width="150">
+<img src="https://static2.mazhangjing.com/cyber/202407/a9fee2da_image.png" width="250">
+
+<img src="https://static2.mazhangjing.com/cyber/202210/53c2bcf4_图片.png" width="250">
 
 ## 特性
 

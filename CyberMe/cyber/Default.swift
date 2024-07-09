@@ -17,6 +17,7 @@ enum Default {
         static let train12306 = "cn.12306://home"
         static let healthApp = "x-apple-health://home"
         static let calApp = "x-apple-calevent://home"
+        static let shortcut = "weixin://dl/business/?t=npwSq0Egcsd"
         static let todoist = "todoist://"
     }
     static let groupName = "group.mazhangjing.cyberme.share"
@@ -42,6 +43,7 @@ enum CyberUrl {
     static let uploadHealthData = "cyberme://uploadHealthData"
 
     static let showBodyMass = "cyberme://showBodyMass"
+    static let showShortcut = "cyberme://showShortcut"
     static let showWeather = "cyberme://showWeather"
     static let showMiHome = "cyberme://miHome"
     static let show12306 = "cyberme://12306"

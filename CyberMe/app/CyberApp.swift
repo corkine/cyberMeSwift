@@ -161,6 +161,9 @@ struct CyberApp: App {
         case _ where input.hasPrefix(CyberUrl.showCal):
             UIApplication.shared.open(URL(string: Default.UrlScheme.calApp)!)
             break
+        case _ where input.hasPrefix(CyberUrl.showShortcut):
+            UIApplication.shared.open(URL(string: Default.UrlScheme.shortcut)!)
+            break
         case _ where input.hasPrefix(CyberUrl.goLink):
             print("handle add short link \(url)")
             cyberService.originUrl = url.queryOf("url") ?? ""

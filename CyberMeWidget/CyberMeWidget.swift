@@ -542,6 +542,19 @@ struct CyberMeWidgetEntryView : View {
         }
     }
     
+    var shortcutView: some View {
+        return ZStack {
+            if #available(iOSApplicationExtension 16.0, *) {
+                AccessoryWidgetBackground()
+            } else {
+                Color.white.opacity(0.2)
+            }
+            Image(systemName: "car.side")
+                .font(.system(size: 24))
+        }
+        .widgetURL(URL(string: CyberUrl.showShortcut))
+    }
+    
     var workView: some View {
         let data = entry.dashboard
         let finishWork = data.offWork
@@ -611,7 +624,7 @@ struct CyberMeWidgetEntryView : View {
         case .accessoryRectangular:
             todoView
         case .accessoryCircular:
-            workView
+            shortcutView
         default:
             Text("Not Support")
         }
@@ -677,7 +690,7 @@ struct CyberMeWidget_Previews: PreviewProvider {
             CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
                                                       dashboard: Dashboard.demo))
             .previewContext(WidgetPreviewContext(family: .accessoryCircular))
-            .previewDisplayName("Work")
+            .previewDisplayName("Shortcut")
             CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
                                                       dashboard: Dashboard.demo))
             .preferredColorScheme(.dark)

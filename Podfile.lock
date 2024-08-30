@@ -1,5 +1,5 @@
 PODS:
-  - device_info_plus (0.0.1):
+  - audio_session (0.0.1):
     - Flutter
   - Flutter (1.0.0)
   - flutter_image_compress (1.0.0):
@@ -15,21 +15,30 @@ PODS:
     - Flutter
     - OrderedSet (~> 5.0)
   - FlutterPluginRegistrant (0.0.1):
-    - device_info_plus
+    - audio_session
     - Flutter
     - flutter_image_compress
     - flutter_inappwebview
-    - health
+    - health_kit_reporter
     - image_picker_ios
+    - just_audio
+    - package_info_plus
     - pasteboard
     - path_provider_foundation
     - quick_actions_ios
     - shared_preferences_foundation
     - sqflite
     - url_launcher_ios
-  - health (1.0.4):
+    - video_player_avfoundation
+    - wakelock_plus
+    - webview_flutter_wkwebview
+  - health_kit_reporter (2.1.0):
     - Flutter
+    - HealthKitReporter
+  - HealthKitReporter (3.0.0)
   - image_picker_ios (0.0.1):
+    - Flutter
+  - just_audio (0.0.1):
     - Flutter
   - libwebp (1.3.2):
     - libwebp/demux (= 1.3.2)
@@ -47,6 +56,8 @@ PODS:
     - Mantle/extobjc (= 2.2.0)
   - Mantle/extobjc (2.2.0)
   - OrderedSet (5.0.0)
+  - package_info_plus (0.4.5):
+    - Flutter
   - pasteboard (0.0.1):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -54,9 +65,9 @@ PODS:
     - FlutterMacOS
   - quick_actions_ios (0.0.1):
     - Flutter
-  - SDWebImage (5.19.2):
-    - SDWebImage/Core (= 5.19.2)
-  - SDWebImage/Core (5.19.2)
+  - SDWebImage (5.19.6):
+    - SDWebImage/Core (= 5.19.6)
+  - SDWebImage/Core (5.19.6)
   - SDWebImageWebPCoder (0.14.6):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
@@ -68,24 +79,37 @@ PODS:
     - FlutterMacOS
   - url_launcher_ios (0.0.1):
     - Flutter
+  - video_player_avfoundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - wakelock_plus (0.0.1):
+    - Flutter
+  - webview_flutter_wkwebview (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
-  - device_info_plus (from `../cyberme_flutter/.ios/.symlinks/plugins/device_info_plus/ios`)
+  - audio_session (from `../cyberme_flutter/.ios/.symlinks/plugins/audio_session/ios`)
   - Flutter (from `../cyberme_flutter/.ios/Flutter`)
   - flutter_image_compress (from `../cyberme_flutter/.ios/.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_inappwebview (from `../cyberme_flutter/.ios/.symlinks/plugins/flutter_inappwebview/ios`)
   - FlutterPluginRegistrant (from `../cyberme_flutter/.ios/Flutter/FlutterPluginRegistrant`)
-  - health (from `../cyberme_flutter/.ios/.symlinks/plugins/health/ios`)
+  - health_kit_reporter (from `../cyberme_flutter/.ios/.symlinks/plugins/health_kit_reporter/ios`)
   - image_picker_ios (from `../cyberme_flutter/.ios/.symlinks/plugins/image_picker_ios/ios`)
+  - just_audio (from `../cyberme_flutter/.ios/.symlinks/plugins/just_audio/ios`)
+  - package_info_plus (from `../cyberme_flutter/.ios/.symlinks/plugins/package_info_plus/ios`)
   - pasteboard (from `../cyberme_flutter/.ios/.symlinks/plugins/pasteboard/ios`)
   - path_provider_foundation (from `../cyberme_flutter/.ios/.symlinks/plugins/path_provider_foundation/darwin`)
   - quick_actions_ios (from `../cyberme_flutter/.ios/.symlinks/plugins/quick_actions_ios/ios`)
   - shared_preferences_foundation (from `../cyberme_flutter/.ios/.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `../cyberme_flutter/.ios/.symlinks/plugins/sqflite/darwin`)
   - url_launcher_ios (from `../cyberme_flutter/.ios/.symlinks/plugins/url_launcher_ios/ios`)
+  - video_player_avfoundation (from `../cyberme_flutter/.ios/.symlinks/plugins/video_player_avfoundation/darwin`)
+  - wakelock_plus (from `../cyberme_flutter/.ios/.symlinks/plugins/wakelock_plus/ios`)
+  - webview_flutter_wkwebview (from `../cyberme_flutter/.ios/.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
+    - HealthKitReporter
     - libwebp
     - Mantle
     - OrderedSet
@@ -93,8 +117,8 @@ SPEC REPOS:
     - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
-  device_info_plus:
-    :path: "../cyberme_flutter/.ios/.symlinks/plugins/device_info_plus/ios"
+  audio_session:
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/audio_session/ios"
   Flutter:
     :path: "../cyberme_flutter/.ios/Flutter"
   flutter_image_compress:
@@ -103,10 +127,14 @@ EXTERNAL SOURCES:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/flutter_inappwebview/ios"
   FlutterPluginRegistrant:
     :path: "../cyberme_flutter/.ios/Flutter/FlutterPluginRegistrant"
-  health:
-    :path: "../cyberme_flutter/.ios/.symlinks/plugins/health/ios"
+  health_kit_reporter:
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/health_kit_reporter/ios"
   image_picker_ios:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/image_picker_ios/ios"
+  just_audio:
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/just_audio/ios"
+  package_info_plus:
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/package_info_plus/ios"
   pasteboard:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/pasteboard/ios"
   path_provider_foundation:
@@ -119,26 +147,38 @@ EXTERNAL SOURCES:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/sqflite/darwin"
   url_launcher_ios:
     :path: "../cyberme_flutter/.ios/.symlinks/plugins/url_launcher_ios/ios"
+  video_player_avfoundation:
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/video_player_avfoundation/darwin"
+  wakelock_plus:
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/wakelock_plus/ios"
+  webview_flutter_wkwebview:
+    :path: "../cyberme_flutter/.ios/.symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
-  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
+  audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_image_compress: 5a5e9aee05b6553048b8df1c3bc456d0afaac433
   flutter_inappwebview: 3d32228f1304635e7c028b0d4252937730bbc6cf
-  FlutterPluginRegistrant: 0470cc4a5cc4f72c187eb1da3e83155e56aff0a9
-  health: 5a380c0f6c4f619535845992993964293962e99e
+  FlutterPluginRegistrant: ea0771c70e6cb1e6727299a3d9ab6c78b5ed0ba5
+  health_kit_reporter: c42352ae9e6ba3035618f27aec723833487ceab3
+  HealthKitReporter: 3511fd29070917a255fa60df7f415c2007f74b73
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
   pasteboard: 982969ebaa7c78af3e6cc7761e8f5e77565d9ce0
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   quick_actions_ios: 5ec8f5f1ae81512ac803fe10c197ebb875767a9e
-  SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
+  SDWebImage: a79252b60f4678812d94316c91da69ec83089c9f
   SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+  video_player_avfoundation: 7c6c11d8470e1675df7397027218274b6d2360b3
+  wakelock_plus: 78ec7c5b202cab7761af8e2b2b3d0671be6c4ae1
+  webview_flutter_wkwebview: 2a23822e9039b7b1bc52e5add778e5d89ad488d1
 
 PODFILE CHECKSUM: 83d6bcc62c2ec6053dc7528c7c2ba79bb299e087
 

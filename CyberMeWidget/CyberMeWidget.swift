@@ -159,8 +159,8 @@ struct CyberMeWidgetEntryView : View {
         let bodyMassStr = bodyMass == "0.0" ? "" :
         "\(bodyMassNum >= 0 ? "▼" : "▲")\(bodyMass)kg"
         
-        let mind = data.fitnessInfo?.mindful ?? 0.0
-        let mindStr = mind != 0.0 ? "🫧" : "⚠︎M"
+        //let mind = data.fitnessInfo?.mindful ?? 0.0
+        let mindStr = "" //mind != 0.0 ? "🫧" : "⚠︎M"
         let fitInfo = "\(bodyMassStr) \(mindStr)"
         
         return VStack(alignment:.leading) {
@@ -338,177 +338,23 @@ struct CyberMeWidgetEntryView : View {
     }
     
     var smallView: some View {
-        //let checkCardURL = URL(string: "cyberme://checkCardForce")!
-        let checkCardURL = URL(string: CyberUrl.checkCardHCM)!
-        let bodyMassURL = URL(string: CyberUrl.showBodyMass)!
-        let todoURL = URL(string: CyberUrl.showTodoist)!
-        
-        let data = entry.dashboard
-
-        //工作日晚上 HCM 系统关闭查询，防止数据异常
-        let needCard = !data.offWork && Date.before(hour: 21, minute: 0)
-        let needFitness = needWarnFitness(data)
-        let needDiaryReport = data.needDiaryReport
-        let needPlan = data.todo.isEmpty
-        let needBreath = (data.fitnessInfo?.mindful ?? 0.0) == 0.0
-        
-        let showCardPlan = needCard && needPlan
-        let showPlan = needPlan
-        let showCardReport = needCard && needDiaryReport && !Date.before(hour: 17)
-        let showOnlyCard = needCard
-        let showBreathWorkout = needFitness && needBreath
-        let showBreath = needBreath
-        let showWorkout = needFitness
-        
-        var bg = ""
-        if showCardPlan {
-            bg = "redA"
-        } else if showPlan {
-            bg = "redB"
-        } else if showCardReport {
-            bg = "grayA"
-        } else if showOnlyCard {
-            bg = "grayB"
-        } else if showBreathWorkout {
-            bg = "blueA"
-        } else if showWorkout || showBreath {
-            bg = "blueB"
-        } else {
-            bg = "orange"
-        }
-        
-        return VStack(spacing: 0) {
+      let data = entry.dashboard
+      return HStack {
+        Spacer()
+        VStack(spacing: 0) {
             Spacer()
-            if showCardPlan {
-                HStack {
-                    Image("card")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                    Text("打卡")
-                        .font(.title)
-                    Spacer()
-                }
-                .widgetURL(checkCardURL)
-                HStack {
-                    Image("target")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                    Text("计划")
-                        .font(.title)
-                    Spacer()
-                }
-                .widgetURL(todoURL)
-            } else if showPlan {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Image("target")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .offset(x: -5)
-                        Text("计划")
-                            .font(.title)
-                            .padding(.top, -5)
-                        Spacer()
-                    }
-                    Spacer()
-                }
-                .widgetURL(todoURL)
-            } else if showCardReport {
-                HStack {
-                    Image("card")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                    Text("打卡")
-                        .font(.title)
-                    Spacer()
-                }
-                .widgetURL(checkCardURL)
-                HStack {
-                    Image("noticeBoard")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                    Text("日报")
-                        .font(.title)
-                    Spacer()
-                }
-            } else if showOnlyCard {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Image("card")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .offset(x: -5)
-                        Text("打卡")
-                            .font(.title)
-                            .padding(.top, -5)
-                        Spacer()
-                    }
-                    Spacer()
-                }
-                .widgetURL(checkCardURL)
-            } else if showBreathWorkout {
-                HStack {
-                    Image("mirror")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                    Text("呼吸")
-                        .font(.title)
-                    Spacer()
-                }
-                HStack {
-                    Image("bmi")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                        .scaleEffect(.init(width: 0.9, height: 0.9))
-                    Text("锻炼")
-                        .font(.title)
-                    Spacer()
-                }
-                .widgetURL(bodyMassURL)
-            } else if showWorkout {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Image("bmi")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .offset(x: -8)
-                            .scaleEffect(.init(width: 0.9, height: 0.9))
-                        Text("锻炼")
-                            .font(.title)
-                            .padding(.top, -5)
-                        Spacer()
-                    }
-                    Spacer()
-                }
-                .widgetURL(bodyMassURL)
-            } else if showBreath {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Image("mirror")
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                        Text("呼吸")
-                            .font(.title)
-                            .padding(.top, -5)
-                        Spacer()
-                    }
-                    Spacer()
-                }
-            } else {
-                HStack {
-                    Spacer()
-                    Image("seed")
-                        .resizable()
-                        .aspectRatio(1, contentMode: .fit)
-                        .frame(width: 80)
-                    Spacer()
-                }
-            }
+            Image("card")
+              .resizable()
+              .aspectRatio(1, contentMode: .fit)
+          Text("\(Int(data.car?.status.range ?? 0))km")
+            .font(.footnote)
             Spacer()
-        }
-        .padding(.all, 14)
-        .background(Color(bg))
-        .foregroundColor(.white)
+          }
+        Spacer()
+      }
+      .padding(.all, 14)
+      .background(Color.black)
+      .foregroundColor(.white)
     }
     
     var todoView: some View {

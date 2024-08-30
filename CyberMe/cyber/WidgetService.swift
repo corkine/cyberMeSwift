@@ -29,6 +29,7 @@ struct Dashboard: Codable {
     var updateAt: Int64
     var needDiaryReport: Bool
     var needPlantWater: Bool
+    var car: Car?
     struct Ticket: Codable {
         var orderNo:String?
         var date:String?
@@ -99,6 +100,62 @@ struct Dashboard: Codable {
             case goalCut = "goal-cut"
             case bodyMassDay30 = "body-mass-day-30"
         }
+    }
+    struct Car: Codable {
+      var dumpTime: Int64?
+      var reportTime: Int64?
+      var status: CarStatus
+      var tripStatus: CarTripStatus
+      //var loc: CarLoc
+      var vin: String
+      enum CodingKeys: String, CodingKey {
+        case dumpTime = "dump-time"
+        case reportTime = "report-time"
+        case status
+        case tripStatus = "trip-status"
+        //case loc
+        case vin
+      }
+      struct CarStatus: Codable {
+        var oilDistance: Double
+        var inspection: Double
+        var windows: String
+        var parkingBrake: String
+        var doors: String
+        var speed: Double
+        var tyre: String
+        var fuelLevel: Double
+        var engineType: String
+        var lock: String
+        var range: Double
+        var oilLevel: Double
+        enum CodingKeys: String, CodingKey {
+          case oilDistance = "oil-distance"
+          case inspection
+          case windows
+          case parkingBrake = "parking-brake"
+          case doors
+          case speed
+          case tyre
+          case fuelLevel = "fuel-level"
+          case engineType = "engine-type"
+          case lock
+          case range
+          case oilLevel = "oil-level"
+        }
+      }
+      struct CarTripStatus: Codable {
+        var tripHours: Double
+        var fuel: Double
+        var averageFuel: Double
+        var mileage: Double
+        enum CodingKeys: String, CodingKey {
+          case tripHours = "trip-hours"
+          case fuel
+          case averageFuel = "average-fuel"
+          case mileage
+        }
+      }
     }
 }
 

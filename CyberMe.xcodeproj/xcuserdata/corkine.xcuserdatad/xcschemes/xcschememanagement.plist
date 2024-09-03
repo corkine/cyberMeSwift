@@ -27,12 +27,12 @@
 		<key>CyberMeStatusBar.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>22</integer>
+			<integer>5</integer>
 		</dict>
 		<key>CyberMeWidgetExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>47</integer>
 		</dict>
 		<key>MacLandmarks.xcscheme</key>
 		<dict>
@@ -41,12 +41,29 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Widget.xcscheme_^#shared#^_</key>
+		<key>WatchMe Watch App (Glance).xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>9</integer>
+		</dict>
+		<key>WatchMe Watch App (Notification).xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>WatchMe Watch App.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>cyberShare.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>watchMeExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -72,6 +89,16 @@
 			<true/>
 		</dict>
 		<key>195A3D4428BFA2C800239F01</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>198A83EE2C495B6F002BC107</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>198A84002C496998002BC107</key>
 		<dict>
 			<key>primary</key>
 			<true/>

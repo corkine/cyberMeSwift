@@ -39,6 +39,7 @@ enum CyberUrl {
 
     static let syncTodo = "cyberme://syncTodo"
     static let syncWidget = "cyberme://syncWidget"
+    static let svwUrl = "cyberme://flutter?app=car"
 
     static let uploadHealthData = "cyberme://uploadHealthData"
 

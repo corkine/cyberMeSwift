@@ -102,18 +102,18 @@ struct Dashboard: Codable {
         }
     }
     struct Car: Codable {
-      var dumpTime: Int64?
-      var reportTime: Int64?
+      var dumpTime: Int64
+      var reportTime: Int64
       var status: CarStatus
       var tripStatus: CarTripStatus
-      //var loc: CarLoc
+      var loc: CarLoc
       var vin: String
       enum CodingKeys: String, CodingKey {
         case dumpTime = "dump-time"
         case reportTime = "report-time"
         case status
         case tripStatus = "trip-status"
-        //case loc
+        case loc
         case vin
       }
       struct CarStatus: Codable {
@@ -156,6 +156,20 @@ struct Dashboard: Codable {
           case mileage
         }
       }
+      struct CarLoc: Codable {
+        var latitude: Int64
+        var longitude: Int64
+        var headDirection: Int
+        var time: String
+        var place: String
+        enum CodingKeys: String, CodingKey {
+          case latitude
+          case longitude
+          case headDirection = "head-direction"
+          case place
+          case time
+        }
+      }
     }
 }
 
@@ -174,9 +188,18 @@ extension Dashboard {
                            Todo(title: "睡觉", isFinished: false, create_at: "2"),
                            Todo(title: "打豆豆", isFinished: true, create_at: "3"),
                            Todo(title: "提醒事项", isFinished: false, create_at: "4")]
-    static let demo = Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "", tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
-                                todo: demoTodo, tickets: [Ticket.default], updateAt:
-                                    Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
+    static let demo = Dashboard(workStatus: "🟡",
+                                offWork: true,
+                                cardCheck: ["8:20","17:31"],
+                                weatherInfo: "",
+                                tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
+                                todo: demoTodo,
+                                tickets: [Ticket.default],
+                                updateAt: Int64(Date().timeIntervalSince1970),
+                                needDiaryReport: false,
+                                needPlantWater: true,
+                                car: Car(dumpTime:1725370208035, reportTime:1725271808000,
+                                  status: Car.CarStatus(oilDistance: 8500, inspection: 28500, windows: "closed", parkingBrake: "active", doors: "closed", speed: 0, tyre: "checked", fuelLevel: 27, engineType: "gasoline", lock: "locked", range: 110, oilLevel: 75), tripStatus: Car.CarTripStatus(tripHours: 50.05, fuel: 109.722, averageFuel: 6.8337, mileage: 1599), loc: Car.CarLoc(latitude: 34696612, longitude: 113680355, headDirection: 175, time: "2024-09-02 18:10:08", place: "河南省郑州市管城回族区贺江路"), vin: "LSVNR60C6R2022322"))
     static func failed(error:Error?) -> Dashboard {
         Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "请求失败：\(String(describing: error))",
                   todo: demoTodo, tickets: [], updateAt:

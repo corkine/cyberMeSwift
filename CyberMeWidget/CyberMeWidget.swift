@@ -336,25 +336,88 @@ struct CyberMeWidgetEntryView : View {
         .foregroundColor(.white)
         .widgetURL(URL(string: CyberUrl.syncWidget))
     }
+  
+    func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/dd HH:mm"
+        return formatter.string(from: date)
+    }
     
     var smallView: some View {
       let data = entry.dashboard
-      return HStack {
-        Spacer()
-        VStack(spacing: 0) {
+      let fuel = String(format:"%.0f", data.car?.tripStatus.fuel ?? 0)
+      let mile = String(format:"%.0f", data.car?.tripStatus.mileage ?? 0)
+      let cost = String(format:"%.1f", data.car?.tripStatus.averageFuel ?? 0)
+      let update = Date(timeIntervalSince1970: Double(data.car?.reportTime ?? 0) / 1000)
+      let range = String(format: "%.0f", data.car?.status.range ?? 0)
+      let fuelLevel = data.car?.status.fuelLevel
+      
+      return GeometryReader { geometry in
+        ZStack {
+          Color.black
+          
+          VStack(alignment: .leading, spacing: 5) {
+            HStack {
+              Image("vw")
+                  .resizable()
+                  .frame(width: 24, height: 24)
+              Spacer()
+              VStack(alignment: .trailing) {
+                Text(formatDate(update))
+                Text(data.car?.loc.place ?? "--")
+                  .truncationMode(.head)
+              }
+              .font(.system(size: 10))
+              .lineLimit(1)
+              .foregroundColor(.gray)
+            }
+            
+              
+            HStack(alignment: .firstTextBaseline) {
+              
+              if #available(iOSApplicationExtension 16.1, *) {
+                Text(range)
+                  .font(.system(size: 32))
+                  .fontWeight(.bold)
+                  .fontDesign(.monospaced)
+              } else {
+                Text(range)
+                  .font(.system(size: 32))
+              }
+                
+              Text("km")
+                .font(.system(size: 13))
+                .offset(x: -7)
+            }
+            .foregroundColor(.white)
+            
+            ProgressView(value: fuelLevel, total: 100)
+                .accentColor(.white)
+                .frame(width: 80, height: 10)
+                .offset(y: -7)
+              
             Spacer()
-            Image("card")
-              .resizable()
-              .aspectRatio(1, contentMode: .fit)
-          Text("\(Int(data.car?.status.range ?? 0))km")
-            .font(.footnote)
-            Spacer()
+            
+            HStack {
+              Spacer()
+              Text("\(fuel)L · \(mile)km · \(cost)L/100km")
+                .font(.system(size: 8))
+                .foregroundColor(.gray)
+                .lineLimit(1)
+                .offset(y: 8)
+              Spacer()
+            }
           }
-        Spacer()
+          .padding()
+          
+          Image("car")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: geometry.size.width - 20)
+            .offset(x: geometry.size.width / 8, y: geometry.size.height / 3.9)
+        }
+        .widgetURL(URL(string: CyberUrl.svwUrl))
       }
-      .padding(.all, 14)
-      .background(Color.black)
-      .foregroundColor(.white)
     }
     
     var todoView: some View {
@@ -519,33 +582,34 @@ struct CyberMeWidget: Widget {
 
 struct CyberMeWidget_Previews: PreviewProvider {
     static var previews: some View {
-//        CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-//                                                  dashboard: Dashboard.demo))
-//        .preferredColorScheme(.dark)
-//        .previewContext(WidgetPreviewContext(family: .systemSmall))
-        if #available(iOSApplicationExtension 16.0, *) {
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .preferredColorScheme(.dark)
-            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-            .previewDisplayName("Todo")
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .previewContext(WidgetPreviewContext(family: .accessoryInline))
-            .previewDisplayName("Weather")
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
-            .previewDisplayName("Shortcut")
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .preferredColorScheme(.dark)
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
-        } else {
-            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                      dashboard: Dashboard.demo))
-            .preferredColorScheme(.dark)
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
-        }
+      CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                dashboard: Dashboard.demo))
+      .preferredColorScheme(.dark)
+      .previewContext(WidgetPreviewContext(family: .systemSmall))
+      .previewDisplayName("Car")
+//        if #available(iOSApplicationExtension 16.0, *) {
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .preferredColorScheme(.dark)
+//            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+//            .previewDisplayName("Todo")
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .previewContext(WidgetPreviewContext(family: .accessoryInline))
+//            .previewDisplayName("Weather")
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+//            .previewDisplayName("Shortcut")
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .preferredColorScheme(.dark)
+//            .previewContext(WidgetPreviewContext(family: .systemMedium))
+//        } else {
+//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                      dashboard: Dashboard.demo))
+//            .preferredColorScheme(.dark)
+//            .previewContext(WidgetPreviewContext(family: .systemMedium))
+//        }
     }
 }

@@ -29,7 +29,7 @@
     "Flutter": [
 
     ],
-    "device_info_plus": [
+    "audio_session": [
 
     ],
     "flutter_image_compress": [
@@ -38,10 +38,16 @@
     "flutter_inappwebview": [
 
     ],
-    "health": [
+    "health_kit_reporter": [
 
     ],
     "image_picker_ios": [
+
+    ],
+    "just_audio": [
+
+    ],
+    "package_info_plus": [
 
     ],
     "pasteboard": [
@@ -60,6 +66,15 @@
 
     ],
     "url_launcher_ios": [
+
+    ],
+    "video_player_avfoundation": [
+
+    ],
+    "wakelock_plus": [
+
+    ],
+    "webview_flutter_wkwebview": [
 
     ]
   }

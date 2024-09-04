@@ -30,7 +30,6 @@
 		19431E532A18EC4A00210547 /* MessageBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19431E522A18EC4A00210547 /* MessageBus.swift */; };
 		1948648028D883A500064104 /* PhPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948647F28D883A500064104 /* PhPicker.swift */; };
 		1948648228D89DF300064104 /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948648128D89DF300064104 /* TodoView.swift */; };
-		1948B75F28F6C569009BECD0 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* WidgetService.swift */; };
 		1948B76128F6C7F7009BECD0 /* CyberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA428D36D9E00860518 /* CyberService.swift */; };
 		1948B76228F6D0A4009BECD0 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* WidgetService.swift */; };
 		1948B76528F858CD009BECD0 /* TimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B76428F858CD009BECD0 /* TimeUtil.swift */; };
@@ -83,6 +82,9 @@
 		19D6C3BB28D1514300ED5D4B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D6C3BA28D1514300ED5D4B /* Model.swift */; };
 		19D6C3BD28D1522E00ED5D4B /* Hike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D6C3BC28D1522E00ED5D4B /* Hike.swift */; };
 		19DBD54F28D61E190086B710 /* LeaderBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DBD54E28D61E190086B710 /* LeaderBoard.swift */; };
+		19E4D5632C88782700729B98 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E4D5612C88782700729B98 /* WidgetView.swift */; };
+		19E4D5652C88789C00729B98 /* WidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E4D5642C88789C00729B98 /* WidgetProvider.swift */; };
+		19E4D5662C88790B00729B98 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* WidgetService.swift */; };
 		19E7F6FA299E56C400AB5D68 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */; };
 		19E9C08D29F02FC900B4FFC4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9C08C29F02FC900B4FFC4 /* ShareViewController.swift */; };
 		19E9C09429F02FC900B4FFC4 /* CyberShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -90,7 +92,7 @@
 		19F4DC02291E2585006B7D92 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F4DC01291E2585006B7D92 /* DashboardView.swift */; };
 		19FD182928D9CBB0004F97B3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180028D9CB27004F97B3 /* WidgetKit.framework */; };
 		19FD182A28D9CBB0004F97B3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180228D9CB27004F97B3 /* SwiftUI.framework */; };
-		19FD182D28D9CBB0004F97B3 /* CyberMeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FD182C28D9CBB0004F97B3 /* CyberMeWidget.swift */; };
+		19FD182D28D9CBB0004F97B3 /* WidgetMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FD182C28D9CBB0004F97B3 /* WidgetMain.swift */; };
 		19FD182F28D9CBB1004F97B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19FD182E28D9CBB1004F97B3 /* Assets.xcassets */; };
 		19FD183328D9CBB1004F97B3 /* CyberMeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		19FF8EC529001FCA009C96C3 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Extension.swift */; };
@@ -241,6 +243,8 @@
 		19D6C3BA28D1514300ED5D4B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		19D6C3BC28D1522E00ED5D4B /* Hike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hike.swift; sourceTree = "<group>"; };
 		19DBD54E28D61E190086B710 /* LeaderBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderBoard.swift; sourceTree = "<group>"; };
+		19E4D5612C88782700729B98 /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
+		19E4D5642C88789C00729B98 /* WidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetProvider.swift; sourceTree = "<group>"; };
 		19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CyberShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		19E9C08C29F02FC900B4FFC4 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		19E9C09129F02FC900B4FFC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -249,7 +253,7 @@
 		19FD180028D9CB27004F97B3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		19FD180228D9CB27004F97B3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CyberMeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		19FD182C28D9CBB0004F97B3 /* CyberMeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberMeWidget.swift; sourceTree = "<group>"; };
+		19FD182C28D9CBB0004F97B3 /* WidgetMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetMain.swift; sourceTree = "<group>"; };
 		19FD182E28D9CBB1004F97B3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19FD183028D9CBB1004F97B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		19FF8EC429001FCA009C96C3 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
@@ -528,7 +532,6 @@
 				1957D61B29F66F5F00EE5334 /* CS+Ticket.swift */,
 				197C90D6291F620C00373BEF /* CS+WeekPlan.swift */,
 				1957D62329F7F9B900EE5334 /* CS+Story.swift */,
-				1948B75E28F6C569009BECD0 /* WidgetService.swift */,
 				19B925752906A5370039948A /* HealthManager.swift */,
 			);
 			path = cyber;
@@ -606,7 +609,10 @@
 		19FD182B28D9CBB0004F97B3 /* CyberMeWidget */ = {
 			isa = PBXGroup;
 			children = (
-				19FD182C28D9CBB0004F97B3 /* CyberMeWidget.swift */,
+				1948B75E28F6C569009BECD0 /* WidgetService.swift */,
+				19FD182C28D9CBB0004F97B3 /* WidgetMain.swift */,
+				19E4D5642C88789C00729B98 /* WidgetProvider.swift */,
+				19E4D5612C88782700729B98 /* WidgetView.swift */,
 				19FF8EC829002041009C96C3 /* CyberMeWidgetExtension.entitlements */,
 				19FD182E28D9CBB1004F97B3 /* Assets.xcassets */,
 				19FD183028D9CBB1004F97B3 /* Info.plist */,
@@ -1023,6 +1029,7 @@
 				19D6C3B728D14C4000ED5D4B /* Badge.swift in Sources */,
 				19B925782906AD830039948A /* BodyMassView.swift in Sources */,
 				19B925762906A5370039948A /* HealthManager.swift in Sources */,
+				19E4D5662C88790B00729B98 /* WidgetService.swift in Sources */,
 				19DBD54F28D61E190086B710 /* LeaderBoard.swift in Sources */,
 				19625BA228D365B600860518 /* CyberHomeView.swift in Sources */,
 				19CE761628D240D500AF8AFF /* LandmarkCommands.swift in Sources */,
@@ -1034,7 +1041,6 @@
 				19D2A9E028D489AE009C81C4 /* Bullseye.swift in Sources */,
 				19CE75ED28D2307F00AF8AFF /* Landmarks.swift in Sources */,
 				193548D8290CD99F00B2266C /* FoodAccount.xcdatamodeld in Sources */,
-				1948B75F28F6C569009BECD0 /* WidgetService.swift in Sources */,
 				1948648028D883A500064104 /* PhPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1070,8 +1076,9 @@
 			files = (
 				1948B76228F6D0A4009BECD0 /* WidgetService.swift in Sources */,
 				190995BA2900112A000B5770 /* CS+API.swift in Sources */,
-				19FD182D28D9CBB0004F97B3 /* CyberMeWidget.swift in Sources */,
+				19FD182D28D9CBB0004F97B3 /* WidgetMain.swift in Sources */,
 				190995BD29001135000B5770 /* CS+Setting.swift in Sources */,
+				19E4D5652C88789C00729B98 /* WidgetProvider.swift in Sources */,
 				194ABAD9292D28950000F8D4 /* HealthManager.swift in Sources */,
 				19FF8EC629001FCA009C96C3 /* View+Extension.swift in Sources */,
 				193548E4290CF86200B2266C /* Default.swift in Sources */,
@@ -1080,6 +1087,7 @@
 				194ABADA292D28DB0000F8D4 /* CS+Health.swift in Sources */,
 				197C90DA291F659D00373BEF /* CS+Dashboard.swift in Sources */,
 				1948B76128F6C7F7009BECD0 /* CyberService.swift in Sources */,
+				19E4D5632C88782700729B98 /* WidgetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

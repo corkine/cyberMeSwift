@@ -249,10 +249,10 @@ struct CyberApp: App {
             }
             break
         case "flutterApps":
-            AppDelegate.openFlutterApp()
+            AppDelegate.openFlutterApp(route: "/menu")
             break
         case "flutterApps-dynamic":
-            AppDelegate.openFlutterApp(route: AppDelegate.lastRoute["route"] ?? "/app")
+            AppDelegate.openFlutterApp(route: AppDelegate.lastRoute["route"] ?? "/menu")
         case "addLog":
             break
         case "foodBalanceAdd":
@@ -325,7 +325,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
     }
     
-    public static var lastRoute = ["name": "最近应用", "route": "/app"]
+    public static var lastRoute = ["name": "最近应用", "route": "/menu"]
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions
@@ -353,6 +353,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             if call.method == "setLastUsedAppRoute" {
                 let args = call.arguments as! [String:String]
                 Self.lastRoute = args;
+                result(nil)
+            } else if call.method == "refreshWidget" {
+                Dashboard.updateWidget(inSeconds: 0)
                 result(nil)
             } else {
                 result(FlutterMethodNotImplemented)

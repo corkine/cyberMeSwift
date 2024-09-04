@@ -1,59 +1,12 @@
 //
-//  CyberMeWidget.swift
-//  CyberMeWidget
+//  WidgetView.swift
+//  CyberMe
 //
-//  Created by corkine on 2022/9/20.
+//  Created by Corkine on 2024/9/4.
 //
 
 import WidgetKit
 import SwiftUI
-
-struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), dashboard: Dashboard.demo)
-    }
-
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), dashboard: Dashboard.demo)
-        completion(entry)
-    }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
-        Task.detached {
-            let (location, err) = await WidgetLocation.fetchIfTime()
-            if let err = err {
-                CyberService.sendNotice(msg: "Error when fetch location: \(err.localizedDescription)")
-            } else {
-                CyberService.trackUrl(location: location!, by: "corkine@CMIXR")
-            }
-        }
-        Task.detached {
-            let (dashboard, error) = await CyberService.fetchDashboard(location: nil)
-            if let dashboard = dashboard {
-                let currentDate = Date()
-                let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
-                
-                let entry = SimpleEntry(date: currentDate, dashboard: dashboard)
-
-                let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
-                completion(timeline)
-            } else {
-                let currentDate = Date()
-                let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
-                
-                let entry = SimpleEntry(date: currentDate, dashboard: Dashboard.failed(error: error))
-
-                let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
-                completion(timeline)
-            }
-        }
-    }
-}
-
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let dashboard: Dashboard
-}
 
 struct CyberMeWidgetEntryView : View {
     
@@ -339,7 +292,7 @@ struct CyberMeWidgetEntryView : View {
   
     func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "M/dd HH:mm"
+        formatter.dateFormat = "MM/dd HH:mm"
         return formatter.string(from: date)
     }
     
@@ -351,6 +304,19 @@ struct CyberMeWidgetEntryView : View {
       let update = Date(timeIntervalSince1970: Double(data.car?.reportTime ?? 0) / 1000)
       let range = String(format: "%.0f", data.car?.status.range ?? 0)
       let fuelLevel = data.car?.status.fuelLevel
+      var warning = false
+      if let car = data.car {
+        let status = car.status
+        if  status.parkingBrake == "active" &&
+            (
+              status.tyre != "checked" ||
+              status.lock != "locked" ||
+              status.doors != "closed" ||
+              status.windows != "closed"
+            ) {
+          warning = true
+        }
+      }
       
       return GeometryReader { geometry in
         ZStack {
@@ -358,16 +324,23 @@ struct CyberMeWidgetEntryView : View {
           
           VStack(alignment: .leading, spacing: 5) {
             HStack {
-              Image("vw")
-                  .resizable()
-                  .frame(width: 24, height: 24)
+              if warning {
+                Image("vw")
+                    .resizable()
+                    .colorMultiply(Color(red: 0.7, green: 0.2, blue: 0.2, opacity: 0.9))
+                    .frame(width: 20, height: 20)
+              } else {
+                Image("vw")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+              }
               Spacer()
               VStack(alignment: .trailing) {
                 Text(formatDate(update))
                 Text(data.car?.loc.place ?? "--")
                   .truncationMode(.head)
               }
-              .font(.system(size: 10))
+              .font(.system(size: 9))
               .lineLimit(1)
               .foregroundColor(.gray)
             }
@@ -451,19 +424,6 @@ struct CyberMeWidgetEntryView : View {
         }
     }
     
-    var shortcutView: some View {
-        return ZStack {
-            if #available(iOSApplicationExtension 16.0, *) {
-                AccessoryWidgetBackground()
-            } else {
-                Color.white.opacity(0.2)
-            }
-            Image(systemName: "car.side")
-                .font(.system(size: 24))
-        }
-        .widgetURL(URL(string: CyberUrl.showShortcut))
-    }
-    
     var workView: some View {
         let data = entry.dashboard
         let finishWork = data.offWork
@@ -517,7 +477,7 @@ struct CyberMeWidgetEntryView : View {
                 let lowTemp = "↓\(Int(temp.low))\(tempLowDetail ? String(format: "%+.0f", temp.diffLow!) : "")"
                 return Text("\(isYesterday ? "*" : "")\(highTemp)\(lowTemp) \(weatherInfo)")
             }
-        } 
+        }
         
         return Text("\(weatherInfo)")
     }
@@ -532,84 +492,88 @@ struct CyberMeWidgetEntryView : View {
             weatherView
         case .accessoryRectangular:
             todoView
-        case .accessoryCircular:
-            shortcutView
         default:
             Text("Not Support")
         }
     }
 }
 
-@available(iOSApplicationExtension 16.0, *)
-@main
-struct CyberMeWidget: Widget {
-    let kind: String = "CyberMeWidget"
+struct QuickWidgetEntryView : View {
     
-    let backgroundData = BackgroundManager()
+    @Environment(\.widgetFamily) var family
     
-    var supportFamilies: [WidgetFamily] {
-        return [WidgetFamily.systemMedium,
-                WidgetFamily.systemSmall,
-                WidgetFamily.accessoryInline,
-                WidgetFamily.accessoryCircular,
-                WidgetFamily.accessoryRectangular]
+    var entry: QuickProvider.Entry
+    let basic: CGFloat = 11.5
+    
+    var store = UserDefaults(suiteName: Default.groupName)
+    
+    var dateStr: String {
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.dateFormat = "M月d日 E"//"MM月dd日 E"
+        return formatter.string(from: now)
     }
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            CyberMeWidgetEntryView(entry: entry)
-        }
-        .supportedFamilies(supportFamilies)
-        .configurationDisplayName("CyberMe")
-        .description("Cloud Life Easy")
-        .onBackgroundURLSessionEvents { (sessionIdentifier, completion) in
-            if sessionIdentifier == self.kind {
-                self.backgroundData.update()
-                self.backgroundData.completionHandler = completion
-                print("background update")
+    
+    func alert(_ text: String) -> some View {
+        ZStack {
+            Color.white.opacity(0.22)
+            HStack(spacing:1) {
+                Text(text)
             }
+            .font(.system(size: basic))
+            .padding(.horizontal, 6)
+            .padding(.vertical, 3)
         }
+        .fixedSize(horizontal: true, vertical: true)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
-}
-
-//@main
-//struct CyberMeWidgets: WidgetBundle {
-//    @WidgetBundleBuilder
-//    var body: some Widget {
-//        CyberMeWidget()
-//    }
-//}
-
-struct CyberMeWidget_Previews: PreviewProvider {
-    static var previews: some View {
-      CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                dashboard: Dashboard.demo))
-      .preferredColorScheme(.dark)
-      .previewContext(WidgetPreviewContext(family: .systemSmall))
-      .previewDisplayName("Car")
-//        if #available(iOSApplicationExtension 16.0, *) {
-//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-//                                                      dashboard: Dashboard.demo))
-//            .preferredColorScheme(.dark)
-//            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-//            .previewDisplayName("Todo")
-//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-//                                                      dashboard: Dashboard.demo))
-//            .previewContext(WidgetPreviewContext(family: .accessoryInline))
-//            .previewDisplayName("Weather")
-//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-//                                                      dashboard: Dashboard.demo))
-//            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
-//            .previewDisplayName("Shortcut")
-//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-//                                                      dashboard: Dashboard.demo))
-//            .preferredColorScheme(.dark)
-//            .previewContext(WidgetPreviewContext(family: .systemMedium))
-//        } else {
-//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-//                                                      dashboard: Dashboard.demo))
-//            .preferredColorScheme(.dark)
-//            .previewContext(WidgetPreviewContext(family: .systemMedium))
-//        }
+    
+    /// 如果工作日没有打卡或者是周六 8:00 - 20:00，则显示
+    func needHCMCard(_ data: Dashboard) -> Bool {
+        let now = Date()
+        if now.weekday >= 6 {
+            let hour = now.hour
+            return hour >= 8 && hour <= 20
+        }
+        if !data.offWork { return true }
+        return false
+    }
+    
+    var magicNumber: String {
+        let base = (store!.dictionary(forKey: "settings") as? [String:String] ?? [:])["wireguardBasePort"]
+        let baseInt = Int(base ?? "21000") ?? 21000
+        let calendar = Calendar.current
+        let today = Date()
+        let dayOfYear = calendar.ordinality(of: .day, in: .year, for: today)
+        return "\(dayOfYear! + baseInt)"
+    }
+    
+    func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/dd HH:mm"
+        return formatter.string(from: date)
+    }
+    
+    var shortcutView: some View {
+        return ZStack {
+            if #available(iOSApplicationExtension 16.0, *) {
+                AccessoryWidgetBackground()
+            } else {
+                Color.white.opacity(0.2)
+            }
+            Image(systemName: "car.side")
+                .font(.system(size: 24))
+        }
+        .widgetURL(URL(string: CyberUrl.showShortcut))
+    }
+    
+    var body: some View {
+        switch family {
+        case .accessoryCircular:
+            shortcutView
+        default:
+            Text("Not Support")
+        }
     }
 }

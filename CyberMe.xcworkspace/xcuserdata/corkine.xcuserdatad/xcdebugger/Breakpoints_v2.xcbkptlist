@@ -70,16 +70,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CCFD5DF4-5FE8-48C9-98EB-3AE47C056692"
+            uuid = "A5E0C601-5BD8-42C1-960D-1F5B7AD416F4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CyberMe/app/CyberApp.swift"
+            filePath = "CyberMeWidget/WidgetService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
-            landmarkName = "application(_:configurationForConnecting:options:)"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
+            landmarkName = "fetchDashboard(location:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

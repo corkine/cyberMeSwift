@@ -102,7 +102,7 @@ struct CyberMeWidgetEntryView : View {
         let bg = WidgetBackground(rawValue: store!.string(forKey: "widgetBG") ?? "mountain")
         let alertOn = store!.bool(forKey: "alert")
         let fakeTodo = data.tickets.filter(\.isUncomming).map { ticket in
-            Dashboard.Todo(title: ticket.description, isFinished: false, create_at: "0")
+            Todo(title: ticket.description, isFinished: false, create_at: "0", list: "Work")
         }
         data.todo = fakeTodo + data.todo
         
@@ -396,7 +396,7 @@ struct CyberMeWidgetEntryView : View {
     var todoView: some View {
         var data = entry.dashboard
         let fakeTodo = data.tickets.filter(\.isUncomming).map { ticket in
-            Dashboard.Todo(title: ticket.description, isFinished: false, create_at: "0")
+          Todo(title: ticket.description, isFinished: false, create_at: "0", list: "车票")
         }
         data.todo = Array((fakeTodo + data.todo).prefix(3))
         

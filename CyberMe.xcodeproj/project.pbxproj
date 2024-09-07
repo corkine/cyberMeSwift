@@ -17,7 +17,6 @@
 		192E141429FE2EE2005468DA /* StatusBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192E141329FE2EE2005468DA /* StatusBarApp.swift */; };
 		192E141829FE2EE2005468DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192E141729FE2EE2005468DA /* Assets.xcassets */; };
 		192E141B29FE2EE2005468DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192E141A29FE2EE2005468DA /* Preview Assets.xcassets */; };
-		192E142129FE2FBF005468DA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 192E142029FE2FBF005468DA /* Info.plist */; };
 		192E142329FE3095005468DA /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192E142229FE3095005468DA /* RouteView.swift */; };
 		192E14252A0BB7A7005468DA /* DapentiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192E14242A0BB7A7005468DA /* DapentiView.swift */; };
 		193323A228D2264F0038AD74 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193323A128D2264F0038AD74 /* Feature.swift */; };
@@ -64,13 +63,34 @@
 		198A84062C496998002BC107 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A84052C496998002BC107 /* ContentView.swift */; };
 		198A84082C496999002BC107 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 198A84072C496999002BC107 /* Assets.xcassets */; };
 		198A840B2C496999002BC107 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 198A840A2C496999002BC107 /* Preview Assets.xcassets */; };
-		198A840E2C496999002BC107 /* WatchMe Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 198A84012C496998002BC107 /* WatchMe Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		198A840E2C496999002BC107 /* CyberMeWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 198A84012C496998002BC107 /* CyberMeWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		199160CE2C34376900DA7CA2 /* CarPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199160CD2C34376900DA7CA2 /* CarPlay.swift */; };
 		199BA88E291653D00080925D /* CyberNavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88D291653D00080925D /* CyberNavView.swift */; };
 		199BA890291653FE0080925D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BA88F291653FE0080925D /* ProfileView.swift */; };
 		19B925762906A5370039948A /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
 		19B925782906AD830039948A /* BodyMassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925772906AD830039948A /* BodyMassView.swift */; };
 		19BD734728CA07AF0062B8D9 /* landmarkData.json in Resources */ = {isa = PBXBuildFile; fileRef = 19BD734628CA07AF0062B8D9 /* landmarkData.json */; };
+		19C5F2932C8C4CCE000EE87B /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C5F2922C8C4CCE000EE87B /* Connectivity.swift */; };
+		19C5F2942C8C4CCE000EE87B /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C5F2922C8C4CCE000EE87B /* Connectivity.swift */; };
+		19C5F29A2C8C6F8F000EE87B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180028D9CB27004F97B3 /* WidgetKit.framework */; };
+		19C5F29B2C8C6F8F000EE87B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180228D9CB27004F97B3 /* SwiftUI.framework */; };
+		19C5F29E2C8C6F8F000EE87B /* WatchWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C5F29D2C8C6F8F000EE87B /* WatchWidget.swift */; };
+		19C5F2A02C8C6F90000EE87B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19C5F29F2C8C6F90000EE87B /* Assets.xcassets */; };
+		19C5F2A42C8C6F90000EE87B /* CyberMeWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 19C5F2992C8C6F8F000EE87B /* CyberMeWatchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		19C5F2AB2C8C723B000EE87B /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* WidgetService.swift */; };
+		19C5F2AC2C8C7290000EE87B /* CyberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA428D36D9E00860518 /* CyberService.swift */; };
+		19C5F2AD2C8C7293000EE87B /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
+		19C5F2AE2C8C729A000EE87B /* Lib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Lib+Extension.swift */; };
+		19C5F2AF2C8C729D000EE87B /* TimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B76428F858CD009BECD0 /* TimeUtil.swift */; };
+		19C5F2B02C8C72AC000EE87B /* CS+Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D62329F7F9B900EE5334 /* CS+Story.swift */; };
+		19C5F2B12C8C72AC000EE87B /* CS+WeekPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D6291F620C00373BEF /* CS+WeekPlan.swift */; };
+		19C5F2B22C8C72AC000EE87B /* CS+Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995BB29001135000B5770 /* CS+Setting.swift */; };
+		19C5F2B32C8C72AC000EE87B /* CS+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61D29F6704C00EE5334 /* CS+Business.swift */; };
+		19C5F2B42C8C72AC000EE87B /* CS+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D8291F653E00373BEF /* CS+Dashboard.swift */; };
+		19C5F2B52C8C72AC000EE87B /* CS+Health.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90DB291F65EE00373BEF /* CS+Health.swift */; };
+		19C5F2B62C8C72AC000EE87B /* CS+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995B82900112A000B5770 /* CS+API.swift */; };
+		19C5F2B72C8C72AC000EE87B /* CS+Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61B29F66F5F00EE5334 /* CS+Ticket.swift */; };
+		19C5F2B82C8C72B5000EE87B /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
 		19CE75EA28D22EB400AF8AFF /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE75E928D22EB400AF8AFF /* Helper.swift */; };
 		19CE75ED28D2307F00AF8AFF /* Landmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE75EC28D2307F00AF8AFF /* Landmarks.swift */; };
 		19CE761628D240D500AF8AFF /* LandmarkCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE761528D240D500AF8AFF /* LandmarkCommands.swift */; };
@@ -85,16 +105,30 @@
 		19E4D5632C88782700729B98 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E4D5612C88782700729B98 /* WidgetView.swift */; };
 		19E4D5652C88789C00729B98 /* WidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E4D5642C88789C00729B98 /* WidgetProvider.swift */; };
 		19E4D5662C88790B00729B98 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* WidgetService.swift */; };
+		19E4D5672C8BFB9F00729B98 /* WidgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B75E28F6C569009BECD0 /* WidgetService.swift */; };
+		19E4D5682C8BFC1500729B98 /* CyberService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19625BA428D36D9E00860518 /* CyberService.swift */; };
+		19E4D5692C8BFC3000729B98 /* TimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948B76428F858CD009BECD0 /* TimeUtil.swift */; };
+		19E4D56A2C8BFC4500729B98 /* HealthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B925752906A5370039948A /* HealthManager.swift */; };
+		19E4D56B2C8BFC7000729B98 /* Lib+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C8A1A291223EE00FF975F /* Lib+Extension.swift */; };
+		19E4D56C2C8BFC8A00729B98 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193548E2290CF5CD00B2266C /* Default.swift */; };
+		19E4D56D2C8BFC9D00729B98 /* CS+Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995BB29001135000B5770 /* CS+Setting.swift */; };
+		19E4D56E2C8BFC9D00729B98 /* CS+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D8291F653E00373BEF /* CS+Dashboard.swift */; };
+		19E4D56F2C8BFC9D00729B98 /* CS+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61D29F6704C00EE5334 /* CS+Business.swift */; };
+		19E4D5702C8BFC9D00729B98 /* CS+Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D61B29F66F5F00EE5334 /* CS+Ticket.swift */; };
+		19E4D5712C8BFC9D00729B98 /* CS+WeekPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D6291F620C00373BEF /* CS+WeekPlan.swift */; };
+		19E4D5722C8BFC9D00729B98 /* CS+Health.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90DB291F65EE00373BEF /* CS+Health.swift */; };
+		19E4D5732C8BFC9D00729B98 /* CS+Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1957D62329F7F9B900EE5334 /* CS+Story.swift */; };
+		19E4D5742C8BFC9D00729B98 /* CS+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190995B82900112A000B5770 /* CS+API.swift */; };
 		19E7F6FA299E56C400AB5D68 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 19E7F6F9299E56C400AB5D68 /* SwiftUIFlowLayout */; };
 		19E9C08D29F02FC900B4FFC4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9C08C29F02FC900B4FFC4 /* ShareViewController.swift */; };
-		19E9C09429F02FC900B4FFC4 /* CyberShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		19E9C09429F02FC900B4FFC4 /* CyberShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		19E9C09929F037E000B4FFC4 /* ShortLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9C09829F037E000B4FFC4 /* ShortLinkView.swift */; };
 		19F4DC02291E2585006B7D92 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F4DC01291E2585006B7D92 /* DashboardView.swift */; };
 		19FD182928D9CBB0004F97B3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180028D9CB27004F97B3 /* WidgetKit.framework */; };
 		19FD182A28D9CBB0004F97B3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FD180228D9CB27004F97B3 /* SwiftUI.framework */; };
 		19FD182D28D9CBB0004F97B3 /* WidgetMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FD182C28D9CBB0004F97B3 /* WidgetMain.swift */; };
 		19FD182F28D9CBB1004F97B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19FD182E28D9CBB1004F97B3 /* Assets.xcassets */; };
-		19FD183328D9CBB1004F97B3 /* CyberMeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		19FD183328D9CBB1004F97B3 /* CyberMeWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		19FF8EC529001FCA009C96C3 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Extension.swift */; };
 		19FF8EC629001FCA009C96C3 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF8EC429001FCA009C96C3 /* View+Extension.swift */; };
 		19FFA8FA290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFA8F8290FC16800024E87 /* FoodAccountDAO+CoreDataClass.swift */; };
@@ -111,6 +145,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 198A84002C496998002BC107;
 			remoteInfo = "WatchMe Watch App";
+		};
+		19C5F2A22C8C6F90000EE87B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 195A3D2328BFA2C600239F01 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 19C5F2982C8C6F8F000EE87B;
+			remoteInfo = CyberMeWatchWidgetExtension;
 		};
 		19D2A9F128D4B4F6009C81C4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -136,27 +177,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		19C5F2A82C8C6F90000EE87B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				19C5F2A42C8C6F90000EE87B /* CyberMeWatchWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		19CE757D28D22B4A00AF8AFF /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				198A840E2C496999002BC107 /* WatchMe Watch App.app in Embed Watch Content */,
+				198A840E2C496999002BC107 /* CyberMeWatch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		19FD180D28D9CB28004F97B3 /* Embed App Extensions */ = {
+		19FD180D28D9CB28004F97B3 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				19E9C09429F02FC900B4FFC4 /* CyberShare.appex in Embed App Extensions */,
-				19FD183328D9CBB1004F97B3 /* CyberMeWidgetExtension.appex in Embed App Extensions */,
+				19E9C09429F02FC900B4FFC4 /* CyberShare.appex in Embed Foundation Extensions */,
+				19FD183328D9CBB1004F97B3 /* CyberMeWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -191,6 +243,7 @@
 		1948B76428F858CD009BECD0 /* TimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
 		194ABAD7292CF5E70000F8D4 /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
 		194B0B5029F157B100324E52 /* LastNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNoteView.swift; sourceTree = "<group>"; };
+		19501B3E2C8C47E100B401F8 /* WatchMe Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WatchMe Watch App.entitlements"; sourceTree = "<group>"; };
 		1957D61229F4114800EE5334 /* ExpressCheckAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressCheckAddView.swift; sourceTree = "<group>"; };
 		1957D61429F58A1800EE5334 /* LastDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDiaryView.swift; sourceTree = "<group>"; };
 		1957D61629F5922200EE5334 /* GptAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GptAnswerView.swift; sourceTree = "<group>"; };
@@ -212,7 +265,7 @@
 		197C90D6291F620C00373BEF /* CS+WeekPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+WeekPlan.swift"; sourceTree = "<group>"; };
 		197C90D8291F653E00373BEF /* CS+Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Dashboard.swift"; sourceTree = "<group>"; };
 		197C90DB291F65EE00373BEF /* CS+Health.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CS+Health.swift"; sourceTree = "<group>"; };
-		198A84012C496998002BC107 /* WatchMe Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchMe Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		198A84012C496998002BC107 /* CyberMeWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CyberMeWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		198A84032C496998002BC107 /* WatchMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchMeApp.swift; sourceTree = "<group>"; };
 		198A84052C496998002BC107 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		198A84072C496999002BC107 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -225,6 +278,12 @@
 		19B925772906AD830039948A /* BodyMassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMassView.swift; sourceTree = "<group>"; };
 		19BD734628CA07AF0062B8D9 /* landmarkData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = landmarkData.json; sourceTree = "<group>"; };
 		19BD734828CAB6400062B8D9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		19C5F2922C8C4CCE000EE87B /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		19C5F2992C8C6F8F000EE87B /* CyberMeWatchWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CyberMeWatchWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		19C5F29D2C8C6F8F000EE87B /* WatchWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWidget.swift; sourceTree = "<group>"; };
+		19C5F29F2C8C6F90000EE87B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		19C5F2A12C8C6F90000EE87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		19C5F2B92C8C89C5000EE87B /* CyberMeWatchWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMeWatchWidgetExtension.entitlements; sourceTree = "<group>"; };
 		19CE75E928D22EB400AF8AFF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		19CE75EC28D2307F00AF8AFF /* Landmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landmarks.swift; sourceTree = "<group>"; };
 		19CE75FC28D23A5F00AF8AFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -291,6 +350,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		19C5F2962C8C6F8F000EE87B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19C5F29B2C8C6F8F000EE87B /* SwiftUI.framework in Frameworks */,
+				19C5F29A2C8C6F8F000EE87B /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,11 +480,12 @@
 				19BD734828CAB6400062B8D9 /* README.md */,
 				195A3D2D28BFA2C600239F01 /* CyberMe */,
 				19CE75F928D23A5F00AF8AFF /* CyberMeMac */,
+				192E141229FE2EE2005468DA /* CyberMeStatusBar */,
+				19E9C08B29F02FC900B4FFC4 /* CyberShare */,
 				19D2A9EE28D4B4F6009C81C4 /* CyberMeTests */,
 				19FD182B28D9CBB0004F97B3 /* CyberMeWidget */,
-				19E9C08B29F02FC900B4FFC4 /* CyberShare */,
-				192E141229FE2EE2005468DA /* CyberMeStatusBar */,
-				198A84022C496998002BC107 /* WatchMe Watch App */,
+				198A84022C496998002BC107 /* CyberMeWatch */,
+				19C5F29C2C8C6F8F000EE87B /* CyberMeWatchWidget */,
 				19FD17FF28D9CB27004F97B3 /* Frameworks */,
 				195A3D2C28BFA2C600239F01 /* Products */,
 				EABBB441DD37E808531248A7 /* Pods */,
@@ -431,7 +500,8 @@
 				19FD182828D9CBB0004F97B3 /* CyberMeWidgetExtension.appex */,
 				19E9C08A29F02FC900B4FFC4 /* CyberShare.appex */,
 				192E141129FE2EE2005468DA /* CyberMeStatusBar.app */,
-				198A84012C496998002BC107 /* WatchMe Watch App.app */,
+				198A84012C496998002BC107 /* CyberMeWatch.app */,
+				19C5F2992C8C6F8F000EE87B /* CyberMeWatchWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -462,15 +532,17 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		198A84022C496998002BC107 /* WatchMe Watch App */ = {
+		198A84022C496998002BC107 /* CyberMeWatch */ = {
 			isa = PBXGroup;
 			children = (
 				198A84032C496998002BC107 /* WatchMeApp.swift */,
 				198A84052C496998002BC107 /* ContentView.swift */,
+				19C5F2922C8C4CCE000EE87B /* Connectivity.swift */,
 				198A84072C496999002BC107 /* Assets.xcassets */,
+				19501B3E2C8C47E100B401F8 /* WatchMe Watch App.entitlements */,
 				198A84092C496999002BC107 /* Preview Content */,
 			);
-			path = "WatchMe Watch App";
+			path = CyberMeWatch;
 			sourceTree = "<group>";
 		};
 		198A84092C496999002BC107 /* Preview Content */ = {
@@ -479,6 +551,17 @@
 				198A840A2C496999002BC107 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		19C5F29C2C8C6F8F000EE87B /* CyberMeWatchWidget */ = {
+			isa = PBXGroup;
+			children = (
+				19C5F29D2C8C6F8F000EE87B /* WatchWidget.swift */,
+				19C5F2B92C8C89C5000EE87B /* CyberMeWatchWidgetExtension.entitlements */,
+				19C5F29F2C8C6F90000EE87B /* Assets.xcassets */,
+				19C5F2A12C8C6F90000EE87B /* Info.plist */,
+			);
+			path = CyberMeWatchWidget;
 			sourceTree = "<group>";
 		};
 		19CE75F928D23A5F00AF8AFF /* CyberMeMac */ = {
@@ -663,7 +746,7 @@
 				195A3D2828BFA2C600239F01 /* Frameworks */,
 				195A3D2928BFA2C600239F01 /* Resources */,
 				19CE757D28D22B4A00AF8AFF /* Embed Watch Content */,
-				19FD180D28D9CB28004F97B3 /* Embed App Extensions */,
+				19FD180D28D9CB28004F97B3 /* Embed Foundation Extensions */,
 				BDC85593F725377739150FB8 /* [CP] Embed Pods Frameworks */,
 				15E4CFDBBEEECD616F582242 /* [CP-User] Embed Flutter Build cyberme_flutter Script */,
 			);
@@ -683,22 +766,41 @@
 			productReference = 195A3D2B28BFA2C600239F01 /* CyberMe.app */;
 			productType = "com.apple.product-type.application";
 		};
-		198A84002C496998002BC107 /* WatchMe Watch App */ = {
+		198A84002C496998002BC107 /* CyberMeWatch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 198A840F2C496999002BC107 /* Build configuration list for PBXNativeTarget "WatchMe Watch App" */;
+			buildConfigurationList = 198A840F2C496999002BC107 /* Build configuration list for PBXNativeTarget "CyberMeWatch" */;
 			buildPhases = (
 				198A83FD2C496998002BC107 /* Sources */,
 				198A83FE2C496998002BC107 /* Frameworks */,
 				198A83FF2C496998002BC107 /* Resources */,
+				19C5F2A82C8C6F90000EE87B /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				19C5F2A32C8C6F90000EE87B /* PBXTargetDependency */,
+			);
+			name = CyberMeWatch;
+			productName = "WatchMe Watch App";
+			productReference = 198A84012C496998002BC107 /* CyberMeWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		19C5F2982C8C6F8F000EE87B /* CyberMeWatchWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19C5F2A52C8C6F90000EE87B /* Build configuration list for PBXNativeTarget "CyberMeWatchWidgetExtension" */;
+			buildPhases = (
+				19C5F2952C8C6F8F000EE87B /* Sources */,
+				19C5F2962C8C6F8F000EE87B /* Frameworks */,
+				19C5F2972C8C6F8F000EE87B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "WatchMe Watch App";
-			productName = "WatchMe Watch App";
-			productReference = 198A84012C496998002BC107 /* WatchMe Watch App.app */;
-			productType = "com.apple.product-type.application";
+			name = CyberMeWatchWidgetExtension;
+			productName = CyberMeWatchWidgetExtension;
+			productReference = 19C5F2992C8C6F8F000EE87B /* CyberMeWatchWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		19D2A9EC28D4B4F6009C81C4 /* CyberMeTests */ = {
 			isa = PBXNativeTarget;
@@ -762,7 +864,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					192E141029FE2EE2005468DA = {
 						CreatedOnToolsVersion = 14.1;
@@ -771,6 +873,9 @@
 						CreatedOnToolsVersion = 13.2.1;
 					};
 					198A84002C496998002BC107 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					19C5F2982C8C6F8F000EE87B = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
 					19D2A9EC28D4B4F6009C81C4 = {
@@ -807,7 +912,8 @@
 				19FD182728D9CBB0004F97B3 /* CyberMeWidgetExtension */,
 				19E9C08929F02FC900B4FFC4 /* CyberShare */,
 				192E141029FE2EE2005468DA /* CyberMeStatusBar */,
-				198A84002C496998002BC107 /* WatchMe Watch App */,
+				198A84002C496998002BC107 /* CyberMeWatch */,
+				19C5F2982C8C6F8F000EE87B /* CyberMeWatchWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -819,7 +925,6 @@
 			files = (
 				192E141B29FE2EE2005468DA /* Preview Assets.xcassets in Resources */,
 				192E141829FE2EE2005468DA /* Assets.xcassets in Resources */,
-				192E142129FE2FBF005468DA /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -840,6 +945,14 @@
 			files = (
 				198A840B2C496999002BC107 /* Preview Assets.xcassets in Resources */,
 				198A84082C496999002BC107 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		19C5F2972C8C6F8F000EE87B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19C5F2A02C8C6F90000EE87B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,6 +1120,7 @@
 				195DCC6929815AC800C615AD /* TicketView.swift in Sources */,
 				190995B92900112A000B5770 /* CS+API.swift in Sources */,
 				19F4DC02291E2585006B7D92 /* DashboardView.swift in Sources */,
+				19C5F2932C8C4CCE000EE87B /* Connectivity.swift in Sources */,
 				1948B76528F858CD009BECD0 /* TimeUtil.swift in Sources */,
 				1957D62229F7F95300EE5334 /* StoryBoardView.swift in Sources */,
 				19D2A9E528D4B045009C81C4 /* Game.swift in Sources */,
@@ -1049,8 +1163,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19E4D5672C8BFB9F00729B98 /* WidgetService.swift in Sources */,
+				19E4D56A2C8BFC4500729B98 /* HealthManager.swift in Sources */,
+				19C5F2942C8C4CCE000EE87B /* Connectivity.swift in Sources */,
+				19E4D5742C8BFC9D00729B98 /* CS+API.swift in Sources */,
+				19E4D5712C8BFC9D00729B98 /* CS+WeekPlan.swift in Sources */,
+				19E4D56F2C8BFC9D00729B98 /* CS+Business.swift in Sources */,
 				198A84062C496998002BC107 /* ContentView.swift in Sources */,
+				19E4D56D2C8BFC9D00729B98 /* CS+Setting.swift in Sources */,
 				198A84042C496998002BC107 /* WatchMeApp.swift in Sources */,
+				19E4D5692C8BFC3000729B98 /* TimeUtil.swift in Sources */,
+				19E4D56C2C8BFC8A00729B98 /* Default.swift in Sources */,
+				19E4D5732C8BFC9D00729B98 /* CS+Story.swift in Sources */,
+				19E4D5682C8BFC1500729B98 /* CyberService.swift in Sources */,
+				19E4D56E2C8BFC9D00729B98 /* CS+Dashboard.swift in Sources */,
+				19E4D56B2C8BFC7000729B98 /* Lib+Extension.swift in Sources */,
+				19E4D5702C8BFC9D00729B98 /* CS+Ticket.swift in Sources */,
+				19E4D5722C8BFC9D00729B98 /* CS+Health.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		19C5F2952C8C6F8F000EE87B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19C5F2AE2C8C729A000EE87B /* Lib+Extension.swift in Sources */,
+				19C5F29E2C8C6F8F000EE87B /* WatchWidget.swift in Sources */,
+				19C5F2AF2C8C729D000EE87B /* TimeUtil.swift in Sources */,
+				19C5F2B22C8C72AC000EE87B /* CS+Setting.swift in Sources */,
+				19C5F2B82C8C72B5000EE87B /* HealthManager.swift in Sources */,
+				19C5F2B62C8C72AC000EE87B /* CS+API.swift in Sources */,
+				19C5F2B72C8C72AC000EE87B /* CS+Ticket.swift in Sources */,
+				19C5F2AD2C8C7293000EE87B /* Default.swift in Sources */,
+				19C5F2B12C8C72AC000EE87B /* CS+WeekPlan.swift in Sources */,
+				19C5F2AB2C8C723B000EE87B /* WidgetService.swift in Sources */,
+				19C5F2B32C8C72AC000EE87B /* CS+Business.swift in Sources */,
+				19C5F2B02C8C72AC000EE87B /* CS+Story.swift in Sources */,
+				19C5F2B52C8C72AC000EE87B /* CS+Health.swift in Sources */,
+				19C5F2AC2C8C7290000EE87B /* CyberService.swift in Sources */,
+				19C5F2B42C8C72AC000EE87B /* CS+Dashboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1096,8 +1247,13 @@
 /* Begin PBXTargetDependency section */
 		198A840D2C496999002BC107 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 198A84002C496998002BC107 /* WatchMe Watch App */;
+			target = 198A84002C496998002BC107 /* CyberMeWatch */;
 			targetProxy = 198A840C2C496999002BC107 /* PBXContainerItemProxy */;
+		};
+		19C5F2A32C8C6F90000EE87B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 19C5F2982C8C6F8F000EE87B /* CyberMeWatchWidgetExtension */;
+			targetProxy = 19C5F2A22C8C6F90000EE87B /* PBXContainerItemProxy */;
 		};
 		19D2A9F228D4B4F6009C81C4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1128,6 +1284,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CyberMeStatusBar/Preview Content\"";
 				DEVELOPMENT_TEAM = MUN22RF257;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1162,6 +1319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CyberMeStatusBar/Preview Content\"";
 				DEVELOPMENT_TEAM = MUN22RF257;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1384,12 +1542,15 @@
 		198A84102C496999002BC107 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "WatchMe Watch App.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WatchMe Watch App/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "CyberMeWatch/Preview\\ Content";
 				DEVELOPMENT_TEAM = V3ADQ9GV27;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1403,6 +1564,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.landmark.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1415,12 +1577,15 @@
 		198A84112C496999002BC107 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = "WatchMe Watch App.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WatchMe Watch App/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "CyberMeWatch/Preview\\ Content";
 				DEVELOPMENT_TEAM = V3ADQ9GV27;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1433,6 +1598,73 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.landmark.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Release;
+		};
+		19C5F2A62C8C6F90000EE87B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = CyberMeWatchWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V3ADQ9GV27;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CyberMeWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CyberMeWatchWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.landmark.watchkitapp.CyberMeWatchWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.4;
+			};
+			name = Debug;
+		};
+		19C5F2A72C8C6F90000EE87B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = CyberMeWatchWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V3ADQ9GV27;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CyberMeWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CyberMeWatchWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazhangjing.landmark.watchkitapp.CyberMeWatchWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1631,11 +1863,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		198A840F2C496999002BC107 /* Build configuration list for PBXNativeTarget "WatchMe Watch App" */ = {
+		198A840F2C496999002BC107 /* Build configuration list for PBXNativeTarget "CyberMeWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				198A84102C496999002BC107 /* Debug */,
 				198A84112C496999002BC107 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		19C5F2A52C8C6F90000EE87B /* Build configuration list for PBXNativeTarget "CyberMeWatchWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				19C5F2A62C8C6F90000EE87B /* Debug */,
+				19C5F2A72C8C6F90000EE87B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

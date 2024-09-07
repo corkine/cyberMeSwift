@@ -1,6 +1,5 @@
 //
-//  WebService.swift
-//  helloSwift
+//  WidgetService.swift
 //
 //  Created by corkine on 2022/10/12.
 //
@@ -14,6 +13,154 @@ enum WidgetBackground: String, CaseIterable, Identifiable {
     var id: Self { self }
 }
 
+struct Ticket: Codable {
+    var orderNo:String?
+    var date:String?
+    var start:String?
+    var end:String?
+    var trainNo:String?
+    var siteNo:String?
+    var checkNo:String?
+    var originData:String?
+    var id:String?
+    var isUncomming:Bool {
+        guard let d = TimeUtil.format(fromStr: date) else {
+            return true
+        }
+        return Date().timeIntervalSince1970 < d.timeIntervalSince1970
+    }
+    var description:String {
+        var isTomorrow = false
+        if let date = TimeUtil.format(fromStr: date ?? "") {
+            let diff = TimeUtil.diffDay(startDate: Date.today, endDate: date)
+            if diff == 1 {
+                isTomorrow = true
+            }
+        }
+        let prefix = isTomorrow ? "明天 " : ""
+        let date = date == nil ? "" : TimeUtil.formatTo(fromStr: date!) + " "
+        let start = start == nil ? "" : start! + " "
+        let train = trainNo == nil ? "火车 " : trainNo! + ", "
+        let check = checkNo == nil ? "" : ", " + checkNo! + "检票 "
+        return "\(prefix)\(date)\(start)\(train)\(siteNo ?? "")\(check)"
+    }
+    static let `default` = Ticket(
+      orderNo: "ET101",
+      date: "2023-01-11T17:00:00",
+      start: "武汉站",
+      end: "武汉东",
+      trainNo: "G507",
+      siteNo: "6车12A号",
+      checkNo: "14B",
+      originData: "原始信息",
+      id: "AQMkADA")
+}
+
+struct Todo: Codable,Hashable,Identifiable {
+  var title:String
+  var isFinished:Bool
+  var create_at:String
+  var list:String
+  var id:String { title }
+}
+
+struct Temp: Codable {
+  var high: Double
+  var low: Double
+  var diffHigh: Double?
+  var diffLow: Double?
+}
+
+struct Fitness: Codable {
+  var active: Double
+  var rest: Double
+  var stand: Int?
+  var exercise: Int?
+  var mindful: Double?
+  var goalActive: Double
+  var goalCut: Double
+  var bodyMassDay30: Double?
+  enum CodingKeys: String, CodingKey {
+    case active
+    case rest
+    case mindful
+    case goalActive = "goal-active"
+    case goalCut = "goal-cut"
+    case bodyMassDay30 = "body-mass-day-30"
+  }
+}
+
+struct Car: Codable {
+  var dumpTime: Int64
+  var reportTime: Int64
+  var status: CarStatus
+  var tripStatus: CarTripStatus
+  var loc: CarLoc
+  var vin: String
+  enum CodingKeys: String, CodingKey {
+    case dumpTime = "dump-time"
+    case reportTime = "report-time"
+    case status
+    case tripStatus = "trip-status"
+    case loc
+    case vin
+  }
+  struct CarStatus: Codable {
+    var oilDistance: Double
+    var inspection: Double
+    var windows: String
+    var parkingBrake: String
+    var doors: String
+    var speed: Double
+    var tyre: String
+    var fuelLevel: Double
+    var engineType: String
+    var lock: String
+    var range: Double
+    var oilLevel: Double
+    enum CodingKeys: String, CodingKey {
+      case oilDistance = "oil-distance"
+      case inspection
+      case windows
+      case parkingBrake = "parking-brake"
+      case doors
+      case speed
+      case tyre
+      case fuelLevel = "fuel-level"
+      case engineType = "engine-type"
+      case lock
+      case range
+      case oilLevel = "oil-level"
+    }
+  }
+  struct CarTripStatus: Codable {
+    var tripHours: Double
+    var fuel: Double
+    var averageFuel: Double
+    var mileage: Double
+    enum CodingKeys: String, CodingKey {
+      case tripHours = "trip-hours"
+      case fuel
+      case averageFuel = "average-fuel"
+      case mileage
+    }
+  }
+  struct CarLoc: Codable {
+    var latitude: Int64
+    var longitude: Int64
+    var headDirection: Int
+    var time: String
+    var place: String
+    enum CodingKeys: String, CodingKey {
+      case latitude
+      case longitude
+      case headDirection = "head-direction"
+      case place
+      case time
+    }
+  }
+}
+
 struct Dashboard: Codable {
     var workStatus:String
     var offWork:Bool
@@ -22,7 +169,9 @@ struct Dashboard: Codable {
     var tempInfo: Temp?
     var tempFutureInfo: Temp?
     /// 返回气温和是否是昨天气温的说明
-    var tempSmartInfo: (Temp?,Bool) { Date().hour >= 19 ? (tempFutureInfo, false) : (tempInfo, true) }
+    var tempSmartInfo: (Temp?,Bool) {
+      Date().hour >= 19 ? (tempFutureInfo, false) : (tempInfo, true)
+    }
     var fitnessInfo: Fitness?
     var todo:[Todo]
     var tickets:[Ticket]
@@ -30,153 +179,11 @@ struct Dashboard: Codable {
     var needDiaryReport: Bool
     var needPlantWater: Bool
     var car: Car?
-    struct Ticket: Codable {
-        var orderNo:String?
-        var date:String?
-        var start:String?
-        var end:String?
-        var trainNo:String?
-        var siteNo:String?
-        var checkNo:String?
-        var originData:String?
-        var id:String?
-        var isUncomming:Bool {
-            guard let d = TimeUtil.format(fromStr: date) else {
-                return true
-            }
-            return Date().timeIntervalSince1970 < d.timeIntervalSince1970
-        }
-        var description:String {
-            var isTomorrow = false
-            if let date = TimeUtil.format(fromStr: date ?? "") {
-                let diff = TimeUtil.diffDay(startDate: Date.today, endDate: date)
-                if diff == 1 {
-                    isTomorrow = true
-                }
-            }
-            let prefix = isTomorrow ? "明天 " : ""
-            let date = date == nil ? "" : TimeUtil.formatTo(fromStr: date!) + " "
-            let start = start == nil ? "" : start! + " "
-            let train = trainNo == nil ? "火车 " : trainNo! + ", "
-            let check = checkNo == nil ? "" : ", " + checkNo! + "检票 "
-            return "\(prefix)\(date)\(start)\(train)\(siteNo ?? "")\(check)"
-        }
-        static let `default` = Ticket(orderNo: "ET101",
-                                      date: "2023-01-11T17:00:00",
-                                      start: "武汉站",
-                                      end: "武汉东",
-                                      trainNo: "G507",
-                                      siteNo: "6车12A号",
-                                      checkNo: "14B",
-                                      originData: "原始信息",
-                                      id: "AQMkADA")
-    }
-    struct Todo: Codable,Hashable,Identifiable {
-        var title:String
-        var isFinished:Bool
-        var create_at:String
-        var id:String { title }
-    }
-    struct Temp: Codable {
-        var high: Double
-        var low: Double
-        var diffHigh: Double?
-        var diffLow: Double?
-    }
-    struct Fitness: Codable {
-        var active: Double
-        var rest: Double
-        var stand: Int?
-        var exercise: Int?
-        var mindful: Double?
-        var goalActive: Double
-        var goalCut: Double
-        var bodyMassDay30: Double?
-        enum CodingKeys: String, CodingKey {
-            case active
-            case rest
-            case mindful
-            case goalActive = "goal-active"
-            case goalCut = "goal-cut"
-            case bodyMassDay30 = "body-mass-day-30"
-        }
-    }
-    struct Car: Codable {
-      var dumpTime: Int64
-      var reportTime: Int64
-      var status: CarStatus
-      var tripStatus: CarTripStatus
-      var loc: CarLoc
-      var vin: String
-      enum CodingKeys: String, CodingKey {
-        case dumpTime = "dump-time"
-        case reportTime = "report-time"
-        case status
-        case tripStatus = "trip-status"
-        case loc
-        case vin
-      }
-      struct CarStatus: Codable {
-        var oilDistance: Double
-        var inspection: Double
-        var windows: String
-        var parkingBrake: String
-        var doors: String
-        var speed: Double
-        var tyre: String
-        var fuelLevel: Double
-        var engineType: String
-        var lock: String
-        var range: Double
-        var oilLevel: Double
-        enum CodingKeys: String, CodingKey {
-          case oilDistance = "oil-distance"
-          case inspection
-          case windows
-          case parkingBrake = "parking-brake"
-          case doors
-          case speed
-          case tyre
-          case fuelLevel = "fuel-level"
-          case engineType = "engine-type"
-          case lock
-          case range
-          case oilLevel = "oil-level"
-        }
-      }
-      struct CarTripStatus: Codable {
-        var tripHours: Double
-        var fuel: Double
-        var averageFuel: Double
-        var mileage: Double
-        enum CodingKeys: String, CodingKey {
-          case tripHours = "trip-hours"
-          case fuel
-          case averageFuel = "average-fuel"
-          case mileage
-        }
-      }
-      struct CarLoc: Codable {
-        var latitude: Int64
-        var longitude: Int64
-        var headDirection: Int
-        var time: String
-        var place: String
-        enum CodingKeys: String, CodingKey {
-          case latitude
-          case longitude
-          case headDirection = "head-direction"
-          case place
-          case time
-        }
-      }
-    }
 }
 
 extension Dashboard {
     static var lastUpdate = Date()
     static func updateWidget(inSeconds inSec: Int64) {
-        //print("updating widget call")
         let now = Date()
         if now.timeIntervalSince(lastUpdate) >= Double(inSec) {
             lastUpdate = now
@@ -184,22 +191,24 @@ extension Dashboard {
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
-    static let demoTodo = [Todo(title: "吃饭", isFinished: false, create_at: "1"),
-                           Todo(title: "睡觉", isFinished: false, create_at: "2"),
-                           Todo(title: "打豆豆", isFinished: true, create_at: "3"),
-                           Todo(title: "提醒事项", isFinished: false, create_at: "4")]
-    static let demo = Dashboard(workStatus: "🟡",
-                                offWork: true,
-                                cardCheck: ["8:20","17:31"],
-                                weatherInfo: "",
-                                tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
-                                todo: demoTodo,
-                                tickets: [Ticket.default],
-                                updateAt: Int64(Date().timeIntervalSince1970),
-                                needDiaryReport: false,
-                                needPlantWater: true,
-                                car: Car(dumpTime:1725370208035, reportTime:1725271808000,
-                                  status: Car.CarStatus(oilDistance: 8500, inspection: 28500, windows: "closed", parkingBrake: "active", doors: "closed", speed: 0, tyre: "checked", fuelLevel: 27, engineType: "gasoline", lock: "locked", range: 110, oilLevel: 75), tripStatus: Car.CarTripStatus(tripHours: 50.05, fuel: 109.722, averageFuel: 6.8337, mileage: 1599), loc: Car.CarLoc(latitude: 34696612, longitude: 113680355, headDirection: 175, time: "2024-09-02 18:10:08", place: "河南省郑州市管城回族区贺江路"), vin: "LSVNR60C6R2022322"))
+    static let demoTodo = [
+       Todo(title: "吃饭", isFinished: false, create_at: "1", list: "工作"),
+       Todo(title: "睡觉", isFinished: false, create_at: "2", list: "工作"),
+       Todo(title: "打豆豆", isFinished: true, create_at: "3", list: "工作"),
+       Todo(title: "提醒事项", isFinished: false, create_at: "4", list: "工作")]
+    static let demo = Dashboard(
+      workStatus: "🟡",
+      offWork: true,
+      cardCheck: ["8:20","17:31"],
+      weatherInfo: "",
+      tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
+      todo: demoTodo,
+      tickets: [Ticket.default],
+      updateAt: Int64(Date().timeIntervalSince1970),
+      needDiaryReport: false,
+      needPlantWater: true,
+      car: Car(dumpTime:1725370208035, reportTime:1725271808000,
+        status: Car.CarStatus(oilDistance: 8500, inspection: 28500, windows: "closed", parkingBrake: "active", doors: "closed", speed: 0, tyre: "checked", fuelLevel: 27, engineType: "gasoline", lock: "locked", range: 110, oilLevel: 75), tripStatus: Car.CarTripStatus(tripHours: 50.05, fuel: 109.722, averageFuel: 6.8337, mileage: 1599), loc: Car.CarLoc(latitude: 34696612, longitude: 113680355, headDirection: 175, time: "2024-09-02 18:10:08", place: "河南省郑州市管城回族区贺江路"), vin: "LSVNR60C6R2022322"))
     static func failed(error:Error?) -> Dashboard {
         Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "请求失败：\(String(describing: error))",
                   todo: demoTodo, tickets: [], updateAt:
@@ -208,116 +217,129 @@ extension Dashboard {
 }
 
 extension CyberService {
-    static var dashboard: Dashboard?
+  
+  static let iosShareKey = "group.mazhangjing.cyberme.share"
+  static let watchShareKey = "group.mazhangjing.cyberme.watch"
+  static let tokenKey = "cyber-token"
+  
+  static var dashboard: Dashboard?
     
-    static func sendNotice(msg:String) {
-        let token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
-            .string(forKey: "cyber-token") ?? ""
-        guard let url = URL(string: baseUrl + Self.noticeUrl + Self.urlencode(msg)) else {
-            print("End point is Invalid")
-            return
-        }
-        var request = URLRequest(url: url)
-        print("requesting for \(request)")
-        request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            print("send notice \(String(describing: data)), \(String(describing: response))")
-        }.resume()
-    }
+  static func sendNotice(msg:String) {
+      let token = UserDefaults(suiteName: iosShareKey)!.string(forKey: tokenKey) ?? ""
+      guard let url = URL(string: baseUrl + Self.noticeUrl + Self.urlencode(msg)) else {
+          print("End point is Invalid")
+          return
+      }
+      var request = URLRequest(url: url)
+      print("requesting for \(request)")
+      request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+      URLSession.shared.dataTask(with: request) { data, response, error in
+          print("send notice \(String(describing: data)), \(String(describing: response))")
+      }.resume()
+  }
     
-    static func trackUrl(location:CLLocation, by:String) {
-        let token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
-            .string(forKey: "cyber-token") ?? ""
-        guard let url = URL(string: baseUrl + Self.trackUrl(lo: location.coordinate.longitude,
-                                                            la: location.coordinate.latitude,
-                                                            by: by)) else {
-            print("End point is Invalid")
-            return
-        }
-        var request = URLRequest(url: url)
-        request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let resp = response {
-                print("set track \(String(describing: resp))")
-            } else {
-                print("set track failed, no response!")
-            }
-        }.resume()
-    }
+  static func trackUrl(location:CLLocation, by:String) {
+      let token = UserDefaults(suiteName: iosShareKey)!.string(forKey: tokenKey) ?? ""
+      guard let url = URL(string: baseUrl + Self.trackUrl(lo: location.coordinate.longitude,
+                                                          la: location.coordinate.latitude,
+                                                          by: by)) else {
+          print("End point is Invalid")
+          return
+      }
+      var request = URLRequest(url: url)
+      request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+      URLSession.shared.dataTask(with: request) { data, response, error in
+          if let resp = response {
+              print("set track \(String(describing: resp))")
+          } else {
+              print("set track failed, no response!")
+          }
+      }.resume()
+  }
     
-    static func fetchDashboard(location: CLLocation?) async -> (Dashboard?, Error?) {
-        let token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
-            .string(forKey: "cyber-token") ?? ""
-        if dashboard != nil {
-            print("fetch dashboard data from bg")
-            let oldDash = dashboard
-            dashboard = nil
-            return (oldDash, nil)
-        } else {
-            do {
-                var urlComponents = URLComponents(string: baseUrl + dashboardUrl)!
-                if let location = location {
-                    let lat = location.coordinate.latitude
-                    let lon = location.coordinate.longitude
-                    urlComponents.queryItems = [
-                        URLQueryItem(name: "location", value: "\(lat),\(lon)")
-                    ]
-                }
-                var request = URLRequest(url: urlComponents.url!)
-                request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
-                print("requesting for \(request)")
-                let (data, _) = try await URLSession.shared.data(for: request)
-                return (try JSONDecoder().decode(Dashboard.self, from: data), nil)
-            } catch {
-                return (nil, error)
-            }
-        }
+  static func fetchDashboard(location: CLLocation?) async -> (Dashboard?, Error?) {
+    #if os(watchOS)
+    let token = UserDefaults(suiteName: watchShareKey)!.string(forKey: tokenKey) ?? ""
+    #else
+    let token = UserDefaults(suiteName: iosShareKey)!.string(forKey: tokenKey) ?? ""
+    #endif
+    if dashboard != nil {
+      print("fetch dashboard data from bg")
+      let oldDash = dashboard
+      dashboard = nil
+      return (oldDash, nil)
+    } else {
+      do {
+          var urlComponents = URLComponents(string: baseUrl + dashboardUrl)!
+          if let location = location {
+              let lat = location.coordinate.latitude
+              let lon = location.coordinate.longitude
+              urlComponents.queryItems = [
+                  URLQueryItem(name: "location", value: "\(lat),\(lon)")
+              ]
+          }
+          var request = URLRequest(url: urlComponents.url!)
+          request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+          print("requesting for \(request)")
+          let (data, _) = try await URLSession.shared.data(for: request)
+          return (try JSONDecoder().decode(Dashboard.self, from: data), nil)
+      } catch {
+          return (nil, error)
+      }
     }
+  }
 }
 
 class BackgroundManager : NSObject, URLSessionDelegate, URLSessionDownloadDelegate {
     
-    var completionHandler: (() -> Void)? = nil
+  var completionHandler: (() -> Void)? = nil
     
-    var token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
-        .string(forKey: "cyber-token") ?? ""
+  #if os(watchOS)
+  let token = UserDefaults(suiteName: CyberService.watchShareKey)!.string(forKey: CyberService.tokenKey) ?? ""
+  #else
+  let token = UserDefaults(suiteName: CyberService.iosShareKey)!.string(forKey: CyberService.tokenKey) ?? ""
+  #endif
     
-    lazy var urlSession: URLSession = {
-        let config = URLSessionConfiguration.background(withIdentifier: "CyberMeWidget")
-        config.sessionSendsLaunchEvents = true
-        return URLSession(configuration: config, delegate: self, delegateQueue: nil)
-    }()
+  lazy var urlSession: URLSession = {
+      let config = URLSessionConfiguration.background(withIdentifier: "CyberMeWidget")
+      config.sessionSendsLaunchEvents = true
+      return URLSession(configuration: config, delegate: self, delegateQueue: nil)
+  }()
     
-    func update() {
-        guard let url = URL(string: CyberService.baseUrl + CyberService.dashboardUrl) else {
-            print("End point is Invalid")
-            return
+  func update() {
+      guard let url = URL(string: CyberService.baseUrl + CyberService.dashboardUrl) else {
+          print("End point is Invalid")
+          return
+      }
+      var request = URLRequest(url: url)
+      print("requesting for \(request)")
+      request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
+      let task = urlSession.downloadTask(with: request)
+      task.resume()
+  }
+    
+  func urlSession(_ session: URLSession ,downloadTask: URLSessionDownloadTask,
+                  didFinishDownloadingTo location: URL) {
+    print(location)
+    if let data = FileManager.default.contents(atPath: location.path) {
+        if let response = try? JSONDecoder().decode(Dashboard.self, from: data) {
+            print("bg decoding from \(data)")
+            CyberService.dashboard = response
+        } else {
+            print("bg decoding from \(data) failed")
         }
-        var request = URLRequest(url: url)
-        print("requesting for \(request)")
-        request.setValue("Basic \(token)", forHTTPHeaderField: "Authorization")
-        let task = urlSession.downloadTask(with: request)
-        task.resume()
     }
+  }
     
-    func urlSession(_ session: URLSession ,downloadTask: URLSessionDownloadTask,
-                    didFinishDownloadingTo location: URL) {
-        print(location)
-        if let data = FileManager.default.contents(atPath: location.path) {
-            if let response = try? JSONDecoder().decode(Dashboard.self, from: data) {
-                print("bg decoding from \(data)")
-                CyberService.dashboard = response
-            } else {
-                print("bg decoding from \(data) failed")
-            }
-        }
-    }
-    
-    func  urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        self.completionHandler!()
-        WidgetCenter.shared.reloadTimelines(ofKind: "CyberMeWidget")
-        print("Background update")
-    }
+  func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+      self.completionHandler!()
+      #if os(iOS)
+      WidgetCenter.shared.reloadTimelines(ofKind: "CyberMeWidget")
+      #else
+      WidgetCenter.shared.reloadTimelines(ofKind: "CyberMeWatchWidget")
+      #endif
+      print("Background update")
+  }
 }
 
 enum WidgetLocation {

@@ -326,10 +326,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     public static var lastRoute = ["name": "最近应用", "route": "/menu"]
+  
+    public static var conn: Connectivity?
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        Self.logger.info("register watch connectivity...")
+        Self.conn = Connectivity.shared
         Self.logger.info("register background task..")
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "cyberme.refresh", using: nil) { task in
             Self.logger.info("enter background refresh: service is \(AppDelegate.cyberService == nil)")

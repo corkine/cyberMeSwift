@@ -10,6 +10,8 @@ import WatchConnectivity
 
 final class Connectivity: NSObject, ObservableObject {
   
+  @Published var activated: Bool = false
+  
   static let shared = Connectivity()
   
   override private init() {
@@ -17,7 +19,6 @@ final class Connectivity: NSObject, ObservableObject {
     #if !os(watchOS)
     guard WCSession.isSupported() else { return }
     #endif
-    print("activing watch connectivity support")
     WCSession.default.delegate = self
     WCSession.default.activate()
   }
@@ -35,23 +36,27 @@ final class Connectivity: NSObject, ObservableObject {
   /// watchOS 检查 Token，如果不存在，要求发送
   public func ensureHaveToken(callback: @escaping () -> Void) {
     #if os(watchOS)
-    if UserDefaults(suiteName: "group.mazhangjing.cyberme.watch")!
-      .string(forKey: "cyber-token")?.isEmpty ?? true {
-      WCSession.default.sendMessage(
-        ["action": "require-token"],
-        replyHandler: { data in
-          guard let token = data["token"] as? String else {
-            print("no token from iPhone responsed")
-            return
-          }
-          print("setting token \(token) from iPhone")
-          UserDefaults(suiteName: "group.mazhangjing.cyberme.watch")!
-            .setValue(token, forKey: "cyber-token")
-          callback()
-        },
-        errorHandler: { err in
-          print("send require token to iPhone error \(err.localizedDescription)")
-        })
+    if UserDefaults(suiteName: CyberService.watchShareKey)!
+      .string(forKey: CyberService.tokenKey)?.isEmpty ?? true {
+      if canSendToPeer() {
+        WCSession.default.sendMessage(
+          ["action": "require-token"],
+          replyHandler: { data in
+            guard let token = data["token"] as? String else {
+              print("no token from iPhone responsed")
+              return
+            }
+            print("setting token \(token) from iPhone")
+            UserDefaults(suiteName: CyberService.watchShareKey)!
+              .setValue(token, forKey: CyberService.tokenKey)
+            callback()
+          },
+          errorHandler: { err in
+            print("send require token to iPhone error \(err.localizedDescription)")
+          })
+      } else {
+        print("can't send to peer")
+      }
     } else {
       callback()
     }
@@ -69,7 +74,10 @@ final class Connectivity: NSObject, ObservableObject {
 
 extension Connectivity: WCSessionDelegate {
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-    print("active done \(String(describing: error?.localizedDescription))")
+    print("active done \(String(describing: error?.localizedDescription)), status \(WCSession.default.activationState)")
+    if activationState == .activated {
+      self.activated = true
+    }
   }
   
   #if os(iOS)
@@ -94,12 +102,13 @@ extension Connectivity: WCSessionDelegate {
                replyHandler: @escaping ([String : Any]) -> Void) {
     guard let action = message["action"] as? String else {
       print("receiving no action, skip handle it")
+      replyHandler(["msg": "no-action"])
       return
     }
     #if os(iOS)
     if action == "require-token" {
-      let token = UserDefaults(suiteName: "group.mazhangjing.cyberme.share")!
-          .string(forKey: "cyber-token") ?? ""
+      let token = UserDefaults(suiteName: CyberService.iosShareKey)!
+        .string(forKey: CyberService.tokenKey) ?? ""
       if !token.isEmpty {
         print("sending token \(token) to watchOS")
         replyHandler(["token": token])
@@ -107,14 +116,14 @@ extension Connectivity: WCSessionDelegate {
         print("iOS have no token!")
         replyHandler(["msg": "no-token"])
       }
-    } else {
-      replyHandler(["msg": "no-action"])
+      return
     }
     #endif
+    replyHandler(["msg": "not-impl"])
   }
   
   func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-
+    print("receiving \(message), skip it")
   }
   
   func session(_ session: WCSession, didReceiveMessageData messageData: Data) {

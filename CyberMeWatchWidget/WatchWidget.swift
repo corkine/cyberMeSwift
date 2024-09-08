@@ -64,16 +64,18 @@ struct CarRangeView: View {
   var body: some View {
     let carFuelPercent = dash.car?.status.fuelLevel ?? 100
     let carFuelRange = dash.car?.status.range ?? 0.0
+    let rangeText = carFuelRange != 0.0 ? Text("\(carFuelRange, format: .number)") : Text("N/A")
     ProgressView(value: carFuelPercent, total: 100) {
       VStack(spacing: 0) {
-        Text("\(carFuelRange, format: .number)")
+        rangeText
+          .font(.system(size: 16))
           .offset(x: 0, y: 3)
         Text("km")
           .font(.system(size: 10))
           .offset(x: 0, y: -1)
       }
     }
-    .tint(.green)
+    .tint(carFuelPercent < 0.1 ? .yellow : .green)
     .progressViewStyle(CircularProgressViewStyle())
   }
 }
@@ -116,25 +118,34 @@ struct CarInlineView: View {
 struct TodoView: View {
   var dash: Dashboard
   var body: some View {
+    let todoTop = dash.todo.prefix(4)
     return HStack(alignment: .top) {
       Rectangle()
         .foregroundColor(colorOfStatus(dash: dash))
         .frame(width: 5)
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .padding(.trailing, 3)
+        .padding(.leading, 2)
         .padding(.vertical, 1)
       VStack(alignment: .leading) {
-        ForEach(dash.todo, id: \.id) { todo in
-          if todo.isFinished {
-            Text(todo.title)
-              .strikethrough()
-          } else {
-            Text(todo.title)
+        if todoTop.isEmpty {
+          Text("无待办事项")
+            .padding(.bottom, 0)
+          Text("Have a nice day!")
+        } else {
+          ForEach(todoTop, id: \.id) { todo in
+            if todo.isFinished {
+              Text(todo.title)
+                .foregroundColor(.gray)
+                .strikethrough(true, color: .white)
+            } else {
+              Text(todo.title)
+            }
           }
+          .lineLimit(1)
+          .truncationMode(.tail)
+          .font(.system(size: 14))
         }
-        .lineLimit(1)
-        .truncationMode(.tail)
-        .font(.system(size: 15))
       }
       Spacer()
     }

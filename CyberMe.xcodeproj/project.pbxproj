@@ -243,7 +243,6 @@
 		1948B76428F858CD009BECD0 /* TimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
 		194ABAD7292CF5E70000F8D4 /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
 		194B0B5029F157B100324E52 /* LastNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastNoteView.swift; sourceTree = "<group>"; };
-		19501B3E2C8C47E100B401F8 /* WatchMe Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WatchMe Watch App.entitlements"; sourceTree = "<group>"; };
 		1957D61229F4114800EE5334 /* ExpressCheckAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressCheckAddView.swift; sourceTree = "<group>"; };
 		1957D61429F58A1800EE5334 /* LastDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastDiaryView.swift; sourceTree = "<group>"; };
 		1957D61629F5922200EE5334 /* GptAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GptAnswerView.swift; sourceTree = "<group>"; };
@@ -283,7 +282,6 @@
 		19C5F29D2C8C6F8F000EE87B /* WatchWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWidget.swift; sourceTree = "<group>"; };
 		19C5F29F2C8C6F90000EE87B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19C5F2A12C8C6F90000EE87B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		19C5F2B92C8C89C5000EE87B /* CyberMeWatchWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CyberMeWatchWidgetExtension.entitlements; sourceTree = "<group>"; };
 		19CE75E928D22EB400AF8AFF /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		19CE75EC28D2307F00AF8AFF /* Landmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Landmarks.swift; sourceTree = "<group>"; };
 		19CE75FC28D23A5F00AF8AFF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -539,7 +537,6 @@
 				198A84052C496998002BC107 /* ContentView.swift */,
 				19C5F2922C8C4CCE000EE87B /* Connectivity.swift */,
 				198A84072C496999002BC107 /* Assets.xcassets */,
-				19501B3E2C8C47E100B401F8 /* WatchMe Watch App.entitlements */,
 				198A84092C496999002BC107 /* Preview Content */,
 			);
 			path = CyberMeWatch;
@@ -557,7 +554,6 @@
 			isa = PBXGroup;
 			children = (
 				19C5F29D2C8C6F8F000EE87B /* WatchWidget.swift */,
-				19C5F2B92C8C89C5000EE87B /* CyberMeWatchWidgetExtension.entitlements */,
 				19C5F29F2C8C6F90000EE87B /* Assets.xcassets */,
 				19C5F2A12C8C6F90000EE87B /* Info.plist */,
 			);

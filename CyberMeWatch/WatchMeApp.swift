@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 @main
-struct WatchMe_Watch_AppApp: App {
+struct WatchMeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -79,6 +79,12 @@ struct ContentView: View {
           }
           .frame(width: 100, height: 20)
         }
+      }
+    }
+    .onChange(of: Connectivity.shared.activated) { status in
+      if status {
+        print("due to status activated changed, update data now...")
+        updateData()
       }
     }
     .onChange(of: scenePhase) { scene in

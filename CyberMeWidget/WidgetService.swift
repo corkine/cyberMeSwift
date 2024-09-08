@@ -182,38 +182,41 @@ struct Dashboard: Codable {
 }
 
 extension Dashboard {
-    static var lastUpdate = Date()
-    static func updateWidget(inSeconds inSec: Int64) {
-        let now = Date()
-        if now.timeIntervalSince(lastUpdate) >= Double(inSec) {
-            lastUpdate = now
-            print("updating widget action call")
-            WidgetCenter.shared.reloadAllTimelines()
-        }
-    }
-    static let demoTodo = [
-       Todo(title: "吃饭", isFinished: false, create_at: "1", list: "工作"),
-       Todo(title: "睡觉", isFinished: false, create_at: "2", list: "工作"),
-       Todo(title: "打豆豆", isFinished: true, create_at: "3", list: "工作"),
-       Todo(title: "提醒事项", isFinished: false, create_at: "4", list: "工作")]
-    static let demo = Dashboard(
-      workStatus: "🟡",
-      offWork: true,
-      cardCheck: ["8:20","17:31"],
-      weatherInfo: "",
-      tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
-      todo: demoTodo,
-      tickets: [Ticket.default],
-      updateAt: Int64(Date().timeIntervalSince1970),
-      needDiaryReport: false,
-      needPlantWater: true,
-      car: Car(dumpTime:1725370208035, reportTime:1725271808000,
-        status: Car.CarStatus(oilDistance: 8500, inspection: 28500, windows: "closed", parkingBrake: "active", doors: "closed", speed: 0, tyre: "checked", fuelLevel: 27, engineType: "gasoline", lock: "locked", range: 110, oilLevel: 75), tripStatus: Car.CarTripStatus(tripHours: 50.05, fuel: 109.722, averageFuel: 6.8337, mileage: 1599), loc: Car.CarLoc(latitude: 34696612, longitude: 113680355, headDirection: 175, time: "2024-09-02 18:10:08", place: "河南省郑州市管城回族区贺江路"), vin: "LSVNR60C6R2022322"))
-    static func failed(error:Error?) -> Dashboard {
-        Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "请求失败：\(String(describing: error))",
-                  todo: demoTodo, tickets: [], updateAt:
-                    Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
-    }
+  static var lastUpdate = Date()
+  static func updateWidget(inSeconds inSec: Int64) {
+      let now = Date()
+      if now.timeIntervalSince(lastUpdate) >= Double(inSec) {
+          lastUpdate = now
+          print("updating widget action call")
+          WidgetCenter.shared.reloadAllTimelines()
+      }
+  }
+  static let demoTodo = [
+     Todo(title: "WWDC watchOS 相关 Keynote 梳理", isFinished: false, create_at: "1", list: "学习"),
+     Todo(title: "Apple Developer 会员续期", isFinished: false, create_at: "2", list: "事项"),
+     Todo(title: "完成健身环今日打卡", isFinished: true, create_at: "3", list: "事项"),
+     Todo(title: "完成专利修改和提交", isFinished: false, create_at: "4", list: "工作"),
+     Todo(title: "完成论文的修改", isFinished: false, create_at: "4", list: "工作")]
+  static let demoCar =
+    Car(dumpTime:1725370208035, reportTime:1725271808000,
+      status: Car.CarStatus(oilDistance: 8500, inspection: 28500, windows: "closed", parkingBrake: "active", doors: "closed", speed: 0, tyre: "checked", fuelLevel: 27, engineType: "gasoline", lock: "locked", range: 110, oilLevel: 75), tripStatus: Car.CarTripStatus(tripHours: 50.05, fuel: 109.722, averageFuel: 6.8337, mileage: 1599), loc: Car.CarLoc(latitude: 34696612, longitude: 113680355, headDirection: 175, time: "2024-09-02 18:10:08", place: "河南省郑州市管城回族区贺江路"), vin: "LSVNR60C6R2022322")
+  static let demo = Dashboard(
+    workStatus: "🟡",
+    offWork: true,
+    cardCheck: ["8:20","17:31"],
+    weatherInfo: "",
+    tempInfo: Temp(high: 23.0, low: 15.0, diffHigh: 4.2, diffLow: 3.1),
+    todo: demoTodo,
+    tickets: [Ticket.default],
+    updateAt: Int64(Date().timeIntervalSince1970),
+    needDiaryReport: false,
+    needPlantWater: true,
+    car: demoCar)
+  static func failed(error:Error?) -> Dashboard {
+      Dashboard(workStatus: "🟡", offWork: true, cardCheck: ["8:20","17:31"], weatherInfo: "请求失败：\(String(describing: error))",
+                todo: demoTodo, tickets: [], updateAt:
+                  Int64(Date().timeIntervalSince1970), needDiaryReport: false, needPlantWater: true)
+  }
 }
 
 extension CyberService {

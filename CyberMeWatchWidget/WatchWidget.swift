@@ -7,25 +7,39 @@
 
 import WidgetKit
 import SwiftUI
+import Intents
 
 struct Provider: TimelineProvider {
+  typealias Entry = SimpleEntry
+  //typealias Intent = ConfigurationIntent
+  
   func placeholder(in context: Context) -> SimpleEntry {
-    SimpleEntry(date: Date(), dashboard: Dashboard.demo)
+    //let intent = ConfigurationIntent()
+    //intent.tab = "todo"
+    return SimpleEntry(date: Date(), dashboard: Dashboard.demo
+                       //, intent: intent
+    )
   }
 
-  func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-    let entry = SimpleEntry(date: Date(), dashboard: Dashboard.demo)
+  func getSnapshot(//for configuration: Intent,
+                   in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+    let entry = SimpleEntry(date: Date(), dashboard: Dashboard.demo
+                            //, intent: configuration
+    )
     completion(entry)
   }
 
-  func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+  func getTimeline(//for configuration: Intent,
+                   in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
     Task.detached {
         let (dashboard, error) = await CyberService.fetchDashboard(location: nil)
         if let dashboard = dashboard {
             let currentDate = Date()
             let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
             
-            let entry = SimpleEntry(date: currentDate, dashboard: dashboard)
+            let entry = SimpleEntry(date: currentDate, dashboard: dashboard
+                                    //, intent: configuration
+            )
 
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
             completion(timeline)
@@ -33,18 +47,30 @@ struct Provider: TimelineProvider {
             let currentDate = Date()
             let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 5, to: currentDate)!
             
-            let entry = SimpleEntry(date: currentDate, dashboard: Dashboard.failed(error: error))
+            let entry = SimpleEntry(date: currentDate, dashboard: Dashboard.failed(error: error)
+                                    //, intent: configuration
+            )
 
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
             completion(timeline)
         }
     }
   }
+  
+//  func recommendations() -> [IntentRecommendation<Intent>] {
+//    return [("car", "车辆信息"), ("todo", "待办和工作信息")]
+//      .map { key in
+//        let intent = ConfigurationIntent()
+//        intent.tab = key.0
+//        return IntentRecommendation(intent: intent, description: key.1)
+//      }
+//  }
 }
 
 struct SimpleEntry: TimelineEntry {
   let date: Date
   let dashboard: Dashboard
+  //let intent: ConfigurationIntent
 }
 
 func colorOfStatus(dash: Dashboard) -> Color {
@@ -80,7 +106,27 @@ struct CarRangeView: View {
   }
 }
 
-struct CornerView: View {
+struct WorkStatusRangeView: View {
+  var dash: Dashboard
+  var body: some View {
+    let all = dash.todo.count
+    let finished = dash.todo.filter({ t in
+      t.isFinished
+    }).count
+    let progress = all == 0 ? 0.0 : (Double(finished) / Double(all)) * 1.0
+    let offWork = dash.offWork
+    let color = colorOfStatus(dash: dash)
+    ProgressView(value: progress, total: 1) {
+      Image(systemName: offWork ? "moon.haze.fill" : "wallet.pass.fill")
+        .font(.system(size: 19))
+        .foregroundColor(color)
+    }
+    .tint(color)
+    .progressViewStyle(CircularProgressViewStyle())
+  }
+}
+
+struct TodoCornerView: View {
   var dash: Dashboard
   var body: some View {
     let all = dash.todo.count
@@ -159,31 +205,53 @@ struct CyberMeWatchWidgetEntryView : View {
   var body: some View {
     switch family {
     case .accessoryCircular:
-      CarRangeView(dash: entry.dashboard)
+      WorkStatusRangeView(dash: entry.dashboard)
     case .accessoryCorner:
-      CornerView(dash: entry.dashboard)
-    case .accessoryInline:
-      CarInlineView(dash: entry.dashboard)
+      TodoCornerView(dash: entry.dashboard)
     case .accessoryRectangular:
       TodoView(dash: entry.dashboard)
+    case .accessoryInline:
+      Text("Unsupport widget")
+    default:
+      Text("Unsupport widget")
+    }
+  }
+}
+
+struct CyberMeWatchWidgetCarEntryView : View {
+  @Environment(\.widgetFamily) var family
+  var entry: Provider.Entry
+
+  var body: some View {
+    switch family {
+    case .accessoryCircular:
+      CarRangeView(dash: entry.dashboard)
+    case .accessoryInline:
+      CarInlineView(dash: entry.dashboard)
+    case .accessoryCorner:
+      Text("Unsupport widget")
+    case .accessoryRectangular:
+      Text("Unsupport widget")
     @unknown default:
       Text("Unsupport widget")
     }
   }
 }
 
-@main
 struct CyberMeWatchWidget: Widget {
   let kind: String = "CyberMeWatchWidget"
   
   let backgroundData = BackgroundManager()
 
   var body: some WidgetConfiguration {
-    StaticConfiguration(kind: kind, provider: Provider()) { entry in
-        CyberMeWatchWidgetEntryView(entry: entry)
+    StaticConfiguration(kind: kind,
+                        //intent: ConfigurationIntent.self,
+                        provider: Provider()) { entry in
+      CyberMeWatchWidgetEntryView(entry: entry)
     }
-    .configurationDisplayName("WatchMe")
-    .description("工作状态, 待办事项, 车辆状态")
+    .supportedFamilies([.accessoryCircular, .accessoryCorner, .accessoryRectangular])
+    .configurationDisplayName("工作与待办")
+    .description("工作状态与待办事项")
     .onBackgroundURLSessionEvents { (sessionIdentifier, completion) in
         if sessionIdentifier == self.kind {
             self.backgroundData.update()
@@ -194,9 +262,44 @@ struct CyberMeWatchWidget: Widget {
   }
 }
 
+struct CyberMeWatchCarWidget: Widget {
+  let kind: String = "CyberMeWatchWidgetCar"
+  
+  let backgroundData = BackgroundManager()
+
+  var body: some WidgetConfiguration {
+    StaticConfiguration(kind: kind,
+                        //intent: ConfigurationIntent.self,
+                        provider: Provider()) { entry in
+      CyberMeWatchWidgetCarEntryView(entry: entry)
+    }
+    .supportedFamilies([.accessoryCircular, .accessoryInline])
+    .configurationDisplayName("车辆信息")
+    .description("大众车联网信息")
+    .onBackgroundURLSessionEvents { (sessionIdentifier, completion) in
+        if sessionIdentifier == self.kind {
+            self.backgroundData.update()
+            self.backgroundData.completionHandler = completion
+            print("background update for car")
+        }
+    }
+  }
+}
+
+@main
+struct CyberMeWatchWidgets: WidgetBundle {
+  @WidgetBundleBuilder
+  var body: some Widget {
+      CyberMeWatchWidget()
+      CyberMeWatchCarWidget()
+  }
+}
+
 struct CyberMeWatchWidget_Previews: PreviewProvider {
   static var previews: some View {
-    CyberMeWatchWidgetEntryView(entry: SimpleEntry(date: Date(), dashboard: Dashboard.demo))
+    CyberMeWatchWidgetEntryView(entry: SimpleEntry(date: Date(), dashboard: Dashboard.demo
+                                                   //,intent: ConfigurationIntent()
+                                                  ))
       .previewContext(WidgetPreviewContext(family: .accessoryCircular))
   }
 }

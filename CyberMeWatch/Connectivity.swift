@@ -7,6 +7,7 @@
 
 import Foundation
 import WatchConnectivity
+import WidgetKit
 
 final class Connectivity: NSObject, ObservableObject {
   
@@ -59,6 +60,19 @@ final class Connectivity: NSObject, ObservableObject {
       }
     } else {
       callback()
+    }
+    #endif
+  }
+  
+  public func requestReloadWatchWidgetTimeline() {
+    #if os(iOS)
+    if canSendToPeer() {
+      WCSession.default.sendMessage(
+        ["action": "reload-timeline"],
+        replyHandler: optionalMainQueueDispatch(handler: nil),
+        errorHandler: optionalMainQueueDispatch(handler: nil))
+    } else {
+      print("can't send to peer")
     }
     #endif
   }
@@ -116,6 +130,13 @@ extension Connectivity: WCSessionDelegate {
         print("iOS have no token!")
         replyHandler(["msg": "no-token"])
       }
+      return
+    }
+    #else
+    if action == "reload-timeline" {
+      print("watchOS reload all timeliens done")
+      WidgetCenter.shared.reloadAllTimelines()
+      replyHandler(["msg": "done"])
       return
     }
     #endif

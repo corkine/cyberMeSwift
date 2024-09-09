@@ -59,6 +59,8 @@
 		197C90D9291F653E00373BEF /* CS+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D8291F653E00373BEF /* CS+Dashboard.swift */; };
 		197C90DA291F659D00373BEF /* CS+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90D8291F653E00373BEF /* CS+Dashboard.swift */; };
 		197C90DC291F65EE00373BEF /* CS+Health.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C90DB291F65EE00373BEF /* CS+Health.swift */; };
+		19828F972C8EBB74000F6E75 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C5F2922C8C4CCE000EE87B /* Connectivity.swift */; };
+		19828F982C8EBBD8000F6E75 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C5F2922C8C4CCE000EE87B /* Connectivity.swift */; };
 		198A84042C496998002BC107 /* WatchMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A84032C496998002BC107 /* WatchMeApp.swift */; };
 		198A84062C496998002BC107 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A84052C496998002BC107 /* ContentView.swift */; };
 		198A84082C496999002BC107 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 198A84072C496999002BC107 /* Assets.xcassets */; };
@@ -1195,6 +1197,7 @@
 				19C5F2AB2C8C723B000EE87B /* WidgetService.swift in Sources */,
 				19C5F2B32C8C72AC000EE87B /* CS+Business.swift in Sources */,
 				19C5F2B02C8C72AC000EE87B /* CS+Story.swift in Sources */,
+				19828F972C8EBB74000F6E75 /* Connectivity.swift in Sources */,
 				19C5F2B52C8C72AC000EE87B /* CS+Health.swift in Sources */,
 				19C5F2AC2C8C7290000EE87B /* CyberService.swift in Sources */,
 				19C5F2B42C8C72AC000EE87B /* CS+Dashboard.swift in Sources */,
@@ -1223,6 +1226,7 @@
 			files = (
 				1948B76228F6D0A4009BECD0 /* WidgetService.swift in Sources */,
 				190995BA2900112A000B5770 /* CS+API.swift in Sources */,
+				19828F982C8EBBD8000F6E75 /* Connectivity.swift in Sources */,
 				19FD182D28D9CBB0004F97B3 /* WidgetMain.swift in Sources */,
 				190995BD29001135000B5770 /* CS+Setting.swift in Sources */,
 				19E4D5652C88789C00729B98 /* WidgetProvider.swift in Sources */,

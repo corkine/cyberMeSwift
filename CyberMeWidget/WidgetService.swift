@@ -184,12 +184,13 @@ struct Dashboard: Codable {
 extension Dashboard {
   static var lastUpdate = Date()
   static func updateWidget(inSeconds inSec: Int64) {
-      let now = Date()
-      if now.timeIntervalSince(lastUpdate) >= Double(inSec) {
-          lastUpdate = now
-          print("updating widget action call")
-          WidgetCenter.shared.reloadAllTimelines()
-      }
+    let now = Date()
+    if now.timeIntervalSince(lastUpdate) >= Double(inSec) {
+      lastUpdate = now
+      print("updating widget action call")
+      WidgetCenter.shared.reloadAllTimelines()
+      Connectivity.shared.requestReloadWatchWidgetTimeline()
+    }
   }
   static let demoTodo = [
      Todo(title: "WWDC watchOS 相关 Keynote 梳理", isFinished: false, create_at: "1", list: "学习"),
@@ -339,7 +340,7 @@ class BackgroundManager : NSObject, URLSessionDelegate, URLSessionDownloadDelega
       #if os(iOS)
       WidgetCenter.shared.reloadTimelines(ofKind: "CyberMeWidget")
       #else
-      WidgetCenter.shared.reloadTimelines(ofKind: "CyberMeWatchWidget")
+      WidgetCenter.shared.reloadAllTimelines()
       #endif
       print("Background update")
   }

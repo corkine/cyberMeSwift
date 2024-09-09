@@ -115,9 +115,11 @@ struct WorkStatusRangeView: View {
     }).count
     let progress = all == 0 ? 0.0 : (Double(finished) / Double(all)) * 1.0
     let offWork = dash.offWork
+    let needCard = dash.workStatus == "🔴"
     let color = colorOfStatus(dash: dash)
     ProgressView(value: progress, total: 1) {
-      Image(systemName: offWork ? "moon.haze.fill" : "wallet.pass.fill")
+      Image(systemName: offWork ? "moon.haze.fill" :
+              needCard ? "exclamationmark.triangle.fill" :"wallet.pass.fill")
         .font(.system(size: 19))
         .foregroundColor(color)
     }

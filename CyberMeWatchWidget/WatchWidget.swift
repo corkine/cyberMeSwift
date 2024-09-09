@@ -200,27 +200,45 @@ struct TodoView: View {
   }
 }
 
+let carUrl = URL(string: "cyberme-watch://car")
+
+let todoUrl = URL(string: "cyberme-watch://todo")
+
 struct CyberMeWatchWidgetEntryView : View {
+  @Environment(\.isLuminanceReduced) var isLuminanceReduced
   @Environment(\.widgetFamily) var family
   var entry: Provider.Entry
-  
-  let url = URL(string: "cyberme-watch://todo")
 
   var body: some View {
-    switch family {
-    case .accessoryCircular:
-      WorkStatusRangeView(dash: entry.dashboard)
-        .widgetURL(url)
-    case .accessoryCorner:
-      TodoCornerView(dash: entry.dashboard)
-        .widgetURL(url)
-    case .accessoryRectangular:
-      TodoView(dash: entry.dashboard)
-        .widgetURL(url)
-    case .accessoryInline:
-      Text("Unsupport widget")
-    default:
-      Text("Unsupport widget")
+    if isLuminanceReduced {
+      switch family {
+      case .accessoryCircular:
+        WorkStatusRangeView(dash: entry.dashboard)
+      case .accessoryCorner:
+        TodoCornerView(dash: entry.dashboard)
+      case .accessoryRectangular:
+        TodoView(dash: entry.dashboard)
+      case .accessoryInline:
+        Text("Unsupport widget")
+      default:
+        Text("Unsupport widget")
+      }
+    } else {
+      switch family {
+      case .accessoryCircular:
+        WorkStatusRangeView(dash: entry.dashboard)
+          .widgetURL(todoUrl)
+      case .accessoryCorner:
+        TodoCornerView(dash: entry.dashboard)
+          .widgetURL(todoUrl)
+      case .accessoryRectangular:
+        TodoView(dash: entry.dashboard)
+          .widgetURL(todoUrl)
+      case .accessoryInline:
+        Text("Unsupport widget")
+      default:
+        Text("Unsupport widget")
+      }
     }
   }
 }
@@ -228,17 +246,13 @@ struct CyberMeWatchWidgetEntryView : View {
 struct CyberMeWatchWidgetCarEntryView : View {
   @Environment(\.widgetFamily) var family
   var entry: Provider.Entry
-  
-  let url = URL(string: "cyberme-watch://car")
 
   var body: some View {
     switch family {
     case .accessoryCircular:
       CarRangeView(dash: entry.dashboard)
-        .widgetURL(url)
     case .accessoryInline:
       CarInlineView(dash: entry.dashboard)
-        .widgetURL(url)
     case .accessoryCorner:
       Text("Unsupport widget")
     case .accessoryRectangular:

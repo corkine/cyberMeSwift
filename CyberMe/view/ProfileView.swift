@@ -28,7 +28,10 @@ struct SmallAppView: View {
                            ("跨平台笔记", { service.showAddNoteView = true }),
                            ("快递追踪", { service.showExpressTrack = true }),
                            ("故事社", { service.showStoryBook = true }),
-                           ("喷嚏图卦", { service.showDapenti = true })],
+                           ("喷嚏图卦", { service.showDapenti = true }),
+                           ("Refresh Timeline", {
+          Connectivity.shared.requestReloadWatchWidgetTimeline()
+        })],
                    itemSpacing: 10) { (name, call) in
             Button(name) { withAnimation { call() } }
                 .padding(.vertical, -5) }

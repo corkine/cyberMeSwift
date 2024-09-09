@@ -67,10 +67,8 @@ final class Connectivity: NSObject, ObservableObject {
   public func requestReloadWatchWidgetTimeline() {
     #if os(iOS)
     if canSendToPeer() {
-      WCSession.default.sendMessage(
-        ["action": "reload-timeline"],
-        replyHandler: optionalMainQueueDispatch(handler: nil),
-        errorHandler: optionalMainQueueDispatch(handler: nil))
+      print("sending reload timeline...")
+      try? WCSession.default.updateApplicationContext(["action": "reload-timeline"])
     } else {
       print("can't send to peer")
     }
@@ -109,7 +107,17 @@ extension Connectivity: WCSessionDelegate {
   
   func session(_ session: WCSession,
                didReceiveApplicationContext applicationContext: [String : Any]) {
-
+    guard let action = applicationContext["action"] as? String else {
+      print("no handler to handle applicationContext: \(applicationContext)")
+      return
+    }
+    #if os(watchOS)
+    if action == "reload-timeline" {
+      print("watchOS reload all timeliens called")
+      WidgetCenter.shared.reloadAllTimelines()
+      return
+    }
+    #endif
   }
   
   func session(_ session: WCSession, didReceiveMessage message: [String : Any],
@@ -133,12 +141,6 @@ extension Connectivity: WCSessionDelegate {
       return
     }
     #else
-    if action == "reload-timeline" {
-      print("watchOS reload all timeliens done")
-      WidgetCenter.shared.reloadAllTimelines()
-      replyHandler(["msg": "done"])
-      return
-    }
     #endif
     replyHandler(["msg": "not-impl"])
   }

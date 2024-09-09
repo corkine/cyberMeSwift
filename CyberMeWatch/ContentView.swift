@@ -152,6 +152,13 @@ struct TabContentView: View {
       todoView.tag(TabTag.todo)
       carView.tag(TabTag.car)
     }
+    .onOpenURL { url in
+      if url.host(percentEncoded: true) == "car" {
+        selectedTab = TabTag.car
+      } else if url.host(percentEncoded: true) == "todo" {
+        selectedTab = TabTag.todo
+      }
+    }
     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
     .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .automatic))
   }

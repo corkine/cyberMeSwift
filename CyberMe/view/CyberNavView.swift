@@ -40,8 +40,6 @@ struct MainApp: View {
                                 Label("Today", systemImage: "house")
                             }
                             .tag(Tab.dashboard)
-                    } else {
-                        // Fallback on earlier versions
                     }
                     FoodBalanceView()
                         .tabItem {
@@ -61,9 +59,6 @@ struct MainApp: View {
                 })
                 .accentColor(.blue)
                 .transition(.moveAndFade)
-                
-                
-                
                 
                 // Badge View
                 ZStack {

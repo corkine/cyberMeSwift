@@ -203,15 +203,20 @@ struct TodoView: View {
 struct CyberMeWatchWidgetEntryView : View {
   @Environment(\.widgetFamily) var family
   var entry: Provider.Entry
+  
+  let url = URL(string: "cyberme-watch://todo")
 
   var body: some View {
     switch family {
     case .accessoryCircular:
       WorkStatusRangeView(dash: entry.dashboard)
+        .widgetURL(url)
     case .accessoryCorner:
       TodoCornerView(dash: entry.dashboard)
+        .widgetURL(url)
     case .accessoryRectangular:
       TodoView(dash: entry.dashboard)
+        .widgetURL(url)
     case .accessoryInline:
       Text("Unsupport widget")
     default:
@@ -223,13 +228,17 @@ struct CyberMeWatchWidgetEntryView : View {
 struct CyberMeWatchWidgetCarEntryView : View {
   @Environment(\.widgetFamily) var family
   var entry: Provider.Entry
+  
+  let url = URL(string: "cyberme-watch://car")
 
   var body: some View {
     switch family {
     case .accessoryCircular:
       CarRangeView(dash: entry.dashboard)
+        .widgetURL(url)
     case .accessoryInline:
       CarInlineView(dash: entry.dashboard)
+        .widgetURL(url)
     case .accessoryCorner:
       Text("Unsupport widget")
     case .accessoryRectangular:

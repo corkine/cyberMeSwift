@@ -38,9 +38,6 @@
     "flutter_inappwebview": [
 
     ],
-    "health_kit_reporter": [
-
-    ],
     "image_picker_ios": [
 
     ],
@@ -62,7 +59,7 @@
     "shared_preferences_foundation": [
 
     ],
-    "sqflite": [
+    "sqflite_darwin": [
 
     ],
     "url_launcher_ios": [

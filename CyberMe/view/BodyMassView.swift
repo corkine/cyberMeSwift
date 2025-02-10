@@ -128,7 +128,11 @@ struct BodyMassView: View {
             .padding(.bottom, 30)
         }
         .onAppear {
-            if service.bodyMassShowWithFetch { service.refreshAndUploadHealthInfo() }
+            if service.bodyMassShowWithFetch {
+              Task {
+                await service.refreshAndUploadHealthInfo()
+              }
+            }
         }
         .onDisappear {
             Dashboard.updateWidget(inSeconds: 0)

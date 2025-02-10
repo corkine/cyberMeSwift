@@ -176,7 +176,6 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/HealthKitReporter/HealthKitReporter.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OrderedSet/OrderedSet.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
@@ -184,7 +183,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/audio_session/audio_session.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/flutter_image_compress/flutter_image_compress.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/flutter_inappwebview/flutter_inappwebview.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/health_kit_reporter/health_kit_reporter.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/image_picker_ios/image_picker_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/just_audio/just_audio.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework"
@@ -193,14 +191,13 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/path_provider_foundation/path_provider_foundation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/quick_actions_ios/quick_actions_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/shared_preferences_foundation/shared_preferences_foundation.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/sqflite/sqflite.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/sqflite_darwin/sqflite_darwin.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/url_launcher_ios/url_launcher_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/video_player_avfoundation/video_player_avfoundation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/wakelock_plus/wakelock_plus.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/webview_flutter_wkwebview/webview_flutter_wkwebview.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/HealthKitReporter/HealthKitReporter.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Mantle/Mantle.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OrderedSet/OrderedSet.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
@@ -208,7 +205,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/audio_session/audio_session.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/flutter_image_compress/flutter_image_compress.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/flutter_inappwebview/flutter_inappwebview.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/health_kit_reporter/health_kit_reporter.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/image_picker_ios/image_picker_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/just_audio/just_audio.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework"
@@ -217,7 +213,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/path_provider_foundation/path_provider_foundation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/quick_actions_ios/quick_actions_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/shared_preferences_foundation/shared_preferences_foundation.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/sqflite/sqflite.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/sqflite_darwin/sqflite_darwin.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/url_launcher_ios/url_launcher_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/video_player_avfoundation/video_player_avfoundation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/wakelock_plus/wakelock_plus.framework"

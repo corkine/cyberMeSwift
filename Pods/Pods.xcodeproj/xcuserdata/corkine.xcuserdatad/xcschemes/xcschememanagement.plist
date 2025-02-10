@@ -14,11 +14,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>HealthKitReporter.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Mantle.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -70,11 +65,6 @@
 			<false/>
 		</dict>
 		<key>flutter_inappwebview.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>health_kit_reporter.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -139,12 +129,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>sqflite-sqflite_darwin_privacy.xcscheme</key>
+		<key>sqflite_darwin-sqflite_darwin_privacy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>sqflite.xcscheme</key>
+		<key>sqflite_darwin.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -169,7 +159,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>wakelock_plus-thermal.xcscheme</key>
+		<key>wakelock_plus-wakelock_plus_privacy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

@@ -107,7 +107,7 @@ extension CyberService {
     }
     
     func setLoginToken(user:String, pass:String) {
-        guard let passToken = genToken(password: pass, expiredSeconds: 60 * 60 * 24 * 10) else {
+        guard let passToken = genToken(password: pass, expiredSeconds: 60 * 60 * 24 * 30) else {
             print("error to set token for user \(user)")
             return
         }

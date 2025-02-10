@@ -67,5 +67,53 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C42CE998-C33B-41DD-8A34-D9E6CF1E3447"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CyberMe/app/CarPlay.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "setInformationTemplate()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C42CE998-C33B-41DD-8A34-D9E6CF1E3447 - 86f5556a0b7c7dcf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) suspend resume partial function for closure #1 @Sendable () async -&gt; () in CyberMe.CarPlaySceneDelegate.setInformationTemplate() -&gt; ()"
+                  moduleName = "CyberMe"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corkine/Desktop/CyberMeSwift/CyberMe/app/CarPlay.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "C42CE998-C33B-41DD-8A34-D9E6CF1E3447 - 2cd06a200de0e3ce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in CyberMe.CarPlaySceneDelegate.setInformationTemplate() -&gt; ()"
+                  moduleName = "CyberMe"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corkine/Desktop/CyberMeSwift/CyberMe/app/CarPlay.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "1344">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -61,7 +61,7 @@ extension CyberService {
       // 处理 bodyMassUploadData
       if let data = try await bodyMassUploadTask, !data.isEmpty {
         print("upload bodyMass value: \(data)")
-        let res = try await self.uploadJSON(api: CyberService.uploadBodyMassNewUrl, data: data)
+        let _ = try await self.uploadJSON(api: CyberService.uploadBodyMassNewUrl, data: data)
       }
       
       healthManager.fetchWorkoutData { sumType in

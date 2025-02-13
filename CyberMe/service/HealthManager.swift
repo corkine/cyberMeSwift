@@ -208,7 +208,7 @@ class HealthManager {
   fileprivate func formatDate(_ date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    formatter.timeZone = TimeZone(secondsFromGMT: 8) // 使用 UTC 时间
+    formatter.timeZone = TimeZone(secondsFromGMT: 8*3600)
     return formatter.string(from: date)
   }
   
@@ -269,8 +269,6 @@ class HealthManager {
           continuation.resume(throwing: NSError(domain: "UnexpectedIdentifier", code: 0, userInfo: nil))
           return
         }
-        
-        print("sample is \(samples)")
         
         let results = samples?.compactMap { sample -> (Date, Double)? in
           guard let sample = sample as? HKQuantitySample else { return nil }

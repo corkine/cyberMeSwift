@@ -23,7 +23,12 @@ struct CyberMeWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
+          if #available(iOSApplicationExtension 17.0, *) {
             CyberMeWidgetEntryView(entry: entry)
+              .containerBackground(.fill.tertiary, for: .widget)
+          } else {
+            CyberMeWidgetEntryView(entry: entry)
+          }
         }
         .supportedFamilies(supportFamilies)
         .configurationDisplayName("CyberMe")
@@ -68,17 +73,18 @@ struct CyberMeWidgets: WidgetBundle {
 
 struct CyberMeWidget_Previews: PreviewProvider {
     static var previews: some View {
-      CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-                                                dashboard: Dashboard.demo))
-      .preferredColorScheme(.dark)
-      .previewContext(WidgetPreviewContext(family: .systemSmall))
-      .previewDisplayName("Car")
-//        if #available(iOSApplicationExtension 16.0, *) {
-//            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
-//                                                      dashboard: Dashboard.demo))
-//            .preferredColorScheme(.dark)
-//            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-//            .previewDisplayName("Todo")
+//      CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+//                                                dashboard: Dashboard.demo))
+//      .preferredColorScheme(.dark)
+//      .previewContext(WidgetPreviewContext(family: .systemSmall))
+//      .previewDisplayName("Car")
+        if #available(iOSApplicationExtension 17.0, *) {
+            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
+                                                      dashboard: Dashboard.demo))
+            .preferredColorScheme(.dark)
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .previewDisplayName("Todo")
+            .containerBackground(.fill.tertiary, for: .widget)
 //            CyberMeWidgetEntryView(entry: SimpleEntry(date: Date(),
 //                                                      dashboard: Dashboard.demo))
 //            .previewContext(WidgetPreviewContext(family: .accessoryInline))
@@ -96,6 +102,6 @@ struct CyberMeWidget_Previews: PreviewProvider {
 //                                                      dashboard: Dashboard.demo))
 //            .preferredColorScheme(.dark)
 //            .previewContext(WidgetPreviewContext(family: .systemMedium))
-//        }
+        }
     }
 }

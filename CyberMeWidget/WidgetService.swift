@@ -90,6 +90,27 @@ struct Fitness: Codable {
   }
 }
 
+struct Limit: Codable {
+  var plan: LimitPlan?
+  var progress: LimitProgress?
+  struct LimitPlan: Codable {
+    var id: String
+    var name: String
+    var startTime: Int64
+    var endTime: Int64
+    var goalPoint: Int64
+    var description: String
+  }
+  struct LimitProgress: Codable {
+    var targetPoints: Int64
+    var recordPoints: Int64
+    var todayPoints: Int64
+    var everyDayPoints: Int64
+    var todayOk: Bool
+    var percent: Double
+  }
+}
+
 struct Car: Codable {
   var dumpTime: Int64
   var reportTime: Int64
@@ -179,6 +200,7 @@ struct Dashboard: Codable {
     var needDiaryReport: Bool
     var needPlantWater: Bool
     var car: Car?
+    var limit: Limit?
 }
 
 extension Dashboard {

@@ -87,7 +87,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   
   var shortcutItem: UIApplicationShortcutItem? { AppDelegate.shortcutItem }
   
-  static func openFlutterApp(route: String = "/menu") {
+  static func openFlutterApp1(route: String = "/menu") {
     if flutterEngine.viewController == nil {
       guard
         let windowScene = UIApplication.shared.connectedScenes
@@ -110,6 +110,46 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         flutterEngine.viewController!.pushRoute(route)
       }
     }
+  }
+  
+  static func openFlutterApp(route: String = "/menu") {
+      if flutterEngine.viewController == nil {
+          guard
+              let windowScene = UIApplication.shared.connectedScenes
+                  .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
+              let window = windowScene.windows.first(where: \.isKeyWindow),
+              let rootViewController = window.rootViewController
+          else { return }
+          
+          let flutterViewController = FlutterViewController(
+              engine: AppDelegate.flutterEngine,
+              nibName: nil,
+              bundle: nil)
+          
+          // For initial navigation, use a simple route without query params
+          // or set the initial route to a base route like "/home"
+          flutterViewController.modalPresentationStyle = .overCurrentContext
+          flutterViewController.isViewOpaque = true
+          
+          rootViewController.present(flutterViewController, animated: true)
+          
+          // After presenting, navigate to the specific route with params
+          DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+              navigateToFlutterRoute(route)
+          }
+      } else {
+          DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+              navigateToFlutterRoute(route)
+          }
+      }
+  }
+  
+  private static func navigateToFlutterRoute(_ route: String) {
+      let methodChannel = FlutterMethodChannel(
+          name: "flutter/nativeSimpleChannel",
+          binaryMessenger: flutterEngine.binaryMessenger)
+      
+      methodChannel.invokeMethod("navigateTo", arguments: route)
   }
   
   func application(_ application: UIApplication,

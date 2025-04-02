@@ -140,8 +140,10 @@ struct CyberMeWidgetEntryView: View {
             .kerning(0.6)
             .font(.system(size: basic + 3))
         }
-        Text(fitInfo)
-          .font(.system(size: basic + 2))
+        Link(destination: URL(string: "cyberme://flutter/app/limit")!) {
+          Text(fitInfo)
+            .font(.system(size: basic + 2))
+        }
         Spacer()
         // MARK: 顶部提醒日报、健身信息
         if data.needDiaryReport && haveLimit {
@@ -173,7 +175,7 @@ struct CyberMeWidgetEntryView: View {
         } else if data.needDiaryReport {
           alert("今日日报")
         } else if haveLimit {
-          Link(destination: URL(string: CyberUrl.showBodyMass)!) {
+          Link(destination: URL(string: "cyberme://flutter/app/limit")!) {
             alert(limitStr)
           }
         } else if needFitness {
@@ -267,15 +269,17 @@ struct CyberMeWidgetEntryView: View {
                     .lineLimit(1)
                 }
               } else {
-                if item.isFinished {
-                  Text(item.title)
-                    .strikethrough()
-                    .font(.system(size: basic + 4))
-                    .lineLimit(1)
-                } else {
-                  Text(item.title)
-                    .font(.system(size: basic + 4))
-                    .lineLimit(1)
+                Link(destination: URL(string: "cyberme://flutter/app/todo")!) {
+                  if item.isFinished {
+                    Text(item.title)
+                      .strikethrough()
+                      .font(.system(size: basic + 4))
+                      .lineLimit(1)
+                  } else {
+                    Text(item.title)
+                      .font(.system(size: basic + 4))
+                      .lineLimit(1)
+                  }
                 }
               }
             }

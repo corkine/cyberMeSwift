@@ -5,6 +5,8 @@
 //  Created by Corkine on 2022/10/29.
 //
 
+import Foundation
+
 enum Default {
     enum UrlScheme {
         static let caiyunWeather = "caiyunapppro://weather"
@@ -32,14 +34,17 @@ enum Setting {
 enum CyberUrl {
     
     static let flutterApp = "cyberme://flutter"
-    
+  
+    static func appOf(_ name: String) -> URL {
+      URL(string: "cyberme://flutter/app/\(name)")!
+    }
+      
     static let checkCardHCM = "cyberme://checkCardHCM"
     static let checkCardIfNeed = "cyberme://checkCardIfNeed"
     static let checkCardForce = "cyberme://checkCardForce"
 
     static let syncTodo = "cyberme://syncTodo"
     static let syncWidget = "cyberme://syncWidget"
-    static let svwUrl = "cyberme://flutter?app=car"
 
     static let uploadHealthData = "cyberme://uploadHealthData"
 

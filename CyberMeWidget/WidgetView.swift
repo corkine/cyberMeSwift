@@ -140,7 +140,7 @@ struct CyberMeWidgetEntryView: View {
             .kerning(0.6)
             .font(.system(size: basic + 3))
         }
-        Link(destination: URL(string: "cyberme://flutter/app/limit")!) {
+        Link(destination: CyberUrl.appOf("limit")) {
           Text(fitInfo)
             .font(.system(size: basic + 2))
         }
@@ -175,7 +175,7 @@ struct CyberMeWidgetEntryView: View {
         } else if data.needDiaryReport {
           alert("今日日报")
         } else if haveLimit {
-          Link(destination: URL(string: "cyberme://flutter/app/limit")!) {
+          Link(destination: CyberUrl.appOf("limit")) {
             alert(limitStr)
           }
         } else if needFitness {
@@ -269,17 +269,15 @@ struct CyberMeWidgetEntryView: View {
                     .lineLimit(1)
                 }
               } else {
-                Link(destination: URL(string: "cyberme://flutter/app/todo")!) {
-                  if item.isFinished {
-                    Text(item.title)
-                      .strikethrough()
-                      .font(.system(size: basic + 4))
-                      .lineLimit(1)
-                  } else {
-                    Text(item.title)
-                      .font(.system(size: basic + 4))
-                      .lineLimit(1)
-                  }
+                if item.isFinished {
+                  Text(item.title)
+                    .strikethrough()
+                    .font(.system(size: basic + 4))
+                    .lineLimit(1)
+                } else {
+                  Text(item.title)
+                    .font(.system(size: basic + 4))
+                    .lineLimit(1)
                 }
               }
             }
@@ -429,7 +427,7 @@ struct CyberMeWidgetEntryView: View {
           .frame(width: geometry.size.width - 20)
           .offset(x: geometry.size.width / 8, y: geometry.size.height / 3.9)
       }
-      .widgetURL(URL(string: CyberUrl.svwUrl))
+      .widgetURL(CyberUrl.appOf("car"))
     }
   }
 

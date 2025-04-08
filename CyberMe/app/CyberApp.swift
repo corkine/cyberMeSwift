@@ -87,31 +87,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   
   var shortcutItem: UIApplicationShortcutItem? { AppDelegate.shortcutItem }
   
-  static func openFlutterApp1(route: String = "/menu") {
-    if flutterEngine.viewController == nil {
-      guard
-        let windowScene = UIApplication.shared.connectedScenes
-          .first(where: { $0.activationState == .foregroundActive && $0 is UIWindowScene }) as? UIWindowScene,
-        let window = windowScene.windows.first(where: \.isKeyWindow),
-        let rootViewController = window.rootViewController
-      else { return }
-      let flutterViewController = FlutterViewController(
-        engine: AppDelegate.flutterEngine,
-        nibName: nil,
-        bundle: nil)
-      
-      flutterViewController.pushRoute(route)
-      flutterViewController.modalPresentationStyle = .overCurrentContext
-      flutterViewController.isViewOpaque = true
-      
-      rootViewController.present(flutterViewController, animated: true)
-    } else {
-      DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-        flutterEngine.viewController!.pushRoute(route)
-      }
-    }
-  }
-  
   static func openFlutterApp(route: String = "/menu") {
       if flutterEngine.viewController == nil {
           guard

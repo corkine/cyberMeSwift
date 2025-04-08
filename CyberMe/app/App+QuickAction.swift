@@ -98,8 +98,8 @@ extension CyberApp {
       AppDelegate.openFlutterApp(route: "/menu")
       break
     case "flutterApps-user":
-      if let id = shortcutItem.userInfo?["id"] as? String {
-        AppDelegate.openFlutterApp(route: "/app/\(id)")
+      if let url = shortcutItem.userInfo?["id"] as? String {
+        AppDelegate.openFlutterApp(route: url)
       } else {
         AppDelegate.openFlutterApp(route: "/menu")
       }

@@ -1,6 +1,0 @@
-framework module Pods_CyberMeTests {
-  umbrella header "Pods-CyberMeTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

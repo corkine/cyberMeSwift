@@ -76,6 +76,10 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+# IDE/Editor
+.vscode/
+.idea/
+
 # macOS
 .DS_Store
 .AppleDouble
